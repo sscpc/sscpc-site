@@ -852,12 +852,13 @@ html.on-home.intro-pinned .nav{background:transparent;border-bottom-color:transp
    only its position/size move. Pure transform animation = smooth and cheap. ---- */
 .intro__stage::before{content:"";position:absolute;z-index:0;left:-30%;width:160%;top:calc(var(--cy) - 80%);height:160%;pointer-events:none;
   background:radial-gradient(37.5% 32.5% at 50% 50%,rgba(18,110,185,.62) 0%,rgba(8,60,110,.38) 42%,rgba(0,0,0,0) 78%);
-  animation:introGlowDrift 16s ease-in-out infinite;will-change:transform,opacity}
+  opacity:var(--glowop,1);animation:introGlowDrift 16s ease-in-out infinite;will-change:transform,opacity}
+/* the glow fades out (--glowop, set in js/intro.js) once the logo defocuses, so nothing glows behind the SSCPC wordmark */
 @keyframes introGlowDrift{
-  0%,100%{transform:translate3d(0,0,0) scale(1);opacity:1}
-  25%{transform:translate3d(9%,-5%,0) scale(1.16);opacity:.92}
-  50%{transform:translate3d(2%,6%,0) scale(.88);opacity:1}
-  75%{transform:translate3d(-9%,-3%,0) scale(1.1);opacity:.9}
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  25%{transform:translate3d(9%,-5%,0) scale(1.16)}
+  50%{transform:translate3d(2%,6%,0) scale(.88)}
+  75%{transform:translate3d(-9%,-3%,0) scale(1.1)}
 }
 @media(prefers-reduced-motion:reduce){.intro__stage::before{animation:none}}
 
