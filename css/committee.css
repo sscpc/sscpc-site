@@ -1,0 +1,46 @@
+@font-face{font-family:'Noto Sans';font-weight:500;font-style:normal;font-display:swap;src:url(../fonts/noto-sans-medium.woff) format('woff')}
+@font-face{font-family:'Noto Sans';font-weight:600;font-style:normal;font-display:swap;src:url(../fonts/noto-sans-semibold.woff) format('woff')}
+/* Executive Committee: wide profile cards + profile popup (js/members.js) */
+.xc-grid{display:grid;gap:1.5rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+.xc{display:flex;min-height:17.5rem;background:#07162a;color:#f4f1e4;border:1px solid rgba(108,200,255,.28);transition:transform .3s,border-color .3s,box-shadow .3s}
+.xc:hover{transform:translateY(-3px);border-color:rgba(108,200,255,.6);box-shadow:0 14px 34px rgba(0,0,0,.4)}
+.xc-photo{position:relative;flex:0 0 13.5rem;overflow:hidden;display:flex;align-items:flex-start;justify-content:center;padding-top:2.2rem;background:linear-gradient(165deg,#0d3158 0%,#06192e 60%,#030b16 100%);border-right:1px solid #2a7fc0}
+.xc-photo.none{background:linear-gradient(165deg,#0a1f38,#030b16)}
+.xc-photo img{width:10.5rem;aspect-ratio:1;border-radius:50%;object-fit:cover;filter:grayscale(1) contrast(1.05);transition:filter .45s ease;box-shadow:0 0 0 2px rgba(244,241,228,.55),0 0 24px rgba(108,200,255,.3)}
+.xc-body{flex:1;min-width:0;display:flex;flex-direction:column;padding:1.5rem 1.6rem 1.2rem}
+.xc-tags{display:flex;flex-direction:column;align-items:flex-start;gap:.2rem}
+.xc-tag{font-family:'Noto Sans',var(--body,sans-serif);font-weight:600;font-size:.74rem;line-height:1.3;letter-spacing:.1em;text-transform:uppercase;color:#6cc8ff}
+.xc-tag+.xc-tag{font-weight:500;font-size:.68rem;color:#b4cae6}
+.xc-name{margin:1rem 0 .6rem;font-family:var(--heading,sans-serif);font-weight:700;font-size:1.55rem;line-height:1.15;letter-spacing:.01em;color:#f4f1e4}
+.xc-note{margin:0;font-size:.86rem;line-height:1.7;color:#b4cae6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.xc-more{margin-top:auto;padding:.9rem 0 0;border:0;border-top:1px solid rgba(108,200,255,.22);background:none;color:#f4f1e4;text-align:left;font:700 .72rem/1 var(--body,sans-serif);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;display:flex;gap:.6rem;align-items:center;margin-top:1.1rem}
+.xc-more span{transition:transform .2s}
+.xc-more:hover span,.xc-more:focus-visible span{transform:translate(3px,-3px)}
+.xc-more:focus-visible{outline:2px solid #6cc8ff;outline-offset:4px}
+.xc.hit{border-color:#f4f1e4;animation:mcpulse .9s ease-in-out 3}
+/* no photo yet: simple silhouette in the same circle */
+.xc-photo.none::before,.xp-photo.none::before{content:"";display:block;width:10.5rem;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 36%,#3a5578 0 17%,transparent 18%),radial-gradient(ellipse at 50% 100%,#3a5578 0 40%,transparent 41%),#0a1f38;box-shadow:0 0 0 2px rgba(244,241,228,.35)}
+.xp-photo.none::before{width:100%}
+/* photo turns to colour when the card is hovered (always colour on touch screens) */
+.xc:hover .xc-photo img,.xc:focus-within .xc-photo img{filter:none}
+@media(hover:none){.xc-photo img{filter:none}}
+/* popup */
+body.xc-lock{overflow:hidden}
+.xp{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:1rem;background:rgba(2,6,13,.78);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);animation:xpIn .22s ease}
+.xp-box{position:relative;display:flex;gap:1.6rem;width:min(44rem,100%);max-height:calc(100dvh - 2rem);overflow:auto;padding:2rem;background:#07162a;color:#f4f1e4;border:1px solid rgba(108,200,255,.5);box-shadow:0 24px 70px rgba(0,0,0,.6)}
+.xp-photo{flex:none;width:9rem;height:9rem;align-self:flex-start;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:#0a1f38;box-shadow:0 0 0 2px rgba(244,241,228,.55),0 0 24px rgba(108,200,255,.3)}
+.xp-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05)}
+.xp-text{flex:1;min-width:0}
+.xp-note{margin:0;font-size:.95rem;line-height:1.8;color:#d3e2f5}
+.xp-x{position:absolute;top:.5rem;right:.7rem;width:2.4rem;height:2.4rem;border:0;background:none;color:#f4f1e4;font-size:1.9rem;line-height:1;cursor:pointer}
+.xp-x:hover{color:#6cc8ff}
+@keyframes xpIn{from{opacity:0}to{opacity:1}}
+@media(max-width:980px){.xc-grid{grid-template-columns:1fr}}
+@media(max-width:560px){
+  .xc{flex-direction:column}
+  .xc-photo{flex:0 0 auto;height:13.5rem;border-right:0;border-bottom:1px solid #2a7fc0}
+  .xc-photo img{width:9.5rem}
+  .xc-name{font-size:1.35rem}
+  .xp-box{flex-direction:column;align-items:center;text-align:left;padding:1.6rem 1.2rem}
+}
+@media(prefers-reduced-motion:reduce){.xc,.xp{transition:none;animation:none}.xc.hit{animation:none}}

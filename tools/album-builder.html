@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSCPC Album Builder</title>
+<meta name="robots" content="noindex">
+<style>
+@font-face{font-family:'Grifter';font-weight:100 900;src:url(../fonts/grifter-bold.otf) format('opentype')}
+@font-face{font-family:'Poppins';font-weight:400;src:url(../fonts/poppins-regular.ttf) format('truetype')}
+@font-face{font-family:'Poppins';font-weight:700;src:url(../fonts/poppins-bold.ttf) format('truetype')}
+:root{--ink:#f4f1e4;--muted:#aeb2d3;--line:rgba(244,241,228,.25);--pink:#d4536a}
+*{box-sizing:border-box;margin:0}
+body{background:radial-gradient(60% 40% at 80% 0,rgba(125,21,38,.5),transparent 70%),#080b22;color:var(--ink);font:400 .9rem/1.7 'Poppins','Arial',sans-serif;padding:1.25rem}
+main{max-width:46rem;margin:0 auto}
+h1{font-family:'Grifter',Arial,sans-serif;font-size:1.4rem;letter-spacing:.06em;margin:.5rem 0 .25rem}
+h2{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);margin:2rem 0 .75rem}
+p,li{color:var(--muted)}
+ol{padding-left:1.2rem;margin:.75rem 0}
+.card{border:1px solid var(--line);background:#0b0f2e;padding:1.25rem;margin-top:1rem}
+label{display:block;margin-top:1rem;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+input,select,textarea{width:100%;margin-top:.35rem;padding:.7rem .8rem;background:#080b22;color:var(--ink);border:1px solid var(--line);border-radius:0;font:inherit;font-size:.85rem}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 2px rgba(212,83,106,.4)}
+textarea{min-height:5.5rem}
+.grid{display:grid;gap:0 1rem;grid-template-columns:1fr}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+button,a.btn{display:inline-block;margin-top:1.25rem;padding:.85rem 1.4rem;background:#f4f1e4;color:#12183f;border:0;font:700 .75rem 'Poppins',sans-serif;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+button.ghost{background:none;color:var(--ink);border:1px solid var(--line);margin-top:.6rem}
+button:disabled{opacity:.5}
+#msg{margin-top:1rem;color:#e9758a}
+.out textarea{min-height:12rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.75rem}
+#thumbs{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem}
+#thumbs button{margin:0;padding:0;width:64px;height:64px;border:2px solid var(--pink);background:none;position:relative}
+#thumbs button img{width:100%;height:100%;object-fit:cover;display:block}
+#thumbs button.off{border-color:var(--line)}
+#thumbs button.off img{opacity:.2}
+#pickbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:.75rem}
+#pickbar button{margin:0;padding:.4rem .8rem;font-size:.65rem}
+#count{color:var(--muted);font-size:.8rem}
+#thumbs{max-height:22rem;overflow:auto}
+progress{width:100%;margin-top:.75rem;accent-color:var(--pink)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <h1>SSCPC Album Builder</h1>
+  <p>Add a new album to the website without coding. Nothing is uploaded anywhere: your photos are prepared on this device.</p>
+  <ol>
+    <li>Fill in the form, choose the photos (any number, 200+ is fine), untick the ones you do not want, and press <b>Prepare album</b>.</li>
+    <li>Download the ZIP and unzip it <b>into the website folder</b> (it adds a folder inside <code>images/albums</code>).</li>
+    <li>Copy the album code, open <code>js/data.js</code>, and paste it just after the line <code>const ALBUMS = [</code>.</li>
+    <li>Upload the website folder to Netlify again.</li>
+  </ol>
+
+  <form class="card" id="f">
+    <label>Album or event name *<input id="name" required></label>
+    <label>Date of the event<input id="date" type="date"></label>
+    <label>Venue<input id="venue"></label>
+    <div class="grid">
+      <label>Captured by (one name per line)<textarea id="cap"></textarea></label>
+      <label>Edited by (one name per line)<textarea id="edit"></textarea></label>
+    </div>
+    <label>Link to the full album on Facebook (optional)<input id="fb" type="url" placeholder="https://www.facebook.com/..."></label>
+    <label>Album poster / cover (optional, first photo is used if empty)<input id="cover" type="file" accept="image/*"></label>
+    <label>Photos * (choose all of them, then untick the weak ones)<input id="photos" type="file" accept="image/*" multiple required></label>
+    <div id="pickbar" hidden><span id="count"></span><button type="button" class="ghost" id="all">Select all</button><button type="button" class="ghost" id="none">Select none</button></div>
+    <div id="thumbs"></div>
+    <label style="display:flex;gap:.6rem;align-items:center"><input id="ev" type="checkbox" checked style="width:auto;margin:0"> Also create an entry for the Events page</label>
+    <button type="submit" id="go">Prepare album</button>
+    <progress id="bar" value="0" max="1" hidden></progress>
+    <p id="msg" role="status"></p>
+  </form>
+
+  <section class="out" id="out" hidden>
+    <h2>1. Download the photos</h2>
+    <a class="btn" id="dl">Download ZIP</a>
+    <h2>2. Album code for js/data.js (after <code>const ALBUMS = [</code>)</h2>
+    <textarea id="code" readonly style="width:100%"></textarea>
+    <button type="button" class="ghost" data-copy="code">Copy album code</button>
+    <div id="evbox">
+      <h2>3. Event code for js/data.js (after <code>const EVENTS = [</code>)</h2>
+      <textarea id="evcode" readonly style="width:100%"></textarea>
+      <button type="button" class="ghost" data-copy="evcode">Copy event code</button>
+    </div>
+  </section>
+</main>
+<script src="zip.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, '0');
+const slugify = (s, d) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('album-' + ((d || 'new').replace(/-/g, '')));
+const lines = s => s.split('\n').map(x => x.trim()).filter(Boolean);
+const load = f => new Promise((ok, no) => { const u = URL.createObjectURL(f), i = new Image(); i.onload = () => { URL.revokeObjectURL(u); ok(i); }; i.onerror = () => no(new Error('Cannot read ' + f.name)); i.src = u; });
+const q = s => "'" + String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'";
+const FULL = 1280, THUMB = 480, COVER_W = 900;
+
+function encode(canvas, quality) {
+  return new Promise((ok, no) => canvas.toBlob(async b => {
+    if (!b) return no(new Error('Could not save a photo'));
+    ok(new Uint8Array(await b.arrayBuffer()));
+  }, 'image/jpeg', quality));
+}
+function scaled(src, sw, sh, maxSide, exactW) {
+  const k = exactW ? Math.min(1, exactW / sw) : Math.min(1, maxSide / Math.max(sw, sh));
+  const c = document.createElement('canvas'); c.width = Math.round(sw * k); c.height = Math.round(sh * k);
+  const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(src, 0, 0, c.width, c.height);
+  return c;
+}
+/* one photo in, a full-size and a thumbnail JPEG out (thumbnail is made from the smaller copy: cleaner and faster) */
+async function make(file) {
+  const img = await load(file);
+  const big = scaled(img, img.naturalWidth, img.naturalHeight, FULL);
+  const small = scaled(big, big.width, big.height, THUMB);
+  const out = { full: await encode(big, .78), thumb: await encode(small, .75) };
+  big.width = big.height = small.width = small.height = 0;
+  return out;
+}
+async function makeCover(file) {
+  const img = await load(file);
+  const c = scaled(img, img.naturalWidth, img.naturalHeight, 0, COVER_W);
+  const d = await encode(c, .8); c.width = c.height = 0; return d;
+}
+
+/* ---------- photo picker ---------- */
+let picked = [], on = new Set(), urls = [];
+function count() {
+  $('count').textContent = on.size + ' of ' + picked.length + ' photos selected';
+  $('go').disabled = on.size === 0;
+}
+$('photos').onchange = e => {
+  urls.forEach(u => URL.revokeObjectURL(u)); urls = [];
+  picked = [...e.target.files].sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+  on = new Set(picked.map((_, i) => i));
+  $('thumbs').textContent = '';
+  picked.forEach((f, i) => {
+    const b = document.createElement('button'), im = document.createElement('img');
+    b.type = 'button'; b.title = f.name; im.loading = 'lazy'; im.decoding = 'async'; im.alt = '';
+    const u = URL.createObjectURL(f); urls.push(u); im.src = u; b.append(im);
+    b.onclick = () => { if (on.has(i)) { on.delete(i); b.classList.add('off'); } else { on.add(i); b.classList.remove('off'); } count(); };
+    $('thumbs').append(b);
+  });
+  $('pickbar').hidden = !picked.length; count();
+};
+$('all').onclick = () => { picked.forEach((_, i) => on.add(i)); $('thumbs').querySelectorAll('button').forEach(b => b.classList.remove('off')); count(); };
+$('none').onclick = () => { on.clear(); $('thumbs').querySelectorAll('button').forEach(b => b.classList.add('off')); count(); };
+
+/* ---------- build ---------- */
+let zipUrl = null;
+$('f').onsubmit = async e => {
+  e.preventDefault();
+  const go = $('go'), msg = $('msg'), bar = $('bar'); go.disabled = true; bar.hidden = false;
+  try {
+    const name = $('name').value.trim(), dateVal = $('date').value;
+    const date = dateVal ? new Date(dateVal + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+    const files = picked.filter((_, i) => on.has(i));
+    if (!files.length) throw new Error('Select at least one photo');
+    const slug = slugify(name, dateVal), dir = 'images/albums/' + slug, w = Math.max(2, String(files.length).length);
+    const entries = [], paths = []; bar.max = files.length + 1; bar.value = 0;
+    msg.textContent = 'Preparing the cover...';
+    entries.push({ name: dir + '/cover.jpg', data: await makeCover($('cover').files[0] || files[0]) }); bar.value = 1;
+    for (let i = 0; i < files.length; i++) {
+      msg.textContent = 'Preparing photo ' + (i + 1) + ' of ' + files.length + '... keep this tab open';
+      const n = 'photo-' + String(i + 1).padStart(w, '0') + '.jpg', r = await make(files[i]);
+      entries.push({ name: dir + '/' + n, data: r.full }, { name: dir + '/thumbs/' + n, data: r.thumb });
+      paths.push(dir + '/' + n); bar.value = i + 2;
+    }
+    msg.textContent = 'Packing the ZIP...'; await new Promise(r => setTimeout(r, 30));
+    const zip = makeZip(entries);
+    if (zipUrl) URL.revokeObjectURL(zipUrl);
+    zipUrl = URL.createObjectURL(new Blob([zip], { type: 'application/zip' }));
+    $('dl').href = zipUrl; $('dl').download = slug + '.zip';
+
+    const obj = { name, facebook: $('fb').value.trim(),
+      info: { date, venue: $('venue').value.trim(), captured: lines($('cap').value), edited: lines($('edit').value) },
+      cover: dir + '/cover.jpg', thumbs: dir + '/thumbs/', photos: paths };
+    $('code').value = JSON.stringify(obj, null, 2).split('\n').map(l => '  ' + l).join('\n') + ',';
+
+    $('evbox').hidden = !$('ev').checked;
+    $('evcode').value = "  {\n    name: " + q(name) + ",\n    category: 'school',\n    type: 'School event covered by the club',\n    status: 'past',\n    date: " + q(date) +
+      ",\n    time: '',\n    venue: " + q(obj.info.venue) + ",\n    about: '',\n    album: " + q(name) + "\n  },";
+    $('out').hidden = false; $('out').scrollIntoView();
+    msg.textContent = 'Done. ' + files.length + ' photos prepared (' + (zip.length / 1048576).toFixed(1) + ' MB).';
+  } catch (err) { msg.textContent = 'Something went wrong: ' + err.message; }
+  bar.hidden = true; count();
+};
+
+document.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
+  const t = $(b.dataset.copy); t.select();
+  try { await navigator.clipboard.writeText(t.value); } catch (e) { document.execCommand('copy'); }
+  const old = b.textContent; b.textContent = 'Copied'; setTimeout(() => b.textContent = old, 1500);
+});
+</script>
+</body>
+</html>

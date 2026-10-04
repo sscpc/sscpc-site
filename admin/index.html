@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0a0d26">
+<title>SSCPC Admin</title>
+<link rel="icon" href="../images/crown-mark.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+.hide{display:none!important}
+#login{min-height:100vh;display:grid;place-items:center;padding:1.5rem;color:#f4f1e4;background:radial-gradient(55% 55% at 78% 18%,rgba(125,21,38,.6),transparent 70%),radial-gradient(50% 60% at 8% 95%,rgba(29,38,96,.95),transparent 70%),#080b22}
+#login .vf{width:min(24rem,100%);text-align:center}
+#login img{width:54px;margin-bottom:.8rem}
+.ttl{font-family:var(--heading);font-size:1.6rem;line-height:1.2;margin-bottom:1rem}
+.in{width:100%;padding:.7rem .85rem;background:var(--surface);color:var(--ink);border:1px solid var(--line);font:inherit;font-size:.85rem;border-radius:0}
+.in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 40%,transparent)}
+#login .in{background:#080b22;color:#f4f1e4;border-color:rgba(244,241,228,.28);margin:1rem 0}
+.app{display:grid;grid-template-columns:14rem 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;background:var(--surface);border-right:1px solid var(--line);padding:1.2rem .8rem;display:flex;flex-direction:column;gap:.2rem}
+.side .brand{padding:0 .5rem 1rem;font-family:var(--heading)}
+.side .brand img{width:30px}
+.tab{text-align:left;background:none;border:0;border-left:3px solid transparent;color:var(--ink);padding:.6rem .8rem;font:600 .72rem var(--body);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.tab:hover{color:var(--accent)}
+.tab[aria-selected=true]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.sp{flex:1}
+.badge{margin:.5rem;padding:.4rem .6rem;background:var(--accent);color:#f4f1e4;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-align:center}
+main{padding:clamp(1rem,3vw,2rem);min-width:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.8rem;margin-bottom:1.2rem}
+.stats .card{padding:1rem}
+.bar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1rem}
+.bar .in{flex:1;min-width:10rem}
+.sm{padding:.55rem 1.2rem!important;font-size:.68rem!important}
+.tbl{overflow:auto;max-height:65vh;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.75rem}
+th,td{padding:.55rem .7rem;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;max-width:16rem;overflow:hidden;text-overflow:ellipsis}
+th{position:sticky;top:0;background:var(--surface);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+details.it{border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--surface);margin:.5rem 0}
+details.it summary{cursor:pointer;padding:.7rem 1rem;font-weight:600;display:flex;gap:.4rem;align-items:center}
+details.it summary span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bd{padding:.2rem 1rem 1rem;display:grid;gap:.7rem}
+label.f{display:grid;gap:.25rem;font-size:.66rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;font-weight:600}
+fieldset{border:1px solid var(--line);padding:.8rem;display:grid;gap:.7rem;min-width:0}
+legend{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:0 .4rem}
+.mini{background:none;border:1px solid var(--line);color:var(--ink);cursor:pointer;padding:.1rem .5rem;font-size:.75rem}
+.mini:hover{border-color:var(--accent)}
+.note{color:var(--muted);font-size:.78rem;margin-bottom:1rem;max-width:44rem}
+@media(max-width:800px){.app{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:.5rem;align-items:center}.side .brand,.sp{display:none}.tab{white-space:nowrap;border-left:0;border-bottom:3px solid transparent}.tab[aria-selected=true]{border-color:var(--accent)}}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <div class="vf"><i></i><i></i><i></i><i></i>
+    <img src="../images/crown-mark.png" alt="">
+    <div class="ttl">SSCPC Admin</div>
+    <form id="lf"><input class="in" id="key" type="password" placeholder="Admin key" autocomplete="current-password" required>
+    <button class="btn" style="width:100%">Sign in</button></form>
+    <p id="msg" style="margin-top:1rem;font-size:.78rem;color:#d9dbee"></p>
+  </div>
+</div>
+
+<div class="app hide" id="app">
+  <nav class="side" id="side">
+    <div class="brand"><img src="../images/crown-mark.png" alt=""> Admin</div>
+    <div class="sp"></div>
+    <div class="badge hide" id="dirty">UNPUBLISHED CHANGES</div>
+    <button class="tab" id="th">Light / Dark</button>
+    <a class="tab" href="../index.html">← View site</a>
+    <button class="tab" id="so">Sign out</button>
+  </nav>
+  <main id="main"></main>
+</div>
+
+<script src="../js/data.js"></script>
+<script>
+const D={EVENT_DATE,ALBUMS,EVENTS,MEMBERS,PRESIDENT_WHATSAPP,PRESIDENT_WHATSAPP_LINK,SLIDE_SECONDS,SLIDES,FORMS_ENDPOINT};
+const snap=()=>JSON.stringify(D);let base=snap(),key='',X=null,sub='registrations',tab='inbox';
+const $=s=>document.querySelector(s);
+const h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.innerHTML=x;return e};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dirty=()=>$('#dirty').classList.toggle('hide',snap()===base);
+const btn=(t,f,c)=>{const b=h('button','btn '+(c||'')+' sm',t);b.type='button';b.onclick=f;return b};
+const save=(name,text,type)=>{const a=h('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click()};
+
+/* ---------- generic editor: works for any shape in data.js ---------- */
+const blank=v=>Array.isArray(v)?[]:v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,blank(x)])):typeof v==='number'?0:typeof v==='boolean'?false:'';
+const field=(l,el)=>{const x=h('label','f');x.append(l,el);return x};
+function ed(p,k,label){
+  const v=p[k];
+  if(Array.isArray(v)&&v.every(x=>typeof x==='string')){const t=h('textarea','in');t.rows=Math.min(8,v.length+1);t.value=v.join('\n');t.oninput=()=>{p[k]=t.value.split('\n').map(s=>s.trim()).filter(Boolean);dirty()};return field(label+' (one per line)',t)}
+  if(Array.isArray(v))return list(v,label);
+  if(v&&typeof v==='object'){const f=h('fieldset');f.append(h('legend',0,esc(label)));Object.keys(v).forEach(x=>f.append(ed(v,x,x)));return f}
+  if(typeof v==='boolean'){const c=h('input');c.type='checkbox';c.checked=v;c.onchange=()=>{p[k]=c.checked;dirty()};return field(c,label)}
+  const long=typeof v==='string'&&(v.length>70||v.includes('\n')||/^(text|about|note)$/.test(k));
+  const i=h(long?'textarea':'input','in');if(long)i.rows=4;if(typeof v==='number')i.type='number';i.value=v;
+  i.oninput=()=>{p[k]=typeof v==='number'?+i.value:i.value;dirty()};return field(label,i)}
+function list(a,label){
+  const box=h('div');
+  const draw=()=>{box.innerHTML='';
+    a.forEach((it,i)=>{const d=h('details','it'),s=h('summary');
+      s.append(h('span',0,esc(it.name||it.title||it.alt||it.image||'#'+(i+1))));
+      [['↑',-1],['↓',1],['✕',0]].forEach(([t,dx])=>{const b=h('button','mini',t);b.type='button';b.onclick=e=>{e.preventDefault();
+        if(!dx){if(!confirm('Remove this item?'))return;a.splice(i,1)}else{const j=i+dx;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]]}
+        dirty();draw()};s.append(b)});
+      const bd=h('div','bd');Object.keys(it).forEach(k=>bd.append(ed(it,k,k)));d.append(s,bd);box.append(d)});
+    if(a.length||label)box.append(btn('+ Add',()=>{const n=blank(a[0]||{});label==='members'?a.push(n):a.unshift(n);dirty();draw()},'ghost'))};
+  draw();return box}
+
+/* ---------- inbox ---------- */
+const csv=(rows,cols)=>'\ufeff'+[cols,...rows.map(r=>cols.map(c=>r[c]??''))].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+async function load(){const r=await fetch(D.FORMS_ENDPOINT+'?key='+encodeURIComponent(key));const j=await r.json();if(!j.ok)throw 0;X=j}
+function inbox(){
+  const w=h('div'),R=X.registrations,J=X.joins,M=X.messages;
+  const kids=R.reduce((n,r)=>n+(+r.students||0),0);
+  w.append(h('div','stats',[['Registrations',R.length],['Students attending',kids],['Join requests',J.length],['Messages',M.length]].map(([a,b])=>`<div class="card"><small>${a}</small><strong>${b}</strong></div>`).join('')));
+  const rows=[...X[sub]].reverse(),cols=[...new Set(rows.flatMap(r=>Object.keys(r)))].filter(c=>rows.some(r=>r[c]));
+  const bar=h('div','bar');
+  [['registrations','Registrations'],['joins','Join requests'],['messages','Messages']].forEach(([k,t])=>{const c=h('button','chip',t);c.setAttribute('aria-pressed',k===sub);c.onclick=()=>{sub=k;show('inbox')};bar.append(c)});
+  const q=h('input','in');q.placeholder='Search…';bar.append(q,btn('Refresh',async()=>{try{await load();show('inbox')}catch(e){alert('Could not refresh')}},'ghost'),
+    btn('Export CSV',()=>save('sscpc-'+sub+'.csv',csv(rows,cols),'text/csv'),''));
+  const tb=h('div','tbl'),draw=()=>{const f=q.value.toLowerCase(),rs=rows.filter(r=>!f||JSON.stringify(r).toLowerCase().includes(f));
+    tb.innerHTML=rs.length?`<table><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}</tr>${rs.map(r=>`<tr>${cols.map(c=>`<td title="${esc(r[c])}">${esc(r[c])}</td>`).join('')}</tr>`).join('')}</table>`:'<p style="padding:1rem">Nothing here yet.</p>'};
+  q.oninput=draw;draw();w.append(bar,tb);return w}
+
+/* ---------- site settings + publish ---------- */
+function site(){const w=h('div','bd'),d=h('input','in');d.type='datetime-local';d.value=D.EVENT_DATE.slice(0,16);
+  d.onchange=()=>{if(d.value){D.EVENT_DATE=d.value+':00+05:30';dirty()}};
+  w.append(h('p','note','The countdown date. The Spectrum entry under Events (date, time, calendar start/end) is edited separately.'),field('Spectrum countdown (Sri Lanka time)',d));
+  ['SLIDE_SECONDS','PRESIDENT_WHATSAPP','PRESIDENT_WHATSAPP_LINK','FORMS_ENDPOINT'].forEach(k=>w.append(ed(D,k,k)));return w}
+const src=()=>'/* SSCPC site data. Written by the admin portal (admin/index.html). Notes: README.txt */\n\n'+Object.keys(D).map(k=>`const ${k} = ${JSON.stringify(D[k],null,2)};`).join('\n\n')+'\n';
+function publish(){
+  const w=h('div','bd'),g=JSON.parse(localStorage.gh||'{}'),st=h('p','note');
+  w.append(h('p','note','<b>Download</b> gives you a new js/data.js to upload to GitHub yourself. <b>Publish</b> commits it for you, and Vercel redeploys in about a minute. Photos are not uploaded here: use tools/album-builder.html and add the folder to the site.'),btn('Download data.js',()=>save('data.js',src(),'text/javascript')));
+  const f={};[['repo','GitHub repository (owner/name)'],['branch','Branch'],['token','Fine-grained access token (Contents: read and write, this repo only)']].forEach(([k,l])=>{const i=h('input','in');if(k==='token')i.type='password';i.value=g[k]||(k==='branch'?'main':'');f[k]=i;w.append(field(l,i))});
+  w.append(btn('Publish to GitHub',async()=>{
+    const o={repo:f.repo.value.trim(),branch:f.branch.value.trim()||'main',token:f.token.value.trim()};localStorage.gh=JSON.stringify(o);
+    const u=`https://api.github.com/repos/${o.repo}/contents/js/data.js`,H={Authorization:'Bearer '+o.token,Accept:'application/vnd.github+json'};
+    st.textContent='Publishing…';
+    try{const r=await fetch(u+'?ref='+o.branch,{headers:H});if(!r.ok)throw Error('Could not read js/data.js ('+r.status+')');
+      const j=await r.json(),p=await fetch(u,{method:'PUT',headers:H,body:JSON.stringify({message:'Update data.js from admin portal',content:btoa(unescape(encodeURIComponent(src()))),sha:j.sha,branch:o.branch})});
+      if(!p.ok)throw Error('GitHub refused the update ('+p.status+')');base=snap();dirty();st.textContent='Published. The live site updates in about a minute.'}
+    catch(e){st.textContent=e.message}}),st,
+    h('p','note','The token is kept in this browser only. Use a device you trust, and sign out of shared computers.'));
+  return w}
+
+/* ---------- shell ---------- */
+const TABS=[['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',()=>ed(D,'ALBUMS','')],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['site','Site',site],['publish','Publish',publish]];
+TABS.forEach(([k,t])=>{const b=h('button','tab',t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))});
+function show(n){tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
+  const m=$('#main'),t=TABS.find(x=>x[0]===n);m.innerHTML='';m.append(h('div','ttl',t[1]),t[2]());scrollTo(0,0)}
+async function enter(k){key=k;$('#msg').textContent='Checking…';
+  try{await load();sessionStorage.k=k;$('#login').classList.add('hide');$('#app').classList.remove('hide');show(tab)}
+  catch(e){sessionStorage.removeItem('k');$('#msg').textContent='Could not sign in. Check the key, and that the updated Apps Script is deployed.'}}
+$('#lf').onsubmit=e=>{e.preventDefault();enter($('#key').value)};
+$('#so').onclick=()=>{sessionStorage.removeItem('k');location.reload()};
+$('#th').onclick=()=>{const r=document.documentElement,c=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.dataset.theme=c==='dark'?'light':'dark';localStorage.at=r.dataset.theme};
+if(localStorage.at)document.documentElement.dataset.theme=localStorage.at;
+addEventListener('beforeunload',e=>{if(snap()!==base){e.preventDefault();e.returnValue=''}});
+if(sessionStorage.k)enter(sessionStorage.k);
+</script>
+</body>
+</html>

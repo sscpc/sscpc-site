@@ -1,0 +1,30 @@
+/* SSCPC background-music player (js/music.js), bottom-right.
+   Round music button + a pill of three icons (previous / play-pause / next) that slides out to its left
+   on hover, keyboard focus, or a tap on touch screens. */
+.mus-wrap{position:fixed;right:1.2rem;bottom:1.2rem;z-index:59;display:flex;align-items:center;transition:transform .25s}
+.mus{display:grid;place-items:center;flex:none;width:40px;height:40px;padding:0;border-radius:50%;border:1px solid rgba(244,241,228,.35);background:#030b16;color:#f4f1e4;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5),0 0 0 3px rgba(108,200,255,.12);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.mus:hover{transform:scale(1.08);box-shadow:0 8px 22px rgba(0,0,0,.55),0 0 0 4px rgba(108,200,255,.25)}
+.mus:focus-visible,.mus-c:focus-visible{outline:2px solid #6cc8ff;outline-offset:3px}
+.mus svg{display:block;overflow:visible}
+.mus-bars rect{fill:currentColor;transform-box:fill-box;transform-origin:center bottom}
+.mus-off{opacity:1}
+.mus.on{border-color:#6cc8ff;color:#6cc8ff}
+.mus.on .mus-off{opacity:0}
+.mus.on .mus-bars rect{animation:musBar 1s ease-in-out infinite}
+.mus.on .mus-bars rect:nth-child(2){animation-delay:.2s}
+.mus.on .mus-bars rect:nth-child(3){animation-delay:.4s}
+@keyframes musBar{0%,100%{transform:scaleY(.45)}50%{transform:scaleY(1.2)}}
+
+/* controls pill: hidden until the player is hovered / focused / opened */
+.mus-ctl{display:flex;align-items:center;gap:.15rem;max-width:0;opacity:0;overflow:hidden;margin-right:0;padding:0;border:1px solid transparent;border-radius:999px;background:#030b16;white-space:nowrap;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.5);transition:max-width .35s cubic-bezier(.2,.8,.2,1),opacity .25s,margin-right .35s,padding .35s,border-color .25s}
+.mus-c{display:grid;place-items:center;flex:none;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:none;color:#f4f1e4;cursor:pointer;transition:background .2s,transform .2s}
+.mus-c:hover{background:rgba(108,200,255,.18);transform:scale(1.08)}
+.mus-c:active{transform:scale(.94)}
+.mus-pp{background:#f4f1e4;color:#04101e}
+.mus-pp:hover{background:#fff}
+.mus-wrap:has(:focus-visible) .mus-ctl,.mus-wrap.open .mus-ctl{max-width:150px;opacity:1;margin-right:.5rem;padding:3px 5px;border-color:rgba(108,200,255,.45);pointer-events:auto}
+@media(hover:hover){.mus-wrap:hover .mus-ctl{max-width:150px;opacity:1;margin-right:.5rem;padding:3px 5px;border-color:rgba(108,200,255,.45);pointer-events:auto}}
+/* while the intro is pinned the controls stay tucked away */
+html.intro-pinned .mus-ctl{display:none}
+@media print{.mus-wrap{display:none}}
+@media(prefers-reduced-motion:reduce){.mus.on .mus-bars rect{animation:none}.mus,.mus-ctl,.mus-c{transition:none}}

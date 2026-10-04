@@ -1,0 +1,107 @@
+/* SSCPC assistant widget (js/chatbot.js). Uses the site's theme variables so it follows light/dark. */
+#sscpc-bot{position:fixed;left:1rem;bottom:1rem;z-index:60;font-family:var(--body);font-size:.85rem;line-height:1.55;color:var(--ink)}
+#sscpc-bot .sb-panel{position:absolute;left:0;bottom:0;width:min(380px,calc(100vw - 2rem));height:min(560px,calc(100dvh - 7rem));display:flex;flex-direction:column;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:18px;box-shadow:0 0 0 1px rgba(108,200,255,.18),0 18px 50px rgba(0,0,0,.5);overflow:hidden;animation:sbIn .25s cubic-bezier(.2,.8,.2,1)}
+#sscpc-bot .sb-panel[hidden]{display:none}
+@keyframes sbIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.sb-head{display:flex;align-items:center;gap:.7rem;padding:.75rem .9rem;background:#04101e;color:#f4f1e4;border-bottom:1px solid rgba(108,200,255,.3)}
+.sb-head>img{width:34px;height:34px;object-fit:contain}
+.sb-title{display:flex;flex-direction:column;line-height:1.25;min-width:0;flex:1}
+.sb-title strong{font-size:.88rem;letter-spacing:.02em}
+.sb-title span{font-size:.7rem;color:#9fc4e8}
+.sb-tools{display:flex;gap:.25rem}
+.sb-ico{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;border:1px solid transparent;background:none;color:#f4f1e4;cursor:pointer;padding:0}
+.sb-ico:hover{border-color:rgba(108,200,255,.5);background:rgba(108,200,255,.1)}
+.sb-ico svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sb-log{flex:1;overflow-y:auto;padding:.9rem .85rem;display:flex;flex-direction:column;gap:.6rem;scroll-behavior:smooth;overscroll-behavior:contain}
+.sb-msg{display:flex;max-width:92%}
+.sb-msg.user{align-self:flex-end}
+.sb-bub{padding:.55rem .8rem;border-radius:14px;word-wrap:break-word;overflow-wrap:anywhere}
+.sb-msg.bot .sb-bub{background:rgba(108,200,255,.1);border:1px solid var(--line);border-bottom-left-radius:4px}
+.sb-msg.user .sb-bub{background:#1a6fd6;color:#fff;border-bottom-right-radius:4px}
+.sb-links{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.55rem}
+.sb-links a,.sb-dl{display:inline-block;padding:.28rem .65rem;border-radius:999px;border:1px solid rgba(108,200,255,.55);background:transparent;color:inherit;font:600 .72rem/1.4 var(--body);text-decoration:none;cursor:pointer}
+.sb-links a:hover,.sb-dl:hover{background:rgba(108,200,255,.18)}
+.sb-dl{background:#1a6fd6;border-color:#1a6fd6;color:#fff}
+.sb-dl:hover{background:#2b82ee}
+.sb-typing .sb-bub{display:flex;gap:4px;padding:.7rem .9rem}
+.sb-typing i{width:6px;height:6px;border-radius:50%;background:#6cc8ff;animation:sbDot 1s infinite}
+.sb-typing i:nth-child(2){animation-delay:.15s}.sb-typing i:nth-child(3){animation-delay:.3s}
+@keyframes sbDot{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+.sb-chips{display:flex;gap:.4rem;overflow-x:auto;padding:.1rem .85rem .6rem;scrollbar-width:none;flex:none}
+.sb-chips::-webkit-scrollbar{display:none}
+.sb-chips button{flex:none;padding:.32rem .75rem;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font:600 .72rem/1.4 var(--body);cursor:pointer;white-space:nowrap}
+.sb-chips button:hover{border-color:#6cc8ff;background:rgba(108,200,255,.12)}
+.sb-form{display:flex;gap:.45rem;padding:.6rem .75rem;border-top:1px solid var(--line)}
+.sb-form input{flex:1;min-width:0;padding:.55rem .85rem;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-size:16px}
+.sb-form input:focus{outline:none;border-color:#6cc8ff;box-shadow:0 0 0 3px rgba(108,200,255,.2)}
+.sb-form button{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;border:0;background:#1a6fd6;color:#fff;cursor:pointer;padding:0}
+.sb-form button:hover{background:#2b82ee}
+.sb-form svg{width:18px;height:18px;fill:currentColor}
+.sb-foot{letter-spacing:0;word-spacing:normal;font-weight:400;text-transform:none;margin:0;padding:0 .9rem .55rem;font-size:.68rem;color:var(--muted);text-align:center}
+@media (max-width:640px){
+  #sscpc-bot{left:.75rem;bottom:.75rem}
+  #sscpc-bot .sb-panel{position:fixed;left:.5rem;right:.5rem;bottom:.5rem;width:auto;height:min(78dvh,640px)}
+}
+@media (prefers-reduced-motion:reduce){#sscpc-bot .sb-panel{animation:none}.sb-typing i{animation:none;opacity:.7}.sb-log{scroll-behavior:auto}}
+@media print{#sscpc-bot{display:none}}
+
+/* "Need a hand?" section on the Home tab: AI assistant + PDF downloads (sits above the footer) */
+.helpdesk{padding:clamp(3rem,7vw,5rem) 0;color:var(--ink)}
+.hd-head{max-width:760px;margin:0 auto 2.2rem;text-align:center}
+.hd-eyebrow{display:inline-block;font:700 .68rem/1 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--glow);margin-bottom:.8rem}
+.helpdesk h2{margin:0 0 .8rem;font-size:clamp(1.4rem,4.6vw,2.1rem);line-height:1.25}
+.helpdesk h2::after{margin-left:auto;margin-right:auto}
+.hd-head p{margin:0;color:var(--muted);font-size:.88rem}
+.hd-grid{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:820px){.hd-grid{grid-template-columns:1fr 1.15fr;gap:1.5rem}}
+.hd-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.9rem;padding:1.6rem;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 0 0 1px rgba(108,200,255,.06),0 14px 36px rgba(0,0,0,.25)}
+.hd-card h3{margin:0;font-size:1.15rem}
+.hd-card>p{margin:0;color:var(--muted);font-size:.84rem}
+.hd-ico{display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:rgba(108,200,255,.12);border:1px solid rgba(108,200,255,.4)}
+.hd-ico svg{width:24px;height:24px;fill:none;stroke:var(--glow);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.hd-chips{display:flex;flex-wrap:wrap;gap:.45rem}
+.hd-chips button{padding:.4rem .85rem;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font:600 .74rem/1.4 var(--body);cursor:pointer;transition:border-color .2s,background .2s}
+.hd-chips button:hover{border-color:var(--glow);background:rgba(108,200,255,.12)}
+.hd-card .btn{margin-top:auto}
+.hd-list{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:.75rem}
+.hd-list li{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 0;border-top:1px solid var(--line)}
+.hd-list li:first-child{border-top:0;padding-top:.2rem}
+.hd-list li div{display:flex;flex-direction:column;min-width:0}
+.hd-list b{font-size:.88rem}
+.hd-list span{color:var(--muted);font-size:.76rem;line-height:1.5}
+.hd-list .btn{flex:none;margin:0;white-space:nowrap}
+@media(max-width:520px){.hd-list li{flex-direction:column;align-items:flex-start}}
+
+/* AI assistant button, bottom-left (js/chatbot.js). Always visible on every page.
+   Resting state = just the blue AI icon; hover / keyboard focus slides the label open. */
+.sb-ai{position:fixed;left:1rem;bottom:1rem;z-index:60;display:inline-flex;align-items:center;height:44px;padding:5px;border:0;border-radius:999px;background:none;color:#f4f1e4;font:600 .8rem/1 var(--body);cursor:pointer;isolation:isolate;transition:transform .25s cubic-bezier(.2,.8,.2,1),opacity .3s}
+.sb-ai::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;border:1px solid transparent;background:linear-gradient(#071a2f,#04101e) padding-box,linear-gradient(135deg,rgba(130,215,255,.85),rgba(60,120,230,.35) 55%,rgba(130,215,255,.7)) border-box;box-shadow:0 8px 22px rgba(0,0,0,.45),0 0 0 4px rgba(108,200,255,.1);opacity:0;transition:opacity .25s}
+.sb-ai-mark{position:relative;flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#5fb8ff,#1a6fd6 60%,#0d3f8f);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 2px 8px rgba(26,111,214,.55),0 0 0 2px rgba(4,16,30,.55),0 0 16px rgba(60,160,255,.55);animation:sbMarkGlow 3.2s ease-in-out infinite}
+.sb-ai-mark svg{width:18px;height:18px;fill:#fff;stroke:none;display:block}
+.sb-ai-mark::after{content:"";position:absolute;right:-1px;bottom:-1px;width:9px;height:9px;border-radius:50%;background:#34d399;border:2px solid #04101e}
+.sb-ai-txt{display:flex;flex-direction:column;gap:2px;text-align:left;white-space:nowrap;overflow:hidden;max-width:0;opacity:0;margin-left:0;padding-right:0;transition:max-width .35s cubic-bezier(.2,.8,.2,1),opacity .25s,margin-left .35s,padding-right .35s}
+.sb-ai-txt b{font-weight:700;font-size:.8rem;letter-spacing:.03em}
+.sb-ai-txt i{font-style:normal;font-weight:500;font-size:.64rem;color:#9fc4e8;letter-spacing:.04em}
+.sb-ai:hover::before,.sb-ai:focus-visible::before{opacity:1}
+.sb-ai:hover .sb-ai-txt,.sb-ai:focus-visible .sb-ai-txt{max-width:190px;opacity:1;margin-left:.55rem;padding-right:.8rem}
+.sb-ai:hover .sb-ai-mark,.sb-ai:focus-visible .sb-ai-mark{animation:none}
+.sb-ai:hover{transform:translateY(-2px)}
+.sb-ai:focus-visible{outline:2px solid #6cc8ff;outline-offset:3px}
+@keyframes sbMarkGlow{0%,100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 2px 8px rgba(26,111,214,.55),0 0 0 2px rgba(4,16,30,.55),0 0 10px rgba(60,160,255,.4)}50%{box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 2px 8px rgba(26,111,214,.55),0 0 0 2px rgba(4,16,30,.55),0 0 22px rgba(90,190,255,.8)}}
+html.sb-open .sb-ai{opacity:0;pointer-events:none}   /* only tucked away while the chat window itself is open */
+@media (max-width:640px){.sb-ai{left:.75rem;bottom:.75rem}}
+@media (prefers-reduced-motion:reduce){.sb-ai,.sb-ai-txt{transition:none}.sb-ai-mark{animation:none}}
+@media print{.sb-ai{display:none}}
+
+/* streaming answers: blinking cursor while the reply is being written, and Send turns into Stop */
+.sb-bub.sb-streaming::after{content:"";display:inline-block;width:7px;height:1.05em;margin-left:2px;vertical-align:-.18em;border-radius:2px;background:#6cc8ff;animation:sbCaret .9s steps(2,start) infinite}
+@keyframes sbCaret{to{visibility:hidden}}
+.sb-form button .i-stop{display:none}
+.sb-form button.is-stop .i-send{display:none}
+.sb-form button.is-stop .i-stop{display:block}
+.sb-form button.is-stop{background:#334e6e}
+.sb-form button.is-stop:hover{background:#456a94}
+@media (prefers-reduced-motion:reduce){.sb-bub.sb-streaming::after{animation:none}}
+
+/* Assistant + PDF downloads block: Home tab only (router.js sets .on-home on <html>) */
+html:not(.on-home) .helpdesk{display:none}
