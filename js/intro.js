@@ -53,6 +53,7 @@
     stage.style.setProperty('--lop', (1 - logoOut).toFixed(3));
     stage.style.setProperty('--lbl', (logoOut * 14).toFixed(2) + 'px');
     stage.style.setProperty('--lsc', (1 + logoOut * 0.22).toFixed(3));
+    stage.style.setProperty('--glowop', (1 - logoOut).toFixed(3)); /* blue backdrop glow fades out with the logo */
 
     /* signature draws in, then holds solid */
     const sigIn = ease(band(p, 0.24, 0.55));
