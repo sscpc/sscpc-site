@@ -77,7 +77,9 @@
       const w=document.createElement('div');w.className='th';w.dataset.i=j;
       const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Open photo '+(j+1)+' of '+a.name);
       const im=document.createElement('img');im.loading='lazy';im.decoding='async';im.alt='';
-      if(a.thumbs){im.onerror=()=>{im.onerror=null;im.src=p};im.src=a.thumbs+p.split('/').pop()}else im.src=p;
+      /* small spinner (fades in only if the photo is slow) until this photo has loaded */
+      w.classList.add('ld');const done=()=>w.classList.remove('ld');im.onload=done;
+      if(a.thumbs){im.onerror=()=>{im.onerror=done;im.src=p};im.src=a.thumbs+p.split('/').pop()}else{im.onerror=done;im.src=p}
       b.append(im);b.onclick=()=>{if(api.onThumb&&api.onThumb(j,b))return;show(j,b)};w.append(b);thumbs.append(w);
     });
     grid.hidden=true;viewer.hidden=false;if($('filters'))$('filters').hidden=true;$('albums').scrollIntoView();
@@ -91,7 +93,9 @@
     const im=$('lb-img'),fr=im.parentNode,tk=$('lb-ticks');
     im.classList.remove('focus');fr.classList.remove('lock');void im.offsetWidth;
     im.classList.add('focus');fr.classList.add('lock');
+    fr.classList.add('ldg');im.onload=im.onerror=()=>fr.classList.remove('ldg');
     im.src=a.photos[idx];im.alt='Photo '+(idx+1)+' from '+a.name;
+    if(im.complete&&im.naturalWidth)fr.classList.remove('ldg');
     [idx+1,idx-1].forEach(k=>{new Image().src=a.photos[(k+a.photos.length)%a.photos.length]});
     $('lb-t').textContent=a.name;lang($('lb-t'),a.name);
     $('lb-c').textContent='IMG '+pad(idx+1)+' / '+pad(a.photos.length);
