@@ -1,6 +1,6 @@
 /* SSCPC site data. Written by the admin portal (admin/index.html). Notes: README.txt */
 
-const EVENT_DATE = "2026-11-06T09:00:00+05:30";
+const EVENT_DATE = "2026-11-13T09:00:00+05:30";
 
 const ALBUMS = [
   {
