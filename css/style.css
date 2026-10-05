@@ -213,7 +213,7 @@ footer a{color:#f4f1e4;text-decoration:none}
 .albums-grid{display:grid;gap:1.25rem;margin-top:2rem;grid-template-columns:repeat(auto-fill,minmax(min(100%,17rem),1fr))}
 .albums-grid[hidden],.viewer[hidden],#lb[hidden]{display:none}
 .viewer-head{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;margin-top:2rem}
-.viewer-head h3{font-family:var(--heading);font-size:1.1rem;line-height:1.2}
+.viewer-head h3{font-family:var(--heading);font-size:1.1rem;line-height:1.3;letter-spacing:.06em;word-spacing:.18em}
 button.btn{cursor:pointer;border:1px solid transparent}
 button.btn.ghost{border-color:currentColor}
 .thumbs{display:grid;gap:.75rem;margin-top:1.25rem;grid-template-columns:repeat(auto-fill,minmax(min(100%,14rem),1fr))}
@@ -906,3 +906,27 @@ html.intro-enter .intro__hand{animation:handReach 8s ease-in-out infinite,introP
   html.intro-enter .intro__stage,html.intro-enter .intro__logo{animation:none}
   html.intro-enter .intro__hand{animation:none}
 }
+
+/* photo loading "focus lock" indicator: viewfinder corners tighten around the frame while a cyan scan line sweeps down.
+   Used on album tiles (.th.ld) and in the big photo viewer (.pv-frame.ldg). It fades in only after .6s, so fast loads never show it. */
+.thumbs .th.ld>button:first-child{background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px),#07162a}
+.thumbs .th.ld::before,.thumbs .th.ld::after,.pv-frame.ldg::before,.pv-frame.ldg::after{content:"";position:absolute;z-index:2;pointer-events:none;opacity:0}
+.thumbs .th.ld::before,.pv-frame.ldg::before{inset:0;background:linear-gradient(180deg,transparent 0 44%,rgba(108,200,255,.3) 50%,transparent 56% 100%) 0 100%/100% 300% no-repeat;animation:phScan 1.8s linear infinite,phIn .3s ease .6s forwards}
+.thumbs .th.ld::after,.pv-frame.ldg::after{inset:26% 30%;background:
+  linear-gradient(#6cc8ff,#6cc8ff) 0 0/16px 2px,linear-gradient(#6cc8ff,#6cc8ff) 0 0/2px 16px,
+  linear-gradient(#6cc8ff,#6cc8ff) 100% 0/16px 2px,linear-gradient(#6cc8ff,#6cc8ff) 100% 0/2px 16px,
+  linear-gradient(#6cc8ff,#6cc8ff) 0 100%/16px 2px,linear-gradient(#6cc8ff,#6cc8ff) 0 100%/2px 16px,
+  linear-gradient(#6cc8ff,#6cc8ff) 100% 100%/16px 2px,linear-gradient(#6cc8ff,#6cc8ff) 100% 100%/2px 16px,
+  radial-gradient(circle,#f4f1e4 0 2px,transparent 3px);background-repeat:no-repeat;animation:phFocus 1.4s ease-in-out infinite,phIn .3s ease .6s forwards}
+.pv-frame.ldg::after{inset:28%}
+@keyframes phScan{to{background-position:0 0}}
+@keyframes phFocus{0%{transform:scale(1.7)}55%,100%{transform:scale(1)}}
+@keyframes phIn{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.thumbs .th.ld::before,.thumbs .th.ld::after,.pv-frame.ldg::before,.pv-frame.ldg::after{animation:phIn .3s ease .6s forwards}}
+
+/* smooth scroll-reveal (js/reveal.js): items fade and rise in as they enter the screen, matching the home intro */
+html.rv-on .rv{opacity:0}
+html.rv-on .rv.rv-in{animation:rvIn 1s cubic-bezier(.22,.8,.3,1) var(--rv-d,0ms) both}
+html.rv-on .thumbs>.rv.rv-in,html.rv-on .albums-grid>.rv.rv-in{animation-name:rvInLite;animation-duration:.8s}
+@keyframes rvIn{from{opacity:0;translate:0 18px;filter:blur(4px)}to{opacity:1;translate:0 0;filter:blur(0)}}
+@keyframes rvInLite{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
