@@ -926,7 +926,7 @@ html.intro-enter .intro__hand{animation:handReach 8s ease-in-out infinite,introP
 
 /* smooth scroll-reveal (js/reveal.js): items fade and rise in as they enter the screen, matching the home intro */
 html.rv-on .rv{opacity:0}
-html.rv-on .rv.rv-in{animation:rvIn 1s cubic-bezier(.22,.8,.3,1) var(--rv-d,0ms) both}
-html.rv-on .thumbs>.rv.rv-in,html.rv-on .albums-grid>.rv.rv-in{animation-name:rvInLite;animation-duration:.8s}
-@keyframes rvIn{from{opacity:0;translate:0 18px;filter:blur(4px)}to{opacity:1;translate:0 0;filter:blur(0)}}
-@keyframes rvInLite{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+html.rv-on .rv.rv-in{animation:rvIn 1.15s cubic-bezier(.16,1,.3,1) var(--rv-d,0ms) both;will-change:transform,opacity,filter}
+html.rv-on .thumbs>.rv.rv-in,html.rv-on .albums-grid>.rv.rv-in{animation-name:rvInLite;animation-duration:.95s}
+@keyframes rvIn{from{opacity:0;translate:0 56px;scale:.955;filter:blur(12px)}60%{filter:blur(0)}to{opacity:1;translate:0 0;scale:1;filter:blur(0)}}
+@keyframes rvInLite{from{opacity:0;translate:0 44px;scale:.94}to{opacity:1;translate:0 0;scale:1}}
