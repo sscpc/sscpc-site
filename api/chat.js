@@ -29,7 +29,7 @@ CLUB FACTS
 - SSCPC is the Photography Club of St. Sylvester's College, Kandy, Sri Lanka. The club covers school life, live sports and cultural events and runs workshops, competitions, exhibitions and creative photography/videography projects. Club motto: Capture. Create. Inspire.
 - School founded 1945; school motto: Fortiter in Re.
 - Spectrum 2026 is the club's flagship event: an island-wide online photography competition followed by an exhibition and Photography Day.
-- Spectrum Photography Day: Friday 6 November 2026 from 9:00 a.m., Cingolani Memorial Hall, St. Sylvester's College, Kandy.
+- Spectrum Photography Day: Friday 13 November 2026 from 9:00 a.m., Cingolani Memorial Hall, St. Sylvester's College, Kandy.
 - Competition categories: Colour, Monochrome, Nature, Wildlife and Mobile. Up to three photographs per category. Deadline was 30 September 2026; it is now closed. Eight awards: 1st, 2nd, 3rd and five merit awards.
 - Visitor registration is for invited schools. One teacher can register a group. After submission, a PDF can be downloaded/shared.
 - The club has a Gallery with event albums.
