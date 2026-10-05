@@ -8,7 +8,7 @@ function setBurger(o){
 burger.addEventListener('click',()=>setBurger(menu.classList.toggle('open')));
 menu.addEventListener('click',e=>{if(e.target.tagName==='A'){menu.classList.remove('open');setBurger(false)}});
 
-/* countdown to 6 Nov 2026, 9:00 a.m. (Sri Lanka time) */
+/* countdown to 13 Nov 2026, 9:00 a.m. (Sri Lanka time) */
 const T=new Date(EVENT_DATE).getTime();
 const pad=n=>String(n).padStart(2,'0');
 function tick(){
