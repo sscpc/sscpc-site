@@ -1,0 +1,4 @@
+Album end buttons (Previous album / Next album)
+Copy these two files into the repo, keeping the same folders, then commit:
+  css/style.css   (new styles added at the very bottom)
+  js/gallery.js   (end-of-album buttons + typing effect added)
