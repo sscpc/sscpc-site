@@ -35,7 +35,17 @@ const vm = require('vm');
 const SITE_URL = (process.env.SITE_URL || 'https://sscpc.vercel.app').replace(/\/+$/, '');
 
 /* ------------------------------------------------------------------ providers */
-const ENV = process.env;
+/* OPTIONAL: paste keys here between the quotes instead of using Vercel environment variables.
+   This file runs on Vercel's server, so visitors can never see it - but anyone you SEND this file or the zip to can.
+   Never put keys in index.html or any file inside the js/ folder: those are downloaded by every visitor. */
+const LOCAL_KEYS = {
+  GROQ_API_KEY: '',
+  GEMINI_API_KEY: '',
+  CEREBRAS_API_KEY: '',
+  MISTRAL_API_KEY: '',
+  OPENROUTER_API_KEY: ''
+};
+const ENV = Object.assign({}, LOCAL_KEYS, process.env);   /* a Vercel environment variable, if set, wins */
 const PROVIDERS = {
   groq:       { type: 'openai', url: 'https://api.groq.com/openai/v1/chat/completions', key: () => ENV.GROQ_API_KEY, model: () => ENV.GROQ_MODEL || 'llama-3.3-70b-versatile' },
   gemini:     { type: 'openai', url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions', key: () => ENV.GEMINI_API_KEY, model: () => ENV.GEMINI_MODEL || 'gemini-3.5-flash' },
