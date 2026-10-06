@@ -599,9 +599,26 @@
 <script src="js/router.js"></script>
 <script src="js/zip.js"></script>
 <script>/* committee: no "View profile" buttons on the member cards */
-(function(){var L=document.getElementById('members-list');if(!L)return;
-function clean(){L.querySelectorAll('a,button,span,div,p').forEach(function(e){if(!e.children.length&&/^\s*view\s+profile/i.test(e.textContent)){var t=e.closest('a,button')||e;t.remove()}})}
-clean();new MutationObserver(clean).observe(L,{childList:true,subtree:true})})();</script>
+(function(){
+  var RX=/^\s*view\s*profile\W*$/i;
+  function clean(root){
+    var host=document.getElementById('members');if(!host)return;
+    var all=host.querySelectorAll('a,button,span,div,p,li,em,small,b,i');
+    for(var k=0;k<all.length;k++){
+      var e=all[k];
+      if(!e.isConnected||!RX.test(e.textContent))continue;
+      if(e.querySelector('a,button,img,h2,h3,h4')&&e.tagName!=='A'&&e.tagName!=='BUTTON')continue;
+      /* climb to the outermost wrapper that holds nothing but this label (so the divider line goes too) */
+      while(e.parentElement&&e.parentElement!==host&&RX.test(e.parentElement.textContent)&&!e.parentElement.querySelector('img,h3'))e=e.parentElement;
+      e.remove();
+    }
+  }
+  function go(){clean()}
+  go();
+  new MutationObserver(go).observe(document.body,{childList:true,subtree:true});
+  setTimeout(go,500);setTimeout(go,2000);
+})();
+</script>
 <script src="js/reveal.js"></script>
 <script src="js/gallery-tools.js"></script>
 <script src="js/chatbot.js"></script>
