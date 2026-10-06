@@ -267,7 +267,7 @@
   const $ = s => root.querySelector(s);
   const panel = $('#sb-panel'), log = $('#sb-log'), chipsEl = $('#sb-chips'), input = $('#sb-in');
   const history = [];   /* {role:'user'|'bot', text} */
-  let opened = false, aiDown = !AI_ENDPOINT || location.protocol === 'file:';
+  let aiFails = 0, opened = false, aiDown = !AI_ENDPOINT || location.protocol === 'file:';
 
   const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   function fmt(s) {
@@ -489,11 +489,17 @@
       if (!aiDown && !localOnly) {
         try {
           await respondAI();
+          aiFails = 0;
           setChips(DEFAULT_CHIPS);
           return;
         } catch (e) {
           if (stopped) { typing(false); return; }
-          aiDown = true; /* fall back to the built-in answers for the rest of the visit */
+          /* The AI could not answer this time. Switch it off for the rest of the visit only when the server is clearly not set up
+             (404 = api/chat.js not deployed, 503 = no AI key added in Vercel) or it failed 3 times in a row; one hiccup just falls
+             back to the built-in answer for this question. The reason is printed in the browser console (F12). */
+          aiFails = (aiFails || 0) + 1;
+          console.warn('[SSCPC AI] not available:', e && e.message ? e.message : e);
+          if (/http (404|503)/.test(String(e && e.message)) || aiFails >= 3) aiDown = true;
         }
       }
       await new Promise(r => setTimeout(r, 350));
