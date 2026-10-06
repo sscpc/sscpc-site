@@ -40,10 +40,10 @@ const SITE_URL = (process.env.SITE_URL || 'https://sscpc.vercel.app').replace(/\
    Never put keys in index.html or any file inside the js/ folder: those are downloaded by every visitor. */
 const LOCAL_KEYS = {
   GROQ_API_KEY: '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',
-  GEMINI_API_KEY: '',
+  GEMINI_API_KEY: 'AQ.Ab8RN6IVK4gDY10PcRfo8phb688sE_weaR4x-P7NO6qQ3g_gFQ',
   CEREBRAS_API_KEY: '',
   MISTRAL_API_KEY: '',
-  OPENROUTER_API_KEY: ''
+  OPENROUTER_API_KEY: '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'
 };
 const ENV = Object.assign({}, LOCAL_KEYS, process.env);   /* a Vercel environment variable, if set, wins */
 const PROVIDERS = {
