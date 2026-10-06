@@ -270,9 +270,50 @@
   let aiFails = 0, opened = false, aiDown = !AI_ENDPOINT || location.protocol === 'file:';
 
   const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  function fmt(s) {
-    return esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+  /* Chat formatting: turns the AI's markdown into clean HTML (paragraphs, bullet / numbered lists, **bold**, *italic*,
+     `code`, links). Everything is HTML-escaped first, so nothing the AI (or a visitor) writes can inject markup. */
+  function inline(t) {
+    return t
+      .replace(/`([^`\n]+)`/g, '<code>$1</code>')
+      .replace(/\[([^\]\n]+)\]\((https?:\/\/[^\s)]+|mailto:[^\s)]+|#[\w-]*)\)/g, (m, a, u) => '<a href="' + u + '"' + (u[0] === '#' ? '' : ' target="_blank" rel="noopener"') + '>' + a + '</a>')
+      .replace(/(^|[\s(>])(https?:\/\/[^\s<)]+[^\s<).,;:!?])/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>')
+      .replace(/(^|[\s(>])([\w.+-]+@[\w-]+(?:\.[\w-]+)+)/g, '$1<a href="mailto:$2">$2</a>')
+      .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+      .replace(/(^|[\s(>])\*(?![\s*])([^*\n]+?)(?<![\s*])\*(?=$|[\s).,;:!?<])/g, '$1<i>$2</i>');
   }
+  function fmt(s) {
+    const lines = esc(String(s == null ? '' : s)).replace(/\r/g, '').split('\n');
+    let out = '', list = null, para = [];
+    const flushPara = () => { if (para.length) { out += '<p>' + para.join('<br>') + '</p>'; para = []; } };
+    const closeList = () => { if (list) { out += '</' + list + '>'; list = null; } };
+    lines.forEach(line => {
+      let m;
+      if ((m = line.match(/^\s*(?:[*\-•–])\s+(.*)$/))) {
+        flushPara(); if (list !== 'ul') { closeList(); out += '<ul>'; list = 'ul'; } out += '<li>' + inline(m[1]) + '</li>';
+      } else if ((m = line.match(/^\s*\d{1,2}[.)]\s+(.*)$/))) {
+        flushPara(); if (list !== 'ol') { closeList(); out += '<ol>'; list = 'ol'; } out += '<li>' + inline(m[1]) + '</li>';
+      } else if ((m = line.match(/^\s{0,3}#{1,4}\s+(.*)$/))) {
+        flushPara(); closeList(); out += '<p class="sb-h"><b>' + inline(m[1].replace(/\*\*/g, '')) + '</b></p>';
+      } else if (!line.trim()) {
+        flushPara(); closeList();
+      } else {
+        closeList(); para.push(inline(line.trim()));
+      }
+    });
+    flushPara(); closeList();
+    return out;
+  }
+  (function addChatFormatCss() {
+    if (document.getElementById('sb-md-css')) return;
+    const st = document.createElement('style'); st.id = 'sb-md-css';
+    st.textContent =
+      '#sscpc-bot .sb-bub p{margin:0 0 .55em}#sscpc-bot .sb-bub p:last-child,#sscpc-bot .sb-bub ul:last-child,#sscpc-bot .sb-bub ol:last-child{margin-bottom:0}' +
+      '#sscpc-bot .sb-bub ul,#sscpc-bot .sb-bub ol{margin:0 0 .6em;padding-left:1.15em}#sscpc-bot .sb-bub li{margin:.18em 0;padding-left:.1em}' +
+      '#sscpc-bot .sb-bub li::marker{color:#6cc8ff}#sscpc-bot .sb-bub p.sb-h{margin-top:.2em}' +
+      '#sscpc-bot .sb-bub code{padding:.05em .35em;border-radius:3px;background:rgba(108,200,255,.14);font-family:ui-monospace,Consolas,monospace;font-size:.92em}' +
+      '#sscpc-bot .sb-bub a{color:#6cc8ff;text-decoration:underline;text-underline-offset:2px;word-break:break-word}';
+    document.head.appendChild(st);
+  })();
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const nearBottom = () => log.scrollHeight - log.scrollTop - log.clientHeight < 70;
   const toBottom = () => log.scrollTo({ top: log.scrollHeight, behavior: 'instant' });
