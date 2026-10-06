@@ -1,42 +1,24 @@
-SSCPC ASSISTANT (chat bot) - HOW IT WORKS
-=========================================
+SSCPC AI ASSISTANT - SETUP (api/chat.js)
 
-What it is
-  The "AI" button (bottom-left, blue sparkle icon) opens a chat window. It answers
-  questions about the club and website, gives photography tips, and can make PDFs.
+1. Get a free key (no card) from at least one of:
+   Groq        https://console.groq.com/keys
+   Gemini      https://aistudio.google.com  (Get API key)
+   Cerebras    https://cloud.cerebras.ai
+   Mistral     https://console.mistral.ai
+   OpenRouter  https://openrouter.ai/keys
+2. Vercel -> your project -> Settings -> Environment Variables. Add, for example:
+      GROQ_API_KEY    = (your key)
+      GEMINI_API_KEY  = (your key)
+   Add two or three: if one is busy the next answers automatically.
+3. Redeploy (Deployments -> ... -> Redeploy). Env variables only apply to new deployments.
+4. Check it: open https://sscpc.vercel.app/api/chat in a browser. You should see
+   {"providers":["groq","gemini",...],"data":true}
+   "data":true means the AI can read your site data (albums, events, committee).
+   An empty provider list means no key was found.
 
-Files
-  js/chatbot.js     The bot: answers, photography tips, PDF export. EDIT THIS to change answers.
-  css/chatbot.css   Its look (follows the site's light/dark theme).
-  api/chat.js       OPTIONAL AI brain for Vercel (see below).
+If a provider starts failing, its free model name has probably changed: set GROQ_MODEL / GEMINI_MODEL /
+CEREBRAS_MODEL / MISTRAL_MODEL / OPENROUTER_MODEL to a current free model from that provider's docs.
+Any other OpenAI-compatible provider: set AI_BASE_URL, AI_API_KEY and AI_MODEL.
 
-It works with NO setup
-  The bot has a built-in knowledge base, so it works on any host and even offline.
-  Event date, albums and committee names are read live from js/data.js, so they stay
-  current when you update the site in the admin portal.
-
-Turning on the AI mode (optional, Vercel only)
-  1. Vercel > your project > Settings > Environment Variables
-  2. Add  ANTHROPIC_API_KEY  = your key from console.anthropic.com
-     (optional) ANTHROPIC_MODEL = a different model name
-  3. Redeploy.
-  The bot then answers free-form questions with AI (streamed live, word by word, with a Stop button) and falls back to the built-in answers
-  if the AI is unavailable. The key stays on the server and is never visible in the browser.
-  Note: AI usage is billed to that key's account. Do not put the key in any .js file.
-  To switch AI mode off completely, set AI_ENDPOINT = '' at the top of js/chatbot.js.
-
-PDF buttons
-  - "Photography Tips PDF": a 4-page cheat sheet built from the TIPS list in chatbot.js.
-  - "Save chat as PDF" (download icon in the chat header).
-  - Join Us / Register forms keep their own Download PDF buttons after submitting.
-
-Editing answers
-  - Club facts: the FACTS list in js/chatbot.js (each has keywords "k" and an answer "a").
-  - Photography tips: the TIPS list (title + points). The PDF updates automatically.
-  - If you change club facts, also update the CLUB FACTS text in api/chat.js (AI mode).
-
-Where visitors find it
-  - Every page: the "Need a hand?" section sits just above the footer on all tabs,
-    (in index.html, id="helpdesk"; styles at the end of css/chatbot.css).
-    It has chat shortcuts and the PDF download buttons.
-  - Bottom-left: a small "AI" badge (sparkle icon) tells visitors there is an AI assistant; it opens the same chat.
+The AI only sees public site data (js/data.js). Form submissions never go to any AI provider.
+If every provider fails, the chat widget falls back to its built-in answers.
