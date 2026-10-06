@@ -64,6 +64,12 @@
     document.body.append(b);return b;
   };
   const navPrev=ALBUMS.length>1?navBtn('prev','Prev album'):null,navNext=ALBUMS.length>1?navBtn('next','Next album'):null;
+  /* the buttons show only while the photo area is on screen (its middle is level with the buttons) */
+  if(navPrev&&'IntersectionObserver' in window){
+    new IntersectionObserver(es=>{
+      es.forEach(e=>document.documentElement.classList.toggle('alb-photos',e.isIntersecting));
+    },{rootMargin:'-50% 0px -50% 0px',threshold:0}).observe(thumbs);
+  }
   function updateNav(){
     if(!navPrev)return;
     const n=ALBUMS.length,pn=ALBUMS[(cur-1+n)%n].name,nn=ALBUMS[(cur+1)%n].name;
@@ -98,7 +104,7 @@
     grid.hidden=true;viewer.hidden=false;if($('filters'))$('filters').hidden=true;$('albums').scrollIntoView();
     ev('gallery:album',{i});
   }
-  $('back').onclick=()=>{ev('gallery:back');document.documentElement.classList.remove('alb-open');viewer.hidden=true;grid.hidden=false;if($('filters'))$('filters').hidden=false;$('albums').scrollIntoView()};
+  $('back').onclick=()=>{ev('gallery:back');document.documentElement.classList.remove('alb-open','alb-photos');viewer.hidden=true;grid.hidden=false;if($('filters'))$('filters').hidden=false;$('albums').scrollIntoView()};
   const pad=n=>String(n).padStart(2,'0');
   function show(j,el){
     const a=ALBUMS[cur];idx=(j+a.photos.length)%a.photos.length;
