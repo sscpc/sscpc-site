@@ -70,10 +70,48 @@
       es.forEach(e=>document.documentElement.classList.toggle('alb-photos',e.isIntersecting));
     },{rootMargin:'-50% 0px -50% 0px',threshold:0}).observe(thumbs);
   }
+  /* end-of-album buttons: after the last photo, "Previous album" / "Next album". Hovering (or focusing, or on touch screens
+     scrolling to) a button types out that album's name letter by letter, like the AI assistant writing a reply. */
+  const seg=window.Intl&&Intl.Segmenter?new Intl.Segmenter(undefined,{granularity:'grapheme'}):null;
+  const letters=t=>seg?Array.from(seg.segment(t),x=>x.segment):Array.from(t);
+  function typeInto(el,text){
+    clearInterval(el._t);el.classList.add('on');
+    if(still){el.textContent=text;return}
+    const ch=letters(text);let n=0;el.textContent='';
+    el._t=setInterval(()=>{n++;el.textContent=ch.slice(0,n).join('');if(n>=ch.length)clearInterval(el._t)},Math.max(22,Math.min(55,900/ch.length)));
+  }
+  function clearType(el){clearInterval(el._t);el.classList.remove('on');el.textContent=''}
+  const endBtn=(dir)=>{
+    const b=document.createElement('button');b.type='button';b.className='album-end__btn album-end__btn--'+dir;
+    const arrow='<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="'+(dir==='prev'?'M15 5l-7 7 7 7':'M9 5l7 7-7 7')+'" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    b.innerHTML='<span class="album-end__ico">'+arrow+'</span><span class="album-end__txt"><small>'+(dir==='prev'?'Previous album':'Next album')+'</small><b class="album-end__name" aria-hidden="true"></b></span>';
+    b.onclick=()=>openAlbum((cur+(dir==='prev'?-1:1)+ALBUMS.length)%ALBUMS.length);
+    const name=b.querySelector('.album-end__name');
+    const go=()=>typeInto(name,b.dataset.name||''),stop=()=>clearType(name);
+    b.addEventListener('pointerenter',e=>{if(e.pointerType!=='touch')go()});
+    b.addEventListener('pointerleave',stop);
+    b.addEventListener('focus',go);b.addEventListener('blur',stop);
+    b._go=go;b._stop=stop;
+    return b;
+  };
+  let endBox=null,endPrev=null,endNext=null;
+  if(ALBUMS.length>1){
+    endBox=document.createElement('nav');endBox.className='album-end';endBox.setAttribute('aria-label','More albums');
+    endPrev=endBtn('prev');endNext=endBtn('next');endBox.append(endPrev,endNext);viewer.append(endBox);
+    /* touch screens have no hover: write both names once when the buttons scroll into view */
+    if(matchMedia('(hover:none)').matches&&'IntersectionObserver' in window){
+      new IntersectionObserver(es=>es.forEach(e=>{
+        if(e.isIntersecting){endPrev._go();endNext._go()}else{endPrev._stop();endNext._stop()}
+      }),{threshold:.6}).observe(endBox);
+    }
+  }
   function updateNav(){
     if(!navPrev)return;
     const n=ALBUMS.length,pn=ALBUMS[(cur-1+n)%n].name,nn=ALBUMS[(cur+1)%n].name;
     navPrev.title='Previous album: '+pn;navNext.title='Next album: '+nn;navPrev.setAttribute('aria-label',navPrev.title);navNext.setAttribute('aria-label',navNext.title);
+    if(endBox){
+      [[endPrev,pn],[endNext,nn]].forEach(([b,n])=>{b.dataset.name=n;b._stop();const nm=b.querySelector('.album-end__name');lang(nm,n);b.setAttribute('aria-label',(b===endPrev?'Previous album: ':'Next album: ')+n)});
+    }
   }
   function openAlbum(i){
     cur=i;document.documentElement.classList.add('alb-open');updateNav();const a=ALBUMS[i];$('v-title').textContent=a.name;lang($('v-title'),a.name);thumbs.textContent='';
