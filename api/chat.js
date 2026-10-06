@@ -39,7 +39,7 @@ const SITE_URL = (process.env.SITE_URL || 'https://sscpc.vercel.app').replace(/\
    This file runs on Vercel's server, so visitors can never see it - but anyone you SEND this file or the zip to can.
    Never put keys in index.html or any file inside the js/ folder: those are downloaded by every visitor. */
 const LOCAL_KEYS = {
-  GROQ_API_KEY: '',
+  GROQ_API_KEY: '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',
   GEMINI_API_KEY: '',
   CEREBRAS_API_KEY: '',
   MISTRAL_API_KEY: '',
