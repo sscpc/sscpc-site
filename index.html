@@ -81,7 +81,7 @@
       <div class="intro__spot" id="introSpot" aria-hidden="true"></div>
       <div class="intro__hint" id="introHint" aria-hidden="true"><span>Scroll</span><i></i></div>
 
-      <img class="intro__hand" src="images/hero-hand.webp" alt="" width="864" height="1344" draggable="false">
+      <img class="intro__hand" src="images/hero-hand.webp" alt="" width="900" height="1657" draggable="false">
 
       <div class="intro__logo" id="introLogo">
         <div class="intro__tilt">
@@ -291,26 +291,6 @@
       <p class="lead">Meet the students who lead, organize, and contribute to the journey of our Photography Club. Together, we work to create opportunities for learning, creativity, collaboration, and meaningful experiences.</p>
 
       <div id="members-list"></div>
-
-      <div class="pres-msg-frame">
-        <div class="pres-msg">
-          <div class="pres-msg-photo">
-            <img src="images/members/sasidu-president.png" alt="Sasidu Shanelka, President of SSCPC" width="322" height="629">
-          </div>
-          <div class="pres-msg-body">
-            <h3 class="pres-msg-title">President</h3>
-            <div class="pres-msg-text">
-              <p>Photography is more than pressing a shutter; it is about learning to see, capturing emotions, moments, and stories from a unique perspective.</p>
-              <p>As the President of the St. Sylvester’s College Photography Club, I am proud to be part of a community where creativity meets learning. Our club provides a space for every member to explore photography and videography, develop their skills, and express their creativity through workshops, competitions, exhibitions, events, and creative projects.</p>
-              <p>More than cameras and photographs, our club is about the people, friendships, experiences, and ideas we share along the way. I encourage every member to experiment, explore new perspectives, and never be afraid of mistakes, because every experience is an opportunity to grow.</p>
-              <p>Together, let us capture today’s moments, preserve the memories of our school, and create a visual legacy that future generations of St. Sylvester’s College can look back on with pride.</p>
-              <p class="pres-msg-close">Keep creating. Keep exploring. Keep seeing the world differently.</p>
-            </div>
-            <p class="pres-msg-sign">Sasidu Shanelka</p>
-            <p class="pres-msg-name">President, SSCPC</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -618,6 +598,10 @@
 <script src="js/moments.js"></script>
 <script src="js/router.js"></script>
 <script src="js/zip.js"></script>
+<script>/* committee: no "View profile" buttons on the member cards */
+(function(){var L=document.getElementById('members-list');if(!L)return;
+function clean(){L.querySelectorAll('a,button,span,div,p').forEach(function(e){if(!e.children.length&&/^\s*view\s+profile/i.test(e.textContent)){var t=e.closest('a,button')||e;t.remove()}})}
+clean();new MutationObserver(clean).observe(L,{childList:true,subtree:true})})();</script>
 <script src="js/reveal.js"></script>
 <script src="js/gallery-tools.js"></script>
 <script src="js/chatbot.js"></script>
