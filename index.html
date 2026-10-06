@@ -598,19 +598,38 @@
 <script src="js/moments.js"></script>
 <script src="js/router.js"></script>
 <script src="js/zip.js"></script>
-<script>/* committee: no "View profile" buttons on the member cards */
+<script>/* committee: no "View profile" buttons and no personal messages on the member cards */
 (function(){
   var RX=/^\s*view\s*profile\W*$/i;
-  function clean(root){
+  var norm=function(t){return String(t||'').replace(/\s+/g,' ').trim()};
+  var heads=null;
+  function noteHeads(){
+    if(heads)return heads;heads=[];
+    try{(typeof MEMBERS!=='undefined'?MEMBERS:[]).forEach(function(g){(g.members||[]).forEach(function(m){
+      var n=norm(m.note);if(n.length>12)heads.push(n.slice(0,28).toLowerCase())})})}catch(e){}
+    return heads;
+  }
+  function isNote(txt){
+    txt=norm(txt).toLowerCase();if(txt.length<20)return false;
+    return noteHeads().some(function(h){return txt.indexOf(h)===0});
+  }
+  function up(e,host,test){
+    while(e.parentElement&&e.parentElement!==host&&test(e.parentElement.textContent)&&!e.parentElement.querySelector('img,h3'))e=e.parentElement;
+    return e;
+  }
+  function clean(){
     var host=document.getElementById('members');if(!host)return;
-    var all=host.querySelectorAll('a,button,span,div,p,li,em,small,b,i');
+    var all=host.querySelectorAll('a,button,span,div,p,li,em,small,b,i,q,blockquote');
     for(var k=0;k<all.length;k++){
-      var e=all[k];
-      if(!e.isConnected||!RX.test(e.textContent))continue;
-      if(e.querySelector('a,button,img,h2,h3,h4')&&e.tagName!=='A'&&e.tagName!=='BUTTON')continue;
-      /* climb to the outermost wrapper that holds nothing but this label (so the divider line goes too) */
-      while(e.parentElement&&e.parentElement!==host&&RX.test(e.parentElement.textContent)&&!e.parentElement.querySelector('img,h3'))e=e.parentElement;
-      e.remove();
+      var e=all[k];if(!e.isConnected)continue;
+      var t=e.textContent,hasBlock=e.querySelector('a,button,img,h2,h3,h4');
+      if(RX.test(t)){
+        if(hasBlock&&e.tagName!=='A'&&e.tagName!=='BUTTON')continue;
+        up(e,host,function(x){return RX.test(x)}).remove();
+      }else if(isNote(t)){
+        if(e.querySelector('img,h2,h3,h4,a,button'))continue;
+        up(e,host,isNote).remove();
+      }
     }
   }
   function go(){clean()}
