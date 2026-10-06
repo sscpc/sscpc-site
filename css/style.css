@@ -907,22 +907,17 @@ html.intro-enter .intro__hand{animation:handReach 8s ease-in-out infinite,introP
   html.intro-enter .intro__hand{animation:none}
 }
 
-/* photo loading "focus lock" indicator: viewfinder corners tighten around the frame while a cyan scan line sweeps down.
+/* photo loading indicator: a soft light shimmer sweeps across the tile while a small cyan ring spins in the middle.
    Used on album tiles (.th.ld) and in the big photo viewer (.pv-frame.ldg). It fades in only after .6s, so fast loads never show it. */
-.thumbs .th.ld>button:first-child{background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px),#07162a}
+.thumbs .th.ld>button:first-child{background:#07162a}
 .thumbs .th.ld::before,.thumbs .th.ld::after,.pv-frame.ldg::before,.pv-frame.ldg::after{content:"";position:absolute;z-index:2;pointer-events:none;opacity:0}
-.thumbs .th.ld::before,.pv-frame.ldg::before{inset:0;background:linear-gradient(180deg,transparent 0 44%,rgba(108,200,255,.3) 50%,transparent 56% 100%) 0 100%/100% 300% no-repeat;animation:phScan 1.8s linear infinite,phIn .3s ease .6s forwards}
-.thumbs .th.ld::after,.pv-frame.ldg::after{inset:26% 30%;background:
-  linear-gradient(#6cc8ff,#6cc8ff) 0 0/16px 2px,linear-gradient(#6cc8ff,#6cc8ff) 0 0/2px 16px,
-  linear-gradient(#6cc8ff,#6cc8ff) 100% 0/16px 2px,linear-gradient(#6cc8ff,#6cc8ff) 100% 0/2px 16px,
-  linear-gradient(#6cc8ff,#6cc8ff) 0 100%/16px 2px,linear-gradient(#6cc8ff,#6cc8ff) 0 100%/2px 16px,
-  linear-gradient(#6cc8ff,#6cc8ff) 100% 100%/16px 2px,linear-gradient(#6cc8ff,#6cc8ff) 100% 100%/2px 16px,
-  radial-gradient(circle,#f4f1e4 0 2px,transparent 3px);background-repeat:no-repeat;animation:phFocus 1.4s ease-in-out infinite,phIn .3s ease .6s forwards}
-.pv-frame.ldg::after{inset:28%}
-@keyframes phScan{to{background-position:0 0}}
-@keyframes phFocus{0%{transform:scale(1.7)}55%,100%{transform:scale(1)}}
+.thumbs .th.ld::before,.pv-frame.ldg::before{inset:0;background:linear-gradient(105deg,transparent 35%,rgba(108,200,255,.18) 50%,transparent 65%) 100% 0/250% 100% no-repeat;animation:phShimmer 1.5s ease-in-out infinite,phIn .3s ease .6s forwards}
+.thumbs .th.ld::after,.pv-frame.ldg::after{left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:conic-gradient(from 0deg,rgba(108,200,255,0),#6cc8ff);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2.5px));animation:phSpin .85s linear infinite,phIn .3s ease .6s forwards}
+.pv-frame.ldg::after{width:46px;height:46px;margin:-23px 0 0 -23px}
+@keyframes phShimmer{to{background-position:0 0}}
+@keyframes phSpin{to{transform:rotate(360deg)}}
 @keyframes phIn{to{opacity:1}}
-@media(prefers-reduced-motion:reduce){.thumbs .th.ld::before,.thumbs .th.ld::after,.pv-frame.ldg::before,.pv-frame.ldg::after{animation:phIn .3s ease .6s forwards}}
+@media(prefers-reduced-motion:reduce){.thumbs .th.ld::before,.pv-frame.ldg::before{animation:phIn .3s ease .6s forwards}.thumbs .th.ld::after,.pv-frame.ldg::after{animation:phIn .3s ease .6s forwards}}
 
 /* smooth scroll-reveal (js/reveal.js): items fade and rise in as they enter the screen, matching the home intro */
 html.rv-on .rv{opacity:0}
@@ -930,3 +925,19 @@ html.rv-on .rv.rv-in{animation:rvIn 1.15s cubic-bezier(.16,1,.3,1) var(--rv-d,0m
 html.rv-on .thumbs>.rv.rv-in,html.rv-on .albums-grid>.rv.rv-in{animation-name:rvInLite;animation-duration:.95s}
 @keyframes rvIn{from{opacity:0;translate:0 56px;scale:.955;filter:blur(12px)}60%{filter:blur(0)}to{opacity:1;translate:0 0;scale:1;filter:blur(0)}}
 @keyframes rvInLite{from{opacity:0;translate:0 44px;scale:.94}to{opacity:1;translate:0 0;scale:1}}
+
+/* top-left club logo: no glow (pulsing blue halo, soft backdrop and hover ring glow all removed) */
+.brand-ico{animation:none;filter:none}
+.brand-ico::before{display:none}
+.brand-ico.is-active .brand-ring,.brand-ico.shutter .brand-ring{border-color:transparent;box-shadow:none;animation:none}
+.brand-glint{display:none}
+
+/* album side buttons (js/gallery.js): previous / next album, fixed on both sides of the photos while an album is open */
+.album-nav{display:none;position:fixed;top:50%;z-index:40;width:56px;padding:.7rem 0 .6rem;flex-direction:column;align-items:center;gap:.4rem;cursor:pointer;color:#f4f1e4;background:rgba(3,10,20,.82);border:1px solid rgba(108,200,255,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);transform:translateY(-50%);transition:background .25s ease,color .25s ease,border-color .25s ease}
+.album-nav span{font-family:var(--heading);font-weight:700;font-size:.5rem;line-height:1.25;letter-spacing:.12em;text-transform:uppercase;text-align:center;color:#6cc8ff;transition:color .25s ease}
+.album-nav:hover,.album-nav:focus-visible{background:#f4f1e4;color:#030a14;border-color:#f4f1e4}
+.album-nav:hover span,.album-nav:focus-visible span{color:#030a14}
+.album-nav--prev{left:max(8px,calc(50vw - 512px - 76px))}
+.album-nav--next{right:max(8px,calc(50vw - 512px - 76px))}
+html.alb-open:has(#gallery.active) .album-nav{display:flex}
+@media(max-width:1260px){.album-nav{width:40px;padding:.55rem 0 .45rem;background:rgba(3,10,20,.7)}.album-nav svg{width:18px;height:18px}.album-nav span{display:none}.album-nav--prev{left:6px}.album-nav--next{right:6px}}
