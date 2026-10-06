@@ -941,3 +941,23 @@ html.rv-on .thumbs>.rv.rv-in,html.rv-on .albums-grid>.rv.rv-in{animation-name:rv
 .album-nav--next{right:max(8px,calc(50vw - 512px - 76px))}
 html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:visible;pointer-events:auto}
 @media(max-width:1260px){.album-nav{width:40px;padding:.55rem 0 .45rem;background:rgba(3,10,20,.7)}.album-nav svg{width:18px;height:18px}.album-nav span{display:none}.album-nav--prev{left:6px}.album-nav--next{right:6px}}
+
+/* end-of-album buttons (js/gallery.js): Previous / Next album under the last photo.
+   Hovering one types out that album's name with a blinking cursor, like the AI assistant. */
+.album-end{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2.5rem}
+.album-end__btn{display:flex;align-items:center;gap:1rem;min-width:0;min-height:5.4rem;padding:1rem 1.25rem;cursor:pointer;color:var(--ink);background:var(--surface);border:1px solid var(--line);font-family:var(--body);text-align:left;clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);transition:background .25s ease,color .25s ease,border-color .25s ease,box-shadow .25s ease}
+.album-end__btn--next{flex-direction:row-reverse;text-align:right}
+.album-end__ico{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1.5px solid currentColor;transition:transform .25s ease}
+.album-end__txt{display:flex;flex-direction:column;gap:.3rem;min-width:0;flex:1}
+.album-end__txt small{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .25s ease}
+.album-end__name{display:block;min-height:1.5em;font-family:var(--heading);font-weight:700;font-size:1rem;line-height:1.5;letter-spacing:.04em;overflow-wrap:anywhere}
+.album-end__name.on::after{content:"";display:inline-block;width:7px;height:1.05em;margin-left:3px;vertical-align:-.18em;border-radius:2px;background:#6cc8ff;animation:aeCaret .9s steps(2,start) infinite}
+:root[data-theme="light"] .album-end__name.on::after{background:#0a5a96}
+@keyframes aeCaret{to{visibility:hidden}}
+.album-end__btn:hover,.album-end__btn:focus-visible{background:var(--accent);color:var(--on-accent);border-color:var(--accent);box-shadow:0 0 28px rgba(108,200,255,.28)}
+.album-end__btn:hover small,.album-end__btn:focus-visible small{color:inherit;opacity:.75}
+.album-end__btn--prev:hover .album-end__ico,.album-end__btn--prev:focus-visible .album-end__ico{transform:translateX(-4px)}
+.album-end__btn--next:hover .album-end__ico,.album-end__btn--next:focus-visible .album-end__ico{transform:translateX(4px)}
+.album-end__btn:focus-visible{outline:2px solid #6cc8ff;outline-offset:3px}
+@media(max-width:640px){.album-end{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.album-end__name.on::after{animation:none}.album-end__btn,.album-end__ico{transition:none}}
