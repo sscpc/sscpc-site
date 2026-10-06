@@ -56,8 +56,21 @@
     }
     if(years.length>1)row('Year',years,v=>fy=v);
   })();
+  /* side buttons: jump to the previous / next album from anywhere in an open album (no need to scroll back to the top) */
+  const navBtn=(dir,label)=>{
+    const b=document.createElement('button');b.type='button';b.className='album-nav album-nav--'+dir;
+    b.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="'+(dir==='prev'?'M15 5l-7 7 7 7':'M9 5l7 7-7 7')+'" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>'+label+'</span>';
+    b.onclick=()=>openAlbum((cur+(dir==='prev'?-1:1)+ALBUMS.length)%ALBUMS.length);
+    document.body.append(b);return b;
+  };
+  const navPrev=ALBUMS.length>1?navBtn('prev','Prev album'):null,navNext=ALBUMS.length>1?navBtn('next','Next album'):null;
+  function updateNav(){
+    if(!navPrev)return;
+    const n=ALBUMS.length,pn=ALBUMS[(cur-1+n)%n].name,nn=ALBUMS[(cur+1)%n].name;
+    navPrev.title='Previous album: '+pn;navNext.title='Next album: '+nn;navPrev.setAttribute('aria-label',navPrev.title);navNext.setAttribute('aria-label',navNext.title);
+  }
   function openAlbum(i){
-    cur=i;const a=ALBUMS[i];$('v-title').textContent=a.name;lang($('v-title'),a.name);thumbs.textContent='';
+    cur=i;document.documentElement.classList.add('alb-open');updateNav();const a=ALBUMS[i];$('v-title').textContent=a.name;lang($('v-title'),a.name);thumbs.textContent='';
     const fb=$('v-fb');fb.hidden=!a.facebook;if(a.facebook)fb.href=a.facebook;
     const box=$('v-info'),inf=a.info;box.textContent='';box.hidden=!inf;
     if(inf){
@@ -85,7 +98,7 @@
     grid.hidden=true;viewer.hidden=false;if($('filters'))$('filters').hidden=true;$('albums').scrollIntoView();
     ev('gallery:album',{i});
   }
-  $('back').onclick=()=>{ev('gallery:back');viewer.hidden=true;grid.hidden=false;if($('filters'))$('filters').hidden=false;$('albums').scrollIntoView()};
+  $('back').onclick=()=>{ev('gallery:back');document.documentElement.classList.remove('alb-open');viewer.hidden=true;grid.hidden=false;if($('filters'))$('filters').hidden=false;$('albums').scrollIntoView()};
   const pad=n=>String(n).padStart(2,'0');
   function show(j,el){
     const a=ALBUMS[cur];idx=(j+a.photos.length)%a.photos.length;

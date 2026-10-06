@@ -1,4 +1,4 @@
-/* Scroll-reveal: items fade, rise and un-blur into place as they enter the screen.
+/* Scroll-reveal: items fade, rise and un-blur into place every time they enter the screen (scrolling down, back up and down again).
    It replays EVERY time a visitor enters a tab (Home, About, Gallery, Spectrum, Committee, Contact, Register...),
    not just the first time. The footer is deliberately never animated.
    Fails safe: with no IntersectionObserver or with "reduce motion" switched on, nothing is hidden or animated. */
@@ -10,15 +10,27 @@
   var known=new WeakSet(),skip=new WeakSet();
   root.classList.add('rv-on');
 
+  /* IN: an item enters the screen -> play its animation (again, every time) */
   var io=new IntersectionObserver(function(es){
-    es.filter(function(e){return e.isIntersecting})
+    es.filter(function(e){return e.isIntersecting&&e.target.classList.contains('rv')&&!e.target.classList.contains('rv-in')})
       .sort(function(a,b){var A=a.boundingClientRect,B=b.boundingClientRect;return A.top-B.top||A.left-B.left})
       .forEach(function(e,i){
-        var el=e.target;io.unobserve(el);
+        var el=e.target;
         el.style.setProperty('--rv-d',Math.min(i,8)*110+'ms');   /* items arriving together appear one after another */
         el.classList.add('rv-in');
       });
   },{threshold:0,rootMargin:'0px 0px -14% 0px'});
+
+  /* OUT: an item has completely left the screen -> hide it again, ready to animate when scrolled back */
+  var out=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting||skip.has(e.target))return;
+      var el=e.target;
+      el.classList.remove('rv-in');
+      el.style.removeProperty('--rv-d');
+      el.classList.add('rv');
+    });
+  },{threshold:0});
 
   /* when an item has finished appearing, hand it back to its normal styles (hover effects etc.) */
   document.addEventListener('animationend',function(e){
@@ -30,11 +42,11 @@
   /* hide an element and wait for it to scroll into view */
   function arm(el){
     if(skip.has(el))return;
-    io.unobserve(el);
+    io.unobserve(el);out.unobserve(el);
     el.classList.remove('rv-in');
     el.style.removeProperty('--rv-d');
     el.classList.add('rv');
-    io.observe(el);
+    io.observe(el);out.observe(el);
   }
   /* pick up new elements (albums, photo tiles and members are added by scripts) */
   function tag(scope){
