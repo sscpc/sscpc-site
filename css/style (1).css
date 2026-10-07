@@ -907,10 +907,196 @@ html.intro-enter .intro__hand{animation:handReach 8s ease-in-out infinite,introP
   html.intro-enter .intro__hand{animation:none}
 }
 
-/* photo loading spinners: album grid tiles (.th.ld) and the big photo viewer (.pv-frame.ldg).
-   They only fade in after .6s, so fast connections never see them. */
+/* photo loading indicator: glowing infinity loop in the site's cyan/blue theme with a "Loading..." label.
+   Used on album tiles (.th.ld) and in the big photo viewer (.pv-frame.ldg). It fades in only after .35s, so fast loads never show it. */
 .thumbs .th.ld>button:first-child{background:#07162a}
-.thumbs .th.ld::after,.pv-frame.ldg::after{content:"";position:absolute;top:50%;left:50%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:3px solid rgba(244,241,228,.22);border-top-color:#6cc8ff;pointer-events:none;opacity:0;animation:phSpin .8s linear infinite,phIn .3s ease .6s forwards}
-@keyframes phSpin{to{transform:rotate(360deg)}}
+.thumbs .th.ld::before,.thumbs .th.ld::after,.pv-frame.ldg::before,.pv-frame.ldg::after{content:"";position:absolute;z-index:2;pointer-events:none;opacity:0;left:50%}
+.thumbs .th.ld::after,.pv-frame.ldg::after{top:50%;width:76px;height:38px;margin:-27px 0 0 -38px;background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 xmlns:xlink=%22http://www.w3.org/1999/xlink%22 viewBox=%220 0 120 60%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 gradientUnits=%22userSpaceOnUse%22 x1=%2212%22 y1=%220%22 x2=%22108%22 y2=%220%22%3E%3Cstop offset=%220%22 stop-color=%22%232f7bff%22/%3E%3Cstop offset=%221%22 stop-color=%22%239fe0ff%22/%3E%3C/linearGradient%3E%3Cpath id=%22p%22 pathLength=%22100%22 d=%22M60 30C72 10 108 10 108 30C108 50 72 50 60 30C48 10 12 10 12 30C12 50 48 50 60 30Z%22/%3E%3C/defs%3E%3Cuse xlink:href=%22%23p%22 stroke=%22%236cc8ff%22 stroke-opacity=%22.14%22 stroke-width=%227%22 fill=%22none%22/%3E%3Cuse xlink:href=%22%23p%22 stroke=%22url(%23g)%22 stroke-width=%227%22 stroke-linecap=%22round%22 fill=%22none%22 stroke-dasharray=%2230 70%22%3E%3Canimate attributeName=%22stroke-dashoffset%22 from=%220%22 to=%22-100%22 dur=%220.9s%22 repeatCount=%22indefinite%22/%3E%3C/use%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 0 5px rgba(108,200,255,.95)) drop-shadow(0 0 14px rgba(47,123,255,.7));animation:phIn .3s ease .35s forwards}
+.thumbs .th.ld::before,.pv-frame.ldg::before{content:"Loading...";top:50%;transform:translate(-50%,0);margin-top:20px;font:600 10px/1 'Poppins',system-ui,sans-serif;letter-spacing:.06em;color:rgba(159,224,255,.65);animation:phIn .3s ease .35s forwards}
+.pv-frame.ldg::after{width:112px;height:56px;margin:-40px 0 0 -56px}
+.pv-frame.ldg::before{margin-top:28px;font-size:12px}
 @keyframes phIn{to{opacity:1}}
-@media(prefers-reduced-motion:reduce){.thumbs .th.ld::after,.pv-frame.ldg::after{animation:phIn .3s ease .6s forwards}}
+
+/* smooth scroll-reveal (js/reveal.js): items fade and rise in as they enter the screen, matching the home intro */
+html.rv-on .rv{opacity:0}
+html.rv-on .rv.rv-in{animation:rvIn 1.15s cubic-bezier(.16,1,.3,1) var(--rv-d,0ms) both;will-change:transform,opacity,filter}
+html.rv-on .thumbs>.rv.rv-in,html.rv-on .albums-grid>.rv.rv-in{animation-name:rvInLite;animation-duration:.95s}
+@keyframes rvIn{from{opacity:0;translate:0 56px;scale:.955;filter:blur(12px)}60%{filter:blur(0)}to{opacity:1;translate:0 0;scale:1;filter:blur(0)}}
+@keyframes rvInLite{from{opacity:0;translate:0 44px;scale:.94}to{opacity:1;translate:0 0;scale:1}}
+
+/* top-left club logo: no glow (pulsing blue halo, soft backdrop and hover ring glow all removed) */
+.brand-ico{animation:none;filter:none}
+.brand-ico::before{display:none}
+.brand-ico.is-active .brand-ring,.brand-ico.shutter .brand-ring{border-color:transparent;box-shadow:none;animation:none}
+.brand-glint{display:none}
+
+/* album side buttons (js/gallery.js): previous / next album, fixed on both sides of the photos while an album is open */
+.album-nav{display:flex;opacity:0;visibility:hidden;pointer-events:none;position:fixed;top:50%;z-index:40;width:56px;padding:.7rem 0 .6rem;flex-direction:column;align-items:center;gap:.4rem;cursor:pointer;color:#f4f1e4;background:rgba(3,10,20,.82);border:1px solid rgba(108,200,255,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);transform:translateY(-50%);transition:opacity .3s ease,visibility .3s,background .25s ease,color .25s ease,border-color .25s ease}
+.album-nav span{font-family:var(--heading);font-weight:700;font-size:.5rem;line-height:1.25;letter-spacing:.12em;text-transform:uppercase;text-align:center;color:#6cc8ff;transition:color .25s ease}
+.album-nav:hover,.album-nav:focus-visible{background:#f4f1e4;color:#030a14;border-color:#f4f1e4}
+.album-nav:hover span,.album-nav:focus-visible span{color:#030a14}
+.album-nav--prev{left:max(8px,calc(50vw - 512px - 76px))}
+.album-nav--next{right:max(8px,calc(50vw - 512px - 76px))}
+html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:visible;pointer-events:auto}
+@media(max-width:1260px){.album-nav{width:40px;padding:.55rem 0 .45rem;background:rgba(3,10,20,.7)}.album-nav svg{width:18px;height:18px}.album-nav span{display:none}.album-nav--prev{left:6px}.album-nav--next{right:6px}}
+
+/* ===== page banners (Gallery, Spectrum, Committee, Join Us, Contact) =====
+   Full-width photo hero with the tab name and its description. Photos: images/banners/<tab>.jpg (see README-BANNERS.txt).
+   Eye-catching bits: slow zoom + scroll parallax on the photo, viewfinder corner brackets, a light sweep when the tab opens,
+   and staggered text. Everything replays each time a tab is entered. */
+.sec.view.has-banner{padding-top:0}
+.has-banner>.wrap{padding-top:clamp(2.25rem,4.5vw,3.5rem)}
+.pg-banner{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;min-height:clamp(21rem,46vw,33rem);background:#030b16;border-bottom:1px solid rgba(108,200,255,.35)}
+.pg-banner-img{position:absolute;left:0;top:-6%;width:100%;height:112%;object-fit:cover;object-position:var(--pb-pos,50% 40%);z-index:-3;translate:0 var(--py,0px);transform-origin:60% 50%;animation:pgKen 22s ease-in-out infinite alternate;will-change:transform,translate}
+.pg-banner-fx{position:absolute;inset:0;z-index:-2;pointer-events:none;overflow:hidden;
+  background:
+    radial-gradient(60% 90% at 88% 105%,rgba(40,150,240,.34),transparent 70%),
+    linear-gradient(180deg,transparent 52%,rgba(3,11,22,.55) 82%,var(--bg) 100%),
+    linear-gradient(90deg,rgba(3,11,22,.94) 0%,rgba(3,11,22,.74) 38%,rgba(3,11,22,.28) 72%,rgba(3,11,22,.12) 100%)}
+.pg-banner-fx::before{content:"";position:absolute;top:-20%;bottom:-20%;left:-40%;width:30%;background:linear-gradient(100deg,transparent,rgba(180,225,255,.22),transparent);transform:skewX(-18deg);animation:pgShine 2.1s cubic-bezier(.4,.1,.2,1) .35s both}
+.pg-banner::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,#6cc8ff 30%,#f4f1e4 50%,#6cc8ff 70%,transparent);opacity:.75;transform-origin:50% 50%;animation:pgLine 1.2s ease .2s both}
+.pg-corner{position:absolute;z-index:1;width:clamp(18px,2.4vw,30px);height:clamp(18px,2.4vw,30px);border:2px solid #6cc8ff;opacity:.9;pointer-events:none;animation:pgCorner .9s cubic-bezier(.2,.8,.2,1) .15s both}
+.pg-corner.tl{left:clamp(.8rem,2.4vw,2rem);top:clamp(.8rem,2.4vw,2rem);border-right:0;border-bottom:0;--cx:14px;--cy:14px}
+.pg-corner.tr{right:clamp(.8rem,2.4vw,2rem);top:clamp(.8rem,2.4vw,2rem);border-left:0;border-bottom:0;--cx:-14px;--cy:14px}
+.pg-corner.bl{left:clamp(.8rem,2.4vw,2rem);bottom:clamp(.8rem,2.4vw,2rem);border-right:0;border-top:0;--cx:14px;--cy:-14px}
+.pg-corner.br{right:clamp(.8rem,2.4vw,2rem);bottom:clamp(.8rem,2.4vw,2rem);border-left:0;border-top:0;--cx:-14px;--cy:-14px}
+.pg-banner-in{position:relative;width:100%;max-width:70rem;margin:0 auto;padding:clamp(3.2rem,7vw,5rem) clamp(1.25rem,5vw,3rem);color:#f4f1e4}
+.pg-eyebrow{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--body);font-weight:700;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#6cc8ff;animation:pgUp .8s cubic-bezier(.2,.8,.2,1) .25s both}
+.pg-eyebrow::before{content:"";width:2.2rem;height:1px;background:linear-gradient(90deg,#6cc8ff,transparent)}
+.pg-banner h2{margin:.85rem 0 0;font-size:clamp(2.7rem,9vw,5.8rem);line-height:1.02;letter-spacing:.015em;color:#f4f1e4;text-shadow:0 4px 30px rgba(0,0,0,.6),0 0 40px rgba(60,160,255,.25);animation:pgUp .9s cubic-bezier(.2,.8,.2,1) .4s both}
+.pg-banner h2::after{width:clamp(64px,9vw,110px);height:4px;margin-top:1.1rem;background:linear-gradient(90deg,#f4f1e4,#6cc8ff);transform-origin:0 50%;animation:pgBar .9s cubic-bezier(.2,.8,.2,1) .85s both}
+.pg-banner .lead{max-width:50ch;margin-top:1.3rem;color:#e6e8f5;font-size:clamp(.92rem,1.5vw,1.08rem);line-height:1.75;text-shadow:0 1px 14px rgba(0,0,0,.7);animation:pgUp .9s cubic-bezier(.2,.8,.2,1) .6s both}
+.pg-banner .btns{margin-top:1.5rem;animation:pgUp .9s cubic-bezier(.2,.8,.2,1) .8s both}
+@keyframes pgKen{from{scale:1.04}to{scale:1.16}}
+@keyframes pgShine{from{left:-40%}to{left:130%}}
+@keyframes pgLine{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:.75}}
+@keyframes pgCorner{from{opacity:0;translate:var(--cx) var(--cy)}to{opacity:.9;translate:0 0}}
+@keyframes pgUp{from{opacity:0;translate:0 28px;filter:blur(8px)}to{opacity:1;translate:0 0;filter:blur(0)}}
+@keyframes pgBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(max-width:640px){
+  .pg-banner{min-height:19rem}
+  .pg-banner-fx{background:radial-gradient(70% 70% at 90% 110%,rgba(40,150,240,.3),transparent 70%),linear-gradient(180deg,transparent 50%,var(--bg) 100%),linear-gradient(90deg,rgba(3,11,22,.92),rgba(3,11,22,.6))}
+  .pg-eyebrow{font-size:.54rem;letter-spacing:.22em}
+}
+@media(prefers-reduced-motion:reduce){
+  .pg-banner-img{animation:none;translate:none}.pg-banner-fx::before,.pg-banner::after,.pg-corner,.pg-eyebrow,.pg-banner h2,.pg-banner h2::after,.pg-banner .lead,.pg-banner .btns{animation:none}
+}
+
+/* Committee cards: the photo fills the whole left side as a full square (no circle), and the cards show only the tags and name
+   (the short message and "View profile" button are hidden). #members raises the specificity so this wins over css/committee.css. */
+#members .xc{min-height:16rem}
+#members .xc-photo{flex:0 0 16rem;padding:0;align-items:stretch;justify-content:stretch;border-right:0}
+#members .xc-photo img{width:100%;height:100%;aspect-ratio:auto;border-radius:0;box-shadow:none;object-fit:cover}
+#members .xc-body{justify-content:center}
+#members .xc-note,#members .xc-more{display:none!important}
+@media(max-width:560px){
+  #members .xc-photo{flex:0 0 auto;width:100%;height:auto;aspect-ratio:1;border-bottom:0}
+}
+
+/* ===== End-of-album buttons (Previous album / Next album) — js/gallery.js builds <nav class="album-end"> ===== */
+.album-end{display:flex;justify-content:center;align-items:stretch;flex-wrap:wrap;gap:1rem;margin:2.5rem auto 1rem;width:100%}
+.album-end__btn{
+  position:relative;display:inline-flex;align-items:center;gap:.9rem;
+  min-width:15.5rem;padding:.8rem 1.5rem .8rem 1.1rem;
+  font:inherit;color:var(--ink);text-align:left;cursor:pointer;
+  background:linear-gradient(135deg,rgba(8,24,43,.92),rgba(3,10,20,.92));
+  border:1px solid rgba(108,200,255,.45);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);
+  transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease;
+}
+.album-end__btn--next{flex-direction:row-reverse;text-align:right;padding:.8rem 1.1rem .8rem 1.5rem}
+.album-end__ico{
+  flex:0 0 auto;display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:50%;
+  color:var(--glow);background:rgba(108,200,255,.1);border:1px solid rgba(108,200,255,.35);
+  transition:background .3s ease,color .3s ease,border-color .3s ease,transform .3s ease;
+}
+.album-end__ico svg{display:block;width:22px;height:22px}
+.album-end__txt{display:flex;flex-direction:column;justify-content:center;min-width:0;line-height:1.25}
+.album-end__txt small{
+  font-family:var(--heading);font-weight:700;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);transition:color .3s ease;
+}
+.album-end__name{
+  display:block;min-height:1.3em;margin-top:.15rem;font-family:var(--body);font-weight:300;font-size:.8rem;letter-spacing:.02em;color:var(--glow);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:12rem;transition:color .3s ease;
+}
+.album-end__btn:hover,.album-end__btn:focus-visible{
+  background:var(--accent);color:var(--on-accent);border-color:var(--accent);
+  box-shadow:0 0 28px rgba(108,200,255,.35);transform:translateY(-2px);outline:0;
+}
+.album-end__btn:hover .album-end__txt small,.album-end__btn:focus-visible .album-end__txt small,
+.album-end__btn:hover .album-end__name,.album-end__btn:focus-visible .album-end__name{color:var(--on-accent)}
+.album-end__btn:hover .album-end__ico,.album-end__btn:focus-visible .album-end__ico{background:var(--on-accent);color:var(--accent);border-color:var(--on-accent)}
+.album-end__btn--prev:hover .album-end__ico,.album-end__btn--prev:focus-visible .album-end__ico{transform:translateX(-3px)}
+.album-end__btn--next:hover .album-end__ico,.album-end__btn--next:focus-visible .album-end__ico{transform:translateX(3px)}
+.album-end__btn:active{transform:translateY(0) scale(.98)}
+@media(max-width:560px){
+  .album-end{flex-direction:column;align-items:center;gap:.75rem}
+  .album-end__btn{width:100%;max-width:22rem}
+  .album-end__name{max-width:none}
+}
+@media(prefers-reduced-motion:reduce){.album-end__btn,.album-end__ico{transition:none}.album-end__btn:hover,.album-end__btn:focus-visible{transform:none}}
+
+/* ===== Spectrum: Photo Selection + Jury (index.html #spectrum > .sel, directly above .ann) =====
+   Reuses the site's own pieces: --heading / --body / --mono, the #6cc8ff + cream palette, the gradient cut-corner frame from .slider,
+   the "T-minus" label line from .tminus, the viewfinder corners + scanlines from .frame, and the scroll-reveal in js/reveal.js. */
+.sel{position:relative;color:#f4f1e4;padding:clamp(3.5rem,8vw,6rem) 0 clamp(3.5rem,8vw,5.5rem);background:radial-gradient(55% 40% at 92% 0,rgba(8,30,60,.7),transparent 70%),radial-gradient(45% 35% at 0 100%,rgba(8,30,60,.45),transparent 70%),#030b16;overflow:hidden}
+.sel-k{display:flex;align-items:center;gap:.75rem;margin:0 0 .9rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#6cc8ff}
+.sel-k::after{content:"";flex:1;max-width:14rem;height:1px;background:linear-gradient(90deg,#f4f1e4,transparent)}
+.sel h2{margin-bottom:0;color:#f4f1e4;font-size:clamp(1.7rem,5.4vw,3.1rem);line-height:1.14}
+.sel h2 span{display:block}
+.sel h2 .hl{color:#6cc8ff}
+.sel-lead{margin-top:1.5rem;max-width:60ch;color:#b4cae6}
+
+.sel-date{margin-top:clamp(2rem,5vw,3.25rem);padding:2px;background:linear-gradient(135deg,#6cc8ff,#0e2f52 55%,#f4f1e4);clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px)}
+.sel-date-in{display:grid;gap:clamp(1.6rem,4vw,2.5rem);padding:clamp(1.4rem,4vw,2.6rem);background:linear-gradient(180deg,#081a31,#06142a);clip-path:polygon(19px 0,100% 0,100% calc(100% - 19px),calc(100% - 19px) 100%,0 100%,0 19px)}
+.sd-main{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(.9rem,3vw,1.6rem)}
+.sd-day{font-family:var(--heading);font-weight:700;font-size:clamp(4.2rem,17vw,8rem);line-height:.82;letter-spacing:-.02em;color:#f4f1e4;text-shadow:0 0 22px rgba(108,200,255,.35)}
+.sd-my{display:flex;flex-direction:column;gap:.3rem;padding-left:clamp(.9rem,3vw,1.6rem);border-left:3px solid #f4f1e4}
+.sd-my b{font-family:var(--heading);font-weight:700;font-size:clamp(1.1rem,4.2vw,2rem);line-height:1.1;letter-spacing:.14em;text-transform:uppercase}
+.sd-my b+b{color:#6cc8ff}
+.sd-tag{margin:1.2rem 0 0;font-family:var(--mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:#6cc8ff}
+.sd-steps{list-style:none;margin:0;padding:0 0 0 1.5rem;position:relative;display:grid;gap:1.6rem;align-content:center}
+.sd-steps::before{content:"";position:absolute;left:5px;top:.55rem;bottom:.55rem;width:1px;background:linear-gradient(180deg,rgba(244,241,228,.55),rgba(108,200,255,.9))}
+.sd-steps li{position:relative;display:flex;flex-direction:column;gap:.15rem}
+.sd-steps li::before{content:"";position:absolute;left:calc(-1.5rem + 1px);top:.35rem;width:9px;height:9px;border:1px solid #f4f1e4;background:#06142a;transform:rotate(45deg)}
+.sd-steps .is-next::before{background:#6cc8ff;border-color:#6cc8ff}
+.sd-steps time{font-family:var(--mono);font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:#f4f1e4}
+.sd-steps span{font-size:.8rem;color:#b4cae6}
+@media(min-width:800px){
+  .sel-date-in{grid-template-columns:auto 1fr;align-items:center;gap:clamp(2.5rem,6vw,5rem)}
+  .sd-steps{padding-left:clamp(2.5rem,6vw,4.5rem)}
+  .sd-steps::before{left:calc(clamp(2.5rem,6vw,4.5rem) - 1.5rem + 5px)}
+  .sd-steps li::before{left:calc(-1.5rem + 1px)}
+}
+
+.jury-head{margin-top:clamp(3.5rem,8vw,6rem);padding-top:clamp(2.5rem,6vw,4rem);border-top:1px solid rgba(244,241,228,.14)}
+.jury-grid{list-style:none;padding:0;margin:clamp(2rem,5vw,3rem) 0 0;display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;gap:clamp(2rem,4vw,2.5rem)}
+.jury-grid>li{width:100%;max-width:26rem}
+.judge figure{margin:0}
+.judge-ph{position:relative;aspect-ratio:4/5;overflow:hidden;background:linear-gradient(160deg,#0b2038,#050e1b);border:1px solid rgba(244,241,228,.2);transition:border-color .5s ease}
+.judge-ph img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:contrast(1.04) saturate(.94);transition:transform 1.4s cubic-bezier(.2,.8,.2,1)}
+.judge-ph::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,transparent 58%,rgba(3,11,22,.5)),repeating-linear-gradient(0deg,rgba(0,0,0,.08) 0 1px,transparent 1px 3px)}
+.judge-ph>i{position:absolute;z-index:2;width:16px;height:16px;border:1.5px solid rgba(244,241,228,.7);pointer-events:none}
+.judge-ph>i:nth-of-type(1){top:.6rem;left:.6rem;border-right:0;border-bottom:0}
+.judge-ph>i:nth-of-type(2){top:.6rem;right:.6rem;border-left:0;border-bottom:0}
+.judge-ph>i:nth-of-type(3){bottom:.6rem;left:.6rem;border-right:0;border-top:0}
+.judge-ph>i:nth-of-type(4){bottom:.6rem;right:.6rem;border-left:0;border-top:0}
+.judge figcaption{padding:1.1rem .1rem 0}
+.judge figcaption::before{content:"";display:block;width:2.2rem;height:2px;margin-bottom:.9rem;background:#f4f1e4}
+.judge-role{display:block;margin-bottom:.35rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:#6cc8ff}
+.judge-name{display:block;font-family:var(--heading);font-weight:700;font-size:clamp(1.1rem,2.2vw,1.35rem);line-height:1.2;letter-spacing:.04em;color:#f4f1e4;text-wrap:balance}
+@media(hover:hover) and (pointer:fine){
+  .judge:hover .judge-ph{border-color:rgba(108,200,255,.55)}
+  .judge:hover .judge-ph img{transform:scale(1.03)}
+}
+@media(min-width:700px){
+  .jury-grid{grid-template-columns:repeat(3,minmax(0,1fr));justify-items:stretch}
+  .jury-grid>li{max-width:none}
+}
+
+.sel-partner{display:flex;flex-direction:column;align-items:center;gap:1rem;max-width:34rem;margin:clamp(3rem,7vw,5rem) auto 0;padding:1.6rem 1.4rem 1.7rem;text-align:center;border:1px solid rgba(244,241,228,.16);background:rgba(244,241,228,.04)}
+.sel-partner-k{margin:0;font-family:var(--mono);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#6cc8ff}
+.partner-logo{display:block;width:200px;max-width:70%;height:auto}
+.sel-partner-t{margin:0;font-size:.82rem;line-height:1.8;color:#b4cae6}
+@media(prefers-reduced-motion:reduce){.judge-ph img,.judge-ph{transition:none}.judge:hover .judge-ph img{transform:none}}
