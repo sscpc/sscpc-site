@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="css/music.css">
 <link rel="stylesheet" href="css/committee.css">
 <link rel="stylesheet" href="css/gallery-tools.css">
+<link rel="stylesheet" href="css/judges.css">
 <script>document.documentElement.classList.add('loading','intro-hold');document.documentElement.dataset.theme='dark';try{localStorage.removeItem('sscpc-theme')}catch(e){}</script>
 <noscript><style>#loader{display:none}html.loading{overflow:auto}</style></noscript>
 </head>
@@ -295,22 +296,40 @@
         </div>
 
         <ul class="jury-grid">
-          <li class="judge">
+          <li class="judge" data-judge="priyantha-bandara">
             <figure>
-              <div class="judge-ph"><img src="images/spectrum/judges/priyantha-bandara.jpg" alt="Priyantha Bandara, judge" width="800" height="1000" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('no-img');this.remove()"><i></i><i></i><i></i><i></i></div>
-              <figcaption><span class="judge-role">Judge</span><b class="judge-name">Priyantha Bandara</b></figcaption>
+              <div class="judge-ph"><img src="images/spectrum/judges/priyantha-bandara.jpg" alt="Priyantha Bandara, judge" width="800" height="1000" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('no-img');this.remove()"><i></i><i></i><i></i><i></i><span class="judge-no" aria-hidden="true">01</span></div>
+              <figcaption>
+                <span class="judge-role">Judge 01</span>
+                <b class="judge-name">Priyantha Bandara</b>
+                <span class="judge-title">Landscape &amp; Fine-Art Photographer</span>
+                <span class="judge-fields">Landscape / Travel / Fine Art / Architecture / Commercial</span>
+                <button type="button" class="judge-open" aria-haspopup="dialog" aria-label="Open the editorial profile of Priyantha Bandara"><span>Open profile</span><svg viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h38M33 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+              </figcaption>
             </figure>
           </li>
-          <li class="judge">
+          <li class="judge" data-judge="ravi-ranasinghe">
             <figure>
-              <div class="judge-ph"><img src="images/spectrum/judges/ravi-ranasinghe.jpg" alt="Ravi Ranasinghe, judge" width="800" height="1000" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('no-img');this.remove()"><i></i><i></i><i></i><i></i></div>
-              <figcaption><span class="judge-role">Judge</span><b class="judge-name">Ravi Ranasinghe</b></figcaption>
+              <div class="judge-ph"><img src="images/spectrum/judges/ravi-ranasinghe.jpg" alt="Ravi Ranasinghe, judge" width="800" height="1000" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('no-img');this.remove()"><i></i><i></i><i></i><i></i><span class="judge-no" aria-hidden="true">02</span></div>
+              <figcaption>
+                <span class="judge-role">Judge 02</span>
+                <b class="judge-name">Ravi Ranasinghe</b>
+                <span class="judge-title">Street &amp; Fine-Art Photographer</span>
+                <span class="judge-fields">Street / Fine Art / Travel / Human &amp; Cultural Stories</span>
+                <button type="button" class="judge-open" aria-haspopup="dialog" aria-label="Open the editorial profile of Ravi Ranasinghe"><span>Open profile</span><svg viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h38M33 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+              </figcaption>
             </figure>
           </li>
-          <li class="judge">
+          <li class="judge" data-judge="ravisara-jayamanna">
             <figure>
-              <div class="judge-ph"><img src="images/spectrum/judges/ravisara-jayamanna.jpg" alt="Ravisara Jayamanna, judge" width="800" height="1000" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('no-img');this.remove()"><i></i><i></i><i></i><i></i></div>
-              <figcaption><span class="judge-role">Judge</span><b class="judge-name">Ravisara Jayamanna</b></figcaption>
+              <div class="judge-ph"><img src="images/spectrum/judges/ravisara-jayamanna.jpg" alt="Ravisara Jayamanna, judge" width="800" height="1000" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('no-img');this.remove()"><i></i><i></i><i></i><i></i><span class="judge-no" aria-hidden="true">03</span></div>
+              <figcaption>
+                <span class="judge-role">Judge 03</span>
+                <b class="judge-name">Ravisara Jayamanna</b>
+                <span class="judge-title">Wildlife &amp; Nature Photographer</span>
+                <span class="judge-fields">Wildlife / Nature / Conservation</span>
+                <button type="button" class="judge-open" aria-haspopup="dialog" aria-label="Open the editorial profile of Ravisara Jayamanna"><span>Open profile</span><svg viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h38M33 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+              </figcaption>
             </figure>
           </li>
         </ul>
@@ -693,6 +712,7 @@
 })();
 </script>
 <script src="js/reveal.js"></script>
+<script src="js/judges.js" defer></script>
 <script src="js/gallery-tools.js"></script>
 <script src="js/chatbot.js"></script>
 <script src="js/music.js"></script>
