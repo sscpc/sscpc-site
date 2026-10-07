@@ -4,7 +4,7 @@
    Fails safe: with no IntersectionObserver or with "reduce motion" switched on, nothing is hidden or animated. */
 (function(){
   if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-  var SEL=['.sec .wrap > *','.helpdesk .wrap > *','.ab-hero-copy > *','.ab-stats > *','.albums-grid > *','.thumbs > *',
+  var SEL=['.sec .wrap > :not(.jury-grid)','.jury-grid > *','.helpdesk .wrap > *','.ab-hero-copy > *','.ab-stats > *','.albums-grid > *','.thumbs > *',
     '#members-list > *','.cards > *','.contact-layout > *','.helpdesk .hd-card','.spec-card','.ann'].join(',');
   var root=document.documentElement;
   var known=new WeakSet(),skip=new WeakSet();
