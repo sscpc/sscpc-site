@@ -907,17 +907,15 @@ html.intro-enter .intro__hand{animation:handReach 8s ease-in-out infinite,introP
   html.intro-enter .intro__hand{animation:none}
 }
 
-/* photo loading indicator: a soft light shimmer sweeps across the tile while a small cyan ring spins in the middle.
-   Used on album tiles (.th.ld) and in the big photo viewer (.pv-frame.ldg). It fades in only after .6s, so fast loads never show it. */
+/* photo loading indicator: glowing infinity loop in the site's cyan/blue theme with a "Loading..." label.
+   Used on album tiles (.th.ld) and in the big photo viewer (.pv-frame.ldg). It fades in only after .35s, so fast loads never show it. */
 .thumbs .th.ld>button:first-child{background:#07162a}
-.thumbs .th.ld::before,.thumbs .th.ld::after,.pv-frame.ldg::before,.pv-frame.ldg::after{content:"";position:absolute;z-index:2;pointer-events:none;opacity:0}
-.thumbs .th.ld::before,.pv-frame.ldg::before{inset:0;background:linear-gradient(105deg,transparent 35%,rgba(108,200,255,.18) 50%,transparent 65%) 100% 0/250% 100% no-repeat;animation:phShimmer 1.5s ease-in-out infinite,phIn .3s ease .6s forwards}
-.thumbs .th.ld::after,.pv-frame.ldg::after{left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:conic-gradient(from 0deg,rgba(108,200,255,0),#6cc8ff);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2.5px));animation:phSpin .85s linear infinite,phIn .3s ease .6s forwards}
-.pv-frame.ldg::after{width:46px;height:46px;margin:-23px 0 0 -23px}
-@keyframes phShimmer{to{background-position:0 0}}
-@keyframes phSpin{to{transform:rotate(360deg)}}
+.thumbs .th.ld::before,.thumbs .th.ld::after,.pv-frame.ldg::before,.pv-frame.ldg::after{content:"";position:absolute;z-index:2;pointer-events:none;opacity:0;left:50%}
+.thumbs .th.ld::after,.pv-frame.ldg::after{top:50%;width:76px;height:38px;margin:-27px 0 0 -38px;background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 xmlns:xlink=%22http://www.w3.org/1999/xlink%22 viewBox=%220 0 120 60%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 gradientUnits=%22userSpaceOnUse%22 x1=%2212%22 y1=%220%22 x2=%22108%22 y2=%220%22%3E%3Cstop offset=%220%22 stop-color=%22%232f7bff%22/%3E%3Cstop offset=%221%22 stop-color=%22%239fe0ff%22/%3E%3C/linearGradient%3E%3Cpath id=%22p%22 pathLength=%22100%22 d=%22M60 30C72 10 108 10 108 30C108 50 72 50 60 30C48 10 12 10 12 30C12 50 48 50 60 30Z%22/%3E%3C/defs%3E%3Cuse xlink:href=%22%23p%22 stroke=%22%236cc8ff%22 stroke-opacity=%22.14%22 stroke-width=%227%22 fill=%22none%22/%3E%3Cuse xlink:href=%22%23p%22 stroke=%22url(%23g)%22 stroke-width=%227%22 stroke-linecap=%22round%22 fill=%22none%22 stroke-dasharray=%2230 70%22%3E%3Canimate attributeName=%22stroke-dashoffset%22 from=%220%22 to=%22-100%22 dur=%220.9s%22 repeatCount=%22indefinite%22/%3E%3C/use%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 0 5px rgba(108,200,255,.95)) drop-shadow(0 0 14px rgba(47,123,255,.7));animation:phIn .3s ease .35s forwards}
+.thumbs .th.ld::before,.pv-frame.ldg::before{content:"Loading...";top:50%;transform:translate(-50%,0);margin-top:20px;font:600 10px/1 'Poppins',system-ui,sans-serif;letter-spacing:.06em;color:rgba(159,224,255,.65);animation:phIn .3s ease .35s forwards}
+.pv-frame.ldg::after{width:112px;height:56px;margin:-40px 0 0 -56px}
+.pv-frame.ldg::before{margin-top:28px;font-size:12px}
 @keyframes phIn{to{opacity:1}}
-@media(prefers-reduced-motion:reduce){.thumbs .th.ld::before,.pv-frame.ldg::before{animation:phIn .3s ease .6s forwards}.thumbs .th.ld::after,.pv-frame.ldg::after{animation:phIn .3s ease .6s forwards}}
 
 /* smooth scroll-reveal (js/reveal.js): items fade and rise in as they enter the screen, matching the home intro */
 html.rv-on .rv{opacity:0}
