@@ -687,6 +687,7 @@ const MEMBERS = [
       {
         "name": "Sasidu Shanelka",
         "role": "President",
+        "phone": "077 531 2890",
         "grade": "Grade 12",
         "photo": "images/members/sasidu-shanelka.jpg",
         "portrait": "images/members/sasidu-shanelka.png",
@@ -695,6 +696,7 @@ const MEMBERS = [
       {
         "name": "Chethiya Sulakshana",
         "role": "Secretary",
+        "phone": "076 911 0822",
         "grade": "Grade 12",
         "photo": "images/members/chethiya-sulakshana.jpg",
         "portrait": "images/members/chethiya-sulakshana.png",

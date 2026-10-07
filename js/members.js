@@ -50,28 +50,29 @@
 
   MEMBERS.forEach(g=>{
     root.append(el('h3','mem-group',g.title));
-    if(g.exec){ /* executive committee: wide profile cards */
-      const xg=el('div','xc-grid');
+    if(g.exec){ /* executive committee: photo-on-top cards, no grade, phone for President & Secretary */
+      const cg=el('div','cm-grid');
+      const NOTE='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.4"/><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2l1.2-2h6.6l1.2 2h2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5Z"/></svg>';
+      const row=(k,v,href)=>{
+        const r=el('div','cm-row');r.append(el('span','cm-k',k));
+        if(href){const a=el('a','cm-v',v);a.href=href;r.append(a)}else r.append(el('span','cm-v',v));
+        return r;
+      };
       g.members.forEach((m,i)=>{
-        const id='mem-'+norm(m.name),card=el('article','xc');
+        const id='mem-'+norm(m.name),card=el('article','cm');
         card.id=id;EXEC[norm(m.name)]=id;
-        const ph=el('div','xc-photo'+(m.photo?'':' none'));
+        const ph=el('div','cm-photo'+(m.photo?'':' none'));
         if(m.photo){const im=el('img');im.src=m.photo;im.alt=m.name;im.loading='lazy';ph.append(im)}
-        const body=el('div','xc-body'),tags=el('div','xc-tags');
-        tags.append(el('span','xc-tag',m.role));
-        if(m.grade)tags.append(el('span','xc-tag',m.grade));
-        body.append(tags,el('h4','xc-name',m.name));
-        if(m.note){
-          body.append(el('p','xc-note',m.note));
-          const b=el('button','xc-more','View profile');b.type='button';
-          b.setAttribute('aria-haspopup','dialog');
-          b.append(el('span',null,'\u2197'));
-          b.addEventListener('click',()=>openProfile(m,b));
-          body.append(b);
-        }
-        card.append(ph,body);xg.append(card);
+        const body=el('div','cm-body'),top=el('div','cm-top'),ic=el('span','cm-ic');
+        ic.innerHTML=NOTE;
+        top.append(ic,el('span','cm-no',String(i+1).padStart(2,'0')));
+        const rows=el('div','cm-rows');
+        rows.append(row('Role',m.role));
+        if(m.phone)rows.append(row('Phone',m.phone,'tel:'+m.phone.replace(/[^\d+]/g,'').replace(/^0/,'+94')));
+        body.append(top,el('h4','cm-name',m.name),rows);
+        card.append(ph,body);cg.append(card);
       });
-      root.append(xg);return;
+      root.append(cg);return;
     }
     const grid=el('div','mem-grid');
     g.members.forEach(m=>{
