@@ -1036,3 +1036,67 @@ html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:vi
   .album-end__name{max-width:none}
 }
 @media(prefers-reduced-motion:reduce){.album-end__btn,.album-end__ico{transition:none}.album-end__btn:hover,.album-end__btn:focus-visible{transform:none}}
+
+/* ===== Spectrum: Photo Selection + Jury (index.html #spectrum > .sel, directly above .ann) =====
+   Reuses the site's own pieces: --heading / --body / --mono, the #6cc8ff + cream palette, the gradient cut-corner frame from .slider,
+   the "T-minus" label line from .tminus, the viewfinder corners + scanlines from .frame, and the scroll-reveal in js/reveal.js. */
+.sel{position:relative;color:#f4f1e4;padding:clamp(3.5rem,8vw,6rem) 0 clamp(3.5rem,8vw,5.5rem);background:radial-gradient(55% 40% at 92% 0,rgba(8,30,60,.7),transparent 70%),radial-gradient(45% 35% at 0 100%,rgba(8,30,60,.45),transparent 70%),#030b16;overflow:hidden}
+.sel-k{display:flex;align-items:center;gap:.75rem;margin:0 0 .9rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#6cc8ff}
+.sel-k::after{content:"";flex:1;max-width:14rem;height:1px;background:linear-gradient(90deg,#f4f1e4,transparent)}
+.sel h2{margin-bottom:0;color:#f4f1e4;font-size:clamp(1.7rem,5.4vw,3.1rem);line-height:1.14}
+.sel h2 span{display:block}
+.sel h2 .hl{color:#6cc8ff}
+.sel-lead{margin-top:1.5rem;max-width:60ch;color:#b4cae6}
+
+.sel-date{margin-top:clamp(2rem,5vw,3.25rem);padding:2px;background:linear-gradient(135deg,#6cc8ff,#0e2f52 55%,#f4f1e4);clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px)}
+.sel-date-in{display:grid;gap:clamp(1.6rem,4vw,2.5rem);padding:clamp(1.4rem,4vw,2.6rem);background:linear-gradient(180deg,#081a31,#06142a);clip-path:polygon(19px 0,100% 0,100% calc(100% - 19px),calc(100% - 19px) 100%,0 100%,0 19px)}
+.sd-main{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(.9rem,3vw,1.6rem)}
+.sd-day{font-family:var(--heading);font-weight:700;font-size:clamp(4.2rem,17vw,8rem);line-height:.82;letter-spacing:-.02em;color:#f4f1e4;text-shadow:0 0 22px rgba(108,200,255,.35)}
+.sd-my{display:flex;flex-direction:column;gap:.3rem;padding-left:clamp(.9rem,3vw,1.6rem);border-left:3px solid #f4f1e4}
+.sd-my b{font-family:var(--heading);font-weight:700;font-size:clamp(1.1rem,4.2vw,2rem);line-height:1.1;letter-spacing:.14em;text-transform:uppercase}
+.sd-my b+b{color:#6cc8ff}
+.sd-tag{margin:1.2rem 0 0;font-family:var(--mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:#6cc8ff}
+.sd-steps{list-style:none;margin:0;padding:0 0 0 1.5rem;position:relative;display:grid;gap:1.6rem;align-content:center}
+.sd-steps::before{content:"";position:absolute;left:5px;top:.55rem;bottom:.55rem;width:1px;background:linear-gradient(180deg,rgba(244,241,228,.55),rgba(108,200,255,.9))}
+.sd-steps li{position:relative;display:flex;flex-direction:column;gap:.15rem}
+.sd-steps li::before{content:"";position:absolute;left:calc(-1.5rem + 1px);top:.35rem;width:9px;height:9px;border:1px solid #f4f1e4;background:#06142a;transform:rotate(45deg)}
+.sd-steps .is-next::before{background:#6cc8ff;border-color:#6cc8ff}
+.sd-steps time{font-family:var(--mono);font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:#f4f1e4}
+.sd-steps span{font-size:.8rem;color:#b4cae6}
+@media(min-width:800px){
+  .sel-date-in{grid-template-columns:auto 1fr;align-items:center;gap:clamp(2.5rem,6vw,5rem)}
+  .sd-steps{padding-left:clamp(2.5rem,6vw,4.5rem)}
+  .sd-steps::before{left:calc(clamp(2.5rem,6vw,4.5rem) - 1.5rem + 5px)}
+  .sd-steps li::before{left:calc(-1.5rem + 1px)}
+}
+
+.jury-head{margin-top:clamp(3.5rem,8vw,6rem);padding-top:clamp(2.5rem,6vw,4rem);border-top:1px solid rgba(244,241,228,.14)}
+.jury-grid{list-style:none;padding:0;margin:clamp(2rem,5vw,3rem) 0 0;display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;gap:clamp(2rem,4vw,2.5rem)}
+.jury-grid>li{width:100%;max-width:26rem}
+.judge figure{margin:0}
+.judge-ph{position:relative;aspect-ratio:4/5;overflow:hidden;background:linear-gradient(160deg,#0b2038,#050e1b);border:1px solid rgba(244,241,228,.2);transition:border-color .5s ease}
+.judge-ph img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:contrast(1.04) saturate(.94);transition:transform 1.4s cubic-bezier(.2,.8,.2,1)}
+.judge-ph::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,transparent 58%,rgba(3,11,22,.5)),repeating-linear-gradient(0deg,rgba(0,0,0,.08) 0 1px,transparent 1px 3px)}
+.judge-ph>i{position:absolute;z-index:2;width:16px;height:16px;border:1.5px solid rgba(244,241,228,.7);pointer-events:none}
+.judge-ph>i:nth-of-type(1){top:.6rem;left:.6rem;border-right:0;border-bottom:0}
+.judge-ph>i:nth-of-type(2){top:.6rem;right:.6rem;border-left:0;border-bottom:0}
+.judge-ph>i:nth-of-type(3){bottom:.6rem;left:.6rem;border-right:0;border-top:0}
+.judge-ph>i:nth-of-type(4){bottom:.6rem;right:.6rem;border-left:0;border-top:0}
+.judge figcaption{padding:1.1rem .1rem 0}
+.judge figcaption::before{content:"";display:block;width:2.2rem;height:2px;margin-bottom:.9rem;background:#f4f1e4}
+.judge-role{display:block;margin-bottom:.35rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:#6cc8ff}
+.judge-name{display:block;font-family:var(--heading);font-weight:700;font-size:clamp(1.1rem,2.2vw,1.35rem);line-height:1.2;letter-spacing:.04em;color:#f4f1e4;text-wrap:balance}
+@media(hover:hover) and (pointer:fine){
+  .judge:hover .judge-ph{border-color:rgba(108,200,255,.55)}
+  .judge:hover .judge-ph img{transform:scale(1.03)}
+}
+@media(min-width:700px){
+  .jury-grid{grid-template-columns:repeat(3,minmax(0,1fr));justify-items:stretch}
+  .jury-grid>li{max-width:none}
+}
+
+.sel-partner{display:flex;flex-direction:column;align-items:center;gap:1rem;max-width:34rem;margin:clamp(3rem,7vw,5rem) auto 0;padding:1.6rem 1.4rem 1.7rem;text-align:center;border:1px solid rgba(244,241,228,.16);background:rgba(244,241,228,.04)}
+.sel-partner-k{margin:0;font-family:var(--mono);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#6cc8ff}
+.partner-logo{display:block;width:200px;max-width:70%;height:auto}
+.sel-partner-t{margin:0;font-size:.82rem;line-height:1.8;color:#b4cae6}
+@media(prefers-reduced-motion:reduce){.judge-ph img,.judge-ph{transition:none}.judge:hover .judge-ph img{transform:none}}
