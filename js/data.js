@@ -720,7 +720,7 @@ const MEMBERS = [
         "name": "Ravindu Wijesundara",
         "role": "Assistant Secretary",
         "grade": "Grade 12",
-        "photo": "",
+        "photo": "images/members/ravindu-wijesundara.jpg",
         "note": "Being part of a photography club is about more than taking photographs; it is about learning, teamwork, sharing experiences, and creating memories. As Assistant Secretary, I hope to support the committee in organizing activities and maintaining communication among members. I look forward to contributing to workshops, competitions, projects, and initiatives that help everyone develop their skills."
       },
       {
@@ -743,7 +743,7 @@ const MEMBERS = [
         "name": "Sanula Abeydeera",
         "role": "Chief Organizer",
         "grade": "Grade 12",
-        "photo": "",
+        "photo": "images/members/sanula-abeydeera.jpg",
         "note": "Every successful event begins with an idea, but turning it into reality requires teamwork, preparation, and dedication. As Chief Organizer, I hope to transform creative ideas into well-planned activities and memorable experiences. From photography projects and competitions to workshops and special events, I look forward to working with the committee and members to encourage participation and creativity."
       }
     ]
