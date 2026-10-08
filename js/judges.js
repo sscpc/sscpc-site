@@ -6,7 +6,8 @@
    title         short professional title (shown on the card and in the spread)
    fields        3–5 photography specialties (shown as editorial keywords)
    bio           approved biography — one string per paragraph
-   achievements  5–8 items:  {year:'2021', text:'Award / exhibition / publication'}
+   lead          (optional) the one-sentence standfirst under the title; if empty, the first sentence of the bio is used
+   achievements  5–8 items:  {tag:'Award', year:'2021', text:'What it was'}   (tag and year are both optional)
    quote         {text:'...', by:'Name'} — leave text empty until approved
    links         instagram / website / youtube / facebook — full https:// URLs
    portraitCredit  e.g. 'Photo: Name'
@@ -39,8 +40,17 @@
       fields: ['Landscape', 'Travel', 'Fine Art', 'Architecture', 'Commercial'],
       portrait: 'images/spectrum/judges/priyantha-bandara/portrait.jpg',
       portraitCredit: '',
-      bio: [],
-      achievements: [],
+      bio: [
+        'Priyantha Bandara is a Sri Lankan photographer specializing in landscape, travel, architectural, and commercial photography. Based in Sri Lanka, he is known for capturing atmospheric, dramatic natural environments across the island as well as in international destinations like Iceland and India.',
+        'He has established himself as a prominent fine-art landscape and travel photographer in Sri Lanka. Beyond behind-the-lens work, he actively contributes to the photography community through vlogging, educational workshops, and coaching aspiring photographers on the art and technicalities of landscape photography.',
+        'He leads guided landscape photography tours both within Sri Lanka and internationally, taking photographers through regions like Horton Plains, Haldummula, and Jaffna, as well as global destinations such as Iceland.',
+        'His style focuses on dramatic natural lighting, long exposures, mountain vistas, waterfalls, and coastal landscapes. He offers fine-art canvas and photo prints, commercial image licensing, guided photography expeditions, and education and workshops.'
+      ],
+      achievements: [
+        {tag:'Finalist', year:'', text:"Named a finalist among the 10X Top Ten Landscape Photographers for his dramatic capture of Iceland's Skógafoss waterfall."},
+        {tag:'Prints', year:'', text:'Fine-art prints of the misty Sri Lankan highlands (Thotupalakanda in Horton Plains, and Haldummula) and international landscapes, widely collected and licensed.'},
+        {tag:'Workshops', year:'', text:'Organized and conducted photography tours and coaching modules, both locally and globally.'}
+      ],
       quote: { text: '', by: '' },
       links: { instagram: '', website: '', youtube: '', facebook: '' },
       works: [
@@ -57,8 +67,22 @@
       fields: ['Street', 'Fine Art', 'Travel', 'Human & Cultural Stories'],
       portrait: 'images/spectrum/judges/ravi-ranasinghe/portrait.jpg',
       portraitCredit: '',
-      bio: [],
-      achievements: [],
+      bio: [
+        'Ravi Ranasinghe (professionally known as RaviR Photography) is a prominent Sri Lankan fine art, street, and travel photographer. Known for his ability to find “the un-findable in the commonest and simplest of places,” he has established himself as one of Sri Lanka’s most internationally decorated contemporary visual storytellers.',
+        'His passion for photography centres on capturing authentic human emotion, fleeting street narratives, and vibrant cultural events. Rather than focusing solely on commercial output, his work leans into fine-art storytelling, using natural light, shadows, and composition to elevate everyday life into compelling visual art.',
+        'Over his career he has expanded from local street walks in Sri Lanka to leading international photo expeditions. He advocates that great photography relies on vision and commitment rather than expensive gear, and often teaches students who shoot with basic setups or mobile phones.',
+        'His street and cultural work documents everyday life, candid portraits, local traditions, and street dynamics across Sri Lanka, Vietnam, Bali, and India. He teaches a signature 6-week online masterclass, hosts street walks, lectures at universities, and guides photo tours in Sri Lanka (including Jaffna and the Central Highlands) and abroad. He serves as a jury member for national and international competitions, and has held solo exhibitions in Hanoi (Vietnam) and at the Lionel Wendt Art Gallery in Colombo.'
+      ],
+      achievements: [
+        {tag:'Distinction', year:'', text:'EFIAP – Excellence Fédération Internationale de l’Art Photographique (FIAP)'},
+        {tag:'Distinction', year:'', text:'AFIAP – Artist FIAP'},
+        {tag:'Distinction', year:'', text:'ANPAS – Associate of the National Photographic Art Society'},
+        {tag:'Distinction', year:'', text:'LISLP – Licentiateship of the Institute of Sri Lankan Photographers'},
+        {tag:'Gold Award', year:'', text:'Multiple-time winner at the State Festival of Photography, Sri Lanka'},
+        {tag:'Gold Award', year:'2017', text:'AGORA Awards Gold Winner'},
+        {tag:'Medals', year:'', text:'Numerous FIAP, RPS (Royal Photographic Society), and PSA medals across international salons'},
+        {tag:'Honours', year:'', text:'D. C. L. Amarasinghe Memorial Challenge Trophy and Henry Rajakaruna MFIAP Challenge Trophy'}
+      ],
       quote: { text: '', by: '' },
       links: { instagram: '', website: '', youtube: '', facebook: '' },
       works: [
@@ -75,8 +99,20 @@
       fields: ['Wildlife', 'Nature', 'Conservation'],
       portrait: 'images/spectrum/judges/ravisara-jayamanna/portrait.jpg',
       portraitCredit: '',
-      bio: [],
-      achievements: [],
+      bio: [
+        'Ravisara Jayamanna is an award-winning Sri Lankan wildlife photographer, safari tour guide, and nature conservationist. He is recognized for capturing Sri Lanka’s wildlife in its raw, unmanipulated form, with a primary focus on rare and elusive fauna across national parks and rainforests.',
+        'He began his journey into photography in 2017 after joining his school’s photography association. Driven by a curiosity about animal behavior, ecosystems, and travel, he moved into dedicated wildlife photography.',
+        'His philosophy centres on authentic visual storytelling. He avoids digital alterations so that images capture exact moments as they occurred in nature, and he sees his photography as a tool for environmental education, raising awareness about biodiversity conservation and the importance of preserving Sri Lanka’s endemic species.',
+        'His core focus is leopards, endemic bird species, reptiles, and rainforest fauna, across Yala, Wilpattu, Kumana, and Horton Plains national parks and rainforest hotspots like Sinharaja and Kitulgala. He runs wildlife photography safaris for local and international photographers, teaching field techniques and ethical tracking, and delivers lectures and workshops on nature conservation and animal behavior.'
+      ],
+      achievements: [
+        {tag:'Publications', year:'', text:'Work published and featured by global wildlife platforms including BBC Earth, National Geographic (India), Discovery, and Nikon.'},
+        {tag:'Award', year:'2018, 2022', text:'Wild Sri Lanka Photographer of the Year'},
+        {tag:'Winner', year:'2019', text:'SLAAS Nature E Photo Contest'},
+        {tag:'Awards', year:'', text:'State Festival of Photography and NPAS (National Photographic Art Society)'},
+        {tag:'Finalist', year:'', text:'NatureInFocus'},
+        {tag:'Recognition', year:'', text:'Among the Top 5 Monkey Photographers in the 35Awards'}
+      ],
       quote: { text: '', by: '' },
       links: { instagram: '', website: '', youtube: '', facebook: '' },
       works: [
@@ -146,6 +182,8 @@
     var j = JUDGES[idx], n = pad(idx + 1), next = JUDGES[(idx + 1) % JUDGES.length], nextN = pad(((idx + 1) % JUDGES.length) + 1);
     var works = j.works.filter(function (w) { return PH || w.src; });
     var lay = layout(works);
+    /* opening standfirst: optional j.lead, otherwise the first sentence of the biography */
+    var lead = j.lead || (j.bio && j.bio[0] ? (j.bio[0].match(/^.+?[.!?](?=\s|$)/) || [''])[0] : '');
     var h = '';
 
     /* ---- 01 opening spread ---- */
@@ -158,7 +196,8 @@
       '</figure>' +
       '<h2 class="jd-name" id="jd-name" style="--nl:' + Math.max(j.first.length, j.last.length) + '"><span class="jd-ln" style="--d:.6s"><span>' + esc(j.first) + '</span></span><span class="jd-ln" style="--d:.75s"><span>' + esc(j.last) + '</span></span></h2>' +
       '<p class="jd-role" data-r style="--d:.95s">' + esc(j.title) + '</p>' +
-      '<ul class="jd-tags" data-r style="--d:1.05s" aria-label="Photography fields">' + j.fields.map(function (f, i) { return '<li><i>' + pad(i + 1) + '</i>' + esc(f) + '</li>'; }).join('') + '</ul>' +
+      (lead ? '<p class="jd-lead" data-r style="--d:1.05s">' + esc(lead) + '</p>' : '') +
+      '<ul class="jd-tags" data-r style="--d:1.15s" aria-label="Photography fields">' + j.fields.map(function (f, i) { return '<li><i>' + pad(i + 1) + '</i>' + esc(f) + '</li>'; }).join('') + '</ul>' +
       '<p class="jd-cue" aria-hidden="true"><span></span>Scroll</p>' +
     '</header>';
 
@@ -186,10 +225,11 @@
       h += '<div class="jd-ach"><p class="jd-lab" data-r><i></i>Achievements &amp; Recognition</p><ol>';
       if (hasAch) {
         h += ach.map(function (a, i) {
-          return '<li data-r style="--d:' + (i * 0.06) + 's"><i>' + pad(i + 1) + '</i><time>' + esc(a.year || '') + '</time><span>' + esc(a.text || '') + '</span></li>';
+          var tg = [a.tag, a.year].filter(Boolean).join(' · ');
+          return '<li data-r style="--d:' + (i * 0.06) + 's"><i>' + pad(i + 1) + '</i><div>' + (tg ? '<small>' + esc(tg) + '</small>' : '') + '<span>' + esc(a.text || '') + '</span></div></li>';
         }).join('');
       } else {
-        for (var k = 0; k < 5; k++) h += '<li class="is-ph" data-r style="--d:' + (k * 0.06) + 's"><i>' + pad(k + 1) + '</i><time>Year</time><span class="jd-ph-t">Award, exhibition or publication &mdash; to be added</span></li>';
+        for (var k = 0; k < 5; k++) h += '<li class="is-ph" data-r style="--d:' + (k * 0.06) + 's"><i>' + pad(k + 1) + '</i><div><small>Award &middot; Year</small><span class="jd-ph-t">Award, exhibition or publication &mdash; to be added</span></div></li>';
       }
       h += '</ol></div>';
     }
@@ -272,6 +312,7 @@
     scroller.scrollTop = 0;
     observe();
     onScroll();
+    setTimeout(onScroll, 1200);
   }
 
   /* reveal-on-scroll, parallax, progress */
@@ -302,6 +343,11 @@
       if (!scroller) return;
       var st = scroller.scrollTop, max = scroller.scrollHeight - scroller.clientHeight;
       ov.classList.toggle('is-scrolled', st > 40);
+      /* fail-safe: anything already on screen is revealed even if the observer was slow */
+      ov.querySelectorAll('[data-r]:not(.in)').forEach(function (e) {
+        var r = e.getBoundingClientRect();
+        if (r.top < scroller.clientHeight * 0.92 && r.bottom > 0) e.classList.add('in');
+      });
       ov.querySelector('.jd-prog span').style.transform = 'scaleX(' + (max > 0 ? st / max : 0) + ')';
       if (reduce) return;
       var vh = scroller.clientHeight;

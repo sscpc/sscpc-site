@@ -90,6 +90,7 @@ html.jd-lock{overflow:hidden}
 .jd-name{position:relative;z-index:3;margin:0;font-family:var(--heading);font-weight:800;text-transform:uppercase;font-size:min(calc(84vw / (var(--nl,9) * .72 + .6)),9rem);line-height:.9;letter-spacing:.005em;text-shadow:0 2px 40px rgba(2,7,15,.55)}
 .jd-ln:nth-child(2){padding-left:4vw}
 .jd-role{position:relative;z-index:3;margin:1.5rem 0 0;padding-top:1.1rem;border-top:1px solid var(--ln);font-size:1.02rem;font-weight:300;letter-spacing:.04em;color:#e8edf6}
+.jd-lead{position:relative;z-index:3;margin:1rem 0 0;font-size:.95rem;font-weight:300;line-height:1.75;color:#cfd9e9;max-width:34rem}
 .jd-tags{position:relative;z-index:3;list-style:none;margin:1.1rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem .5rem}
 .jd-tags li{display:inline-flex;align-items:baseline;gap:.5rem;padding:.38rem .8rem;border:1px solid rgba(244,241,228,.28);border-radius:100px;font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;background:rgba(2,7,15,.35)}
 .jd-tags i{font-style:normal;color:var(--glow)}
@@ -207,9 +208,9 @@ html.jd-lock{overflow:hidden}
   .jd-kick em{display:inline}
 }
 @media(min-width:1000px){
-  .jd-hero{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:auto auto auto 1fr auto;column-gap:1.5rem;padding:0 var(--gx) 3rem;min-height:max(100svh,46rem)}
+  .jd-hero{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:auto auto auto auto 1fr auto;column-gap:1.5rem;padding:0 var(--gx) 3rem;min-height:max(100svh,46rem)}
   .jd-bignum{right:auto;left:calc(var(--gx) - .06em);top:auto;bottom:-.07em;font-size:min(46vw,52rem);-webkit-text-stroke:1px rgba(244,241,228,.2);z-index:0}
-  .jd-portrait{position:relative;inset:auto;grid-column:7/13;grid-row:1/6;margin:0;padding:5.6rem 0 0;display:flex;flex-direction:column;z-index:1}
+  .jd-portrait{position:relative;inset:auto;grid-column:7/13;grid-row:1/7;margin:0;padding:5.6rem 0 0;display:flex;flex-direction:column;z-index:1}
   .jd-pimg{position:relative;inset:auto;flex:1;min-height:30rem;border:1px solid rgba(244,241,228,.18)}
   .jd-pimg::after{background:linear-gradient(180deg,rgba(2,7,15,.15),transparent 30%,transparent 62%,rgba(2,7,15,.55))}
   .jd-pimg img{top:-7%;height:114%}
@@ -222,8 +223,9 @@ html.jd-lock{overflow:hidden}
   .jd-name{grid-column:1/13;grid-row:2;font-size:min(11.4vw,13.5rem);line-height:.86;margin-top:.5rem;pointer-events:none}
   .jd-ln:nth-child(2){padding-left:13%}
   .jd-role{grid-column:1/6;grid-row:3;margin-top:3.2rem;font-size:1.25rem;max-width:26rem}
-  .jd-tags{grid-column:1/6;grid-row:4;align-self:start;margin-top:1.4rem;max-width:30rem}
-  .jd-cue{display:flex;grid-column:1/6;grid-row:5;align-self:end;align-items:center;gap:1rem;margin:0;font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--soft);z-index:3}
+  .jd-lead{grid-column:1/6;grid-row:4;margin-top:1.3rem;font-size:1.05rem;max-width:27rem}
+  .jd-tags{grid-column:1/6;grid-row:5;align-self:start;margin-top:1.4rem;max-width:30rem}
+  .jd-cue{display:flex;grid-column:1/6;grid-row:6;align-self:end;align-items:center;gap:1rem;margin:0;font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--soft);z-index:3}
   .jd-cue span{display:block;width:3.4rem;height:1px;background:var(--ink);transform-origin:0 50%;animation:jdcue 2.4s ease-in-out infinite}
   @keyframes jdcue{0%,100%{transform:scaleX(.25)}50%{transform:scaleX(1)}}
 
