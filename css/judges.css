@@ -116,11 +116,11 @@ html.jd-lock{overflow:hidden}
 .jd-fields li span{font-family:var(--heading);font-weight:800;text-transform:uppercase;font-size:clamp(1.9rem,9.4vw,6rem);line-height:1;letter-spacing:.01em;overflow-wrap:break-word}
 .jd-fields li:nth-child(even) span{padding-left:9vw;color:transparent;-webkit-text-stroke:1px rgba(244,241,228,.85)}
 .jd-ach ol,.jd-credits ol{list-style:none;margin:0;padding:0;counter-reset:none}
-.jd-ach li{display:grid;grid-template-columns:2.2rem 3.6rem minmax(0,1fr);gap:.4rem .8rem;padding:1rem 0;border-top:1px solid var(--ln);font-size:.92rem;line-height:1.6;color:#e6ebf4}
+.jd-ach li{display:grid;grid-template-columns:2.2rem minmax(0,1fr);gap:.4rem .8rem;padding:1rem 0;border-top:1px solid var(--ln);font-size:.92rem;line-height:1.6;color:#e6ebf4}
 .jd-ach li:last-child{border-bottom:1px solid var(--ln)}
 .jd-ach li i{font-family:var(--mono);font-style:normal;font-size:.66rem;letter-spacing:.2em;color:var(--glow);padding-top:.25em}
-.jd-ach li time{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;color:var(--soft);padding-top:.12em}
-.jd-ach li.is-ph time{color:rgba(180,202,230,.45)}
+.jd-ach li small{display:block;margin-bottom:.25rem;font-family:var(--mono);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)}
+.jd-ach li.is-ph small{color:rgba(180,202,230,.45)}
 
 /* ---- quote ---- */
 .jd-quote{position:relative;padding:clamp(5rem,14vw,10rem) var(--gx);background:linear-gradient(180deg,transparent,rgba(12,38,70,.45) 30%,rgba(12,38,70,.45) 70%,transparent);border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);overflow:hidden}
@@ -243,7 +243,6 @@ html.jd-lock{overflow:hidden}
   .jd-fields li span{font-size:clamp(2.6rem,5.2vw,6.6rem)}
   .jd-fields li:nth-child(even) span{padding-left:4vw}
   .jd-ach{grid-column:9/13;padding-top:.2rem;position:sticky;top:6rem}
-  .jd-ach li{grid-template-columns:2rem 3.4rem minmax(0,1fr)}
 
   .jd-quote{padding-top:clamp(7rem,13vw,13rem);padding-bottom:clamp(7rem,13vw,13rem)}
   .jd-quote-in{padding-left:12%}
@@ -271,7 +270,7 @@ html.jd-lock{overflow:hidden}
 @media(min-width:1500px){.jd-name{font-size:min(11.4vw,14.5rem)}}
 
 /* gentle stacking on very small phones */
-@media(max-width:380px){.jd-ach li{grid-template-columns:1.8rem 3rem minmax(0,1fr)}.jd-close span{display:none}.jd-close{padding:0;width:2.9rem;justify-content:center}}
+@media(max-width:380px){.jd-close span{display:none}.jd-close{padding:0;width:2.9rem;justify-content:center}}
 @media(max-width:699px){.jd-close span{display:none}.jd-close{padding:0;width:2.9rem;justify-content:center}.jd-bar-l span:first-child{display:inline}.jd-bar-l i{display:none}.jd-bar-l span:last-child{display:none}}
 
 @media(prefers-reduced-motion:reduce){
