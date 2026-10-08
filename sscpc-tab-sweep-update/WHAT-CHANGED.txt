@@ -1,0 +1,11 @@
+Light sweep tab transition
+Copy these three files into the repo, keeping the same folders, then commit:
+  js/router.js    (rewritten: plays the sweep when a tab link is clicked)
+  js/reveal.js    (one line changed: don't replay the old tab under the sweep)
+  css/style.css   (new styles added at the very bottom)
+
+Tuning (js/router.js):
+  MS = 470            time of each half of the sweep (ms)
+  S = H*.45           how much the edge leans
+  E = W*.5            how long the screen stays fully covered
+Colour comes from --bg and --glow in css/style.css.
