@@ -705,6 +705,7 @@ const MEMBERS = [
       {
         "name": "Nadeesha Ambakotuwa",
         "role": "Treasurer",
+        "phone": "078 134 8209",
         "grade": "Grade 12",
         "photo": "images/members/nadeesha-ambakotuwa.jpg",
         "portrait": "images/members/nadeesha-ambakotuwa.png",
@@ -791,6 +792,18 @@ const SLIDES = [
   {
     "image": "images/announcements/crownsmen-wristband.jpg",
     "alt": "The official Crownsmen wristband, Rs. 400"
+  },
+  {
+    "image": "images/announcements/judge-priyantha-bandara.jpg",
+    "alt": "Spectrum 2026 poster: Meet our judges, Priyantha Bandara"
+  },
+  {
+    "image": "images/announcements/judge-ravi-ranasinghe.jpg",
+    "alt": "Spectrum 2026 poster: Meet our judges, Ravi Ranasinghe"
+  },
+  {
+    "image": "images/announcements/judge-ravisara-jayamanna.jpg",
+    "alt": "Spectrum 2026 poster: Meet our judges, Ravisara Jayamanna"
   }
 ];
 

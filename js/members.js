@@ -67,7 +67,7 @@
         ic.innerHTML=NOTE;
         top.append(ic,el('span','cm-no',String(i+1).padStart(2,'0')));
         const rows=el('div','cm-rows');
-        rows.append(row('Role',m.role));
+        rows.append(row('Position',m.role));
         if(m.phone)rows.append(row('Phone',m.phone,'tel:'+m.phone.replace(/[^\d+]/g,'').replace(/^0/,'+94')));
         body.append(top,el('h4','cm-name',m.name),rows);
         card.append(ph,body);cg.append(card);

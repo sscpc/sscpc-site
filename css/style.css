@@ -249,7 +249,7 @@ button.btn.ghost{border-color:currentColor}
 .intro{position:relative;color:#f4f1e4;padding:clamp(3.5rem,8vw,6rem) 0;background:radial-gradient(50% 80% at 90% 100%,rgba(0,0,0,.45),transparent 70%),#07162a;border-top:3px solid;border-image:linear-gradient(90deg,#02060d,#6cc8ff,#f4f1e4) 1}
 .intro-grid{display:grid;gap:2rem}
 @media(min-width:820px){.intro-grid{grid-template-columns:1fr 1.25fr;gap:4rem;align-items:center}}
-.intro .motto{margin:0;font-weight:800;font-size:clamp(1.6rem,7.5vw,2.8rem);letter-spacing:.1em;line-height:1.3;text-transform:uppercase;text-shadow:0 0 18px rgba(108,200,255,.6)}
+.intro .motto{margin:0;font-weight:800;font-size:clamp(1.6rem,7.5vw,2.8rem);letter-spacing:.1em;line-height:1.3;text-transform:uppercase}
 .intro .motto::after{display:none}
 .intro .motto span{display:block}
 .intro-text p:not(.closer){text-transform:uppercase;letter-spacing:.05em}
