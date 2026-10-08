@@ -61,7 +61,7 @@ html.jd-lock{overflow:hidden}
 .jd-bar-l span:last-child{display:none}
 
 /* shared bits */
-.jd-lab{display:flex;align-items:center;gap:.8rem;margin:0 0 1.6rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--glow)}
+.jd-lab{display:flex;align-items:center;gap:.8rem;margin:0 0 1.6rem;font-family:'Poppins',sans-serif;font-weight:300;font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--glow)}
 .jd-lab i{display:block;width:2.2rem;height:1px;background:currentColor}
 .jd-ph-t{color:rgba(180,202,230,.55)!important;font-style:italic}
 [data-r]{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--d,0s)}
