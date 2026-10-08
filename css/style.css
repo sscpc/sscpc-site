@@ -1100,3 +1100,13 @@ html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:vi
 .partner-logo{display:block;width:200px;max-width:70%;height:auto}
 .sel-partner-t{margin:0;font-size:.82rem;line-height:1.8;color:#b4cae6}
 @media(prefers-reduced-motion:reduce){.judge-ph img,.judge-ph{transition:none}.judge:hover .judge-ph img{transform:none}}
+
+/* ---------- tab change: light sweep (see js/router.js) ---------- */
+#tsweep{position:fixed;inset:0;z-index:9990;display:none;overflow:hidden;pointer-events:auto;touch-action:none}
+#tsweep.on{display:block}
+#tsweep>div{position:absolute;inset:0;clip-path:polygon(0 0,0 0,0 0);-webkit-clip-path:polygon(0 0,0 0,0 0);will-change:clip-path}
+#tsweep .ts-panel{background:var(--bg,#030b16)}
+#tsweep .ts-glow{background:var(--glow,#6cc8ff);opacity:.16}
+#tsweep .ts-line{background:var(--glow,#6cc8ff);opacity:.95}
+#tsweep .ts-trail{background:var(--glow,#6cc8ff);opacity:.5}
+@media(prefers-reduced-motion:reduce){#tsweep{display:none!important}}
