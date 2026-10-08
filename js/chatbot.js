@@ -553,71 +553,38 @@
 
   /* ------------------------------------------------------------------ PDFs */
   const clean = v => String(v == null ? '' : v).replace(/[“”]/g, '"').replace(/[‘’]/g, "'").replace(/[–—]/g, '-').replace(/…/g, '...').replace(/[^\x20-\x7E\u00A0-\u00FF\n]/g, '').trim();
-  function logoData() {
-    return new Promise(res => {
-      try {
-        const img = new Image();
-        img.onload = () => { try { const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight; c.getContext('2d').drawImage(img, 0, 0); res(c.toDataURL('image/png')); } catch (e) { res(null); } };
-        img.onerror = () => res(null);
-        img.src = 'images/logo.png';
-      } catch (e) { res(null); }
-    });
-  }
-  async function newDoc(title, subtitle) {
-    if (!window.jspdf) { addMsg('bot', 'The PDF tool is still loading. Please try again in a moment.'); return null; }
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-    const W = 210, logo = await logoData();
-    doc.setFillColor(4, 16, 30); doc.rect(0, 0, W, 38, 'F');
-    doc.setFillColor(40, 130, 230); doc.rect(0, 38, W, 2, 'F');
-    if (logo) doc.addImage(logo, 'PNG', 14, 7, 24, 24);
-    doc.setTextColor(244, 241, 228); doc.setFont('helvetica', 'bold'); doc.setFontSize(20); doc.text('SSCPC', 44, 18);
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.text("St. Sylvester's College Photography Club", 44, 24.5);
-    doc.setFontSize(11); doc.text(clean(title), 44, 31);
-    doc.setTextColor(60, 66, 100);
-    return { doc: doc, y: 52, W: W, H: 297 };
-  }
-  function footer(doc, W) {
-    const n = doc.getNumberOfPages();
-    for (let i = 1; i <= n; i++) {
-      doc.setPage(i); doc.setFontSize(8); doc.setTextColor(120, 125, 150);
-      doc.text(SITE_URL.replace('https://', '') + '  |  ' + EMAIL, 14, 290);
-      doc.text('Page ' + i + ' of ' + n, W - 14, 290, { align: 'right' });
-    }
-  }
-  function para(c, text, opt) {
-    opt = opt || {};
-    const { doc } = c, size = opt.size || 10, lh = size * 0.5, x = opt.x || 14, w = 182 - (x - 14);
-    doc.setFont('helvetica', opt.bold ? 'bold' : 'normal'); doc.setFontSize(size);
-    if (opt.color) doc.setTextColor.apply(doc, opt.color);
-    const lines = doc.splitTextToSize(clean(text), w);
-    lines.forEach(ln => { if (c.y > 278) { doc.addPage(); c.y = 20; } doc.text(ln, x, c.y); c.y += lh + 0.9; });
-    c.y += opt.after || 0;
-  }
   async function tipsPdf() {
-    const c = await newDoc('Photography Tips Cheat Sheet'); if (!c) return;
-    para(c, 'Quick, practical tips from the club. Practice a little every day and keep experimenting.', { size: 10, after: 4, color: [90, 94, 130] });
-    TIPS.forEach(t => {
-      if (c.y > 252) { c.doc.addPage(); c.y = 20; }
-      c.doc.setDrawColor(40, 130, 230); c.doc.setLineWidth(0.6); c.doc.line(14, c.y - 3.5, 14, c.y + 1);
-      para(c, t.title, { size: 12.5, bold: true, color: [8, 30, 60], after: 1, x: 17 });
-      t.pts.forEach(p => para(c, '-  ' + p, { size: 9.5, color: [50, 55, 90], x: 18 }));
-      c.y += 3;
+    if (!window.jspdf || !window.SSCPCPdf) { addMsg('bot', 'The PDF tool is still loading. Please try again in a moment.'); return; }
+    const K = window.SSCPCPdf, x = await K.create('Photography Tips Cheat Sheet');
+    K.para(x, 'Quick, practical tips from the club. Practice a little every day and keep experimenting.', { size: 10, color: K.C.muted, after: 6 });
+    TIPS.forEach((t, i) => {
+      K.ensure(x, 30);
+      const d = x.doc, y = x.y;
+      d.setFillColor(125, 21, 38); d.circle(18, y - 1.2, 3.6, 'F');
+      d.setTextColor(244, 241, 228); d.setFont(x.f.bold[0], x.f.bold[1]); d.setFontSize(8);
+      d.text(String(i + 1), 18, y + .2, { align: 'center' });
+      K.para(x, t.title, { size: 12, bold: true, color: K.C.ink, x: 25, after: 1.5 });
+      t.pts.forEach(p => K.para(x, '-  ' + p, { size: 9.4, color: [50, 55, 90], x: 26, lh: 5, after: .6 }));
+      x.y += 4;
     });
-    footer(c.doc, c.W);
-    c.doc.save('SSCPC-Photography-Tips.pdf');
+    K.finish(x);
+    x.doc.save('SSCPC-Photography-Tips.pdf');
   }
   async function chatPdf() {
     const turns = history.filter(h => h.text);
     if (!turns.length) { addMsg('bot', 'There is nothing to save yet. Ask me something first!'); return; }
-    const c = await newDoc('Chat with the SSCPC Assistant'); if (!c) return;
-    para(c, 'Saved on ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }), { size: 9, color: [120, 125, 150], after: 3 });
+    if (!window.jspdf || !window.SSCPCPdf) { addMsg('bot', 'The PDF tool is still loading. Please try again in a moment.'); return; }
+    const K = window.SSCPCPdf, x = await K.create('Chat with the SSCPC Assistant');
+    K.meta(x, 'Conversation', turns.length + (turns.length === 1 ? ' message' : ' messages'), K.today());
     turns.forEach(h => {
-      para(c, h.role === 'user' ? 'You' : 'SSCPC Assistant', { size: 9, bold: true, color: h.role === 'user' ? [40, 100, 190] : [8, 30, 60] });
-      para(c, h.text.replace(/\*\*/g, ''), { size: 10, color: [50, 55, 90], after: 3 });
+      const me = h.role === 'user';
+      K.tag(x, me ? 'You' : 'SSCPC Assistant', { right: me, color: me ? K.C.blue : K.C.maroon });
+      K.bubble(x, h.text.replace(/\*\*/g, ''), me
+        ? { right: true, fill: [226, 238, 252], color: K.C.ink, w: 150 }
+        : { fill: K.C.paper, bar: K.C.maroon, color: K.C.ink, w: 160 });
     });
-    footer(c.doc, c.W);
-    c.doc.save('SSCPC-Chat.pdf');
+    K.finish(x);
+    x.doc.save('SSCPC-Chat.pdf');
   }
   function doAction(a) {
     if (a === 'tipsPdf') tipsPdf(); else if (a === 'chatPdf') chatPdf(); else if (a === 'close') closePanel();

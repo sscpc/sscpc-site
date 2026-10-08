@@ -5,50 +5,20 @@
   const confirmBox=f.querySelector('[name="confirm"]');
   const clean=v=>String(v==null?'':v).replace(/[^\x20-\x7E\u00A0-\u00FF\n]/g,'?').trim();
 
-  async function logoData(){
-    try{
-      const img=document.querySelector('.brand img');
-      if(img.decode)await img.decode();
-      const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
-      c.getContext('2d').drawImage(img,0,0);return c.toDataURL('image/png');
-    }catch(e){return null}
-  }
-
-  /* Builds a PDF copy of the registration, same style as the Join Us
+  /* Builds a PDF copy of the registration, in the same design as the Join Us
      application PDF, so a visitor school always has a copy of what they
      submitted -- to keep, print, or send to the organisers on WhatsApp. */
   async function makePdf(d,ref){
-    const {jsPDF}=window.jspdf;
-    const doc=new jsPDF({unit:'mm',format:'a4'}),W=210;
-    const logo=await logoData();
-    doc.setFillColor(18,24,63);doc.rect(0,0,W,40,'F');
-    doc.setFillColor(125,21,38);doc.rect(0,40,W,2.5,'F');
-    if(logo)doc.addImage(logo,'PNG',14,8,24,24);
-    doc.setTextColor(244,241,228);doc.setFont('helvetica','bold');doc.setFontSize(22);doc.text('SSCPC',44,20);
-    doc.setFont('helvetica','normal');doc.setFontSize(10);
-    doc.text("St. Sylvester's College Photography Club",44,27);
-    doc.text('Spectrum Visitor Registration',44,33);
-    let y=56;
-    doc.setTextColor(90,94,130);doc.setFontSize(9);
-    doc.text('Reference: '+ref,14,y);
-    doc.text('Date: '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}),W-14,y,{align:'right'});
-    y+=10;
-    const rows=[['School name',d.school],['Teacher in charge name',d.mic_name],['Teacher in charge telephone number',d.mic_phone],
-      ['Club email',d.email],["President's name",d.president_name],["President's phone / WhatsApp",d.phone],['Students attending',d.students],['Teachers attending',d.teachers],
-      ['Student names',d.student_names],['Message',d.message]];
-    rows.forEach(([k,v])=>{
-      v=clean(v);if(!v)return;
-      const lines=doc.splitTextToSize(v,W-28);
-      if(y+8+lines.length*5.5>275){doc.addPage();y=20}
-      doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(125,21,38);doc.text(k.toUpperCase(),14,y);
-      doc.setFont('helvetica','normal');doc.setFontSize(11);doc.setTextColor(18,24,63);doc.text(lines,14,y+6);
-      y+=6+lines.length*5.5+4;
-      doc.setDrawColor(216,207,159);doc.line(14,y-2,W-14,y-2);y+=2;
-    });
-    doc.setFontSize(9);doc.setTextColor(90,94,130);
-    doc.text('Please keep this as your copy of the registration.',14,288);
+    const K=window.SSCPCPdf;
+    const x=await K.create('Spectrum Visitor Registration');
+    K.meta(x,'Reference',ref,K.today());
+    K.fields(x,'School',[['School name',d.school,{full:true}],['Teacher in charge name',d.mic_name],['Teacher in charge telephone number',d.mic_phone]]);
+    K.fields(x,'Club contact',[['Club email',d.email,{full:true}],["President's name",d.president_name],["President's phone / WhatsApp",d.phone]]);
+    K.fields(x,'Attendance',[['Students attending',d.students],['Teachers attending',d.teachers],['Student names',d.student_names,{full:true}],['Message',d.message,{full:true}]]);
+    K.note(x,'Please keep this as your copy of the registration. Bring it, or show it on your phone, when you arrive at Spectrum.');
+    K.finish(x);
     const name='SSCPC-Registration-'+clean(d.school).replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.pdf';
-    return {blob:doc.output('blob'),name};
+    return {blob:x.doc.output('blob'),name};
   }
 
   /* Students attending must exactly match the number of student names filled

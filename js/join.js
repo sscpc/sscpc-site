@@ -4,47 +4,18 @@
   const $=id=>document.getElementById(id);
   const clean=v=>String(v==null?'':v).replace(/[^\x20-\x7E\u00A0-\u00FF\n]/g,'?').trim();
 
-  async function logoData(){
-    try{
-      const img=document.querySelector('.brand img');
-      if(img.decode)await img.decode();
-      const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
-      c.getContext('2d').drawImage(img,0,0);return c.toDataURL('image/png');
-    }catch(e){return null}
-  }
-
   async function makePdf(d,ref){
-    const {jsPDF}=window.jspdf;
-    const doc=new jsPDF({unit:'mm',format:'a4'}),W=210;
-    const logo=await logoData();
-    doc.setFillColor(18,24,63);doc.rect(0,0,W,40,'F');
-    doc.setFillColor(125,21,38);doc.rect(0,40,W,2.5,'F');
-    if(logo)doc.addImage(logo,'PNG',14,8,24,24);
-    doc.setTextColor(244,241,228);doc.setFont('helvetica','bold');doc.setFontSize(22);doc.text('SSCPC',44,20);
-    doc.setFont('helvetica','normal');doc.setFontSize(10);
-    doc.text("St. Sylvester's College Photography Club",44,27);
-    doc.text('Membership Application',44,33);
-    let y=56;
-    doc.setTextColor(90,94,130);doc.setFontSize(9);
-    doc.text('Membership No.: '+(ref||'pending -- contact the club'),14,y);
-    doc.text('Date: '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}),W-14,y,{align:'right'});
-    y+=10;
-    const rows=[['Full name',d.name],['Grade',d.grade],['Admission number',d.admission],['Phone / WhatsApp',d.phone],['Email',d.email],
-      ['Parent / guardian',d.guardian],['Guardian phone',d.guardian_phone],['Photography experience',d.experience],
-      ['Equipment',d.equipment],['Interests',d.interests],['Why I want to join',d.why]];
-    rows.forEach(([k,v])=>{
-      v=clean(v);if(!v)return;
-      const lines=doc.splitTextToSize(v,W-28);
-      if(y+8+lines.length*5.5>275){doc.addPage();y=20}
-      doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(125,21,38);doc.text(k.toUpperCase(),14,y);
-      doc.setFont('helvetica','normal');doc.setFontSize(11);doc.setTextColor(18,24,63);doc.text(lines,14,y+6);
-      y+=6+lines.length*5.5+4;
-      doc.setDrawColor(216,207,159);doc.line(14,y-2,W-14,y-2);y+=2;
-    });
-    doc.setFontSize(9);doc.setTextColor(90,94,130);
-    doc.text('Please send this application to the President of SSCPC.',14,288);
+    const K=window.SSCPCPdf;
+    const x=await K.create('Membership Application');
+    K.meta(x,'Membership No.',ref||'Pending - the club will confirm',K.today());
+    K.fields(x,'Applicant',[['Full name',d.name],['Grade',d.grade],['Admission number',d.admission],['Phone / WhatsApp',d.phone],['Email',d.email]]);
+    K.fields(x,'Parent / guardian',[['Parent / guardian',d.guardian],['Guardian phone',d.guardian_phone]]);
+    K.fields(x,'About your photography',[['Photography experience',d.experience],['Equipment',d.equipment],['Interests',d.interests,{full:true}],['Why I want to join',d.why,{full:true}]]);
+    K.signatures(x,['Applicant signature','Parent / guardian signature','Date']);
+    K.note(x,'Please send this application to the President of SSCPC, or message the club on WhatsApp with your membership number.');
+    K.finish(x);
     const name='SSCPC-Application-'+clean(d.name).replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.pdf';
-    return {blob:doc.output('blob'),name};
+    return {blob:x.doc.output('blob'),name};
   }
 
   /* "Why do you want to join?": None / Prefer not to say quick option */
