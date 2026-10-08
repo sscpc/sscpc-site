@@ -10,8 +10,6 @@
    achIntro      (optional) one line above the achievements list
    lead          (optional) the one-sentence standfirst under the title; if empty, the first sentence of the bio is used
    achievements  5–8 items:  {tag:'Award', year:'2021', text:'What it was'}   (tag and year are both optional)
-   quote         {text:'...', by:'Name'} — leave text empty until approved
-   links         instagram / website / youtube / facebook — full https:// URLs
    portraitCredit  e.g. 'Photo: Name'
    works         4–6 photographs, each made with W(src, title, caption, credit)
                  e.g. W('images/spectrum/judges/priyantha-bandara/work-1.jpg',
@@ -58,8 +56,6 @@
         {tag:"Workshop Leader", year:"", text:"Successfully organized and conducted photography tours and coaching modules locally and globally."}
       ],
       achIntro: "",
-      quote: { text: '', by: '' },
-      links: { instagram: '', website: '', youtube: '', facebook: '' },
       works: [
         W('images/spectrum/judges/priyantha-bandara/work-1.jpg','','','Photo: Priyantha Bandara',1536,1025),
         W('images/spectrum/judges/priyantha-bandara/work-2.jpg','','','Photo: Priyantha Bandara',1024,1536),
@@ -96,8 +92,6 @@
         {tag:"Key Award", year:"", text:"Winner of prestigious local honors, including the D. C. L. Amarasinghe Memorial Challenge Trophy and Henry Rajakaruna MFIAP Challenge Trophy."}
       ],
       achIntro: "Ravi Ranasinghe has accumulated dozens of national and international awards:",
-      quote: { text: '', by: '' },
-      links: { instagram: '', website: '', youtube: '', facebook: '' },
       works: [
         W('images/spectrum/judges/ravi-ranasinghe/work-1.jpg','','','Photo: Ravi Ranasinghe',1536,1149),
         W('images/spectrum/judges/ravi-ranasinghe/work-2.jpg','','','Photo: Ravi Ranasinghe',1536,1068),
@@ -132,8 +126,6 @@
         {tag:"Awards & Recognition", year:"", text:"Recognized among the Top 5 Monkey Photographers in the 35Awards."}
       ],
       achIntro: "",
-      quote: { text: '', by: '' },
-      links: { instagram: '', website: '', youtube: '', facebook: '' },
       works: [
         W('images/spectrum/judges/ravisara-jayamanna/work-1.jpg','','','Photo: Ravisara Jayamanna',1185,1536),
         W('images/spectrum/judges/ravisara-jayamanna/work-2.jpg','','','Photo: Ravisara Jayamanna',1322,1536),
@@ -256,17 +248,6 @@
     }
     h += '</div></section>';
 
-    /* ---- 04 quote ---- */
-    var hasQ = j.quote && j.quote.text;
-    if (hasQ || PH) {
-      h += '<section class="jd-quote' + (hasQ ? '' : ' is-ph') + '" aria-label="In their words"><div class="jd-quote-in">' +
-        '<p class="jd-lab" data-r><i></i>In their words</p>' +
-        '<span class="jd-qm" aria-hidden="true">&ldquo;</span>' +
-        (hasQ ? '<blockquote data-r><p>' + esc(j.quote.text) + '</p><footer>' + esc(j.quote.by || (j.first + ' ' + j.last)) + '</footer></blockquote>'
-              : '<blockquote data-r><p>A personal quote about photography &mdash; to be added.</p><footer>' + esc(j.first + ' ' + j.last) + '</footer></blockquote>') +
-      '</div></section>';
-    }
-
     /* ---- 05 gallery ---- */
     if (works.length) {
       h += '<section class="jd-gal" aria-label="Selected works"><div class="jd-gal-in">' +
@@ -275,25 +256,8 @@
       '</div></section>';
     }
 
-    /* ---- 06 credits · links · next ---- */
-    var credits = works.filter(function (w) { return w.title || w.credit || PH; });
-    var L = j.links || {}, linkDefs = [['instagram', 'Instagram'], ['website', 'Website'], ['youtube', 'YouTube'], ['facebook', 'Facebook']];
-    var anyLink = linkDefs.some(function (d) { return safeUrl(L[d[0]]); });
+    /* ---- 06 next judge / back ---- */
     h += '<footer class="jd-end"><div class="jd-end-in">';
-    if (credits.length) {
-      h += '<div class="jd-credits"><p class="jd-lab" data-r><i></i>Photo Credits</p><ol>' +
-        credits.map(function (w, i) {
-          return '<li data-r' + (w.title || w.credit ? '' : ' class="is-ph"') + '><i>' + pad(i + 1) + '</i><span>' + (w.title ? esc(w.title) : '<em class="jd-ph-t">Untitled</em>') + '</span><em>' + (w.credit ? esc(w.credit) : (PH ? '<span class="jd-ph-t">credit</span>' : '')) + '</em></li>';
-        }).join('') + '</ol></div>';
-    }
-    if (anyLink || PH) {
-      h += '<div class="jd-links"><p class="jd-lab" data-r><i></i>Follow the work</p><ul>' +
-        linkDefs.filter(function (d) { return PH || safeUrl(L[d[0]]); }).map(function (d) {
-          var u = safeUrl(L[d[0]]);
-          return u ? '<li data-r><a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer"><span>' + d[1] + '</span>' + ICON_OUT + '</a></li>'
-                   : '<li data-r class="is-ph"><span><span>' + d[1] + '</span><small class="jd-ph-t">link to be added</small></span></li>';
-        }).join('') + '</ul></div>';
-    }
     h += '<div class="jd-next" data-r><p class="jd-lab"><i></i>Next judge</p>' +
       '<button type="button" class="jd-next-b" data-jd-go="' + ((idx + 1) % JUDGES.length) + '"><span class="jd-next-n">' + nextN + '</span><span class="jd-next-name">' + esc(next.first) + '<br>' + esc(next.last) + '</span>' + ICON_ARROW + '</button>' +
       '<button type="button" class="jd-back" data-jd-close>' + '<span>Back to the Judges</span></button></div>';

@@ -274,9 +274,7 @@ html.jd-lock{overflow:hidden}
   .jd-plates>.jd-plate .jd-pl-cap{max-width:90%}
 
   .jd-end-in{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:1.5rem;align-items:start}
-  .jd-credits{grid-column:1/5}
-  .jd-links{grid-column:5/9}
-  .jd-next{grid-column:9/13}
+  .jd-next{grid-column:5/13}
 }
 @media(min-width:1000px) and (max-height:760px){.jd-hero{min-height:46rem}}
 @media(min-width:1500px){.jd-name{font-size:min(11.4vw,14.5rem)}}
