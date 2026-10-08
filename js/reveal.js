@@ -82,7 +82,7 @@
   window.addEventListener('hashchange',function(){requestAnimationFrame(replayActive)});
   document.addEventListener('click',function(e){
     var a=e.target.closest&&e.target.closest('.menu a, .brand, .foot-nav a');
-    if(a)requestAnimationFrame(function(){requestAnimationFrame(replayActive)});
+    if(a&&!e.defaultPrevented)requestAnimationFrame(function(){requestAnimationFrame(replayActive)});   /* a tab link that plays the light sweep replays when the new tab shows instead */
   });
 
   /* new elements added while the page is running */
