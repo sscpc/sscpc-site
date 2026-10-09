@@ -8,11 +8,12 @@
 <title>SSCPC Album Builder</title>
 <link rel="stylesheet" href="../css/style.css">
 <style>
+@font-face{font-family:'Bonsad';font-weight:100 900;font-style:normal;font-display:swap;src:url(../fonts/bonsad-regular.otf) format('opentype')}
+@font-face{font-family:'Quick Zip';font-weight:100 900;font-style:normal;font-display:swap;src:url(../fonts/quick-zip.otf) format('opentype')}
 @font-face{font-family:'Roboto';font-weight:400;font-style:normal;font-display:swap;src:url(../fonts/roboto-regular.ttf) format('truetype')}
-@font-face{font-family:'Roboto';font-weight:500;font-style:normal;font-display:swap;src:url(../fonts/roboto-medium.ttf) format('truetype')}
 @font-face{font-family:'Roboto';font-weight:600 900;font-style:normal;font-display:swap;src:url(../fonts/roboto-bold.ttf) format('truetype')}
-@font-face{font-family:'Roboto Heading';font-weight:100 900;font-style:normal;font-display:swap;src:url(../fonts/roboto-bold.ttf) format('truetype')}
-:root{--body:'Roboto','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif;--heading:'Roboto Heading','Roboto','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif}
+:root{--body:'Bonsad','Roboto','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif;--heading:'Quick Zip','Roboto','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif}
+h1,h2,h3,h4,.ttl,legend,.brand{font-family:var(--heading)}
 </style>
 <style>
 main{max-width:76rem;margin:0 auto;padding:clamp(1rem,3vw,2rem) clamp(1rem,3vw,2rem) 7rem}
@@ -35,7 +36,7 @@ label.f{display:grid;gap:.25rem;margin-top:.8rem;font-size:.64rem;letter-spacing
 @media(min-width:60rem){.ed{grid-template-columns:minmax(0,1fr) 17rem}.pv{position:sticky;top:1rem;align-self:start}}
 .box{background:var(--surface);border:1px solid var(--line);padding:1rem 1.1rem;margin-top:1rem}
 .box h3{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.pv .album .cap{transform:none;max-height:none;overflow:visible;box-shadow:none;transition:none;line-height:1.35;font-size:inherit}.pv .aw{pointer-events:none}.pv .album{cursor:default}
+.pv .album .cap{transform:none;max-height:none;overflow:visible;box-shadow:none;transition:none;line-height:1.35;font-size:inherit}.pv .aw{pointer-events:none;--body:'Poppins','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif}.pv .album{cursor:default}
 .bar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.8rem 0}.bar .note{flex:1;min-width:8rem}
 .drop{display:block;margin-top:.7rem;border:2px dashed var(--line);padding:1.2rem;text-align:center;color:var(--muted);font-size:.8rem}.drop.over{border-color:var(--glow)}
 .tiles{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fill,minmax(7.5rem,1fr))}
