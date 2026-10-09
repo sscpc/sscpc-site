@@ -154,8 +154,29 @@ function doGet(e) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const cs = CONTACT_SHEET_ID ? SpreadsheetApp.openById(CONTACT_SHEET_ID) : ss;
 
+  // Admin portal: mark a row Handled/New and save a private note (columns "Status" and "Note" are added automatically)
+  if (e.parameter.action === 'set') {
+    const map = { registrations: [ss, 'Registrations'], joins: [ss, 'Join requests'], messages: [cs, 'Messages'] }[e.parameter.sheet];
+    const sh = map && map[0].getSheetByName(map[1]);
+    const row = parseInt(e.parameter.row, 10);
+    if (!sh || !(row >= 2) || row > sh.getLastRow()) return out({ ok: false, error: 'Row not found. Refresh and try again.' });
+    if (String(sh.getRange(row, 1).getDisplayValue()) !== String(e.parameter.ts || '')) return out({ ok: false, error: 'The sheet changed. Refresh and try again.' });
+    const lock = LockService.getScriptLock();
+    lock.waitLock(30000);
+    try {
+      [['Status', e.parameter.status], ['Note', e.parameter.note]].forEach(function (c) {
+        const head = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+        let ix = head.indexOf(c[0]);
+        if (ix < 0) { sh.getRange(1, head.length + 1).setValue(c[0]); ix = head.length; }
+        sh.getRange(row, ix + 1).setValue(c[1] || '');
+      });
+    } finally { lock.releaseLock(); }
+    return out({ ok: true });
+  }
+
   return out({
     ok: true,
+    v: 2,
     registrations: sheetRows(ss, 'Registrations'),
     joins: sheetRows(ss, 'Join requests'),
     messages: sheetRows(cs, 'Messages')
@@ -166,7 +187,7 @@ function sheetRows(ss, name) {
   const sh = ss.getSheetByName(name);
   if (!sh || sh.getLastRow() < 2) return [];
   const v = sh.getDataRange().getDisplayValues(), head = v[0];
-  return v.slice(1).map(r => { const o = {}; head.forEach((c, i) => { if (c) o[c] = r[i]; }); return o; });
+  return v.slice(1).map((r, n) => { const o = { _row: n + 2 }; head.forEach((c, i) => { if (c) o[c] = r[i]; }); return o; });
 }
 
 function out(o) {

@@ -2,194 +2,283 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#030b16">
 <title>SSCPC Album Builder</title>
-<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../css/style.css">
 <style>
-@font-face{font-family:'Grifter';font-weight:100 900;src:url(../fonts/grifter-bold.otf) format('opentype')}
-@font-face{font-family:'Poppins';font-weight:400;src:url(../fonts/poppins-regular.ttf) format('truetype')}
-@font-face{font-family:'Poppins';font-weight:700;src:url(../fonts/poppins-bold.ttf) format('truetype')}
-:root{--ink:#f4f1e4;--muted:#aeb2d3;--line:rgba(244,241,228,.25);--pink:#d4536a}
-*{box-sizing:border-box;margin:0}
-body{background:radial-gradient(60% 40% at 80% 0,rgba(125,21,38,.5),transparent 70%),#080b22;color:var(--ink);font:400 .9rem/1.7 'Poppins','Arial',sans-serif;padding:1.25rem}
-main{max-width:46rem;margin:0 auto}
-h1{font-family:'Grifter',Arial,sans-serif;font-size:1.4rem;letter-spacing:.06em;margin:.5rem 0 .25rem}
-h2{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);margin:2rem 0 .75rem}
-p,li{color:var(--muted)}
-ol{padding-left:1.2rem;margin:.75rem 0}
-.card{border:1px solid var(--line);background:#0b0f2e;padding:1.25rem;margin-top:1rem}
-label{display:block;margin-top:1rem;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-input,select,textarea{width:100%;margin-top:.35rem;padding:.7rem .8rem;background:#080b22;color:var(--ink);border:1px solid var(--line);border-radius:0;font:inherit;font-size:.85rem}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 2px rgba(212,83,106,.4)}
-textarea{min-height:5.5rem}
-.grid{display:grid;gap:0 1rem;grid-template-columns:1fr}
-@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
-button,a.btn{display:inline-block;margin-top:1.25rem;padding:.85rem 1.4rem;background:#f4f1e4;color:#12183f;border:0;font:700 .75rem 'Poppins',sans-serif;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer}
-button.ghost{background:none;color:var(--ink);border:1px solid var(--line);margin-top:.6rem}
-button:disabled{opacity:.5}
-#msg{margin-top:1rem;color:#e9758a}
-.out textarea{min-height:12rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.75rem}
-#thumbs{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem}
-#thumbs button{margin:0;padding:0;width:64px;height:64px;border:2px solid var(--pink);background:none;position:relative}
-#thumbs button img{width:100%;height:100%;object-fit:cover;display:block}
-#thumbs button.off{border-color:var(--line)}
-#thumbs button.off img{opacity:.2}
-#pickbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:.75rem}
-#pickbar button{margin:0;padding:.4rem .8rem;font-size:.65rem}
-#count{color:var(--muted);font-size:.8rem}
-#thumbs{max-height:22rem;overflow:auto}
-progress{width:100%;margin-top:.75rem;accent-color:var(--pink)}
-[hidden]{display:none!important}
+main{max-width:76rem;margin:0 auto;padding:clamp(1rem,3vw,2rem) clamp(1rem,3vw,2rem) 7rem}
+.ttl{font-family:var(--heading);font-size:1.6rem;line-height:1.2}
+.top{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem}.top .ttl{flex:1}
+.note{color:var(--muted);font-size:.78rem;max-width:46rem}
+.sm{padding:.5rem 1.1rem!important;font-size:.66rem!important}
+.in{width:100%;padding:.6rem .75rem;background:var(--surface);color:var(--ink);border:1px solid var(--line);font:inherit;font-size:.85rem;border-radius:0}
+.in:focus{outline:none;border-color:var(--glow);box-shadow:0 0 0 2px color-mix(in srgb,var(--glow) 35%,transparent)}
+textarea.in{min-height:4.5rem}
+label.f{display:grid;gap:.25rem;margin-top:.8rem;font-size:.64rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;font-weight:600}
+.two{display:grid;gap:0 .8rem;grid-template-columns:1fr 1fr}
+.lib{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(10.5rem,1fr))}
+.lib button{all:unset;cursor:pointer;display:block;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.lib button:hover,.lib button:focus-visible{border-color:var(--glow)}
+.lib img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#040f1d}
+.lib span{display:block;padding:.6rem .7rem;font-size:.75rem;line-height:1.35}.lib small{color:var(--muted)}
+.lib .new{display:grid;place-items:center;min-height:12rem;border-style:dashed;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.7rem}
+.ed{display:grid;gap:1.5rem;grid-template-columns:1fr}
+@media(min-width:60rem){.ed{grid-template-columns:minmax(0,1fr) 17rem}.pv{position:sticky;top:1rem;align-self:start}}
+.box{background:var(--surface);border:1px solid var(--line);padding:1rem 1.1rem;margin-top:1rem}
+.box h3{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pv .album .cap{transform:none;max-height:none;overflow:visible;box-shadow:none;transition:none;line-height:1.35;font-size:inherit}.pv .aw{pointer-events:none}.pv .album{cursor:default}
+.bar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.8rem 0}.bar .note{flex:1;min-width:8rem}
+.drop{display:block;margin-top:.7rem;border:2px dashed var(--line);padding:1.2rem;text-align:center;color:var(--muted);font-size:.8rem}.drop.over{border-color:var(--glow)}
+.tiles{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fill,minmax(7.5rem,1fr))}
+.t{position:relative;aspect-ratio:1;background:#040f1d;border:2px solid var(--glow);cursor:grab;overflow:hidden}
+.t.off{border-color:var(--line)}.t.off img{opacity:.2}.t.cov{border-color:#ffd25a}
+.t img{width:100%;height:100%;object-fit:cover;display:block}
+.t .b{position:absolute;display:flex;gap:2px}.t .b.a{left:2px;bottom:2px}.t .b.z{right:2px;top:2px}
+.t button{all:unset;cursor:pointer;min-width:1.5rem;height:1.5rem;display:grid;place-items:center;background:rgba(3,10,20,.82);color:#f4f1e4;font-size:.7rem}
+.t button:hover{background:#000}.t .st.on{color:#ffd25a}
+.t em{position:absolute;left:2px;top:2px;background:#c0392b;color:#fff;font:700 .55rem var(--body);padding:.1rem .3rem;font-style:normal}
+.act{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--navbg);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:.7rem clamp(1rem,3vw,2rem)}
+.act>div{max-width:76rem;margin:0 auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+#msg{flex:1;min-width:10rem;font-size:.78rem;color:var(--muted)}#msg.err{color:#ff8a8a}
+progress{width:100%;accent-color:var(--glow)}[hidden]{display:none!important}
+.dl a{display:inline-block;margin:.3rem .4rem 0 0}
+details.gh{border:1px solid var(--line);background:var(--surface);padding:.6rem .9rem;margin-bottom:1rem}details.gh summary{cursor:pointer;font-size:.75rem;font-weight:600}
 </style>
 </head>
 <body>
-<main>
-  <h1>SSCPC Album Builder</h1>
-  <p>Add a new album to the website without coding. Nothing is uploaded anywhere: your photos are prepared on this device.</p>
-  <ol>
-    <li>Fill in the form, choose the photos (any number, 200+ is fine), untick the ones you do not want, and press <b>Prepare album</b>.</li>
-    <li>Download the ZIP and unzip it <b>into the website folder</b> (it adds a folder inside <code>images/albums</code>).</li>
-    <li>Copy the album code, open <code>js/data.js</code>, and paste it just after the line <code>const ALBUMS = [</code>.</li>
-    <li>Upload the website folder to Netlify again.</li>
-  </ol>
-
-  <form class="card" id="f">
-    <label>Album or event name *<input id="name" required></label>
-    <label>Date of the event<input id="date" type="date"></label>
-    <label>Venue<input id="venue"></label>
-    <div class="grid">
-      <label>Captured by (one name per line)<textarea id="cap"></textarea></label>
-      <label>Edited by (one name per line)<textarea id="edit"></textarea></label>
-    </div>
-    <label>Link to the full album on Facebook (optional)<input id="fb" type="url" placeholder="https://www.facebook.com/..."></label>
-    <label>Album poster / cover (optional, first photo is used if empty)<input id="cover" type="file" accept="image/*"></label>
-    <label>Photos * (choose all of them, then untick the weak ones)<input id="photos" type="file" accept="image/*" multiple required></label>
-    <div id="pickbar" hidden><span id="count"></span><button type="button" class="ghost" id="all">Select all</button><button type="button" class="ghost" id="none">Select none</button></div>
-    <div id="thumbs"></div>
-    <label style="display:flex;gap:.6rem;align-items:center"><input id="ev" type="checkbox" checked style="width:auto;margin:0"> Also create an entry for the Events page</label>
-    <button type="submit" id="go">Prepare album</button>
-    <progress id="bar" value="0" max="1" hidden></progress>
-    <p id="msg" role="status"></p>
-  </form>
-
-  <section class="out" id="out" hidden>
-    <h2>1. Download the photos</h2>
-    <a class="btn" id="dl">Download ZIP</a>
-    <h2>2. Album code for js/data.js (after <code>const ALBUMS = [</code>)</h2>
-    <textarea id="code" readonly style="width:100%"></textarea>
-    <button type="button" class="ghost" data-copy="code">Copy album code</button>
-    <div id="evbox">
-      <h2>3. Event code for js/data.js (after <code>const EVENTS = [</code>)</h2>
-      <textarea id="evcode" readonly style="width:100%"></textarea>
-      <button type="button" class="ghost" data-copy="evcode">Copy event code</button>
-    </div>
-  </section>
+<main id="m">
+  <div class="top"><div class="ttl">Album Builder</div>
+    <button class="btn ghost sm" id="th" type="button">Light / Dark</button><a class="btn ghost sm" href="../admin/index.html">Admin</a></div>
+  <details class="gh" id="gh"><summary id="ghs">GitHub connection</summary>
+    <p class="note" style="margin:.5rem 0">Needed to publish straight to the site. Uses the same saved settings as the admin portal, so if Publish works there it works here. Token: fine-grained, this repo only, Contents read and write. Without it you can still download a ZIP.</p>
+    <div class="two"><label class="f">Repository (owner/name)<input class="in" id="g-repo"></label><label class="f">Branch<input class="in" id="g-br" placeholder="main"></label></div>
+    <label class="f">Access token<input class="in" id="g-tok" type="password" autocomplete="off"></label>
+    <button class="btn sm" id="g-save" type="button" style="margin-top:.8rem">Save and check</button> <span class="note" id="g-st"></span></details>
+  <div id="view"></div>
 </main>
 <script src="zip.js"></script>
 <script>
-const $ = id => document.getElementById(id);
-const pad = n => String(n).padStart(2, '0');
-const slugify = (s, d) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('album-' + ((d || 'new').replace(/-/g, '')));
-const lines = s => s.split('\n').map(x => x.trim()).filter(Boolean);
-const load = f => new Promise((ok, no) => { const u = URL.createObjectURL(f), i = new Image(); i.onload = () => { URL.revokeObjectURL(u); ok(i); }; i.onerror = () => no(new Error('Cannot read ' + f.name)); i.src = u; });
-const q = s => "'" + String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'";
-const FULL = 1280, THUMB = 480, COVER_W = 900;
+const $=s=>document.querySelector(s),h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const FULL=1280,THUMB=480,COVER=900,BATCH=12e6,PART=60e6;
+let D=null,E=null,GH=JSON.parse(localStorage.gh||'{}'),busy=false;
+const NAMES=t=>[...t.matchAll(/^const (\w+) =/gm)].map(m=>m[1]);
+const parse=t=>new Function(t+';return {'+NAMES(t).join(',')+'}')();
+const ser=d=>'/* SSCPC site data. Written by the admin portal (admin/index.html). Notes: README.txt */\n\n'+Object.keys(d).map(k=>`const ${k} = ${JSON.stringify(d[k],null,2)};`).join('\n\n')+'\n';
+const lines=s=>s.split('\n').map(x=>x.trim()).filter(Boolean);
+const slugify=(s,d)=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||('album-'+(d||'new').replace(/-/g,''));
+const dirOf=a=>(a.photos[0]||a.cover||'').split('/').slice(0,-1).join('/').replace(/\/thumbs$/,'');
+const say=(t,err)=>{const m=$('#msg');if(m){m.textContent=t;m.className=err?'err':''}};
+const b64=b=>new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result.split(',')[1]);r.readAsDataURL(b)});
+const toBlob=(c,q)=>new Promise((ok,no)=>c.toBlob(b=>b?ok(b):no(Error('Could not save a photo')),'image/jpeg',q));
 
-function encode(canvas, quality) {
-  return new Promise((ok, no) => canvas.toBlob(async b => {
-    if (!b) return no(new Error('Could not save a photo'));
-    ok(new Uint8Array(await b.arrayBuffer()));
-  }, 'image/jpeg', quality));
+/* ---------- images ---------- */
+async function bmp(src,w){ // decoded image, optionally already shrunk to width w (honours EXIF rotation)
+  try{return await createImageBitmap(src,w?{resizeWidth:w,resizeQuality:'medium',imageOrientation:'from-image'}:{imageOrientation:'from-image'})}
+  catch(e){const u=URL.createObjectURL(src);try{const i=new Image();i.src=u;await i.decode();return i}finally{setTimeout(()=>URL.revokeObjectURL(u),3e4)}}}
+const dim=i=>[i.naturalWidth||i.width,i.naturalHeight||i.height];
+function scaled(src,max,exactW){const[w,h]=dim(src),k=exactW?Math.min(1,exactW/w):Math.min(1,max/Math.max(w,h)),c=document.createElement('canvas');
+  c.width=Math.round(w*k);c.height=Math.round(h*k);const x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(src,0,0,c.width,c.height);return c}
+async function make(file){const im=await bmp(file),big=scaled(im,FULL),sm=scaled(big,THUMB);im.close&&im.close();
+  const r={full:await toBlob(big,.78),thumb:await toBlob(sm,.75)};big.width=sm.width=0;return r}
+async function makeCover(blob){const im=await bmp(blob),c=scaled(im,0,COVER),b=await toBlob(c,.8);im.close&&im.close();c.width=0;return b}
+
+/* tile previews + duplicate detection (small decode of every photo, a few at a time) */
+async function prep(t){
+  const im=await bmp(t.file,200),c=scaled(im,200);t.url=URL.createObjectURL(await toBlob(c,.6));
+  const g=document.createElement('canvas');g.width=9;g.height=8;const x=g.getContext('2d');x.drawImage(c,0,0,9,8);
+  const p=x.getImageData(0,0,9,8).data,v=i=>p[i*4]*.3+p[i*4+1]*.59+p[i*4+2]*.11;let s='';
+  for(let y=0;y<8;y++)for(let k=0;k<8;k++)s+=v(y*9+k)>v(y*9+k+1)?1:0;t.hash=s;im.close&&im.close();
 }
-function scaled(src, sw, sh, maxSide, exactW) {
-  const k = exactW ? Math.min(1, exactW / sw) : Math.min(1, maxSide / Math.max(sw, sh));
-  const c = document.createElement('canvas'); c.width = Math.round(sw * k); c.height = Math.round(sh * k);
-  const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(src, 0, 0, c.width, c.height);
-  return c;
+async function prepAll(list){let i=0;const run=async()=>{while(i<list.length){const t=list[i++];try{await prep(t)}catch(e){t.url='';t.bad=true}draw()}};
+  await Promise.all([run(),run(),run()]);markDups()}
+function markDups(){const T=E.tiles.filter(t=>t.hash);T.forEach(t=>t.dup=false);
+  for(let i=0;i<T.length;i++)for(let j=i+1;j<T.length;j++){if(T[j].dup)continue;let d=0;for(let k=0;k<64&&d<4;k++)if(T[i].hash[k]!==T[j].hash[k])d++;if(d<4)T[j].dup=true}
+  draw()}
+
+/* ---------- data.js: load / GitHub ---------- */
+async function loadData(){
+  try{const r=await fetch('../js/data.js',{cache:'no-store'});if(!r.ok)throw 0;D=parse(await r.text());return true}catch(e){}
+  if(GH.token&&GH.repo)try{D=parse((await head()).text);return true}catch(e){}
+  return false}
+const gql=async(q,v)=>{const r=await fetch('https://api.github.com/graphql',{method:'POST',headers:{Authorization:'Bearer '+GH.token,'Content-Type':'application/json'},body:JSON.stringify({query:q,variables:v})});
+  const j=await r.json().catch(()=>({}));if(!r.ok||j.errors)throw Error((j.errors&&j.errors[0].message)||j.message||('GitHub said '+r.status));return j.data};
+async function head(){const[o,n]=GH.repo.split('/'),b=GH.branch||'main';
+  const d=(await gql('query($o:String!,$n:String!,$q:String!,$e:String!){repository(owner:$o,name:$n){ref(qualifiedName:$q){target{oid}} object(expression:$e){...on Blob{text isTruncated}}}}',{o,n,q:'refs/heads/'+b,e:b+':js/data.js'})).repository;
+  if(!d||!d.ref)throw Error('Repository or branch not found');if(!d.object||d.object.isTruncated)throw Error('Could not read js/data.js');return{oid:d.ref.target.oid,text:d.object.text}}
+async function commit(files,msg,fin){
+  for(let t=0;;t++)try{const hd=await head(),all=files.slice();
+    if(fin)all.push({path:'js/data.js',blob:new Blob([ser(fin(parse(hd.text)))])});
+    const add=[];for(const f of all)add.push({path:f.path,contents:await b64(f.blob)});
+    await gql('mutation($i:CreateCommitOnBranchInput!){createCommitOnBranch(input:$i){commit{oid}}}',{i:{branch:{repositoryNameWithOwner:GH.repo,branchName:GH.branch||'main'},message:{headline:msg},expectedHeadOid:hd.oid,fileChanges:{additions:add}}});return}
+  catch(e){if(t>=2||!/oid|head|expected/i.test(e.message))throw e}}
+
+/* ---------- library ---------- */
+function library(){
+  E=null;const v=$('#view');v.textContent='';
+  v.append(Object.assign(h('p','note','Pick an album to edit, or start a new one. New albums go to the top of the gallery.'),{}));
+  const g=h('div','lib');v.append(g);
+  const n=h('button','new','+ New album');n.onclick=()=>edit(null);g.append(n);
+  D.ALBUMS.forEach((a,i)=>{const b=h('button');const im=h('img');im.loading='lazy';im.alt='';im.src='../'+(a.cover||a.photos[0]||'');im.onerror=()=>im.style.visibility='hidden';
+    const s=h('span');s.append(a.name,h('br'),Object.assign(h('small'),{textContent:a.photos.length+' photos'+(a.info&&a.info.date?' · '+a.info.date:'')}));b.append(im,s);b.onclick=()=>edit(i);g.append(b)})}
+
+/* ---------- editor ---------- */
+const DEF_TYPE={school:'School event covered by the club',main:'Annual photography exhibition'};
+function edit(i){
+  const a=i==null?null:D.ALBUMS[i],ev=a&&D.EVENTS.find(e=>e.album===a.name),dr=!a&&JSON.parse(localStorage.albumDraft||'null');
+  const base=a?{name:a.name,date:a.info?.date||'',venue:a.info?.venue||'',cap:(a.info?.captured||[]).join('\n'),edit:(a.info?.edited||[]).join('\n'),fb:a.facebook||'',orig:a.originals||''}
+    :Object.assign({name:'',date:'',venue:'',cap:'',edit:'',fb:'',orig:''},dr&&dr.f);
+  const used=a?a.photos.map(p=>+(p.match(/photo-(\d+)/)||[])[1]||0):[0],sample=a&&(a.photos.map(p=>(p.match(/photo-(\d+)/)||[])[1]).find(Boolean)||'');
+  E={i,orig:a,f:base,cover:null,coverFile:null,
+    ev:{on:a?!!ev:true,category:ev?.category||'school',type:ev?.type||DEF_TYPE.school,status:ev?.status||'past',time:ev?.time||'',about:ev?.about||'',...(!a&&dr&&dr.ev)},
+    next:Math.max(0,...used)+1,pad:sample&&sample[0]==='0'?sample.length:0,
+    tiles:a?a.photos.map((p,k)=>({id:'e'+k,path:p,url:'../'+(a.thumbs?a.thumbs+p.split('/').pop():p),on:true})):[]};
+  const v=$('#view');v.textContent='';
+  const bk=h('button','btn ghost sm','← All albums');bk.type='button';bk.onclick=()=>{if(busy)return;library()};
+  v.append(bk,h('div','ttl',a?'Edit album':'New album'));
+  if(dr&&!a)v.append(h('p','note','Draft restored. Choose the photos again to continue (order and ticks are not saved).'));
+  const wrap=h('div','ed'),L=h('div'),R=h('div','pv');wrap.append(L,R);v.append(wrap);
+  const F=(k,l,o={})=>{const el=h(o.area?'textarea':'input','in');if(o.type)el.type=o.type;el.value=E.f[k];el.oninput=()=>{E.f[k]=el.value;sync()};const x=h('label','f',l);x.append(el);return x};
+  L.append(F('name','Album or event name *'));
+  const dt=F('date','Date (shown on the site)'),pk=h('input','in');pk.type='date';pk.title='Pick a date';pk.style.marginTop='.3rem';
+  pk.onchange=()=>{if(pk.value){E.f.date=new Date(pk.value+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});dt.querySelector('input').value=E.f.date;sync()}};dt.append(pk);
+  const two=h('div','two');two.append(dt,F('venue','Venue'));L.append(two);
+  const t2=h('div','two');t2.append(F('cap','Captured by (one per line)',{area:1}),F('edit','Edited by (one per line)',{area:1}));L.append(t2,
+    F('fb','Facebook album link',{type:'url'}),F('orig','Full-quality photos link (Drive etc., optional)',{type:'url'}));
+  /* events */
+  const eb=h('div','box');eb.append(h('h3',0,'Events page'));const ck=h('input');ck.type='checkbox';ck.checked=E.ev.on;
+  const cl=h('label','f');cl.style.cssText='display:flex;gap:.5rem;align-items:center;text-transform:none';cl.append(ck,a&&ev?'Has an Events page entry (untick to remove it)':'Also create an Events page entry');
+  const ex=h('div');ex.hidden=!ck.checked;ck.onchange=()=>{E.ev.on=ck.checked;ex.hidden=!ck.checked};
+  const sel=(k,l,o)=>{const s=h('select','in');o.forEach(x=>s.append(new Option(x[1],x[0])));s.value=E.ev[k];s.onchange=()=>{E.ev[k]=s.value;if(k==='category'&&Object.values(DEF_TYPE).includes(E.ev.type)){E.ev.type=DEF_TYPE[s.value];ty.value=E.ev.type}};const x=h('label','f',l);x.append(s);return x};
+  const tx=(k,l,area)=>{const s=h(area?'textarea':'input','in');s.value=E.ev[k];s.oninput=()=>E.ev[k]=s.value;const x=h('label','f',l);x.append(s);x.i=s;return x};
+  const ty=tx('type','Type').i,tyL=ty.parentNode;
+  const e2=h('div','two');e2.append(sel('category','Category',[['school','School event'],['main','Main (Spectrum)']]),sel('status','Status',[['past','Past'],['upcoming','Upcoming']]));
+  ex.append(e2,tyL,tx('time','Time (optional)'),tx('about','About (optional)',1));eb.append(cl,ex);L.append(eb);
+  /* photos */
+  const pb=h('div','box');pb.append(h('h3',0,'Photos'));
+  const dz=h('label','drop');dz.append('Drop photos here or tap to choose (any number). Drag tiles to reorder, ★ sets the cover.');
+  const fi=h('input');fi.type='file';fi.accept='image/*';fi.multiple=true;fi.hidden=true;dz.append(fi);
+  const add=fs=>{fs=[...fs].filter(f=>f.type.startsWith('image/')).sort((x,y)=>x.name.localeCompare(y.name,undefined,{numeric:true}));
+    const ts=fs.map((f,k)=>({id:'n'+Date.now()+'_'+k,file:f,on:true,url:''}));E.tiles.push(...ts);draw();prepAll(ts)};
+  fi.onchange=()=>{add(fi.files);fi.value=''};
+  ['dragover','dragenter'].forEach(n=>dz.addEventListener(n,e=>{if(e.dataTransfer.types.includes('Files')){e.preventDefault();dz.classList.add('over')}}));
+  ['dragleave','drop'].forEach(n=>dz.addEventListener(n,()=>dz.classList.remove('over')));
+  dz.addEventListener('drop',e=>{if(e.dataTransfer.files.length){e.preventDefault();add(e.dataTransfer.files)}});
+  const bar=h('div','bar'),cnt=h('span','note');cnt.id='cnt';
+  const B=(t,f)=>{const b=h('button','btn ghost sm',t);b.type='button';b.onclick=f;return b};
+  bar.append(cnt,B('All',()=>{E.tiles.forEach(t=>t.on=true);draw()}),B('None',()=>{E.tiles.forEach(t=>t.on=false);draw()}),
+    B('Untick duplicates',()=>{E.tiles.forEach(t=>{if(t.dup)t.on=false});draw()}),
+    B('Sort by name',()=>{E.tiles.sort((x,y)=>(x.file?x.file.name:x.path).localeCompare(y.file?y.file.name:y.path,undefined,{numeric:true}));draw()}),
+    B('Sort by time taken',()=>{E.tiles.sort((x,y)=>(x.file?x.file.lastModified:0)-(y.file?y.file.lastModified:0));draw()}));
+  const pc=h('input');pc.type='file';pc.accept='image/*';const pl=h('label','f','Custom poster instead of a photo (optional)');pl.append(pc);
+  pc.onchange=()=>{E.coverFile=pc.files[0]||null;E.cover=null;sync()};
+  const grid=h('div','tiles');grid.id='tiles';pb.append(dz,bar,grid,pl);L.append(pb);
+  /* preview */
+  const pv=h('div');pv.id='pv';R.append(h('p','note','Preview of the album card'),pv);
+  const dl=h('div','dl');dl.id='dl';R.append(dl);
+  /* action bar */
+  const ab=h('div','act');ab.innerHTML='<div><span id="msg"></span><button class="btn sm" id="pub" type="button">Publish to site</button><button class="btn ghost sm" id="zip" type="button">Download ZIP instead</button></div><div id="pgw" hidden><progress id="pg" value="0" max="1"></progress></div>';
+  document.body.append(ab);ab.id='actbar';$('#pub').onclick=()=>run('gh');$('#zip').onclick=()=>run('zip');
+  draw();
 }
-/* one photo in, a full-size and a thumbnail JPEG out (thumbnail is made from the smaller copy: cleaner and faster) */
-async function make(file) {
-  const img = await load(file);
-  const big = scaled(img, img.naturalWidth, img.naturalHeight, FULL);
-  const small = scaled(big, big.width, big.height, THUMB);
-  const out = { full: await encode(big, .78), thumb: await encode(small, .75) };
-  big.width = big.height = small.width = small.height = 0;
-  return out;
+let drag=-1;
+function draw(){
+  const g=$('#tiles');if(!g||!E)return;g.textContent='';
+  const first=E.tiles.find(t=>t.on),cov=E.cover&&E.tiles.find(t=>t.id===E.cover&&t.on)?E.cover:null;
+  E.tiles.forEach((t,i)=>{const d=h('div','t'+(t.on?'':' off')+(cov===t.id?' cov':''));d.draggable=true;d.title=t.file?t.file.name:t.path.split('/').pop();
+    if(t.url){const im=h('img');im.alt='';im.draggable=false;im.src=t.url;im.onclick=()=>{t.on=!t.on;draw()};d.append(im)}else d.style.background='repeating-linear-gradient(45deg,#040f1d,#040f1d 6px,#0a2038 6px,#0a2038 12px)';
+    if(t.dup)d.append(h('em',0,'DUP'));
+    const z=h('div','b z'),a=h('div','b a');
+    const bt=(p,x,f,c)=>{const b=h('button',c||'',x);b.type='button';b.onclick=e=>{e.stopPropagation();f()};p.append(b)};
+    bt(z,t.on?'✓':'✕',()=>{t.on=!t.on;draw()});
+    bt(a,'◀',()=>mv(i,i-1));bt(a,'★',()=>{E.cover=t.id;E.coverFile=null;draw()},cov===t.id?'st on':'st');bt(a,'▶',()=>mv(i,i+1));
+    d.append(z,a);
+    d.ondragstart=e=>{drag=i;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','t')};
+    d.ondragover=e=>{if(drag>-1)e.preventDefault()};d.ondrop=e=>{if(drag>-1){e.preventDefault();e.stopPropagation();mv(drag,i);drag=-1}};
+    g.append(d)});
+  const n=E.tiles.filter(t=>t.on).length;$('#cnt').textContent=n+' of '+E.tiles.length+' photos in the album'+(E.tiles.some(t=>t.dup)?' · '+E.tiles.filter(t=>t.dup).length+' possible duplicates':'');
+  sync();
 }
-async function makeCover(file) {
-  const img = await load(file);
-  const c = scaled(img, img.naturalWidth, img.naturalHeight, 0, COVER_W);
-  const d = await encode(c, .8); c.width = c.height = 0; return d;
+function mv(a,b){if(b<0||b>=E.tiles.length)return;const[x]=E.tiles.splice(a,1);E.tiles.splice(b,0,x);draw()}
+function coverUrl(){
+  if(E.coverFile)return E.coverUrl||(E.coverUrl=URL.createObjectURL(E.coverFile));
+  const c=E.cover&&E.tiles.find(t=>t.id===E.cover&&t.on);if(c)return c.url;
+  if(E.orig&&!E.cover&&E.orig.cover)return '../'+E.orig.cover;
+  const f=E.tiles.find(t=>t.on);return f?f.url:''}
+function sync(){
+  const pv=$('#pv');if(!pv||!E)return;E.coverUrl=E.coverFile?E.coverUrl:null;
+  const n=E.tiles.filter(t=>t.on).length,i=E.orig?E.i:0;
+  pv.innerHTML='<div class="aw"><button type="button" class="album"><span class="inner"><span class="tag"></span><img alt=""><span class="holo"></span><span class="cap"><b></b><small></small><em>Open album</em></span></span></button></div>';
+  pv.querySelector('.tag').textContent='ALBUM '+String(i+1).padStart(2,'0');pv.querySelector('img').src=coverUrl();
+  pv.querySelector('b').textContent=E.f.name||'Album name';pv.querySelector('small').textContent=String(n).padStart(2,'0')+(n===1?' photo':' photos');
+  if(!E.orig)localStorage.albumDraft=JSON.stringify({f:E.f,ev:E.ev});
 }
 
-/* ---------- photo picker ---------- */
-let picked = [], on = new Set(), urls = [];
-function count() {
-  $('count').textContent = on.size + ' of ' + picked.length + ' photos selected';
-  $('go').disabled = on.size === 0;
+/* ---------- build: one pipeline, two outputs ---------- */
+function apply(d){ // pure: puts this editor's changes into a data object
+  const s=E,f=s.f,A=s.paths.A;
+  if(s.orig){const o=d.ALBUMS.find(a=>a.name===s.orig.name);if(!o)throw Error('That album no longer exists on the site. Reload this page.');
+    d.EVENTS.forEach(e=>{if(e.album===s.orig.name)e.album=f.name});Object.assign(o,A);if(!A.originals)delete o.originals;if(!A.facebook)o.facebook=''}
+  else d.ALBUMS.unshift(A);
+  const old=d.EVENTS.find(e=>e.album===f.name),v=s.ev;
+  if(v.on){const o={name:f.name,category:v.category,type:v.type,status:v.status,date:f.date,time:v.time,venue:f.venue,about:v.about,album:f.name};
+    if(old)Object.assign(old,o);else{const k=o.status==='past'?d.EVENTS.findIndex(e=>e.status==='past'):0;d.EVENTS.splice(k<0?d.EVENTS.length:k,0,o)}}
+  else if(old&&s.orig)d.EVENTS.splice(d.EVENTS.indexOf(old),1);
+  return d}
+async function run(mode){
+  if(busy)return;const s=E,f=s.f,on=s.tiles.filter(t=>t.on);
+  try{
+    if(!f.name.trim())throw Error('Give the album a name');if(!on.length)throw Error('Tick at least one photo');
+    if(!s.orig&&D.ALBUMS.some(a=>a.name===f.name.trim()))throw Error('An album with this name already exists. Pick it from the list to edit it.');
+    if(mode==='gh'&&!(GH.repo&&GH.token)){$('#gh').open=true;scrollTo(0,0);throw Error('Connect GitHub first (top of page), or use the ZIP button')}
+    busy=true;$('#pub').disabled=$('#zip').disabled=true;$('#pgw').hidden=false;f.name=f.name.trim();
+    const dirs=new Set(D.ALBUMS.map(dirOf)),slug=slugify(f.name,f.date);let dir=s.orig?dirOf(s.orig):'images/albums/'+slug;
+    if(!s.orig){for(let k=2;dirs.has(dir);k++)dir='images/albums/'+slug+'-'+k}
+    let n=s.next;const w=s.orig?s.pad:Math.max(2,String(on.length).length),nameOf={};
+    on.forEach(t=>{if(!t.path)nameOf[t.id]='photo-'+String(n++).padStart(w,'0')+'.jpg'});
+    const photos=on.map(t=>t.path||dir+'/'+nameOf[t.id]);
+    let cover=s.orig?s.orig.cover:'';const cid=s.cover&&on.find(t=>t.id===s.cover)?s.cover:null;
+    const coverSrc=s.coverFile||(cid&&(()=>{const t=on.find(x=>x.id===cid);return t.file||'../'+t.path})())||(!s.orig&&(on[0].file||'../'+on[0].path));
+    if(coverSrc)cover=dir+'/'+(s.orig?'cover-'+Date.now().toString(36):'cover')+'.jpg';
+    const A={name:f.name,facebook:f.fb.trim(),info:{date:f.date.trim(),venue:f.venue.trim(),captured:lines(f.cap),edited:lines(f.edit)},cover,thumbs:dir+'/thumbs/',photos};
+    if(f.orig.trim())A.originals=f.orig.trim();s.paths={A};
+    const pg=$('#pg'),total=on.filter(t=>t.file).length+1;pg.max=total;pg.value=0;let done=0;
+    /* sinks */
+    const parts=[];let buf=[],size=0,part=1;
+    const flush=async last=>{
+      if(mode==='gh'){if(buf.length){say('Uploading to GitHub...');await commit(buf,(s.orig?'Update album: ':'Add album: ')+f.name+' (photos)')}}
+      else if(buf.length){const es=[];for(const x of buf)es.push({name:x.path,data:new Uint8Array(await x.blob.arrayBuffer())});
+        parts.push({n:part++,blob:new Blob([makeZip(es)],{type:'application/zip'})})}
+      buf=[];size=0};
+    const put=async x=>{buf.push(x);size+=x.blob.size;if(size>(mode==='gh'?BATCH:PART))await flush()};
+    if(coverSrc){say('Preparing the cover...');const src=typeof coverSrc==='string'?await (await fetch(coverSrc)).blob():coverSrc;await put({path:cover,blob:await makeCover(src)})}
+    pg.value=1;const todo=on.filter(t=>t.file);
+    for(let i=0;i<todo.length;i+=3){
+      const grp=todo.slice(i,i+3);say('Preparing photo '+(i+1)+' of '+todo.length+'... keep this tab open');
+      const rs=await Promise.all(grp.map(t=>make(t.file)));
+      for(let k=0;k<grp.length;k++){const nm=nameOf[grp[k].id];await put({path:dir+'/'+nm,blob:rs[k].full});await put({path:dir+'/thumbs/'+nm,blob:rs[k].thumb});pg.value=1+ ++done}}
+    if(mode==='gh'){say('Publishing...');await commit(buf,(s.orig?'Update album: ':'Add album: ')+f.name,apply);buf=[];
+      say('Published. Vercel is deploying: the live site updates in about a minute.');
+      D=apply(structuredClone(D));D.ALBUMS=D.ALBUMS}
+    else{buf.push({path:'js/data.js',blob:new Blob([ser(apply(structuredClone(D)))])});await flush();
+      const dl=$('#dl');dl.textContent='';dl.append(h('p','note','Unzip every part into the website folder (replace js/data.js when asked), then commit and push.'));
+      parts.forEach(p=>{const a=h('a','btn sm','Download part '+p.n+' of '+parts.length);a.href=URL.createObjectURL(p.blob);a.download=slug+'-'+p.n+'.zip';dl.append(a)});
+      say('Done. '+on.length+' photos prepared.')}
+    localStorage.removeItem('albumDraft');
+  }catch(e){say('Something went wrong: '+e.message,1)}
+  busy=false;$('#pub')&&($('#pub').disabled=$('#zip').disabled=false);$('#pgw')&&($('#pgw').hidden=true);
 }
-$('photos').onchange = e => {
-  urls.forEach(u => URL.revokeObjectURL(u)); urls = [];
-  picked = [...e.target.files].sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
-  on = new Set(picked.map((_, i) => i));
-  $('thumbs').textContent = '';
-  picked.forEach((f, i) => {
-    const b = document.createElement('button'), im = document.createElement('img');
-    b.type = 'button'; b.title = f.name; im.loading = 'lazy'; im.decoding = 'async'; im.alt = '';
-    const u = URL.createObjectURL(f); urls.push(u); im.src = u; b.append(im);
-    b.onclick = () => { if (on.has(i)) { on.delete(i); b.classList.add('off'); } else { on.add(i); b.classList.remove('off'); } count(); };
-    $('thumbs').append(b);
-  });
-  $('pickbar').hidden = !picked.length; count();
-};
-$('all').onclick = () => { picked.forEach((_, i) => on.add(i)); $('thumbs').querySelectorAll('button').forEach(b => b.classList.remove('off')); count(); };
-$('none').onclick = () => { on.clear(); $('thumbs').querySelectorAll('button').forEach(b => b.classList.add('off')); count(); };
 
-/* ---------- build ---------- */
-let zipUrl = null;
-$('f').onsubmit = async e => {
-  e.preventDefault();
-  const go = $('go'), msg = $('msg'), bar = $('bar'); go.disabled = true; bar.hidden = false;
-  try {
-    const name = $('name').value.trim(), dateVal = $('date').value;
-    const date = dateVal ? new Date(dateVal + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
-    const files = picked.filter((_, i) => on.has(i));
-    if (!files.length) throw new Error('Select at least one photo');
-    const slug = slugify(name, dateVal), dir = 'images/albums/' + slug, w = Math.max(2, String(files.length).length);
-    const entries = [], paths = []; bar.max = files.length + 1; bar.value = 0;
-    msg.textContent = 'Preparing the cover...';
-    entries.push({ name: dir + '/cover.jpg', data: await makeCover($('cover').files[0] || files[0]) }); bar.value = 1;
-    for (let i = 0; i < files.length; i++) {
-      msg.textContent = 'Preparing photo ' + (i + 1) + ' of ' + files.length + '... keep this tab open';
-      const n = 'photo-' + String(i + 1).padStart(w, '0') + '.jpg', r = await make(files[i]);
-      entries.push({ name: dir + '/' + n, data: r.full }, { name: dir + '/thumbs/' + n, data: r.thumb });
-      paths.push(dir + '/' + n); bar.value = i + 2;
-    }
-    msg.textContent = 'Packing the ZIP...'; await new Promise(r => setTimeout(r, 30));
-    const zip = makeZip(entries);
-    if (zipUrl) URL.revokeObjectURL(zipUrl);
-    zipUrl = URL.createObjectURL(new Blob([zip], { type: 'application/zip' }));
-    $('dl').href = zipUrl; $('dl').download = slug + '.zip';
-
-    const obj = { name, facebook: $('fb').value.trim(),
-      info: { date, venue: $('venue').value.trim(), captured: lines($('cap').value), edited: lines($('edit').value) },
-      cover: dir + '/cover.jpg', thumbs: dir + '/thumbs/', photos: paths };
-    $('code').value = JSON.stringify(obj, null, 2).split('\n').map(l => '  ' + l).join('\n') + ',';
-
-    $('evbox').hidden = !$('ev').checked;
-    $('evcode').value = "  {\n    name: " + q(name) + ",\n    category: 'school',\n    type: 'School event covered by the club',\n    status: 'past',\n    date: " + q(date) +
-      ",\n    time: '',\n    venue: " + q(obj.info.venue) + ",\n    about: '',\n    album: " + q(name) + "\n  },";
-    $('out').hidden = false; $('out').scrollIntoView();
-    msg.textContent = 'Done. ' + files.length + ' photos prepared (' + (zip.length / 1048576).toFixed(1) + ' MB).';
-  } catch (err) { msg.textContent = 'Something went wrong: ' + err.message; }
-  bar.hidden = true; count();
-};
-
-document.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
-  const t = $(b.dataset.copy); t.select();
-  try { await navigator.clipboard.writeText(t.value); } catch (e) { document.execCommand('copy'); }
-  const old = b.textContent; b.textContent = 'Copied'; setTimeout(() => b.textContent = old, 1500);
-});
+/* ---------- start ---------- */
+addEventListener('beforeunload',e=>{if(busy){e.preventDefault();e.returnValue=''}});
+$('#th').onclick=()=>{const r=document.documentElement,c=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.dataset.theme=c==='dark'?'light':'dark';localStorage.at=r.dataset.theme};
+if(localStorage.at)document.documentElement.dataset.theme=localStorage.at;
+const ghUI=()=>{$('#g-repo').value=GH.repo||'';$('#g-br').value=GH.branch||'';$('#g-tok').value=GH.token||'';$('#ghs').textContent='GitHub: '+(GH.token&&GH.repo?'connected to '+GH.repo:'not connected')};
+$('#g-save').onclick=async()=>{GH={repo:$('#g-repo').value.trim(),branch:$('#g-br').value.trim()||'main',token:$('#g-tok').value.trim()};localStorage.gh=JSON.stringify(GH);
+  $('#g-st').textContent='Checking...';try{await head();$('#g-st').textContent='Works.';ghUI();if(!D&&await loadData())library()}catch(e){$('#g-st').textContent='Failed: '+e.message}};
+ghUI();
+loadData().then(ok=>{if(ok)library();else{$('#gh').open=true;$('#view').append(h('p','note','Could not read js/data.js. Open this page from your live site, or connect GitHub above to load it.'))}});
 </script>
 </body>
 </html>
