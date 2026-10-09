@@ -4,48 +4,6 @@ const EVENT_DATE = "2026-11-13T09:00:00+05:30";
 
 const ALBUMS = [
   {
-    "name": "St. Sylvester's College Vs Richmond College Ragby Match",
-    "facebook": "https://web.facebook.com/share/p/1MBWB59fRZ/",
-    "info": {
-      "date": "6 May 2026",
-      "venue": "Nittawela Stadium",
-      "captured": [
-        "Sasidu Shanelka",
-        "Dasun Gunasekara"
-      ],
-      "edited": [
-        "Sasidu Shanelka"
-      ]
-    },
-    "cover": "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/cover.jpg",
-    "thumbs": "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/thumbs/",
-    "photos": [
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-01.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-02.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-03.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-04.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-05.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-06.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-07.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-08.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-09.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-10.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-11.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-12.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-13.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-14.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-15.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-16.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-17.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-18.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-19.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-20.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-21.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-22.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-23.jpg"
-    ]
-  },
-  {
     "name": "Hypnotic Elixir '26",
     "facebook": "https://www.facebook.com/share/p/18mQ6xfMSe/",
     "info": {
@@ -934,6 +892,48 @@ const ALBUMS = [
       "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-12.jpg",
       "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-13.jpg",
       "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-14.jpg"
+    ]
+  },
+  {
+    "name": "St. Sylvester's College Vs Richmond College Ragby Match",
+    "facebook": "https://web.facebook.com/share/p/1MBWB59fRZ/",
+    "info": {
+      "date": "6 May 2026",
+      "venue": "Nittawela Stadium",
+      "captured": [
+        "Sasidu Shanelka",
+        "Dasun Gunasekara"
+      ],
+      "edited": [
+        "Sasidu Shanelka"
+      ]
+    },
+    "cover": "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/cover.jpg",
+    "thumbs": "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/thumbs/",
+    "photos": [
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-01.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-02.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-03.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-04.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-05.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-06.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-07.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-08.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-09.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-10.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-11.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-12.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-13.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-14.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-15.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-16.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-17.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-18.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-19.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-20.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-21.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-22.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-23.jpg"
     ]
   }
 ];
