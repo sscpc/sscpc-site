@@ -4,6 +4,45 @@ const EVENT_DATE = "2026-11-13T09:00:00+05:30";
 
 const ALBUMS = [
   {
+    "name": "Eco explore - Intra school exploring event",
+    "facebook": "https://web.facebook.com/share/p/1DfpjvmJi7/",
+    "info": {
+      "date": "22 May 2026",
+      "venue": "Udawattakale forest reserve kandy",
+      "captured": [
+        "Sasidu Shanelka",
+        "Nadeesha Ambakotuwa"
+      ],
+      "edited": [
+        "Sasidu Shanelka"
+      ]
+    },
+    "cover": "images/albums/eco-explore-intra-school-exploring-event/cover.jpg",
+    "thumbs": "images/albums/eco-explore-intra-school-exploring-event/thumbs/",
+    "photos": [
+      "images/albums/eco-explore-intra-school-exploring-event/photo-01.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-02.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-03.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-04.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-05.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-06.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-07.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-08.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-09.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-10.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-11.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-12.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-13.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-14.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-15.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-16.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-17.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-18.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-19.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-20.jpg"
+    ]
+  },
+  {
     "name": "Hypnotic Elixir '26",
     "facebook": "https://www.facebook.com/share/p/18mQ6xfMSe/",
     "info": {
