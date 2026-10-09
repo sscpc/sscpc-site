@@ -47,6 +47,12 @@ legend{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppe
 .mini:hover{border-color:var(--accent)}
 .note{color:var(--muted);font-size:.78rem;margin-bottom:1rem;max-width:44rem}
 @media(max-width:800px){.app{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:.5rem;align-items:center}.side .brand,.sp{display:none}.tab{white-space:nowrap;border-left:0;border-bottom:3px solid transparent}.tab[aria-selected=true]{border-color:var(--accent)}}
+.f,label.f,div.f{display:grid;gap:.25rem;font-size:.66rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;font-weight:600}
+.err{border-color:#c0392b!important;color:#ff8a8a}pre.box{white-space:pre-wrap;font:.72rem/1.6 var(--mono);padding:1rem;background:var(--surface);border:1px solid var(--line);max-height:50vh;overflow:auto}
+div.box{padding:.8rem 1rem;background:var(--surface);border:1px solid var(--line);margin-bottom:.8rem;font-size:.78rem}
+dialog{background:var(--surface);color:var(--ink);border:1px solid var(--line);width:min(36rem,94vw);max-height:90vh;overflow:auto;padding:1.2rem}dialog::backdrop{background:rgba(0,0,0,.65)}
+.kv{margin-bottom:.6rem}.kv small{color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:.62rem;display:block}
+.tab:disabled{opacity:.35;cursor:default}details.it summary img{flex:none}
 </style>
 </head>
 <body>
@@ -66,6 +72,7 @@ legend{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppe
     <div class="brand"><img src="../images/crown-mark.png" alt=""> Admin</div>
     <div class="sp"></div>
     <div class="badge hide" id="dirty">UNPUBLISHED CHANGES</div>
+    <button class="tab" id="undo" type="button" disabled>↶ Undo</button><button class="tab" id="redo" type="button" disabled>↷ Redo</button>
     <button class="tab" id="th">Light / Dark</button>
     <a class="tab" href="../tools/album-builder.html">Album Builder</a>
     <a class="tab" href="../index.html">← View site</a>
@@ -74,91 +81,173 @@ legend{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppe
   <main id="main"></main>
 </div>
 
-<script src="../js/data.js"></script>
+<dialog id="dlg"></dialog>
 <script>
-const D={EVENT_DATE,ALBUMS,EVENTS,MEMBERS,PRESIDENT_WHATSAPP,PRESIDENT_WHATSAPP_LINK,SLIDE_SECONDS,SLIDES,FORMS_ENDPOINT};
-const snap=()=>JSON.stringify(D);let base=snap(),key='',X=null,sub='registrations',tab='inbox';
-const $=s=>document.querySelector(s);
-const h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.innerHTML=x;return e};
+const $=s=>document.querySelector(s),h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.innerHTML=x;return e};
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const dirty=()=>$('#dirty').classList.toggle('hide',snap()===base);
 const btn=(t,f,c)=>{const b=h('button','btn '+(c||'')+' sm',t);b.type='button';b.onclick=f;return b};
-const save=(name,text,type)=>{const a=h('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click()};
-
-/* ---------- generic editor: works for any shape in data.js ---------- */
-const blank=v=>Array.isArray(v)?[]:v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,blank(x)])):typeof v==='number'?0:typeof v==='boolean'?false:'';
+const save=(n,t,ty)=>{const a=h('a');a.href=URL.createObjectURL(new Blob([t],{type:ty}));a.download=n;a.click()};
+const nice=k=>k.replace(/_/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').toLowerCase().replace(/^./,c=>c.toUpperCase());
+const NAMES=t=>[...t.matchAll(/^const (\w+) =/gm)].map(m=>m[1]);
+const parse=t=>new Function(t+';return {'+NAMES(t).join(',')+'}')();
+const ser=d=>'/* SSCPC site data. Written by the admin portal (admin/index.html). Notes: README.txt */\n\n'+Object.keys(d).map(k=>`const ${k} = ${JSON.stringify(d[k],null,2)};`).join('\n\n')+'\n';
+let D,B,KEYS,key='',X=null,sub='registrations',tab='home',flt='All',hist=[],hi=0,GH=JSON.parse(localStorage.gh||'{}');
+const ST={},URLS={},SEC={MEMBERS:'members',SLIDES:'announcements',EVENTS:'events'};
+const snapK=()=>Object.fromEntries(KEYS.map(k=>[k,JSON.stringify(D[k])]));
+const changed=()=>KEYS.filter(k=>JSON.stringify(D[k])!==B[k]);
+const lab=x=>x&&typeof x==='object'?(x.name||x.title||x.alt||x.image||''):'';
+/* ---------- undo + unpublished marker ---------- */
+let ht;const ub=()=>{$('#undo').disabled=hi<1;$('#redo').disabled=hi>=hist.length-1};
+function snap(){const s=JSON.stringify(D);if(s===hist[hi])return;hist=hist.slice(0,hi+1);hist.push(s);hi=hist.length-1;if(hist.length>60){hist.shift();hi--}ub()}
+function dirty(){const n=changed().length+Object.keys(ST).length;$('#dirty').classList.toggle('hide',!n);clearTimeout(ht);ht=setTimeout(snap,500);ub()}
+function jump(d){clearTimeout(ht);snap();const n=hi+d;if(n<0||n>=hist.length)return;hi=n;D=JSON.parse(hist[hi]);dirty();show(tab)}
+/* ---------- typed editor ---------- */
 const field=(l,el)=>{const x=h('label','f');x.append(l,el);return x};
-function ed(p,k,label){
-  const v=p[k];
-  if(Array.isArray(v)&&v.every(x=>typeof x==='string')){const t=h('textarea','in');t.rows=Math.min(8,v.length+1);t.value=v.join('\n');t.oninput=()=>{p[k]=t.value.split('\n').map(s=>s.trim()).filter(Boolean);dirty()};return field(label+' (one per line)',t)}
-  if(Array.isArray(v))return list(v,label);
-  if(v&&typeof v==='object'){const f=h('fieldset');f.append(h('legend',0,esc(label)));Object.keys(v).forEach(x=>f.append(ed(v,x,x)));return f}
-  if(typeof v==='boolean'){const c=h('input');c.type='checkbox';c.checked=v;c.onchange=()=>{p[k]=c.checked;dirty()};return field(c,label)}
+const URLK=k=>/^(link|facebook|originals|url)$|(Link|Url|_LINK)$/.test(k),IMGK=/^(image|photo|portrait|logo|poster)$/i,SELK={status:['upcoming','past'],category:['main','school']};
+async function shrink(f,png,max){const im=await createImageBitmap(f,{imageOrientation:'from-image'}),k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);return new Promise(ok=>c.toBlob(ok,png?'image/png':'image/jpeg',.84))}
+function imgf(p,k,L,sec,v){
+  const w=h('div','f'),pv=h('img'),i=h('input','in'),f=h('input');w.append(L);
+  pv.style.cssText='max-height:5.5rem;max-width:100%;object-fit:contain;justify-self:start;background:#0003';pv.onerror=()=>pv.style.display='none';pv.onload=()=>pv.style.display='';
+  const sh=()=>{pv.src=v?(URLS[v]||'../'+v):''};sh();i.value=v;i.oninput=()=>{p[k]=v=i.value;sh();dirty()};
+  f.type='file';f.accept='image/*';f.onchange=async()=>{const fl=f.files[0];if(!fl)return;const png=/portrait/i.test(k)||fl.type==='image/png',b=await shrink(fl,png,png?1200:1600),
+    nm=(p.name||p.title||p.alt||'img').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'img',path='images/'+(SEC[sec]||'uploads')+'/'+nm+'-'+Date.now().toString(36)+(png?'.png':'.jpg');
+    ST[path]=b;URLS[path]=URL.createObjectURL(b);p[k]=v=path;i.value=path;sh();dirty()};
+  w.append(pv,i,f);return w}
+function ed(p,k,label,sec){
+  sec=sec||k;const v=p[k],L=nice(label||k);
+  if(Array.isArray(v)&&v.every(x=>typeof x==='string')){const t=h('textarea','in');t.rows=Math.min(8,v.length+1);t.value=v.join('\n');t.oninput=()=>{p[k]=t.value.split('\n').map(s=>s.trim()).filter(Boolean);dirty()};return field(L+' (one per line)',t)}
+  if(Array.isArray(v))return list(v,label,sec);
+  if(v&&typeof v==='object'){const f=h('fieldset');f.append(h('legend',0,esc(L)));Object.keys(v).forEach(x=>f.append(ed(v,x,x,sec)));return f}
+  if(typeof v==='boolean'){const c=h('input');c.type='checkbox';c.checked=v;c.onchange=()=>{p[k]=c.checked;dirty()};return field(c,L)}
+  if(IMGK.test(k)&&typeof v==='string')return imgf(p,k,L,sec,v);
+  let i;
+  if(SELK[k]){i=h('select','in');[...new Set([...SELK[k],v])].forEach(o=>i.append(new Option(o,o)));i.value=v;i.onchange=()=>{p[k]=i.value;dirty()};return field(L,i)}
+  if(/^(start|end)$/.test(k)){i=h('input','in');i.type='datetime-local';i.value=String(v).slice(0,16);i.onchange=()=>{p[k]=i.value?i.value+':00+05:30':'';dirty()};return field(L+' (Sri Lanka time)',i)}
   const long=typeof v==='string'&&(v.length>70||v.includes('\n')||/^(text|about|note)$/.test(k));
-  const i=h(long?'textarea':'input','in');if(long)i.rows=4;if(typeof v==='number')i.type='number';i.value=v;
-  i.oninput=()=>{p[k]=typeof v==='number'?+i.value:i.value;dirty()};return field(label,i)}
-function list(a,label){
-  const box=h('div');
+  i=h(long?'textarea':'input','in');if(long)i.rows=4;if(typeof v==='number')i.type='number';else if(URLK(k))i.type='text',i.placeholder='https://…';else if(k==='phone')i.type='tel';
+  i.value=v;i.oninput=()=>{p[k]=typeof v==='number'?+i.value:i.value;dirty()};return field(L+(/^(name|title|image)$/.test(k)?' *':''),i)}
+function list(a,label,sec){
+  const box=h('div');let dr=-1;
   const draw=()=>{box.innerHTML='';
-    a.forEach((it,i)=>{const d=h('details','it'),s=h('summary');
-      s.append(h('span',0,esc(it.name||it.title||it.alt||it.image||'#'+(i+1))));
+    a.forEach((it,i)=>{const d=h('details','it'),s=h('summary');s.draggable=true;s.title='Drag to reorder';s.append(h('span',0,'⠿ '+esc(lab(it)||'#'+(i+1))));
       [['↑',-1],['↓',1],['✕',0]].forEach(([t,dx])=>{const b=h('button','mini',t);b.type='button';b.onclick=e=>{e.preventDefault();
-        if(!dx){if(!confirm('Remove this item?'))return;a.splice(i,1)}else{const j=i+dx;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]]}
-        dirty();draw()};s.append(b)});
-      const bd=h('div','bd');Object.keys(it).forEach(k=>bd.append(ed(it,k,k)));d.append(s,bd);box.append(d)});
+        if(!dx){if(!confirm('Remove this item?'))return;a.splice(i,1)}else{const j=i+dx;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]]}dirty();draw()};s.append(b)});
+      s.ondragstart=e=>{dr=i;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','x')};
+      d.ondragover=e=>{if(dr>-1)e.preventDefault()};d.ondrop=e=>{e.preventDefault();e.stopPropagation();if(dr<0||dr===i)return;const[x]=a.splice(dr,1);a.splice(i,0,x);dr=-1;dirty();draw()};
+      const bd=h('div','bd');Object.keys(it).forEach(k=>bd.append(ed(it,k,k,sec)));d.append(s,bd);box.append(d)});
     if(a.length||label)box.append(btn('+ Add',()=>{const n=blank(a[0]||{});label==='members'?a.push(n):a.unshift(n);dirty();draw()},'ghost'))};
   draw();return box}
-
+const blank=v=>Array.isArray(v)?[]:v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,blank(x)])):typeof v==='number'?0:typeof v==='boolean'?false:'';
+/* ---------- checks + change review ---------- */
+function chk(v,p,k,o){
+  if(Array.isArray(v))return v.forEach((x,i)=>chk(x,p+' #'+(i+1)+(lab(x)?' ('+lab(x)+')':''),k,o));
+  if(v&&typeof v==='object'){['name','title','image'].forEach(r=>{if(r in v&&!String(v[r]).trim())o.push(p+': "'+nice(r)+'" is empty')});
+    if(v.start&&v.end&&Date.parse(v.start)>Date.parse(v.end))o.push(p+': ends before it starts');return Object.keys(v).forEach(x=>chk(v[x],p,x,o))}
+  if(typeof v==='string'&&v.trim()){if(URLK(k)&&!/^(https?:\/\/|#|\/|mailto:|tel:)/.test(v.trim()))o.push(p+': "'+nice(k)+'" is not a valid link');
+    if(/^(start|end|EVENT_DATE)$/.test(k)&&isNaN(Date.parse(v)))o.push(p+': "'+nice(k)+'" is not a valid date')}}
+function diff(a,b,p,o){
+  if(JSON.stringify(a)===JSON.stringify(b))return;const sh=s=>{s=typeof s==='string'?s:JSON.stringify(s);return s==null?'(none)':s.length>50?s.slice(0,47)+'…':s};
+  if(Array.isArray(a)&&Array.isArray(b)){for(let i=0;i<Math.max(a.length,b.length);i++){const q=p+'['+(lab(b[i])||lab(a[i])||i+1)+']';
+    if(i>=a.length)o.push('+ '+q+' added');else if(i>=b.length)o.push('− '+q+' removed: '+(lab(a[i])||''));else diff(a[i],b[i],q,o)}}
+  else if(a&&b&&typeof a==='object'&&typeof b==='object')[...new Set([...Object.keys(a),...Object.keys(b)])].forEach(k=>diff(a[k],b[k],p+'.'+k,o));
+  else o.push('~ '+p+': '+sh(a)+' → '+sh(b))}
+/* ---------- GitHub (same saved settings as the album builder) ---------- */
+const gql=async(q,v)=>{const r=await fetch('https://api.github.com/graphql',{method:'POST',headers:{Authorization:'Bearer '+GH.token,'Content-Type':'application/json'},body:JSON.stringify({query:q,variables:v})});
+  const j=await r.json().catch(()=>({}));if(!r.ok||j.errors)throw Error((j.errors&&j.errors[0].message)||j.message||('GitHub said '+r.status));return j.data};
+async function head(){const[o,n]=GH.repo.split('/'),b=GH.branch||'main';
+  const d=(await gql('query($o:String!,$n:String!,$q:String!,$e:String!){repository(owner:$o,name:$n){ref(qualifiedName:$q){target{oid}} object(expression:$e){...on Blob{text isTruncated}}}}',{o,n,q:'refs/heads/'+b,e:b+':js/data.js'})).repository;
+  if(!d||!d.ref)throw Error('Repository or branch not found');if(!d.object||d.object.isTruncated)throw Error('Could not read js/data.js');return{oid:d.ref.target.oid,text:d.object.text}}
+const b64=b=>new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result.split(',')[1]);r.readAsDataURL(b)});
+function merge(rd){ // per-section 3-way merge: base (when loaded) / ours / theirs (GitHub now)
+  const out={};[...new Set([...KEYS,...Object.keys(rd)])].forEach(k=>{const o=JSON.stringify(D[k]),r=JSON.stringify(rd[k]);
+    if(o===B[k]||o===r)out[k]=rd[k];else if(r===B[k])out[k]=D[k];
+    else throw Error('"'+k+'" was changed on GitHub (maybe by the Album Builder) and also here. Reload the admin and redo your '+k+' changes.')});return out}
+async function pub(){
+  for(let t=0;;t++)try{const hd=await head(),m=merge(parse(hd.text)),add=[{path:'js/data.js',contents:await b64(new Blob([ser(m)]))}];
+    for(const p in ST)add.push({path:p,contents:await b64(ST[p])});
+    await gql('mutation($i:CreateCommitOnBranchInput!){createCommitOnBranch(input:$i){commit{oid}}}',{i:{branch:{repositoryNameWithOwner:GH.repo,branchName:GH.branch||'main'},message:{headline:'Update site data from admin portal'},expectedHeadOid:hd.oid,fileChanges:{additions:add}}});
+    D=m;KEYS=Object.keys(D);B=snapK();for(const p in ST)delete ST[p];hist=[JSON.stringify(D)];hi=0;dirty();return}
+  catch(e){if(t>=2||!/oid|head|expected/i.test(e.message))throw e}}
 /* ---------- inbox ---------- */
+const isH=r=>/^handled$/i.test(r.Status||''),sup=()=>X&&X.v>=2,SHEET={registrations:'Registrations',joins:'Join requests',messages:'Messages'};
+async function load(){const r=await fetch(D0.FORMS_ENDPOINT+'?key='+encodeURIComponent(key));const j=await r.json();if(!j.ok)throw 0;X=j}
+async function setRow(r,st,note){const q=new URLSearchParams({key,action:'set',sheet:sub,row:r._row,ts:r.Timestamp||'',status:st,note});
+  const j=await(await fetch(D0.FORMS_ENDPOINT+'?'+q)).json();if(!j.ok)throw Error(j.error||'Could not save');r.Status=st;r.Note=note}
 const csv=(rows,cols)=>'\ufeff'+[cols,...rows.map(r=>cols.map(c=>r[c]??''))].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
-async function load(){const r=await fetch(D.FORMS_ENDPOINT+'?key='+encodeURIComponent(key));const j=await r.json();if(!j.ok)throw 0;X=j}
+function openRow(r,after){const d=$('#dlg');d.innerHTML='';d.append(h('div','ttl',esc(r.school||r.name||r.contact_name||'Details')));
+  Object.keys(r).filter(k=>r[k]&&!/^(_row|Status|Note)$/.test(k)).forEach(k=>{const e=h('div','kv');e.innerHTML='<small>'+esc(nice(k))+'</small><div>'+esc(r[k]).replace(/\n/g,'<br>')+'</div>';d.append(e)});
+  const ms=h('p','note');if(sup()){const s=h('select','in');['New','Handled'].forEach(o=>s.append(new Option(o,o)));s.value=isH(r)?'Handled':'New';const n=h('textarea','in');n.rows=3;n.value=r.Note||'';n.placeholder='Private note, saved in the sheet';
+    d.append(field('Status',s),field('Note',n),btn('Save',async()=>{ms.textContent='Saving…';try{await setRow(r,s.value,n.value);d.close();after()}catch(e){ms.textContent=e.message}}))}
+  else ms.textContent='To mark items handled and add notes, update the Apps Script (tools/google-sheet-script.gs) and deploy a new version.';
+  d.append(' ',btn('Close',()=>d.close(),'ghost'),ms);d.showModal()}
 function inbox(){
-  const w=h('div'),R=X.registrations,J=X.joins,M=X.messages;
-  const kids=R.reduce((n,r)=>n+(+r.students||0),0);
-  w.append(h('div','stats',[['Registrations',R.length],['Students attending',kids],['Join requests',J.length],['Messages',M.length]].map(([a,b])=>`<div class="card"><small>${a}</small><strong>${b}</strong></div>`).join('')));
-  const rows=[...X[sub]].reverse(),cols=[...new Set(rows.flatMap(r=>Object.keys(r)))].filter(c=>rows.some(r=>r[c]));
+  const w=h('div'),R=X.registrations,J=X.joins,M=X.messages,all=X[sub],nw=a=>a.filter(r=>!isH(r)).length;
+  w.append(h('div','stats',[['Registrations',R.length],['Students attending',R.reduce((n,r)=>n+(+r.students||0),0)],['Join requests',J.length],['Messages',M.length]].map(([a,b])=>`<div class="card"><small>${a}</small><strong>${b}</strong></div>`).join('')));
   const bar=h('div','bar');
-  [['registrations','Registrations'],['joins','Join requests'],['messages','Messages']].forEach(([k,t])=>{const c=h('button','chip',t);c.setAttribute('aria-pressed',k===sub);c.onclick=()=>{sub=k;show('inbox')};bar.append(c)});
-  const q=h('input','in');q.placeholder='Search…';bar.append(q,btn('Refresh',async()=>{try{await load();show('inbox')}catch(e){alert('Could not refresh')}},'ghost'),
-    btn('Export CSV',()=>save('sscpc-'+sub+'.csv',csv(rows,cols),'text/csv'),''));
-  const tb=h('div','tbl'),draw=()=>{const f=q.value.toLowerCase(),rs=rows.filter(r=>!f||JSON.stringify(r).toLowerCase().includes(f));
-    tb.innerHTML=rs.length?`<table><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}</tr>${rs.map(r=>`<tr>${cols.map(c=>`<td title="${esc(r[c])}">${esc(r[c])}</td>`).join('')}</tr>`).join('')}</table>`:'<p style="padding:1rem">Nothing here yet.</p>'};
+  [['registrations','Registrations'],['joins','Join requests'],['messages','Messages']].forEach(([k,t])=>{const c=h('button','chip',t+(sup()?' ('+nw(X[k])+' new)':''));c.setAttribute('aria-pressed',k===sub);c.onclick=()=>{sub=k;show('inbox')};bar.append(c)});
+  if(sup())['All','New','Handled'].forEach(f=>{const c=h('button','chip',f);c.setAttribute('aria-pressed',f===flt);c.onclick=()=>{flt=f;show('inbox')};bar.append(c)});
+  const q=h('input','in');q.placeholder='Search…';
+  const rows=[...all].reverse().filter(r=>flt==='All'||!sup()||(flt==='Handled')===isH(r)),cols=[...new Set(rows.flatMap(r=>Object.keys(r)))].filter(c=>!/^(_row|Status)$/.test(c)&&rows.some(r=>r[c]));
+  bar.append(q,btn('Refresh',async()=>{try{await load();show('inbox')}catch(e){alert('Could not refresh')}},'ghost'),btn('Export CSV',()=>save('sscpc-'+sub+'.csv',csv(rows,cols),'text/csv')));
+  const tb=h('div','tbl'),draw=()=>{const f=q.value.toLowerCase(),rs=rows.filter(r=>!f||JSON.stringify(r).toLowerCase().includes(f));tb.innerHTML='';
+    if(!rs.length){tb.innerHTML='<p style="padding:1rem">Nothing here.</p>';return}
+    const t=h('table');t.innerHTML='<tr>'+(sup()?'<th></th>':'')+cols.map(c=>`<th>${esc(nice(c))}</th>`).join('')+'</tr>';
+    rs.forEach(r=>{const tr=h('tr');tr.style.cursor='pointer';if(sup()&&!isH(r))tr.style.fontWeight='700';
+      if(sup()){const td=h('td'),b=h('button','mini',isH(r)?'✓':'○');b.title=isH(r)?'Handled (tap to reopen)':'Mark handled';b.onclick=async e=>{e.stopPropagation();try{await setRow(r,isH(r)?'New':'Handled',r.Note||'');show('inbox')}catch(x){alert(x.message)}};td.append(b);tr.append(td)}
+      cols.forEach(c=>{const td=h('td',0,esc(r[c]));td.title=r[c]||'';tr.append(td)});tr.onclick=()=>openRow(r,()=>show('inbox'));t.append(tr)});tb.append(t)};
   q.oninput=draw;draw();w.append(bar,tb);return w}
-
-/* ---------- site settings + publish ---------- */
+/* ---------- home, albums, site, publish ---------- */
+function home(){
+  const w=h('div'),R=X.registrations,J=X.joins,M=X.messages,nw=a=>sup()?a.filter(r=>!isH(r)).length:a.length;
+  const days=Math.ceil((new Date(D.EVENT_DATE)-Date.now())/864e5),ph=D.ALBUMS.reduce((n,a)=>n+a.photos.length,0),mem=D.MEMBERS.reduce((n,g)=>n+g.members.length,0);
+  const C=[['Days to Spectrum',days>0?days:'Done'],[sup()?'New registrations':'Registrations',nw(R)],['Students attending',R.reduce((n,r)=>n+(+r.students||0),0)],[sup()?'New join requests':'Join requests',nw(J)],[sup()?'New messages':'Messages',nw(M)],['Albums',D.ALBUMS.length],['Photos',ph],['Members',mem]];
+  w.append(h('div','stats',C.map(([a,b])=>`<div class="card"><small>${a}</small><strong>${b}</strong></div>`).join('')));
+  const bar=h('div','bar');bar.append(btn('Open inbox',()=>show('inbox')),Object.assign(h('a','btn ghost sm','Album Builder'),{href:'../tools/album-builder.html'}),btn('Review and publish',()=>show('publish'),'ghost'),Object.assign(h('a','btn ghost sm','View site'),{href:'../index.html'}));w.append(bar);
+  const ch=changed();w.append(h('p','note',ch.length||Object.keys(ST).length?'You have unpublished changes in: '+ch.map(nice).join(', ')+'.':'Everything here is published.'));
+  w.append(h('h3',0,'Latest registrations'));const t=h('div','tbl');t.innerHTML='<table>'+[...R].reverse().slice(0,6).map(r=>`<tr><td>${esc(r.school||r.contact_name||'')}</td><td>${esc(r.students||'')} students</td><td>${esc(r.Timestamp||'')}</td></tr>`).join('')+'</table>';w.append(t);return w}
+function albums(){
+  const w=h('div');w.append(h('p','note','Add albums, edit photos, covers and details in the Album Builder. Here you can reorder albums (the order is the gallery order) or remove one.'));
+  w.append(Object.assign(h('a','btn sm','Open Album Builder'),{href:'../tools/album-builder.html'}));
+  const box=h('div');box.style.marginTop='1rem';const draw=()=>{box.innerHTML='';D.ALBUMS.forEach((a,i)=>{const d=h('details','it'),s=h('summary');
+    s.append(Object.assign(h('img'),{src:'../'+(a.cover||a.photos[0]||''),alt:'',style:'width:2.4rem;height:3rem;object-fit:cover'}),h('span',0,esc(a.name)+' <small style="color:var(--muted)">· '+a.photos.length+' photos</small>'));
+    [['↑',-1],['↓',1],['✕',0]].forEach(([t,dx])=>{const b=h('button','mini',t);b.type='button';b.onclick=e=>{e.preventDefault();
+      if(!dx){if(!confirm('Remove "'+a.name+'" from the gallery? Its photo files stay in the repo.'))return;D.ALBUMS.splice(i,1)}else{const j=i+dx;if(j<0||j>=D.ALBUMS.length)return;[D.ALBUMS[i],D.ALBUMS[j]]=[D.ALBUMS[j],D.ALBUMS[i]]}dirty();draw()};s.append(b)});
+    d.append(s);d.querySelector('summary').style.cursor='default';box.append(d)})};draw();w.append(box);return w}
 function site(){const w=h('div','bd'),d=h('input','in');d.type='datetime-local';d.value=D.EVENT_DATE.slice(0,16);
   d.onchange=()=>{if(d.value){D.EVENT_DATE=d.value+':00+05:30';dirty()}};
   w.append(h('p','note','The countdown date. The Spectrum entry under Events (date, time, calendar start/end) is edited separately.'),field('Spectrum countdown (Sri Lanka time)',d));
   ['SLIDE_SECONDS','PRESIDENT_WHATSAPP','PRESIDENT_WHATSAPP_LINK','FORMS_ENDPOINT'].forEach(k=>w.append(ed(D,k,k)));return w}
-const src=()=>'/* SSCPC site data. Written by the admin portal (admin/index.html). Notes: README.txt */\n\n'+Object.keys(D).map(k=>`const ${k} = ${JSON.stringify(D[k],null,2)};`).join('\n\n')+'\n';
 function publish(){
-  const w=h('div','bd'),g=JSON.parse(localStorage.gh||'{}'),st=h('p','note');
-  w.append(h('p','note','<b>Download</b> gives you a new js/data.js to upload to GitHub yourself. <b>Publish</b> commits it for you, and Vercel redeploys in about a minute. Photos are not uploaded here: use tools/album-builder.html and add the folder to the site.'),btn('Download data.js',()=>save('data.js',src(),'text/javascript')));
-  const f={};[['repo','GitHub repository (owner/name)'],['branch','Branch'],['token','Fine-grained access token (Contents: read and write, this repo only)']].forEach(([k,l])=>{const i=h('input','in');if(k==='token')i.type='password';i.value=g[k]||(k==='branch'?'main':'');f[k]=i;w.append(field(l,i))});
-  w.append(btn('Publish to GitHub',async()=>{
-    const o={repo:f.repo.value.trim(),branch:f.branch.value.trim()||'main',token:f.token.value.trim()};localStorage.gh=JSON.stringify(o);
-    const u=`https://api.github.com/repos/${o.repo}/contents/js/data.js`,H={Authorization:'Bearer '+o.token,Accept:'application/vnd.github+json'};
-    st.textContent='Publishing…';
-    try{const r=await fetch(u+'?ref='+o.branch,{headers:H});if(!r.ok)throw Error('Could not read js/data.js ('+r.status+')');
-      const j=await r.json(),p=await fetch(u,{method:'PUT',headers:H,body:JSON.stringify({message:'Update data.js from admin portal',content:btoa(unescape(encodeURIComponent(src()))),sha:j.sha,branch:o.branch})});
-      if(!p.ok)throw Error('GitHub refused the update ('+p.status+')');base=snap();dirty();st.textContent='Published. The live site updates in about a minute.'}
-    catch(e){st.textContent=e.message}}),st,
-    h('p','note','The token is kept in this browser only. Use a device you trust, and sign out of shared computers.'));
-  return w}
-
+  const w=h('div','bd'),st=h('p','note'),errs=[],L=[],ch=changed(),ni=Object.keys(ST).length;
+  KEYS.forEach(k=>chk(D[k],k,k,errs));ch.forEach(k=>diff(JSON.parse(B[k]),D[k],k,L));
+  w.append(h('p','note','Review what will change, then publish. <b>Publish</b> commits to GitHub and Vercel redeploys in about a minute. If the Album Builder (or anyone) changed a section meanwhile, it is merged in automatically; if the same section changed in both places you are asked to reload.'));
+  if(errs.length){const e=h('div','box err');e.append(h('b',0,'Fix these first:'));errs.forEach(x=>e.append(h('div',0,esc(x))));w.append(e)}
+  const r=h('pre','box');r.textContent=(L.length||ni?L.slice(0,80).join('\n')+(L.length>80?'\n… and '+(L.length-80)+' more':'')+(ni?'\n+ '+ni+' new image'+(ni>1?'s':'')+' to upload':''):'No changes.');w.append(r);
+  const bar=h('div','bar');
+  bar.append(btn('Discard all changes',()=>{if(!(ch.length||ni)||!confirm('Throw away all unpublished changes?'))return;D=JSON.parse(JSON.stringify(Object.fromEntries(KEYS.map(k=>[k,JSON.parse(B[k])]))));for(const p in ST)delete ST[p];hist=[JSON.stringify(D)];hi=0;dirty();show('publish')},'ghost'),
+    btn('Download data.js',()=>save('data.js',ser(D),'text/javascript'),'ghost'));
+  const f={};const g=h('div','bd');[['repo','GitHub repository (owner/name)'],['branch','Branch'],['token','Fine-grained access token (Contents: read and write, this repo only)']].forEach(([k,l])=>{const i=h('input','in');if(k==='token')i.type='password';i.value=GH[k]||(k==='branch'?'main':'');f[k]=i;g.append(field(l,i))});
+  const pb=btn('Publish to GitHub',async()=>{GH={repo:f.repo.value.trim(),branch:f.branch.value.trim()||'main',token:f.token.value.trim()};localStorage.gh=JSON.stringify(GH);
+    if(errs.length||!(ch.length||ni)){st.textContent=errs.length?'Fix the problems above first.':'Nothing to publish.';return}
+    st.textContent='Publishing…';pb.disabled=true;try{await pub();show('publish');$('#main').append(h('p','note','Published. The live site updates in about a minute.'))}catch(e){st.textContent=e.message;pb.disabled=false}});
+  bar.append(pb);w.append(bar,st,g,h('p','note','The token is kept in this browser only (shared with the Album Builder). Use a device you trust, and sign out of shared computers.'));return w}
 /* ---------- shell ---------- */
-const TABS=[['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',()=>ed(D,'ALBUMS','')],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['site','Site',site],['publish','Publish',publish]];
+const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['site','Site',site],['publish','Publish',publish]];
 TABS.forEach(([k,t])=>{const b=h('button','tab',t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))});
 function show(n){tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
   const m=$('#main'),t=TABS.find(x=>x[0]===n);m.innerHTML='';m.append(h('div','ttl',t[1]),t[2]());scrollTo(0,0)}
-async function enter(k){key=k;$('#msg').textContent='Checking…';
-  try{await load();sessionStorage.k=k;$('#login').classList.add('hide');$('#app').classList.remove('hide');show(tab)}
+let D0;async function enter(k){key=k;$('#msg').textContent='Checking…';
+  try{const r=await fetch('../js/data.js',{cache:'no-store'});let txt=await r.text();D0=parse(txt);await load();
+    if(GH.token&&GH.repo)try{txt=(await head()).text}catch(e){}
+    D=parse(txt);KEYS=Object.keys(D);B=snapK();hist=[JSON.stringify(D)];hi=0;ub();
+    sessionStorage.k=k;$('#login').classList.add('hide');$('#app').classList.remove('hide');show(tab)}
   catch(e){sessionStorage.removeItem('k');$('#msg').textContent='Could not sign in. Check the key, and that the updated Apps Script is deployed.'}}
 $('#lf').onsubmit=e=>{e.preventDefault();enter($('#key').value)};
 $('#so').onclick=()=>{sessionStorage.removeItem('k');location.reload()};
+$('#undo').onclick=()=>jump(-1);$('#redo').onclick=()=>jump(1);
 $('#th').onclick=()=>{const r=document.documentElement,c=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.dataset.theme=c==='dark'?'light':'dark';localStorage.at=r.dataset.theme};
 if(localStorage.at)document.documentElement.dataset.theme=localStorage.at;
-addEventListener('beforeunload',e=>{if(snap()!==base){e.preventDefault();e.returnValue=''}});
+addEventListener('beforeunload',e=>{if(D&&(changed().length||Object.keys(ST).length)){e.preventDefault();e.returnValue=''}});
 if(sessionStorage.k)enter(sessionStorage.k);
 </script>
 </body>
