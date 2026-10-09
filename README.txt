@@ -43,24 +43,40 @@ details (event, date, venue, credits) and a "Facebook album" button. This keeps 
 complete albums stay on Facebook.
 
 
+ADMIN PORTAL (your-site/admin)
+   Home: key numbers, new items in the inbox, and what is unpublished.
+   Inbox: click a row to read it all, mark it Handled and add a private note.
+     This needs the updated tools/google-sheet-script.gs: paste it into Apps
+     Script, then Deploy > Manage deployments > pencil > New version > Deploy.
+     (Until then the inbox still works, without Handled/Notes.)
+     Please also change ADMIN_KEY in that script from the sample value.
+   Events / Members / Slides: forms with checks (links, dates, empty names),
+     image upload (the picture is resized and committed with your changes),
+     drag the handle to reorder, Undo and Redo in the side menu.
+   Albums: reorder or remove here; add and edit in the Album Builder.
+   Publish: review every change first, fix any listed problems, then publish.
+     Changes made meanwhile elsewhere (for example by the Album Builder) are
+     merged in; if the same section changed in both places, reload and redo it.
+
 2. COMMON UPDATES
 -----------------
 
-EASIEST WAY TO ADD AN ALBUM: THE ALBUM BUILDER (no coding)
-   Open tools/album-builder.html in Chrome (double-click it). Fill in the
-   form, choose the photos, press "Prepare album". Then:
-   1) Download the ZIP and unzip it into the website folder (it adds a folder
-      inside images/albums).
-   2) Copy the album code and paste it into js/data.js right after the line
-      "const ALBUMS = [".
-   3) Upload the website folder to Netlify again.
-   The builder also makes the Events-page entry (paste after
-   "const EVENTS = [").
-   Big albums (200 to 500 photos) are fine: the builder makes a small
-   thumbnail and a full-size copy of every photo, lets you untick photos you
-   do not want, and the gallery shows the light thumbnails and loads each
-   full photo only when it is opened. Keep the tab open while it works
-   (about a minute for 200 photos).
+EASIEST WAY TO ADD OR EDIT AN ALBUM: THE ALBUM BUILDER (no coding)
+   Open  your-site/album-builder  (it forwards to tools/album-builder.html; also reachable from the admin portal's
+   side menu, "Album Builder"). Pick an album to edit, or press New album.
+   Fill in the details, add the photos, drag to reorder, press the star on
+   a photo to make it the cover, and untick any you do not want.
+   Then press "Publish to site": the photos and the updated js/data.js are
+   committed to GitHub and Vercel redeploys in about a minute.
+   First time only: open the "GitHub connection" box at the top and enter the
+   repository (owner/name), branch and a fine-grained token (Contents: read
+   and write, this repo only). The admin portal uses the same saved settings.
+   No token? Press "Download ZIP instead", unzip it into the website folder
+   (it replaces js/data.js), then commit and push.
+   The builder also makes or updates the Events-page entry, and it can edit
+   albums that already exist (details, order, cover, extra photos).
+   Big albums (200 to 500 photos) are fine: photos are processed a few at a
+   time and uploaded in batches. Keep the tab open while it works.
    (The manual way is described in A) below.)
 
 A) ADD A NEW ALBUM
