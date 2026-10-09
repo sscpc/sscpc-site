@@ -2,7 +2,41 @@
 
 const EVENT_DATE = "2026-11-13T09:00:00+05:30";
 
-const ALBUMS = [  {
+const ALBUMS = [
+  {
+    "name": "12th P.M.L.Banda & B.Nillegoda memorial rugby trophy",
+    "facebook": "https://web.facebook.com/share/p/19skD8zjFS/",
+    "info": {
+      "date": "24 May 2026",
+      "venue": "Nittawela Ground",
+      "captured": [
+        "Sasidu Shanelka",
+        "Nadeesha Ambakotuwa"
+      ],
+      "edited": [
+        "Sasidu Shanelka"
+      ]
+    },
+    "cover": "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/cover.jpg",
+    "thumbs": "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/thumbs/",
+    "photos": [
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-01.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-02.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-03.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-04.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-05.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-06.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-07.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-08.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-09.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-10.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-11.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-12.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-13.jpg",
+      "images/albums/12th-p-m-l-banda-b-nillegoda-memorial-rugby-trophy/photo-14.jpg"
+    ]
+  },
+  {
     "name": "Hypnotic Elixir '26",
     "facebook": "https://www.facebook.com/share/p/18mQ6xfMSe/",
     "info": {
