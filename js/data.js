@@ -17,29 +17,29 @@ const ALBUMS = [
         "Sasidu Shanelka"
       ]
     },
-    "cover": "images/albums/eco-explore-intra-school-exploring-event/cover.jpg",
+    "cover": "images/albums/eco-explore-intra-school-exploring-event/cover-mv0fmzcd.jpg",
     "thumbs": "images/albums/eco-explore-intra-school-exploring-event/thumbs/",
     "photos": [
+      "images/albums/eco-explore-intra-school-exploring-event/photo-04.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-14.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-08.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-03.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-12.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-01.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-02.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-03.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-04.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-05.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-06.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-07.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-08.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-09.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-10.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-11.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-12.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-13.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-14.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-15.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-16.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-17.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-18.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-17.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-06.jpg",
       "images/albums/eco-explore-intra-school-exploring-event/photo-19.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-20.jpg"
+      "images/albums/eco-explore-intra-school-exploring-event/photo-20.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-09.jpg"
     ]
   },
   {
