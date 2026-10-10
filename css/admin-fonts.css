@@ -1,0 +1,10 @@
+/* SSCPC admin page: Nexa (Heavy) is the secondary font, always bold.
+   Add to the admin page <head> AFTER its other stylesheets:
+     <link rel="stylesheet" href="css/admin-fonts.css">
+   (use ../css/admin-fonts.css if the admin page lives in an admin/ folder). */
+@font-face{font-family:'Nexa';src:url('../fonts/Nexa-Heavy.ttf') format('truetype');font-weight:100 900;font-style:normal;font-display:swap}
+:root{--font-secondary:'Nexa','Poppins',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+/* everything except the main heading font uses the secondary font */
+body,p,li,td,th,label,small,span,a,button,input,select,textarea,.btn,.av,.av button{font-family:var(--font-secondary);font-weight:700}
+input::placeholder,textarea::placeholder{font-family:var(--font-secondary);font-weight:700}
+b,strong{font-weight:700}

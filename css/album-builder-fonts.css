@@ -1,0 +1,9 @@
+/* SSCPC album builder: Heading Now (Bold / Extrabold) is the secondary font.
+   Add to tools/album-builder.html <head> AFTER its other stylesheets:
+     <link rel="stylesheet" href="../css/album-builder-fonts.css">  */
+@font-face{font-family:'Heading Now';src:url('../fonts/HeadingNow-Bold.ttf') format('truetype');font-weight:100 700;font-style:normal;font-display:swap}
+@font-face{font-family:'Heading Now';src:url('../fonts/HeadingNow-Extrabold.ttf') format('truetype');font-weight:800 900;font-style:normal;font-display:swap}
+:root{--font-secondary:'Heading Now','Poppins',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+body,p,li,td,th,label,small,span,a,button,input,select,textarea,.btn{font-family:var(--font-secondary);font-weight:700}
+input::placeholder,textarea::placeholder{font-family:var(--font-secondary);font-weight:700}
+b,strong{font-weight:800}

@@ -46,19 +46,22 @@
     p.appendChild(document.createTextNode(c.text + ' Send your best frame to the club.'));
   }
 
-  /* ---------- video tutorials ----------
-     Add a video by putting its link in "url". Accepted:
+  /* ---------- lesson videos and photos ----------
+     Each lesson page (id="lesson-<key>" in index.html) has a media slot that is filled from this list.
+     VIDEO: put its link in "url". Accepted:
        - a YouTube link (watch?v=..., youtu.be/..., shorts/... or embed/...): plays on the page, privacy-friendly
          (youtube-nocookie.com), and only loads when the visitor presses play
        - a video file of your own, e.g. 'videos/composition.mp4' (.mp4 or .webm), with an optional  poster: 'images/learn/composition.jpg'
        - any other link (for example a Facebook video): shows a "Watch" button that opens it in a new tab
-     Leave url empty ('') to show the card as "Coming soon". Fields: title, topic, length (text such as '5 min'), by (who made it). */
-  const VIDEOS = [
-    { title: 'Composition: the rule of thirds', topic: 'Composition', url: '', length: '', by: 'SSCPC' },
-    { title: 'Using natural light', topic: 'Light', url: '', length: '', by: 'SSCPC' },
-    { title: 'Aperture, shutter and ISO', topic: 'Exposure', url: '', length: '', by: 'SSCPC' },
-    { title: 'Better photos with your phone', topic: 'Phone photography', url: '', length: '', by: 'SSCPC' }
-  ];
+       Leave url empty ('') to show "Coming soon". Fields: title, length (text such as '5 min'), by (who made it).
+     PHOTOS: a list of { src: 'images/learn/composition-1.jpg', caption: 'Rule of thirds' }. Put the picture files in images/learn/.
+       With no photos the lesson shows "Photos coming soon". */
+  const LESSONS = {
+    composition: { video: { title: 'Composition: the rule of thirds', url: '', length: '', by: 'SSCPC' }, photos: [] },
+    light:       { video: { title: 'Using natural light', url: '', length: '', by: 'SSCPC' }, photos: [] },
+    exposure:    { video: { title: 'Aperture, shutter and ISO', url: '', length: '', by: 'SSCPC' }, photos: [] },
+    phone:       { video: { title: 'Better photos with your phone', url: '', length: '', by: 'SSCPC' }, photos: [] }
+  };
 
   function ytId(u) {
     const m = String(u).match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/))([A-Za-z0-9_-]{11})/);
@@ -69,10 +72,10 @@
     const ns = 'http://www.w3.org/2000/svg', s = document.createElementNS(ns, 'svg'), p = document.createElementNS(ns, 'path');
     s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true'); p.setAttribute('d', 'M8 5v14l11-7z'); s.appendChild(p); return s;
   }
-  function card(v) {
-    const art = make('article', 'hd-card vid-card'), media = make('div', 'vid-media'), url = String(v.url || '').trim();
+  function videoBlock(v) {
+    const art = make('div', 'vid-card'), media = make('div', 'vid-media'), url = String(v.url || '').trim();
     const id = ytId(url), isFile = /\.(mp4|webm)(\?.*)?$/i.test(url);
-    const meta = [v.topic, v.length, v.by].filter(Boolean).join('  ·  ');
+    const meta = [v.length, v.by].filter(Boolean).join('  ·  ');
     if (id) { /* YouTube: a still picture with a play button; the player loads only on click */
       const b = make('button', 'vid-play'); b.type = 'button'; b.setAttribute('aria-label', 'Play video: ' + v.title);
       const img = make('img'); img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; img.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
@@ -93,21 +96,34 @@
       const soon = make('div', 'vid-soon'); soon.appendChild(playIcon()); soon.appendChild(make('span', null, 'Coming soon')); media.appendChild(soon);
     }
     art.appendChild(media);
-    art.appendChild(make('h3', null, v.title));
+    art.appendChild(make('h4', 'vid-title', v.title));
     if (meta) art.appendChild(make('p', 'vid-meta', meta));
     return art;
   }
-  function showVideos() {
-    const box = document.getElementById('learn-videos');
-    if (!box || !VIDEOS.length) return;
-    const grid = box.querySelector('.vid-grid');
-    if (!grid) return;
-    grid.textContent = '';
-    VIDEOS.forEach(function (v) { grid.appendChild(card(v)); });
-    box.hidden = false;
+  function photoBlock(list) {
+    const wrap = make('div', 'ph-grid');
+    if (!list || !list.length) { wrap.appendChild(make('p', 'ph-soon', 'Photos coming soon')); return wrap; }
+    list.forEach(function (p) {
+      const fig = make('figure', 'ph-fig'), a = make('a'), img = make('img');
+      a.href = p.src; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('aria-label', 'Open photo' + (p.caption ? ': ' + p.caption : ''));
+      img.src = p.src; img.alt = p.caption || ''; img.loading = 'lazy'; img.decoding = 'async';
+      a.appendChild(img); fig.appendChild(a);
+      if (p.caption) fig.appendChild(make('figcaption', null, p.caption));
+      wrap.appendChild(fig);
+    });
+    return wrap;
+  }
+  function showMedia() {
+    document.querySelectorAll('.lesson-media[data-lesson]').forEach(function (slot) {
+      const l = LESSONS[slot.getAttribute('data-lesson')];
+      if (!l) return;
+      slot.textContent = '';
+      if (l.video) { slot.appendChild(make('h4', 'media-h', 'Video')); slot.appendChild(videoBlock(l.video)); }
+      slot.appendChild(make('h4', 'media-h', 'Photos')); slot.appendChild(photoBlock(l.photos));
+    });
   }
 
-  window.SSCPCLearn = { pick: pick, weekIndex: weekIndex, ytId: ytId, videos: VIDEOS };
-  function start() { show(); showVideos(); }
+  window.SSCPCLearn = { pick: pick, weekIndex: weekIndex, ytId: ytId, lessons: LESSONS };
+  function start() { show(); showMedia(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

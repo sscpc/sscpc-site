@@ -425,3 +425,11 @@ same Google Apps Script as the forms. Setup, once:
      window.dispatchEvent(new CustomEvent('sscpc:album-open', { detail: { album: albumName } }))
 Shared album links (?album=...) are counted without step 3.
 
+
+ADMIN AND ALBUM BUILDER FONTS
+-----------------------------
+Secondary font, always bold:
+  Admin page    : Nexa Heavy          (fonts/Nexa-Heavy.ttf, css/admin-fonts.css)
+  Album builder : Heading Now Bold    (fonts/HeadingNow-*.ttf, css/album-builder-fonts.css)
+Add the matching <link rel="stylesheet"> line (written at the top of each CSS file) to the end of that page's <head>.
+Heading Now is licensed CC BY-NC (non-commercial); keep its licence PDF if you publish the site.
