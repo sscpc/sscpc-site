@@ -4,45 +4,6 @@ const EVENT_DATE = "2026-11-13T09:00:00+05:30";
 
 const ALBUMS = [
   {
-    "name": "Eco explore - Intra school exploring event",
-    "facebook": "https://www.facebook.com/share/p/14ho7VFNsz1/?mibextid=wwXIfr",
-    "info": {
-      "date": "22 May 2026",
-      "venue": "Udawattakale forest reserve kandy",
-      "captured": [
-        "Sasidu Shanelka",
-        "Nadeesha Ambakotuwa"
-      ],
-      "edited": [
-        "Sasidu Shanelka"
-      ]
-    },
-    "cover": "images/albums/eco-explore-intra-school-exploring-event/cover.jpg",
-    "thumbs": "images/albums/eco-explore-intra-school-exploring-event/thumbs/",
-    "photos": [
-      "images/albums/eco-explore-intra-school-exploring-event/photo-04.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-14.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-08.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-03.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-12.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-01.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-02.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-05.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-07.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-10.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-11.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-13.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-15.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-16.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-18.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-17.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-06.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-19.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-20.jpg",
-      "images/albums/eco-explore-intra-school-exploring-event/photo-09.jpg"
-    ]
-  },
-  {
     "name": "Hypnotic Elixir '26",
     "facebook": "https://www.facebook.com/share/p/18mQ6xfMSe/",
     "info": {
@@ -934,6 +895,45 @@ const ALBUMS = [
     ]
   },
   {
+    "name": "Eco explore - Intra school exploring event",
+    "facebook": "https://www.facebook.com/share/p/14ho7VFNsz1/?mibextid=wwXIfr",
+    "info": {
+      "date": "22 May 2026",
+      "venue": "Udawattakale forest reserve kandy",
+      "captured": [
+        "Sasidu Shanelka",
+        "Nadeesha Ambakotuwa"
+      ],
+      "edited": [
+        "Sasidu Shanelka"
+      ]
+    },
+    "cover": "images/albums/eco-explore-intra-school-exploring-event/cover.jpg",
+    "thumbs": "images/albums/eco-explore-intra-school-exploring-event/thumbs/",
+    "photos": [
+      "images/albums/eco-explore-intra-school-exploring-event/photo-01.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-02.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-03.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-04.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-05.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-06.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-07.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-08.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-09.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-10.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-11.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-12.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-13.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-14.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-15.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-16.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-17.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-18.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-19.jpg",
+      "images/albums/eco-explore-intra-school-exploring-event/photo-20.jpg"
+    ]
+  },
+  {
     "name": "St. Sylvester's College Vs Richmond College Ragby Match",
     "facebook": "https://web.facebook.com/share/p/1MBWB59fRZ/",
     "info": {
@@ -1158,3 +1158,23 @@ const SLIDES = [
 ];
 
 const FORMS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyAHz3S7XpEbTAfYYXuhJDoVZoKPNY5his_4kfAh4ElJYyvgeAd4-14XVT_Vlp06f-j/exec";
+
+/* PDF settings (used by every PDF the site makes, see js/pdf/).
+   Change colours, footer text or defaults here. Colours are hex. Leave footerText empty
+   to show "SSCPC · sscpc.vercel.app" and the club email in the footer.
+   defaults: template = standard | print | compact, pageSize = a4 | a5,
+   orientation = portrait | landscape, textSize = normal | large. A visitor's own choice in
+   the "PDF options" panel overrides these defaults on their device. */
+const PDF_CONFIG = {
+  siteUrl: "https://sscpc.vercel.app",
+  siteLabel: "sscpc.vercel.app",
+  email: "sylvestrian.photography@gmail.com",
+  clubName: "St. Sylvester's College Photography Club",
+  shortName: "SSCPC",
+  footerText: "",
+  logo: "images/pdf-logo.png",
+  colors: { navy: "#04101E", blue: "#2882E6", maroon: "#7D1526", red: "#8A1228", gold: "#E6B022" },
+  defaults: { template: "standard", pageSize: "a4", orientation: "portrait", textSize: "normal" },
+  /* QR codes in the PDFs (they link to siteUrl). size is in mm, between 22 and 40. enabled:false removes them. */
+  qr: { enabled: true, size: 28 }
+};
