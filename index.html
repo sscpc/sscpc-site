@@ -29,6 +29,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/chatbot.css">
 <link rel="stylesheet" href="css/pdf-ui.css">
+<link rel="stylesheet" href="css/learn.css">
 <link rel="stylesheet" href="css/music.css">
 <link rel="stylesheet" href="css/committee.css">
 <link rel="stylesheet" href="css/gallery-tools.css">
@@ -521,6 +522,7 @@
             <p class="reg-msg" id="join-status" role="status"></p>
             <div class="btns">
               <a class="btn cut" id="join-dl">Download PDF</a>
+              <a class="btn ghost" id="join-card" hidden>Download membership card</a>
               <button class="btn cut" type="button" id="join-share" hidden>Share PDF on WhatsApp</button>
               <a class="btn ghost" id="join-wa" target="_blank" rel="noopener">Message the president on WhatsApp</a>
             </div>
@@ -613,6 +615,69 @@
   </div>
 </section>
 
+<section class="helpdesk learn" id="learn" aria-labelledby="learn-title">
+  <div class="wrap">
+    <div class="hd-head">
+      <span class="hd-eyebrow">Learn</span>
+      <h2 id="learn-title">Learn Photography, One Lesson at a Time</h2>
+      <p>Short, practical lessons from the club. Read one, try the challenge, and share your best frame with us.</p>
+    </div>
+    <div class="learn-grid">
+      <article class="hd-card learn-card">
+        <span class="learn-no" aria-hidden="true">1</span>
+        <h3>Composition</h3>
+        <ul class="learn-pts">
+          <li>Switch on the grid and place your subject on a line or crossing point (rule of thirds).</li>
+          <li>Use leading lines such as roads, railings and shadows to pull the eye to your subject.</li>
+          <li>Simplify. Remove clutter, or move closer.</li>
+        </ul>
+        <p class="learn-try"><b>Try this:</b> take five photos of one object, each from a different angle.</p>
+      </article>
+      <article class="hd-card learn-card">
+        <span class="learn-no" aria-hidden="true">2</span>
+        <h3>Light</h3>
+        <ul class="learn-pts">
+          <li>The hour after sunrise and the hour before sunset give soft, warm light.</li>
+          <li>Midday sun is harsh: look for shade, or shoot with the sun behind you.</li>
+          <li>Window light is excellent for portraits. Turn your subject towards it.</li>
+        </ul>
+        <p class="learn-try"><b>Try this:</b> photograph the same spot in the morning and in the evening.</p>
+      </article>
+      <article class="hd-card learn-card">
+        <span class="learn-no" aria-hidden="true">3</span>
+        <h3>Exposure basics</h3>
+        <ul class="learn-pts">
+          <li>Wide aperture gives a blurry background; narrow keeps more in focus.</li>
+          <li>Fast shutter freezes motion; slow shutter blurs it.</li>
+          <li>Keep ISO as low as the light allows.</li>
+        </ul>
+        <p class="learn-try"><b>Try this:</b> freeze a moving friend, then blur them on purpose.</p>
+      </article>
+      <article class="hd-card learn-card">
+        <span class="learn-no" aria-hidden="true">4</span>
+        <h3>Phone photography</h3>
+        <ul class="learn-pts">
+          <li>A phone is a real camera. Clean the lens before you shoot.</li>
+          <li>Tap to focus, then slide to set the brightness.</li>
+          <li>Skip digital zoom. Walk closer instead.</li>
+        </ul>
+        <p class="learn-try"><b>Try this:</b> shoot a portrait with a window beside your subject.</p>
+      </article>
+    </div>
+    <div class="learn-foot">
+      <div class="learn-challenge">
+        <span class="hd-eyebrow">This week's challenge</span>
+        <p><b>Shadows.</b> Find a strong shadow, and make it the subject of your photo. Send your best frame to the club.</p>
+      </div>
+      <div class="btns">
+        <button class="btn cut" type="button" data-bot-pdf="tips">Download the tips sheet (PDF)</button>
+        <button class="btn ghost" type="button" data-bot-ask="Give me a photography tip">Ask the assistant for a tip</button>
+        <a class="btn ghost" href="#gallery">See our gallery for ideas</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap foot-grid">
     <div class="foot-col foot-brand">
@@ -675,6 +740,7 @@
 <script src="js/pdf/docs/chat.js"></script>
 <script src="js/pdf/docs/join.js"></script>
 <script src="js/pdf/docs/register.js"></script>
+<script src="js/pdf/docs/card.js"></script>
 <script src="js/pdf-kit.js"></script>
 <script src="js/join.js"></script>
 <script src="js/contact.js"></script>
@@ -730,6 +796,7 @@
 <script src="js/reveal.js"></script>
 <script src="js/judges-v6.js" defer></script>
 <script src="js/gallery-tools.js"></script>
+<script src="js/album-views.js"></script>
 <script src="js/chatbot.js"></script>
 <script src="js/music.js"></script>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script><!--vercel-->

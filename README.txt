@@ -384,3 +384,30 @@ is loaded from outside. To add a code to another PDF:
    NS.qrCorner(x, { query: 'assistant=1' })              bottom-right of the last page
    a document definition with  headerQr: true      header-right (only when the header is tall enough)
 If the code cannot be made for any reason, the PDF is still produced without it.
+
+MEMBERSHIP CARD
+---------------
+js/pdf/docs/card.js makes a bank-card-size PDF (85.60 x 53.98 mm, corner radius 3.18 mm; the standard allows
+2.88 to 3.48 mm). Page 1 = front (name, grade, membership number, QR code to the About page), page 2 = back.
+After a Join Us application is submitted and the club has given a membership number, a "Download membership
+card" button appears under the application PDF, with optional "Card in Sinhala" and "Card in Tamil" buttons
+(labels in that language with the English beside them; the translations are in js/pdf/i18n.js). Print it at 100% (no "fit to page") on card stock and cut along
+the rounded edge. Open tools/pdf-preview.html and choose "SSCPC Membership Card" to see it with sample data.
+
+LEARN SECTION (Home page, above the footer)
+-------------------------------------------
+index.html, id="learn": four short lessons, a weekly challenge and buttons for the tips PDF and the assistant.
+To change a lesson or the challenge, edit the words in that section. Style: css/learn.css.
+
+GALLERY VIEWS PER ALBUM (admin page)
+------------------------------------
+js/album-views.js counts one view per album per visitor session (only the album name is sent) and sends it to the
+same Google Apps Script as the forms. Setup, once:
+  1. Open tools/album-views.gs and follow the 4 steps at the top (paste it into the Apps Script project, add two
+     lines to doPost / doGet, then Deploy > Manage deployments > New version).
+  2. In the admin page, add  <div id="album-views"></div>  and load js/admin-album-views.js, then call
+     SSCPCAlbumViews.mount(document.getElementById('album-views'), { endpoint: FORMS_ENDPOINT, key: <the admin key> }).
+  3. In the gallery code, when an album is opened, add:
+     window.dispatchEvent(new CustomEvent('sscpc:album-open', { detail: { album: albumName } }))
+Shared album links (?album=...) are counted without step 3.
+

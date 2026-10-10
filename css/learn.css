@@ -1,0 +1,11 @@
+/* Learn section (home page, above the footer). Re-uses the Helpdesk look; add or edit lessons in index.html (id="learn"). */
+.learn .learn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15.5rem,1fr));gap:1rem;margin-top:1.2rem}
+.learn-card{position:relative}
+.learn-no{display:inline-flex;align-items:center;justify-content:center;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--glow);color:#04101e;font-weight:700;font-size:.85rem;margin-bottom:.4rem}
+.learn-pts{margin:.5rem 0 .8rem;padding-left:1.1rem;font-size:.9rem;line-height:1.55;color:var(--muted)}
+.learn-pts li{margin:.3rem 0}
+.learn-try{margin:0;padding:.55rem .7rem;border-left:3px solid var(--glow);background:rgba(108,200,255,.08);border-radius:0 .4rem .4rem 0;font-size:.85rem;line-height:1.5}
+.learn-foot{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between;margin-top:1.4rem;padding:1rem 1.1rem;border:1px solid var(--line);border-radius:.6rem;background:var(--surface)}
+.learn-challenge{flex:1 1 18rem}
+.learn-challenge p{margin:.3rem 0 0;line-height:1.55}
+.learn-foot .btns{display:flex;flex-wrap:wrap;gap:.6rem}

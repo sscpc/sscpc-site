@@ -127,11 +127,12 @@
   /* ---------- start a document ---------- */
   /* create(title, opts) -> context x. opts: {template, pageSize, orientation, textSize}
      (anything left out comes from the visitor's saved choice, then PDF_CONFIG). */
-  async function create(title, opts, lang, headerQr) {
+  async function create(title, opts, lang, headerQr, page) {
     if (!window.jspdf) throw new Error('jsPDF not loaded');
     const cfg = config(), o = resolve(null, opts), P = palette(cfg), T = TEMPLATES[o.template];
     let pw = SIZES[o.pageSize][0], ph = SIZES[o.pageSize][1];
     if (o.orientation === 'landscape') { const t = pw; pw = ph; ph = t; }
+    if (page) { pw = page.w; ph = page.h; } /* a fixed-size document such as the membership card */
     const doc = new window.jspdf.jsPDF({ unit: 'mm', format: [pw, ph], orientation: pw > ph ? 'landscape' : 'portrait', compress: true });
     try { doc.setProperties({ title: String(title), subject: cfg.clubName, author: cfg.shortName, creator: cfg.clubName }); } catch (e) { /* ignore */ }
     const M = pw >= 200 ? 18 : 14;
@@ -143,6 +144,7 @@
     x.bottom = ph - 19;
     x.f = await loadFonts(doc);
     x.logo = await logoData(cfg.logo);
+    if (page) { x.bare = true; x.bottom = ph; return x; } /* no header, footer or margins: the document draws its own pages */
     if (headerQr) { /* QR code at the header's right: only when it fits at 22 mm or more */
       const q = NS.qrPrep(x, { anchor: typeof headerQr === 'string' ? headerQr : '', size: Math.min((cfg.qr && cfg.qr.size) || 28, x.hdrH - 4) });
       if (q && q.size <= x.hdrH - 3 && q.size >= 22) x.hq = q;
@@ -173,9 +175,9 @@
     try { typed = NS.text.has(JSON.stringify(data)); } catch (e) { /* ignore */ }
     await NS.text.prepare(lang !== 'en' || typed);
     const title = typeof def.title === 'function' ? def.title(data) : def.title;
-    const x = await create(title, Object.assign({}, def.options, opts), lang, opts.headerQr != null ? opts.headerQr : def.headerQr);
+    const x = await create(title, Object.assign({}, def.options, opts), lang, opts.headerQr != null ? opts.headerQr : def.headerQr, def.page);
     await def.build(x, data);
-    NS.finish(x, def.footer ? def.footer(data) : undefined);
+    if (!def.page) NS.finish(x, def.footer ? def.footer(data) : undefined);
     const name = def.filename ? def.filename(data) : id + '.pdf';
     return { blob: x.doc.output('blob'), name: name, doc: x.doc, x: x };
   };

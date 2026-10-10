@@ -79,6 +79,29 @@
     try{pdf=await window.SSCPCPdf.deliver({id:'join',data:Object.assign({},d,{ref:ref}),dl:dl,share:share,
       shareTitle:'SSCPC membership application',shareText:'SSCPC membership application'+(ref?' '+ref:''),optionsEl:$('join-pdf-opts')})}catch(err){pdf=null}
 
+    /* the membership card (js/pdf/docs/card.js): offered once the club has given a membership number */
+    const cardBtn=$('join-card');
+    if(cardBtn){
+      cardBtn.hidden=true;
+      if(ref){
+        try{
+          const card=await window.SSCPCPdf.generate('card',{name:d.name,grade:d.grade,ref:ref});
+          cardBtn.href=URL.createObjectURL(card.blob);cardBtn.download=card.name;cardBtn.hidden=false;
+          /* optional Sinhala / Tamil copies of the card (English stays the main card) */
+          document.querySelectorAll('.join-card-x').forEach(n=>n.remove());
+          let after=cardBtn;
+          for(const l of (window.SSCPCPdf.LANGS||[]).filter(l=>l.code!=='en')){
+            try{
+              const c=await window.SSCPCPdf.generate('card',{name:d.name,grade:d.grade,ref:ref},{lang:l.code});
+              const a=document.createElement('a');a.className='btn ghost join-card-x';a.textContent='Card in '+l.label;a.lang=l.code;
+              a.href=URL.createObjectURL(c.blob);a.download=c.name.replace(/\.pdf$/i,'')+'-'+l.code+'.pdf';
+              after.insertAdjacentElement('afterend',a);after=a;
+            }catch(e){/* that language copy is optional */}
+          }
+        }catch(err){cardBtn.hidden=true}
+      }
+    }
+
     const first=clean(d.name).split(' ')[0]||'';
     const refLine=ref?' Membership number: '+ref+'.':' Your membership number will be confirmed by the club.';
     $('join-status').textContent='Thank you'+(first?', '+first:'')+'. Your application has been received.'+refLine
