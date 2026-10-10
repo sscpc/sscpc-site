@@ -433,3 +433,11 @@ Secondary font, always bold:
   Album builder : Heading Now Bold    (fonts/HeadingNow-*.ttf, css/album-builder-fonts.css)
 Add the matching <link rel="stylesheet"> line (written at the top of each CSS file) to the end of that page's <head>.
 Heading Now is licensed CC BY-NC (non-commercial); keep its licence PDF if you publish the site.
+
+HOW TO UPDATE THE LIVE WEBSITE
+------------------------------
+1. Unzip the new zip on your computer and open index.html to check it looks right.
+2. Upload the changed files to your host (Vercel / Netlify / etc.), keeping the same folder names. Easiest: upload the whole
+   folder and let it replace the old files. Vercel/Netlify: drag the folder in, or push it to GitHub and it deploys itself.
+3. Open the live site and press Ctrl+F5 (phone: close the tab and open it again) so the browser loads the new files.
+   If you still see the old version, the installed-app cache (sw.js) is holding it: open the site once more, or clear site data.

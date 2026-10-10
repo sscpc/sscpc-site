@@ -44,11 +44,28 @@
 .ph-fig img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:.4rem}
 .ph-fig figcaption{margin-top:.25rem;font-size:.72rem;color:var(--muted)}
 .ph-soon{grid-column:1/-1;margin:0;padding:.9rem;border:1px dashed var(--line);border-radius:.4rem;text-align:center;font-size:.82rem;color:var(--muted)}
-#learn-hub .learn-grid{margin-bottom:1.4rem}
 
 button.learn-open{width:100%;font:inherit;text-align:left;cursor:pointer}
-.learn-overlay{position:fixed;inset:0;z-index:9000;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--bg,#04101e);color:var(--text,inherit);padding:1.2rem 0 3rem}
+.learn-overlay{position:fixed;inset:0;z-index:9000;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--bg,#04101e);color:var(--text,inherit);padding:1.2rem 0 3rem;
+  transform:translateY(100%);opacity:0;transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .45s ease;will-change:transform}
+.learn-overlay.is-in{transform:none;opacity:1}
 .learn-overlay[hidden]{display:none}
 .learn-overlay .wrap{max-width:68rem;margin:0 auto;padding:0 1.2rem}
-.learn-bar{position:sticky;top:0;z-index:2;padding:.4rem 0 .8rem;background:var(--bg,#04101e)}
+.learn-bar{margin:0 0 1rem;padding:0;background:none;border:0;box-shadow:none;height:auto}
+.learn-bar .btn{display:inline-flex}
 body.learn-lock{overflow:hidden}
+
+/* the lesson cards: spaced apart (this grid is outside the home .learn block, so it needs its own rules) */
+#learn-hub .learn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr));gap:1.5rem;margin:1.6rem 0 2rem}
+#learn-hub .learn-card{padding:1.3rem 1.3rem 1.2rem;border:1px solid var(--line,rgba(128,140,170,.3));border-radius:.8rem;background:var(--surface,rgba(255,255,255,.04))}
+#learn-hub .learn-foot{margin-top:2rem}
+
+/* cards rise in one after another */
+.learn-overlay.is-in .learn-card,.learn-overlay.is-in .learn-foot{animation:learnRise .7s cubic-bezier(.22,1,.36,1) both}
+.learn-overlay.is-in .learn-card:nth-child(1){animation-delay:.20s}
+.learn-overlay.is-in .learn-card:nth-child(2){animation-delay:.28s}
+.learn-overlay.is-in .learn-card:nth-child(3){animation-delay:.36s}
+.learn-overlay.is-in .learn-card:nth-child(4){animation-delay:.44s}
+.learn-overlay.is-in .learn-foot{animation-delay:.52s}
+@keyframes learnRise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.learn-overlay{transition:none;transform:none}.learn-overlay.is-in .learn-card,.learn-overlay.is-in .learn-foot{animation:none}}

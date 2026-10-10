@@ -128,18 +128,22 @@
   function hubInit() {
     const hub = document.getElementById('learn-hub'), openBtn = document.getElementById('learn-open');
     if (!hub || !openBtn) return;
-    let opener = null, scrollY = 0;
+    let opener = null, scrollY = 0, hideT = 0;
     function open() {
-      if (!hub.hidden) return;
+      clearTimeout(hideT);
+      if (hub.classList.contains('is-in')) return;
       opener = document.activeElement; scrollY = window.pageYOffset;
       hub.hidden = false; hub.scrollTop = 0; document.body.classList.add('learn-lock');
+      void hub.offsetWidth;                              /* let the browser see the start position, then slide up */
+      hub.classList.add('is-in');
       try { history.pushState({ learnHub: 1 }, ''); } catch (e) { /* history unavailable: Back button still works */ }
       const b = hub.querySelector('[data-learn-close]'); if (b) b.focus();
     }
     function hide() {
-      if (hub.hidden) return;
-      hub.hidden = true; document.body.classList.remove('learn-lock');
+      if (hub.hidden || !hub.classList.contains('is-in')) return;
+      hub.classList.remove('is-in'); document.body.classList.remove('learn-lock');
       window.scrollTo(0, scrollY);                       /* back to where the visitor was, not the top */
+      clearTimeout(hideT); hideT = setTimeout(function () { if (!hub.classList.contains('is-in')) hub.hidden = true; }, 520);
       if (opener && opener.focus) try { opener.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
     }
     function close() { if (history.state && history.state.learnHub) history.back(); else hide(); }
@@ -147,7 +151,7 @@
     hub.querySelectorAll('[data-learn-close]').forEach(function (b) { b.addEventListener('click', close); });
     window.addEventListener('popstate', function () { if (!(history.state && history.state.learnHub)) hide(); });
     window.addEventListener('hashchange', hide);          /* a link inside (e.g. the gallery) leaves the lessons page */
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !hub.hidden) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && hub.classList.contains('is-in')) close(); });
     hub.addEventListener('click', function (e) { const a = e.target.closest && e.target.closest('a[href^="#"]'); if (a) hide(); });
     if (location.hash === '#learn-hub') history.replaceState(null, '', location.pathname + location.search);
   }
