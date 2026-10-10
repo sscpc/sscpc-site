@@ -396,7 +396,7 @@ the rounded edge. Open tools/pdf-preview.html and choose "SSCPC Membership Card"
 
 LEARN SECTION (a card on the home page opens a lessons page)
 -------------------------------------------------------------
-index.html, id="learn": a single card, "Photography Basics". Clicking it opens the lessons page (id="learn-hub"), which holds
+index.html, id="learn": a single card, "Photography Basics". Clicking it opens the lessons page (id="learn-hub", shown over the site, not a menu tab), which holds
 the four lessons, a video and photos for each lesson, the weekly challenge and the buttons for the tips PDF and the assistant.
 To change a lesson, edit the words in id="learn-hub". To change the card title or text, edit id="learn". Style: css/learn.css.
 THIS WEEK'S CHALLENGE changes by itself every Monday: js/learn.js holds a list of 12 challenges and shows the next one each

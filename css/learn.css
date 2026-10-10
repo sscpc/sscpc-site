@@ -45,3 +45,10 @@
 .ph-fig figcaption{margin-top:.25rem;font-size:.72rem;color:var(--muted)}
 .ph-soon{grid-column:1/-1;margin:0;padding:.9rem;border:1px dashed var(--line);border-radius:.4rem;text-align:center;font-size:.82rem;color:var(--muted)}
 #learn-hub .learn-grid{margin-bottom:1.4rem}
+
+button.learn-open{width:100%;font:inherit;text-align:left;cursor:pointer}
+.learn-overlay{position:fixed;inset:0;z-index:9000;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--bg,#04101e);color:var(--text,inherit);padding:1.2rem 0 3rem}
+.learn-overlay[hidden]{display:none}
+.learn-overlay .wrap{max-width:68rem;margin:0 auto;padding:0 1.2rem}
+.learn-bar{position:sticky;top:0;z-index:2;padding:.4rem 0 .8rem;background:var(--bg,#04101e)}
+body.learn-lock{overflow:hidden}

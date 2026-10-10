@@ -124,6 +124,33 @@
   }
 
   window.SSCPCLearn = { pick: pick, weekIndex: weekIndex, ytId: ytId, lessons: LESSONS };
-  function start() { show(); showMedia(); }
+  /* ---------- lessons page (opens over the site; does not use the menu router) ---------- */
+  function hubInit() {
+    const hub = document.getElementById('learn-hub'), openBtn = document.getElementById('learn-open');
+    if (!hub || !openBtn) return;
+    let opener = null, scrollY = 0;
+    function open() {
+      if (!hub.hidden) return;
+      opener = document.activeElement; scrollY = window.pageYOffset;
+      hub.hidden = false; hub.scrollTop = 0; document.body.classList.add('learn-lock');
+      try { history.pushState({ learnHub: 1 }, ''); } catch (e) { /* history unavailable: Back button still works */ }
+      const b = hub.querySelector('[data-learn-close]'); if (b) b.focus();
+    }
+    function hide() {
+      if (hub.hidden) return;
+      hub.hidden = true; document.body.classList.remove('learn-lock');
+      window.scrollTo(0, scrollY);                       /* back to where the visitor was, not the top */
+      if (opener && opener.focus) try { opener.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+    }
+    function close() { if (history.state && history.state.learnHub) history.back(); else hide(); }
+    openBtn.addEventListener('click', open);
+    hub.querySelectorAll('[data-learn-close]').forEach(function (b) { b.addEventListener('click', close); });
+    window.addEventListener('popstate', function () { if (!(history.state && history.state.learnHub)) hide(); });
+    window.addEventListener('hashchange', hide);          /* a link inside (e.g. the gallery) leaves the lessons page */
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !hub.hidden) close(); });
+    hub.addEventListener('click', function (e) { const a = e.target.closest && e.target.closest('a[href^="#"]'); if (a) hide(); });
+    if (location.hash === '#learn-hub') history.replaceState(null, '', location.pathname + location.search);
+  }
+  function start() { show(); showMedia(); hubInit(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

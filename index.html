@@ -574,9 +574,12 @@
       <div class="btns"><a class="btn cut" href="#register">Register to attend</a><a class="btn ghost" href="#spectrum">Back to Spectrum</a></div>
     </div>
   </section>
-  <section class="sec view" id="learn-hub">
+</main>
+
+  <div class="learn-overlay" id="learn-hub" role="dialog" aria-modal="true" aria-labelledby="learn-hub-title" hidden>
     <div class="wrap">
-      <h2>Photography Basics</h2>
+      <div class="learn-bar"><button type="button" class="btn ghost" data-learn-close>&larr; Back</button></div>
+      <h2 id="learn-hub-title">Photography Basics</h2>
       <p class="lead">Short, practical lessons from the club. Read a lesson, watch the video, study the photos, then try the challenge and share your best frame with us.</p>
       <div class="learn-grid">
       <article class="hd-card learn-card" id="lesson-composition">
@@ -630,15 +633,14 @@
         <p><b>Shadows.</b> Find a strong shadow, and make it the subject of your photo. Send your best frame to the club.</p>
       </div>
       <div class="btns">
-        <a class="btn ghost" href="#home">Back to home</a>
+        <button class="btn ghost" type="button" data-learn-close>Back to home</button>
         <button class="btn cut" type="button" data-bot-pdf="tips">Download the tips sheet (PDF)</button>
         <button class="btn ghost" type="button" data-bot-ask="Give me a photography tip">Ask the assistant for a tip</button>
         <a class="btn ghost" href="#gallery">See our gallery for ideas</a>
       </div>
     </div>
     </div>
-  </section>
-</main>
+  </div>
 
 <div id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
   <div class="pv-top">
@@ -698,7 +700,7 @@
       <h2 id="learn-title">Learn Photography, One Lesson at a Time</h2>
       <p>Short, practical lessons from the club, with photos and videos. Open the course to start.</p>
     </div>
-    <a class="hd-card learn-open" href="#learn-hub" aria-label="Open Photography Basics: lessons, photos and videos">
+    <button type="button" class="hd-card learn-open" id="learn-open" aria-haspopup="dialog" aria-label="Open Photography Basics: lessons, photos and videos">
       <span class="learn-open-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h6a3 3 0 0 1 3 3v11a2 2 0 0 0-2-2H4zM20 5h-6a3 3 0 0 0-3 3v11a2 2 0 0 1 2-2h7z"/></svg></span>
       <span class="learn-open-txt">
         <b>Photography Basics</b>
@@ -706,7 +708,7 @@
         <em>4 lessons &middot; photos &middot; videos</em>
       </span>
       <span class="learn-open-go" aria-hidden="true">Open &rarr;</span>
-    </a>
+    </button>
   </div>
 </section>
 
