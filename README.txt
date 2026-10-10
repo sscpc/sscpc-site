@@ -394,12 +394,24 @@ card" button appears under the application PDF, with optional "Card in Sinhala" 
 (labels in that language with the English beside them; the translations are in js/pdf/i18n.js). Print it at 100% (no "fit to page") on card stock and cut along
 the rounded edge. Open tools/pdf-preview.html and choose "SSCPC Membership Card" to see it with sample data.
 
-LEARN SECTION (Home page, above the footer)
--------------------------------------------
-index.html, id="learn": four short lessons, a weekly challenge and buttons for the tips PDF and the assistant.
-To change a lesson, edit the words in that section. Style: css/learn.css.
+LEARN SECTION (a card on the home page opens a lessons page)
+-------------------------------------------------------------
+index.html, id="learn": a single card, "Photography Basics". Clicking it opens the lessons page (id="learn-hub"), which holds
+the four lessons, a video and photos for each lesson, the weekly challenge and the buttons for the tips PDF and the assistant.
+To change a lesson, edit the words in id="learn-hub". To change the card title or text, edit id="learn". Style: css/learn.css.
 THIS WEEK'S CHALLENGE changes by itself every Monday: js/learn.js holds a list of 12 challenges and shows the next one each
 week, then starts again. Edit the list to add your own, or set PIN at the top of js/learn.js to keep one challenge for a while.
+
+VIDEOS AND PHOTOS INSIDE EACH LESSON
+------------------------------------
+In js/learn.js, the LESSONS list has one entry per lesson (composition, light, exposure, phone) with a "video" and a "photos" list.
+There is no separate video tutorials section any more. To add a video, paste its link into "url":
+  - a YouTube link: it plays on the page. The player loads only when the visitor presses play (youtube-nocookie.com).
+  - your own file, for example url: 'videos/composition.mp4' (.mp4 or .webm, ideally under 30 MB), optional poster: 'images/learn/composition.jpg'.
+  - any other link (for example a Facebook video): a "Watch" button opens it in a new tab.
+  Leave url empty to show "Coming soon".
+To add photos, put the files in images/learn/ and list them, e.g. photos: [{ src: 'images/learn/composition-1.jpg', caption: 'Rule of thirds' }].
+If the site has a Content-Security-Policy (vercel.json), allow youtube-nocookie.com in frame-src and i.ytimg.com in img-src.
 
 GALLERY VIEWS PER ALBUM (admin page)
 ------------------------------------
@@ -412,14 +424,4 @@ same Google Apps Script as the forms. Setup, once:
   3. In the gallery code, when an album is opened, add:
      window.dispatchEvent(new CustomEvent('sscpc:album-open', { detail: { album: albumName } }))
 Shared album links (?album=...) are counted without step 3.
-
-VIDEO TUTORIALS (Learn section)
--------------------------------
-In js/learn.js, the VIDEOS list holds one line per video. Four "Coming soon" cards are ready (Composition, Light,
-Exposure, Phone photography). To add a video, paste its link into "url":
-  - a YouTube link: it plays on the page. The player loads only when the visitor presses play (youtube-nocookie.com).
-  - your own file, for example url: 'videos/composition.mp4' (.mp4 or .webm, ideally under 30 MB), optional poster: 'images/learn/composition.jpg'.
-  - any other link (for example a Facebook video): a "Watch" button opens it in a new tab.
-Add or remove lines to change how many videos are shown. If the site has a Content-Security-Policy (vercel.json), allow
-youtube-nocookie.com in frame-src and i.ytimg.com in img-src.
 
