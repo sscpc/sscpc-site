@@ -22,3 +22,12 @@
 .pdf-lang-row button:disabled{opacity:.6;cursor:wait}
 .pdf-lang-row button:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
 .pdf-lang-note{margin:0;padding:.55rem .9rem .8rem;font-size:.72rem;color:var(--muted);line-height:1.5}
+
+/* Join form: member photo for the membership card */
+.photo-fld>span{display:block;margin-bottom:.5rem}
+.photo-row{display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap}
+.photo-prev{width:96px;height:128px;border-radius:10px;border:1px dashed currentColor;opacity:.9;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.75rem;background-size:cover;background-position:center;flex:none}
+.photo-prev.has{border-style:solid;font-size:0}
+.photo-ctl{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:.5rem}
+.photo-ctl small{opacity:.75;line-height:1.4}
+.photo-clear{align-self:flex-start;padding:.4rem .9rem}
