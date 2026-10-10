@@ -11,10 +11,7 @@
 .learn-foot .btns{display:flex;flex-wrap:wrap;gap:.6rem}
 
 /* Video tutorials */
-.learn-videos{margin-top:1.6rem}
-.vid-head{margin:0 0 .8rem;font-size:1.05rem}
-.vid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15.5rem,1fr));gap:1rem}
-.vid-card h3{margin:.7rem 0 .2rem;font-size:1rem}
+.vid-title{margin:.6rem 0 .2rem;font-size:.95rem}
 .vid-meta{margin:0;font-size:.78rem;color:var(--muted)}
 .vid-media{position:relative;aspect-ratio:16/9;border-radius:.5rem;overflow:hidden;background:#04101e}
 .vid-media iframe,.vid-media video,.vid-media img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
@@ -25,3 +22,26 @@
 .vid-out{flex-direction:column;background:linear-gradient(135deg,#0a2a4a,#04101e)}
 .vid-soon{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:#b4cae6;font-size:.85rem;background:linear-gradient(135deg,#0a2a4a,#04101e)}
 .vid-soon svg{opacity:.6}
+
+/* Home card that opens the lessons page */
+.learn-open{display:flex;align-items:center;gap:1.1rem;margin-top:1.2rem;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s}
+.learn-open:hover,.learn-open:focus-visible{transform:translateY(-2px);box-shadow:0 0 0 1px var(--glow),0 10px 30px rgba(0,0,0,.25)}
+.learn-open:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
+.learn-open-ico{flex:none;display:inline-flex;align-items:center;justify-content:center;width:3.4rem;height:3.4rem;border-radius:50%;background:var(--glow)}
+.learn-open-ico svg{width:1.7rem;height:1.7rem;fill:#04101e}
+.learn-open-txt{flex:1 1 auto;display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.learn-open-txt b{font-size:1.2rem}
+.learn-open-txt span{color:var(--muted);font-size:.9rem;line-height:1.5}
+.learn-open-txt em{font-style:normal;font-size:.78rem;color:var(--glow)}
+.learn-open-go{flex:none;font-weight:700;color:var(--glow);white-space:nowrap}
+@media(max-width:560px){.learn-open{flex-wrap:wrap}.learn-open-go{width:100%}}
+
+/* Lessons page: media inside each lesson */
+.lesson-media{margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--line)}
+.media-h{margin:.6rem 0 .4rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(7rem,1fr));gap:.5rem}
+.ph-fig{margin:0}
+.ph-fig img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:.4rem}
+.ph-fig figcaption{margin-top:.25rem;font-size:.72rem;color:var(--muted)}
+.ph-soon{grid-column:1/-1;margin:0;padding:.9rem;border:1px dashed var(--line);border-radius:.4rem;text-align:center;font-size:.82rem;color:var(--muted)}
+#learn-hub .learn-grid{margin-bottom:1.4rem}
