@@ -14,7 +14,8 @@
     ] },
     build: function (x, d) {
       const turns = (d.turns || []).filter(h => h && h.text), P = x.P;
-      NS.meta(x, 'Conversation', turns.length + (turns.length === 1 ? ' message' : ' messages'), NS.today());
+      NS.meta(x, 'Conversation', turns.length + (turns.length === 1 ? ' message' : ' messages'), NS.today(),
+        { qr: { query: 'assistant=1', caption: 'Scan to continue chatting with the SSCPC Assistant' } }); /* opens the assistant (see js/chatbot.js) */
       let last = null;
       turns.forEach((h, i) => {
         const me = h.role === 'user', next = turns[i + 1], change = !next || (next.role === 'user') !== me;

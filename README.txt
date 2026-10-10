@@ -371,6 +371,7 @@ QR CODES IN THE PDFs
 Each PDF carries a QR code that opens the club website (PDF_CONFIG.siteUrl in js/data.js):
  - Membership application: beside the membership badge, links to the About page (<site>/#about)
  - Registration: inside the "Show this on arrival" box, links to the Spectrum tab (<site>/#spectrum)
+ - Chat PDF ("Save chat as PDF"): beside the Conversation bar at the top, opens the AI assistant (<site>/?assistant=1)
  - Tips sheet: bottom-right of the last page, opens the AI assistant (<site>/?assistant=1) so readers
    find more tips; chatbot.js opens the chat when a page is loaded with ?assistant=1
 The code is drawn as sharp vector squares (js/pdf/qr.js), so it stays crisp at any zoom or print size.
