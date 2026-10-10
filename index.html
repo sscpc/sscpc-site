@@ -502,6 +502,18 @@
             <label class="fld"><span>Email (optional)</span><input type="email" name="email" placeholder="e.g. name@gmail.com" autocomplete="email"></label>
             <label class="fld"><span>Parent / guardian name (optional)</span><input name="guardian" placeholder="e.g. Sunil Perera"></label>
             <label class="fld"><span>Parent / guardian phone (optional)</span><input type="tel" name="guardian_phone" placeholder="e.g. 071 234 5678"></label>
+            <div class="fld full photo-fld">
+              <span>Your photo (for your membership card)</span>
+              <div class="photo-row">
+                <div class="photo-prev" id="join-photo-prev" aria-hidden="true">No photo</div>
+                <div class="photo-ctl">
+                  <input type="file" id="join-photo" accept="image/*" required>
+                  <small>A clear, front-facing photo of your face, in good light. It will be cropped to a portrait and printed on your membership card. It stays on your device and is not uploaded to the website.</small>
+                  <button type="button" class="btn ghost photo-clear" id="join-photo-clear" hidden>Remove photo</button>
+                </div>
+              </div>
+              <p class="reg-msg" id="join-photo-msg" role="status" hidden></p>
+            </div>
             <label class="fld"><span>Photography experience</span><select name="experience" required><option value="">Select</option><option>Beginner</option><option>Some experience</option><option>Experienced</option></select></label>
             <label class="fld"><span>Equipment</span><select name="equipment" required><option value="">Select</option><option>Phone only</option><option>Camera</option><option>Camera and phone</option><option>None yet</option></select></label>
             <fieldset class="grp full"><legend>Interests</legend><div class="opts">
@@ -664,8 +676,12 @@
         <p class="learn-try"><b>Try this:</b> shoot a portrait with a window beside your subject.</p>
       </article>
     </div>
+    <div class="learn-videos" id="learn-videos" hidden>
+      <h3 class="vid-head">Video tutorials</h3>
+      <div class="vid-grid"></div>
+    </div>
     <div class="learn-foot">
-      <div class="learn-challenge">
+      <div class="learn-challenge" id="learn-challenge">
         <span class="hd-eyebrow">This week's challenge</span>
         <p><b>Shadows.</b> Find a strong shadow, and make it the subject of your photo. Send your best frame to the club.</p>
       </div>
@@ -797,6 +813,7 @@
 <script src="js/judges-v6.js" defer></script>
 <script src="js/gallery-tools.js"></script>
 <script src="js/album-views.js"></script>
+<script src="js/learn.js"></script>
 <script src="js/chatbot.js"></script>
 <script src="js/music.js"></script>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script><!--vercel-->
