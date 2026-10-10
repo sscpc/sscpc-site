@@ -21,6 +21,51 @@
     });
   }
 
+  /* Member photo for the membership card. It is cropped to a 3:4 portrait and shrunk in the
+     browser, kept in memory only, and drawn onto the card PDF. It is never sent with the form. */
+  const photoIn=$('join-photo'),photoPrev=$('join-photo-prev'),photoMsg=$('join-photo-msg'),photoClear=$('join-photo-clear');
+  let photoData='';
+  function photoNote(t){if(photoMsg){photoMsg.textContent=t||'';photoMsg.hidden=!t;}}
+  function photoReset(){
+    photoData='';if(photoIn)photoIn.value='';
+    if(photoPrev){photoPrev.style.backgroundImage='';photoPrev.classList.remove('has');photoPrev.textContent='No photo';}
+    if(photoClear)photoClear.hidden=true;
+    if(photoIn)photoIn.required=true;
+  }
+  function loadImage(file){
+    return new Promise((res,rej)=>{
+      const url=URL.createObjectURL(file),img=new Image();
+      img.onload=()=>{URL.revokeObjectURL(url);res(img)};
+      img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('bad image'))};
+      img.src=url;
+    });
+  }
+  async function processPhoto(file){
+    const img=await loadImage(file);
+    const W=480,H=640,ratio=W/H;
+    let sw=img.naturalWidth,sh=img.naturalHeight,sx=0,sy=0;
+    if(sw/sh>ratio){const nw=sh*ratio;sx=(sw-nw)/2;sw=nw}   /* too wide: trim the sides */
+    else{const nh=sw/ratio;sy=(sh-nh)*0.25;sh=nh}            /* too tall: trim mostly the bottom, keep the face */
+    const c=document.createElement('canvas');c.width=W;c.height=H;
+    const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,W,H);
+    g.imageSmoothingQuality='high';g.drawImage(img,sx,sy,sw,sh,0,0,W,H);
+    return c.toDataURL('image/jpeg',0.85);
+  }
+  if(photoIn){
+    photoIn.addEventListener('change',async()=>{
+      const file=photoIn.files&&photoIn.files[0];
+      photoNote('');
+      if(!file){photoReset();return;}
+      if(!/^image\//.test(file.type)){photoReset();photoNote('Please choose an image file (JPG or PNG).');return;}
+      try{
+        photoData=await processPhoto(file);
+        photoPrev.style.backgroundImage='url('+photoData+')';photoPrev.classList.add('has');photoPrev.textContent='Photo selected';
+        if(photoClear)photoClear.hidden=false;
+      }catch(err){photoReset();photoNote('That photo could not be read. Please try a different JPG or PNG image.');}
+    });
+  }
+  if(photoClear)photoClear.addEventListener('click',()=>{photoReset();photoNote('');});
+
   const confirmBox=f.querySelector('[name="confirm"]');
   const confirmMsg=$('join-confirm-msg');
 
@@ -44,7 +89,14 @@
     if(btn.disabled)return;
     btn.disabled=true;btn.textContent='Sending...';
 
+    if(photoIn&&!photoData){
+      btn.disabled=false;btn.textContent='Submit application';
+      photoNote('Please add a clear photo of your face for your membership card.');
+      photoIn.focus();photoMsg&&photoMsg.scrollIntoView({block:'center'});
+      return;
+    }
     const fd=new FormData(f);
+    fd.delete('photo');if(photoIn&&photoIn.name)fd.delete(photoIn.name);   /* the photo stays on this device */
     const d={};['name','grade','admission','phone','email','guardian','guardian_phone','experience','equipment','why'].forEach(k=>d[k]=fd.get(k)||'');
     d.interests=fd.getAll('interests').join(', ');
 
@@ -85,14 +137,14 @@
       cardBtn.hidden=true;
       if(ref){
         try{
-          const card=await window.SSCPCPdf.generate('card',{name:d.name,grade:d.grade,ref:ref});
+          const card=await window.SSCPCPdf.generate('card',{name:d.name,grade:d.grade,ref:ref,photo:photoData});
           cardBtn.href=URL.createObjectURL(card.blob);cardBtn.download=card.name;cardBtn.hidden=false;
           /* optional Sinhala / Tamil copies of the card (English stays the main card) */
           document.querySelectorAll('.join-card-x').forEach(n=>n.remove());
           let after=cardBtn;
           for(const l of (window.SSCPCPdf.LANGS||[]).filter(l=>l.code!=='en')){
             try{
-              const c=await window.SSCPCPdf.generate('card',{name:d.name,grade:d.grade,ref:ref},{lang:l.code});
+              const c=await window.SSCPCPdf.generate('card',{name:d.name,grade:d.grade,ref:ref,photo:photoData},{lang:l.code});
               const a=document.createElement('a');a.className='btn ghost join-card-x';a.textContent='Card in '+l.label;a.lang=l.code;
               a.href=URL.createObjectURL(c.blob);a.download=c.name.replace(/\.pdf$/i,'')+'-'+l.code+'.pdf';
               after.insertAdjacentElement('afterend',a);after=a;
@@ -112,7 +164,7 @@
     const link=(typeof PRESIDENT_WHATSAPP_LINK==='string'?PRESIDENT_WHATSAPP_LINK:'').trim();
     wa.href=num?'https://wa.me/'+num+'?text='+encodeURIComponent(msg):(link||'https://wa.me/?text='+encodeURIComponent(msg));
 
-    f.reset();f.hidden=true;$('join-done').hidden=false;
+    f.reset();photoReset();f.hidden=true;$('join-done').hidden=false;
     btn.disabled=false;btn.textContent='Submit application';
     $('join-done').scrollIntoView({block:'center'});
   });

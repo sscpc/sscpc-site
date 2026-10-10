@@ -1,5 +1,5 @@
 /* PDF: SSCPC membership card.
-   Data: { name, grade, ref }   (ref = the membership number, e.g. "SSCPC 007")
+   Data: { name, grade, ref, photo }   (photo = optional JPEG/PNG data URL of the member's face)   (ref = the membership number, e.g. "SSCPC 007")
    Page size is exactly a bank-card (ID-1): 85.60 x 53.98 mm, corner radius 3.18 mm
    (the standard allows 2.88 to 3.48 mm). Two pages: 1 = front, 2 = back. The rounded card is drawn on a
    white page the same size as the card, so it can be printed on card stock and cut or die-cut as is.
@@ -72,6 +72,13 @@
       doc.setFillColor.apply(doc, P.gold); doc.roundedRect(6, 45, bw, 5.6, 2.8, 2.8, 'F');
       style(x, 'bold', 8.2, P.navy); put(x, ref, 9.2, 49);
       if (grade) { style(x, 'reg', 7, P.soft); put(x, grade, 6 + bw + 3.2, 49); } /* grade sits beside the number */
+      if (d.photo) { /* member photo, top right, 3:4 portrait with a gold frame */
+        const pw = 16, ph = 21.33, pxx = CW - 6 - pw, pyy = 4.5;
+        try {
+          doc.addImage(d.photo, /^data:image\/png/i.test(d.photo) ? 'PNG' : 'JPEG', pxx, pyy, pw, ph);
+          doc.setDrawColor.apply(doc, P.gold); doc.setLineWidth(0.5); doc.roundedRect(pxx, pyy, pw, ph, 1.2, 1.2, 'S');
+        } catch (e) { /* a bad image should never stop the card being made */ }
+      }
       const q = NS.qrPrep(x, { anchor: 'about', size: qw });
       if (q) NS.qrDraw(x, q, CW - 6 - q.size, CH - 5 - q.size, { border: false });
 
