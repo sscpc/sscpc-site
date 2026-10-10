@@ -329,3 +329,57 @@ js/gallery-tools.js + css/gallery-tools.css + js/zip.js add these to every album
    A "Full-quality photos" button then appears for that album. Leave it out to hide the button.
  - Shared links look like  yoursite/?album=<album folder name>&photo=<file name>#gallery
    so keep the album folder names (images/albums/<name>/) unchanged once shared.
+
+PDFs (js/pdf/)
+--------------
+Every PDF the site makes is built by one engine in js/pdf/:
+  text.js        text cleaning, wrapping and drawing; Sinhala/Tamil lines are shaped by the
+                 browser and placed in the PDF as pictures
+  qr.js          QR codes drawn as vector squares (encoder: js/vendor/qrcode.js)
+  i18n.js        the Sinhala and Tamil wording of every label, heading and note (edit here)
+  core.js        page sizes, templates (standard / print / compact), options, fonts, logo,
+                 the document registry and generate()
+  components.js  headers, footer, sections, field panels, tables, cards, tiles, signatures...
+  ui.js          the "PDF options" panel, deliver() (download + share) and data-pdf buttons
+  docs/*.js      one file per PDF: tips, chat, join, register
+Club-wide settings (colours, footer text, defaults) are in PDF_CONFIG in js/data.js.
+To add a new PDF: copy a file in js/pdf/docs/, change the id, title, filename and build(),
+add its <script> tag after the other docs in index.html, then give any button
+data-pdf="your-id". Open tools/pdf-preview.html to check every PDF with sample data.
+
+PDF LANGUAGE: ENGLISH FIRST, SINHALA / TAMIL OPTIONAL
+----------------------------------------------------
+English is the main language. After a visitor submits the Join Us or Registration form, the
+normal English PDF (Download / Share buttons) is ready as before. Below it is a small collapsed box,
+"Need a Sinhala or Tamil copy too? (optional)". Opening it offers two extra download buttons;
+nobody has to use it, and it never changes the English PDF.
+ - Header and footer are always English.
+ - In a Sinhala/Tamil copy every label, heading, note and signature line is printed in that language
+   with the English wording in small type directly beneath it. What the applicant typed is printed
+   exactly as typed (Sinhala and Tamil typing works in every PDF, including English ones).
+ - Fonts (in fonts/): abhayalibre.ttf (Sinhala), notosanstamil-regular.ttf and
+   notosanstamil-bold.ttf (Tamil). Poppins is used for the English words.
+ - Translations are in js/pdf/i18n.js. Please have a Sinhala and a Tamil speaker read them once.
+   A line with no translation prints in English only.
+ - Sinhala/Tamil lines are pictures inside the PDF, so that text cannot be selected or searched.
+ - PDF logo: images/pdf-logo.png (round version of the club logo). Change PDF_CONFIG.logo in
+   js/data.js to use a different picture.
+ - If the site has an offline cache (sw.js), add the three font files and pdf-logo.png to it.
+
+QR CODES IN THE PDFs
+--------------------
+Each PDF carries a QR code that opens the club website (PDF_CONFIG.siteUrl in js/data.js):
+ - Membership application: beside the membership badge, links to the About page (<site>/#about)
+ - Registration: inside the "Show this on arrival" box, links to the Spectrum tab (<site>/#spectrum)
+ - Tips sheet: bottom-right of the last page, opens the AI assistant (<site>/?assistant=1) so readers
+   find more tips; chatbot.js opens the chat when a page is loaded with ?assistant=1
+The code is drawn as sharp vector squares (js/pdf/qr.js), so it stays crisp at any zoom or print size.
+It is dark on white, 28 mm (never below 22 mm), with a 4-module white margin, error correction M and
+no logo on top. Change the size, or turn the codes off, with PDF_CONFIG.qr = { enabled, size } in
+js/data.js. The encoder is bundled in js/vendor/qrcode.js (Kazuhiko Arase, MIT licence), so nothing
+is loaded from outside. To add a code to another PDF:
+   NS.meta(x, ..., { qr: { anchor: 'join' } })     beside the badge
+   NS.note(x, text, { qr: { anchor: 'register' } })  inside a callout
+   NS.qrCorner(x, { query: 'assistant=1' })              bottom-right of the last page
+   a document definition with  headerQr: true      header-right (only when the header is tall enough)
+If the code cannot be made for any reason, the PDF is still produced without it.

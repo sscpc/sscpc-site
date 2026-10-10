@@ -4,20 +4,6 @@
   const $=id=>document.getElementById(id);
   const clean=v=>String(v==null?'':v).replace(/[^\x20-\x7E\u00A0-\u00FF\n]/g,'?').trim();
 
-  async function makePdf(d,ref){
-    const K=window.SSCPCPdf;
-    const x=await K.create('Membership Application');
-    K.meta(x,'Membership No.',ref||'Pending - the club will confirm',K.today());
-    K.fields(x,'Applicant',[['Full name',d.name],['Grade',d.grade],['Admission number',d.admission],['Phone / WhatsApp',d.phone],['Email',d.email]]);
-    K.fields(x,'Parent / guardian',[['Parent / guardian',d.guardian],['Guardian phone',d.guardian_phone]]);
-    K.fields(x,'About your photography',[['Photography experience',d.experience],['Equipment',d.equipment],['Interests',d.interests,{full:true}],['Why I want to join',d.why,{full:true}]]);
-    K.signatures(x,['Applicant signature','Parent / guardian signature','Date']);
-    K.note(x,'Please send this application to the President of SSCPC, or message the club on WhatsApp with your membership number.');
-    K.finish(x);
-    const name='SSCPC-Application-'+clean(d.name).replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.pdf';
-    return {blob:x.doc.output('blob'),name};
-  }
-
   /* "Why do you want to join?": None / Prefer not to say quick option */
   const whyText=$('join-why'),whyNone=$('join-why-none');
   if(whyNone&&whyText){
@@ -85,24 +71,19 @@
        it's pending rather than being shown a made-up one. */
     const ref=(serverResult&&serverResult.ref)||'';
 
+    /* The PDF is built by the shared engine (js/pdf/docs/join.js). deliver() also wires
+       the Download / Share buttons and the PDF options panel, and returns null if the
+       PDF could not be created on this device. */
+    const dl=$('join-dl'),share=$('join-share'),wa=$('join-wa');
     let pdf=null;
-    try{pdf=await makePdf(d,ref)}catch(err){pdf=null}
+    try{pdf=await window.SSCPCPdf.deliver({id:'join',data:Object.assign({},d,{ref:ref}),dl:dl,share:share,
+      shareTitle:'SSCPC membership application',shareText:'SSCPC membership application'+(ref?' '+ref:''),optionsEl:$('join-pdf-opts')})}catch(err){pdf=null}
 
     const first=clean(d.name).split(' ')[0]||'';
     const refLine=ref?' Membership number: '+ref+'.':' Your membership number will be confirmed by the club.';
     $('join-status').textContent='Thank you'+(first?', '+first:'')+'. Your application has been received.'+refLine
       +(pdf?'':' The PDF could not be created on this device, but you can message the president on WhatsApp.');
 
-    const dl=$('join-dl'),share=$('join-share'),wa=$('join-wa');
-    dl.hidden=!pdf;share.hidden=true;
-    if(pdf){
-      dl.href=URL.createObjectURL(pdf.blob);dl.download=pdf.name;
-      const file=new File([pdf.blob],pdf.name,{type:'application/pdf'});
-      if(navigator.canShare&&navigator.canShare({files:[file]})){
-        share.hidden=false;
-        share.onclick=()=>navigator.share({files:[file],title:'SSCPC membership application',text:'SSCPC membership application'+(ref?' '+ref:'')}).catch(()=>{});
-      }
-    }
     const num=(typeof PRESIDENT_WHATSAPP==='string'?PRESIDENT_WHATSAPP:'').replace(/\D/g,'');
     const msg='Hello, I applied to join SSCPC.\n'+(ref?'Membership number: '+ref+'\n':'')+'Name: '+clean(d.name)+'\nGrade: '+clean(d.grade)+'\nPhone: '+clean(d.phone)+'\nI can send the PDF of my application.';
     const link=(typeof PRESIDENT_WHATSAPP_LINK==='string'?PRESIDENT_WHATSAPP_LINK:'').trim();

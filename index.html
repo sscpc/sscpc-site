@@ -28,6 +28,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><!--pwa-->
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/chatbot.css">
+<link rel="stylesheet" href="css/pdf-ui.css">
 <link rel="stylesheet" href="css/music.css">
 <link rel="stylesheet" href="css/committee.css">
 <link rel="stylesheet" href="css/gallery-tools.css">
@@ -476,6 +477,7 @@
               <button class="btn cut" type="button" id="reg-share" hidden>Share PDF on WhatsApp</button>
               <a class="btn ghost" id="reg-wa" target="_blank" rel="noopener">Message the president on WhatsApp</a>
             </div>
+            <details class="pdf-opts" id="reg-pdf-opts" hidden></details>
             <p class="reg-note" style="margin-top:1rem">Please send your registration to the president: tap "Share PDF on WhatsApp" and choose the president's chat. If that button is missing, download the PDF and attach it in the president's WhatsApp chat.</p>
           </div>
         </div>
@@ -522,6 +524,7 @@
               <button class="btn cut" type="button" id="join-share" hidden>Share PDF on WhatsApp</button>
               <a class="btn ghost" id="join-wa" target="_blank" rel="noopener">Message the president on WhatsApp</a>
             </div>
+            <details class="pdf-opts" id="join-pdf-opts" hidden></details>
             <p class="reg-note" style="margin-top:1rem">To send the PDF, tap "Share PDF on WhatsApp" and choose the president's chat. If that button is missing, download the PDF and attach it in the president's WhatsApp chat.</p>
           </div>
         </div>
@@ -604,6 +607,7 @@
           <li><div><b>Membership application</b><span>Fill in the form, then download your PDF</span></div><a class="btn ghost" href="#join">Open form</a></li>
           <li><div><b>Visitor registration</b><span>For invited schools: submit, then download</span></div><a class="btn ghost" href="#register">Open form</a></li>
         </ul>
+        <details class="pdf-opts" data-pdf-options="global" hidden></details>
       </article>
     </div>
   </div>
@@ -660,6 +664,17 @@
 <script src="js/events.js"></script>
 <script src="js/members.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/pdf/text.js"></script>
+<script src="js/pdf/i18n.js"></script>
+<script src="js/vendor/qrcode.js"></script>
+<script src="js/pdf/qr.js"></script>
+<script src="js/pdf/core.js"></script>
+<script src="js/pdf/components.js"></script>
+<script src="js/pdf/ui.js"></script>
+<script src="js/pdf/docs/tips.js"></script>
+<script src="js/pdf/docs/chat.js"></script>
+<script src="js/pdf/docs/join.js"></script>
+<script src="js/pdf/docs/register.js"></script>
 <script src="js/pdf-kit.js"></script>
 <script src="js/join.js"></script>
 <script src="js/contact.js"></script>

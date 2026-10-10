@@ -5,22 +5,6 @@
   const confirmBox=f.querySelector('[name="confirm"]');
   const clean=v=>String(v==null?'':v).replace(/[^\x20-\x7E\u00A0-\u00FF\n]/g,'?').trim();
 
-  /* Builds a PDF copy of the registration, in the same design as the Join Us
-     application PDF, so a visitor school always has a copy of what they
-     submitted -- to keep, print, or send to the organisers on WhatsApp. */
-  async function makePdf(d,ref){
-    const K=window.SSCPCPdf;
-    const x=await K.create('Spectrum Visitor Registration');
-    K.meta(x,'Reference',ref,K.today());
-    K.fields(x,'School',[['School name',d.school,{full:true}],['Teacher in charge name',d.mic_name],['Teacher in charge telephone number',d.mic_phone]]);
-    K.fields(x,'Club contact',[['Club email',d.email,{full:true}],["President's name",d.president_name],["President's phone / WhatsApp",d.phone]]);
-    K.fields(x,'Attendance',[['Students attending',d.students],['Teachers attending',d.teachers],['Student names',d.student_names,{full:true}],['Message',d.message,{full:true}]]);
-    K.note(x,'Please keep this as your copy of the registration. Bring it, or show it on your phone, when you arrive at Spectrum.');
-    K.finish(x);
-    const name='SSCPC-Registration-'+clean(d.school).replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.pdf';
-    return {blob:x.doc.output('blob'),name};
-  }
-
   /* Students attending must exactly match the number of student names filled
      in below -- back to the original way: one named box per student. */
   const studentsInput=document.getElementById('reg-students');
@@ -126,6 +110,7 @@
     const fd=new FormData(f);
     const d={};['school','mic_name','mic_phone','email','phone','students','teachers','message'].forEach(k=>d[k]=fd.get(k)||'');
     d.student_names=names.map((n,i)=>(i+1)+'. '+n).join('\n');
+    d.student_list=names;
 
     let sendErr=null;
     try{await sendForm(fd,'registration')}catch(err){sendErr=err}
@@ -144,23 +129,16 @@
     }
 
     const ref='SSCPC-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+    /* The PDF is built by the shared engine (js/pdf/docs/register.js). deliver() also
+       wires the Download / Share buttons and the PDF options panel. */
+    const dl=document.getElementById('reg-dl'),share=document.getElementById('reg-share');
     let pdf=null;
-    try{pdf=await makePdf(d,ref)}catch(err){pdf=null}
+    try{pdf=await window.SSCPCPdf.deliver({id:'register',data:Object.assign({},d,{ref:ref}),dl:dl,share:share,
+      shareTitle:'SSCPC visitor registration',shareText:'SSCPC visitor registration '+ref,optionsEl:document.getElementById('reg-pdf-opts')})}catch(err){pdf=null}
 
     const status=document.getElementById('reg-status');
     status.textContent='Thank you. Your registration has been received. Reference: '+ref+'. Please send it to the president on WhatsApp.'
       +(pdf?'':' The PDF could not be created on this device.');
-
-    const dl=document.getElementById('reg-dl'),share=document.getElementById('reg-share');
-    dl.hidden=!pdf;share.hidden=true;
-    if(pdf){
-      dl.href=URL.createObjectURL(pdf.blob);dl.download=pdf.name;
-      const file=new File([pdf.blob],pdf.name,{type:'application/pdf'});
-      if(navigator.canShare&&navigator.canShare({files:[file]})){
-        share.hidden=false;
-        share.onclick=()=>navigator.share({files:[file],title:'SSCPC visitor registration',text:'SSCPC visitor registration '+ref}).catch(()=>{});
-      }
-    }
 
     const wa=document.getElementById('reg-wa');
     if(wa){

@@ -1,0 +1,24 @@
+/* PDF options panel (see js/pdf/ui.js). Uses the site's own colour variables. */
+.pdf-opts{margin-top:1rem;border:1px solid var(--line);border-radius:.6rem;background:var(--surface);font-size:.82rem}
+.pdf-opts[hidden]{display:none}
+.pdf-opts summary{cursor:pointer;padding:.65rem .9rem;font-weight:600;letter-spacing:.02em;list-style:none}
+.pdf-opts summary::-webkit-details-marker{display:none}
+.pdf-opts summary::after{content:"+";float:right;color:var(--glow);font-weight:700}
+.pdf-opts[open] summary::after{content:"\2212"}
+.pdf-opts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:.75rem;padding:0 .9rem .35rem}
+.pdf-opts-grid label{display:flex;flex-direction:column;gap:.25rem}
+.pdf-opts-grid span{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.pdf-opts-grid select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:.4rem;padding:.45rem .5rem}
+.pdf-opts p{padding:.2rem .9rem .8rem;font-size:.72rem;color:var(--muted);line-height:1.5}
+
+/* Optional Sinhala / Tamil copy (collapsed; English stays the main PDF) */
+.pdf-lang{margin-top:1rem;border:1px solid var(--line);border-radius:.6rem;background:var(--surface);font-size:.82rem}
+.pdf-lang summary{cursor:pointer;padding:.65rem .9rem;font-weight:600;letter-spacing:.02em;list-style:none}
+.pdf-lang summary::-webkit-details-marker{display:none}
+.pdf-lang summary::after{content:"+";float:right;color:var(--glow);font-weight:700}
+.pdf-lang[open] summary::after{content:"\2212"}
+.pdf-lang-row{display:flex;flex-wrap:wrap;gap:.5rem;padding:0 .9rem}
+.pdf-lang-row button{flex:1 1 9rem;font:inherit;font-size:.9rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:.45rem;padding:.55rem .7rem;cursor:pointer}
+.pdf-lang-row button:disabled{opacity:.6;cursor:wait}
+.pdf-lang-row button:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
+.pdf-lang-note{margin:0;padding:.55rem .9rem .8rem;font-size:.72rem;color:var(--muted);line-height:1.5}

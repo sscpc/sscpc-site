@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>SSCPC PDF preview</title>
+<style>
+  :root{--bg:#030b16;--surface:#08182b;--ink:#f4f1e4;--muted:#b4cae6;--line:#12324f;--glow:#6cc8ff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Arial,sans-serif}
+  header{padding:1rem 1.25rem;border-bottom:1px solid var(--line)}
+  h1{margin:0;font-size:1.1rem}
+  header p{margin:.25rem 0 0;color:var(--muted);font-size:.85rem}
+  main{display:grid;grid-template-columns:19rem 1fr;gap:1rem;padding:1rem 1.25rem;align-items:start}
+  @media(max-width:800px){main{grid-template-columns:1fr}}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:.6rem;padding:1rem}
+  label{display:block;margin:.6rem 0 .2rem;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+  select,button,a.btn{width:100%;font:inherit;padding:.55rem .6rem;border-radius:.45rem;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+  button,a.btn{display:block;text-align:center;text-decoration:none;cursor:pointer;margin-top:.7rem;background:#2882e6;border-color:#2882e6;color:#fff;font-weight:600}
+  button.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+  button:disabled{opacity:.6;cursor:wait}
+  iframe{width:100%;height:78vh;border:1px solid var(--line);border-radius:.6rem;background:#fff}
+  #msg{margin:.7rem 0 0;font-size:.82rem;color:var(--muted);white-space:pre-wrap}
+  #test{margin-top:.8rem;font:12px/1.5 ui-monospace,Consolas,monospace;max-height:14rem;overflow:auto;color:var(--muted)}
+  .ok{color:#7ee2a0}.bad{color:#ff8b8b}
+</style>
+</head>
+<body>
+<header>
+  <h1>SSCPC PDF preview</h1>
+  <p>Builds every registered PDF with sample data, so you can check a design, page size or option without submitting a form. Nothing here is sent anywhere.</p>
+</header>
+<main>
+  <div class="panel">
+    <label for="doc">Document</label><select id="doc"></select>
+    <label for="template">Style</label><select id="template"></select>
+    <label for="pageSize">Page size</label><select id="pageSize"></select>
+    <label for="orientation">Orientation</label><select id="orientation"></select>
+    <label for="textSize">Text size</label><select id="textSize"></select>
+    <label for="lang">PDF language (join and register only)</label><select id="lang"></select>
+    <button id="go" type="button">Build preview</button>
+    <a class="btn" id="dl" hidden>Download this PDF</a>
+    <button id="all" class="ghost" type="button">Run all combinations</button>
+    <p id="msg"></p>
+    <div id="test"></div>
+  </div>
+  <iframe id="view" title="PDF preview"></iframe>
+</main>
+
+<script>window.SSCPCPdf={base:'../'};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/pdf/text.js"></script>
+<script src="../js/pdf/i18n.js"></script>
+<script src="../js/vendor/qrcode.js"></script>
+<script src="../js/pdf/qr.js"></script>
+<script src="../js/pdf/core.js"></script>
+<script src="../js/pdf/components.js"></script>
+<script src="../js/pdf/ui.js"></script>
+<script src="../js/pdf/docs/tips.js"></script>
+<script src="../js/pdf/docs/chat.js"></script>
+<script src="../js/pdf/docs/join.js"></script>
+<script src="../js/pdf/docs/register.js"></script>
+<script>
+(function(){
+  const K=window.SSCPCPdf,$=id=>document.getElementById(id);
+  const names={template:{standard:'Standard',print:'Print-friendly',compact:'Compact'},pageSize:{a4:'A4',a5:'A5'},orientation:{portrait:'Portrait',landscape:'Landscape'},textSize:{normal:'Normal',large:'Large'}};
+  K.LANGS.forEach(l=>{const o=document.createElement('option');o.value=l.code;o.textContent=l.label;$('lang').appendChild(o)});
+  K.list().forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.title+' ('+d.id+')';$('doc').appendChild(o)});
+  Object.keys(names).forEach(k=>K.options.choices[k].forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=names[k][v];if(K.options.get()[k]===v)o.selected=true;$(k).appendChild(o)}));
+  const sample=id=>{const d=K.get(id);return JSON.parse(JSON.stringify(d.sample||{}))};
+  const opts=()=>({template:$('template').value,pageSize:$('pageSize').value,orientation:$('orientation').value,textSize:$('textSize').value,lang:$('lang').value});
+  let url=null;
+  async function build(){
+    $('go').disabled=true;$('msg').textContent='Building...';
+    try{
+      const pdf=await K.generate($('doc').value,sample($('doc').value),opts());
+      if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(pdf.blob);
+      $('view').src=url;$('dl').href=url;$('dl').download=pdf.name;$('dl').hidden=false;
+      $('msg').textContent=pdf.name+'\n'+pdf.doc.getNumberOfPages()+' page(s), '+Math.round(pdf.blob.size/1024)+' KB';
+    }catch(e){$('msg').textContent='Failed: '+(e&&e.message||e)}
+    $('go').disabled=false;
+  }
+  $('go').onclick=build;
+  ['doc','template','pageSize','orientation','textSize','lang'].forEach(id=>$(id).addEventListener('change',build));
+  $('all').onclick=async()=>{
+    const out=$('test');out.textContent='';let ok=0,bad=0;$('all').disabled=true;
+    for(const d of K.list())for(const t of K.options.choices.template)for(const p of K.options.choices.pageSize)for(const o of K.options.choices.orientation)for(const s of K.options.choices.textSize)for(const g of (K.get(d.id).languages?K.LANGS.map(l=>l.code):['en'])){
+      const label=d.id+' / '+t+' / '+p+' / '+o+' / '+s+' / '+g;
+      try{const pdf=await K.generate(d.id,sample(d.id),{template:t,pageSize:p,orientation:o,textSize:s,lang:g});ok++;
+        if(pdf.doc.getNumberOfPages()>6){const l=document.createElement('div');l.textContent='long: '+label+' ('+pdf.doc.getNumberOfPages()+' pages)';out.appendChild(l)}}
+      catch(e){bad++;const l=document.createElement('div');l.className='bad';l.textContent='FAILED '+label+': '+(e&&e.message||e);out.appendChild(l)}
+    }
+    const l=document.createElement('div');l.className=bad?'bad':'ok';l.textContent=ok+' built, '+bad+' failed';out.appendChild(l);$('all').disabled=false;
+  };
+  build();
+})();
+</script>
+</body>
+</html>

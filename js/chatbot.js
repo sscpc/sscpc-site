@@ -553,38 +553,22 @@
 
   /* ------------------------------------------------------------------ PDFs */
   const clean = v => String(v == null ? '' : v).replace(/[“”]/g, '"').replace(/[‘’]/g, "'").replace(/[–—]/g, '-').replace(/…/g, '...').replace(/[^\x20-\x7E\u00A0-\u00FF\n]/g, '').trim();
+  /* Both PDFs are built by the shared engine (js/pdf/docs/tips.js and chat.js). */
   async function tipsPdf() {
     if (!window.jspdf || !window.SSCPCPdf) { addMsg('bot', 'The PDF tool is still loading. Please try again in a moment.'); return; }
-    const K = window.SSCPCPdf, x = await K.create('Photography Tips Cheat Sheet');
-    K.para(x, 'Quick, practical tips from the club. Practice a little every day and keep experimenting.', { size: 10, color: K.C.muted, after: 6 });
-    TIPS.forEach((t, i) => {
-      K.ensure(x, 30);
-      const d = x.doc, y = x.y;
-      d.setFillColor(125, 21, 38); d.circle(18, y - 1.2, 3.6, 'F');
-      d.setTextColor(244, 241, 228); d.setFont(x.f.bold[0], x.f.bold[1]); d.setFontSize(8);
-      d.text(String(i + 1), 18, y + .2, { align: 'center' });
-      K.para(x, t.title, { size: 12, bold: true, color: K.C.ink, x: 25, after: 1.5 });
-      t.pts.forEach(p => K.para(x, '-  ' + p, { size: 9.4, color: [50, 55, 90], x: 26, lh: 5, after: .6 }));
-      x.y += 4;
-    });
-    K.finish(x);
-    x.doc.save('SSCPC-Photography-Tips.pdf');
+    try {
+      const pdf = await window.SSCPCPdf.generate('tips', { tips: TIPS });
+      pdf.doc.save(pdf.name);
+    } catch (e) { addMsg('bot', 'Sorry, the PDF could not be created on this device.'); }
   }
   async function chatPdf() {
     const turns = history.filter(h => h.text);
     if (!turns.length) { addMsg('bot', 'There is nothing to save yet. Ask me something first!'); return; }
     if (!window.jspdf || !window.SSCPCPdf) { addMsg('bot', 'The PDF tool is still loading. Please try again in a moment.'); return; }
-    const K = window.SSCPCPdf, x = await K.create('Chat with the SSCPC Assistant');
-    K.meta(x, 'Conversation', turns.length + (turns.length === 1 ? ' message' : ' messages'), K.today());
-    turns.forEach(h => {
-      const me = h.role === 'user';
-      K.tag(x, me ? 'You' : 'SSCPC Assistant', { right: me, color: me ? K.C.blue : K.C.maroon });
-      K.bubble(x, h.text.replace(/\*\*/g, ''), me
-        ? { right: true, fill: [226, 238, 252], color: K.C.ink, w: 150 }
-        : { fill: K.C.paper, bar: K.C.maroon, color: K.C.ink, w: 160 });
-    });
-    K.finish(x);
-    x.doc.save('SSCPC-Chat.pdf');
+    try {
+      const pdf = await window.SSCPCPdf.generate('chat', { turns: turns });
+      pdf.doc.save(pdf.name);
+    } catch (e) { addMsg('bot', 'Sorry, the PDF could not be created on this device.'); }
   }
   function doAction(a) {
     if (a === 'tipsPdf') tipsPdf(); else if (a === 'chatPdf') chatPdf(); else if (a === 'close') closePanel();
@@ -607,8 +591,16 @@
   input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); ask(input.value); } });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) closePanel(); });
 
+  /* a link with ?assistant=1 (the QR code on the tips PDF) opens the assistant once the page has loaded */
+  try {
+    if (/[?&]assistant(=|&|$)/.test(location.search)) {
+      const go = () => setTimeout(() => { if (panel.hidden) openPanel(); }, 1800);
+      if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
+    }
+  } catch (e) { /* ignore */ }
+
   /* keep the button out of the way of the pinned intro */
-  window.SSCPC_BOT = { open: openPanel, ask: q => { openPanel(); ask(q); }, tipsPdf: tipsPdf };
+  window.SSCPC_BOT = { open: openPanel, ask: q => { openPanel(); ask(q); }, tipsPdf: tipsPdf, tips: TIPS };
 
   /* buttons in the "Need a hand?" section on the Home page */
   document.querySelectorAll('[data-bot-open]').forEach(b => b.addEventListener('click', openPanel));
