@@ -396,8 +396,9 @@ the rounded edge. Open tools/pdf-preview.html and choose "SSCPC Membership Card"
 
 LEARN SECTION (a card on the home page opens a lessons page)
 -------------------------------------------------------------
-Edit it from the admin portal: admin > Learn. There you can add, remove and reorder lessons; edit each lesson's title, points
-(one per line) and "Try this" task; paste a YouTube link for its video (any other link shows a Watch button; empty shows
+Edit it from the admin portal: admin > Learn. The Learn page shows one card per topic (title + a two-sentence summary). Clicking a card
+opens that topic's own section (facts, try this, video, photos). In the admin you can add, remove and reorder topics; edit each topic's
+title, summary, facts (one per line) and "Try it" task; paste a YouTube link for its video (any other link shows a Watch button; empty shows
 "Coming soon"); and upload photos with captions. The weekly challenges are one line each ("Title: what to do"); the site shows
 the next one every Monday. Press Publish in the admin to put changes live.
 The content is stored in js/data.js (LEARN and LEARN_CHALLENGES). The page itself is index.html (id="learn" is the card on the

@@ -586,22 +586,25 @@
 
   <div class="learn-overlay" id="learn-hub" role="dialog" aria-modal="true" aria-labelledby="learn-hub-title" hidden>
     <div class="wrap">
-      <div class="learn-bar"><button type="button" class="btn ghost" data-learn-close>&larr; Back</button></div>
-      <h2 id="learn-hub-title">Photography Basics</h2>
-      <p class="lead">Short, practical lessons from the club. Read a lesson, watch the video, study the photos, then try the challenge and share your best frame with us.</p>
-      <div class="learn-grid" id="learn-grid"></div>
-      <div class="learn-foot">
-      <div class="learn-challenge" id="learn-challenge">
-        <span class="hd-eyebrow">This week's challenge</span>
-        <p><b>Shadows.</b> Find a strong shadow, and make it the subject of your photo. Send your best frame to the club.</p>
+      <div class="learn-pane" id="learn-list">
+        <div class="learn-bar"><button type="button" class="btn ghost" data-learn-close>&larr; Back</button></div>
+        <h2 id="learn-hub-title">Photography Basics</h2>
+        <p class="lead">Pick a topic to open its lesson, with facts, videos and photos. Then try the weekly challenge and share your best frame with the club.</p>
+        <div class="learn-grid" id="learn-grid"></div>
+        <div class="learn-foot">
+        <div class="learn-challenge" id="learn-challenge">
+          <span class="hd-eyebrow">This week's challenge</span>
+          <p><b>Shadows.</b> Find a strong shadow, and make it the subject of your photo. Send your best frame to the club.</p>
+        </div>
+        <div class="btns">
+          <button class="btn ghost" type="button" data-learn-close>Back to home</button>
+          <button class="btn cut" type="button" data-bot-pdf="tips">Download the tips sheet (PDF)</button>
+          <button class="btn ghost" type="button" data-bot-ask="Give me a photography tip">Ask the assistant for a tip</button>
+          <a class="btn ghost" href="#gallery">See our gallery for ideas</a>
+        </div>
       </div>
-      <div class="btns">
-        <button class="btn ghost" type="button" data-learn-close>Back to home</button>
-        <button class="btn cut" type="button" data-bot-pdf="tips">Download the tips sheet (PDF)</button>
-        <button class="btn ghost" type="button" data-bot-ask="Give me a photography tip">Ask the assistant for a tip</button>
-        <a class="btn ghost" href="#gallery">See our gallery for ideas</a>
       </div>
-    </div>
+      <div class="learn-pane" id="learn-detail" aria-live="polite" hidden></div>
     </div>
   </div>
 
