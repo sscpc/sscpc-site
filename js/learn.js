@@ -8,20 +8,22 @@
 (function () {
   'use strict';
   const PIN = null;
-  const CHALLENGES = [
+  const BUILT_IN = [
     { title: 'Shadows', text: 'Find a strong shadow and make it the subject of your photo.' },
     { title: 'Leading lines', text: 'Use a road, fence or railing to lead the eye to your subject.' },
     { title: 'Reflections', text: 'Photograph a reflection in a window, puddle or glass of water.' },
-    { title: 'Golden hour', text: 'Shoot one scene in the hour after sunrise or before sunset.' },
-    { title: 'Frame within a frame', text: 'Use a door, window or archway to frame your subject.' },
-    { title: 'Close up', text: 'Get close to an everyday object and show a detail most people miss.' },
-    { title: 'Patterns', text: 'Find a repeating pattern, then break it with one different thing.' },
-    { title: 'Motion', text: 'Freeze a moving subject, then try to blur it on purpose.' },
-    { title: 'People at work', text: 'Photograph someone at work (with permission) and show what they do.' },
-    { title: 'Black and white', text: 'Take a photo that works because of contrast and shape, not colour.' },
-    { title: 'Minimal', text: 'Make a photo with one subject and lots of empty space.' },
-    { title: 'School life', text: 'Tell a small story of an ordinary moment at school in one frame.' }
+    { title: 'Golden hour', text: 'Shoot one scene in the hour after sunrise or before sunset.' }
   ];
+  /* The weekly challenges are kept in js/data.js (LEARN_CHALLENGES), one per line as "Title: what to do",
+     and are edited in the admin portal under Learn. BUILT_IN is only used if that list is missing. */
+  function fromData() {
+    if (typeof LEARN_CHALLENGES === 'undefined' || !Array.isArray(LEARN_CHALLENGES)) return [];
+    return LEARN_CHALLENGES.map(function (l) {
+      const s = String(l).trim(), i = s.indexOf(':');
+      return i > 0 ? { title: s.slice(0, i).trim(), text: s.slice(i + 1).trim() } : { title: s, text: '' };
+    }).filter(function (c) { return c.title; });
+  }
+  const CHALLENGES = (function () { const c = fromData(); return c.length ? c : BUILT_IN; })();
 
   /* week number counted from a fixed Monday, so every visitor sees the same challenge in the same week */
   function weekIndex(now) {
@@ -43,25 +45,14 @@
     const b = document.createElement('b');
     b.textContent = c.title + '. ';
     p.appendChild(b);
-    p.appendChild(document.createTextNode(c.text + ' Send your best frame to the club.'));
+    p.appendChild(document.createTextNode((c.text ? c.text + ' ' : '') + 'Send your best frame to the club.'));
   }
 
-  /* ---------- lesson videos and photos ----------
-     Each lesson page (id="lesson-<key>" in index.html) has a media slot that is filled from this list.
-     VIDEO: put its link in "url". Accepted:
-       - a YouTube link (watch?v=..., youtu.be/..., shorts/... or embed/...): plays on the page, privacy-friendly
-         (youtube-nocookie.com), and only loads when the visitor presses play
-       - a video file of your own, e.g. 'videos/composition.mp4' (.mp4 or .webm), with an optional  poster: 'images/learn/composition.jpg'
-       - any other link (for example a Facebook video): shows a "Watch" button that opens it in a new tab
-       Leave url empty ('') to show "Coming soon". Fields: title, length (text such as '5 min'), by (who made it).
-     PHOTOS: a list of { src: 'images/learn/composition-1.jpg', caption: 'Rule of thirds' }. Put the picture files in images/learn/.
-       With no photos the lesson shows "Photos coming soon". */
-  const LESSONS = {
-    composition: { video: { title: 'Composition: the rule of thirds', url: '', length: '', by: 'SSCPC' }, photos: [] },
-    light:       { video: { title: 'Using natural light', url: '', length: '', by: 'SSCPC' }, photos: [] },
-    exposure:    { video: { title: 'Aperture, shutter and ISO', url: '', length: '', by: 'SSCPC' }, photos: [] },
-    phone:       { video: { title: 'Better photos with your phone', url: '', length: '', by: 'SSCPC' }, photos: [] }
-  };
+  /* ---------- lessons (kept in js/data.js as LEARN, edited in the admin portal under Learn) ----------
+     Each lesson: title, points (list), tryIt, videoTitle, videoUrl, videoLength, videoBy, photos (list of { photo, caption }).
+     videoUrl: a YouTube link plays on the page (privacy-friendly player, loads only on press); any other link shows a Watch button;
+     empty shows "Coming soon". */
+  const LESSONS = (typeof LEARN !== 'undefined' && Array.isArray(LEARN)) ? LEARN : [];
 
   function ytId(u) {
     const m = String(u).match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/))([A-Za-z0-9_-]{11})/);
@@ -113,14 +104,27 @@
     });
     return wrap;
   }
+  function lessonCard(l, i) {
+    const art = make('article', 'hd-card learn-card');
+    art.appendChild(make('span', 'learn-no', String(i + 1))).setAttribute('aria-hidden', 'true');
+    art.appendChild(make('h3', null, l.title || 'Lesson ' + (i + 1)));
+    const pts = Array.isArray(l.points) ? l.points.filter(Boolean) : [];
+    if (pts.length) { const ul = make('ul', 'learn-pts'); pts.forEach(function (t) { ul.appendChild(make('li', null, t)); }); art.appendChild(ul); }
+    if (l.tryIt) { const p = make('p', 'learn-try'); p.appendChild(make('b', null, 'Try this: ')); p.appendChild(document.createTextNode(l.tryIt)); art.appendChild(p); }
+    const slot = make('div', 'lesson-media');
+    slot.appendChild(make('h4', 'media-h', 'Video'));
+    slot.appendChild(videoBlock({ title: l.videoTitle || l.title || 'Video', url: l.videoUrl, length: l.videoLength, by: l.videoBy }));
+    slot.appendChild(make('h4', 'media-h', 'Photos'));
+    slot.appendChild(photoBlock((Array.isArray(l.photos) ? l.photos : []).filter(function (p) { return p && p.photo; }).map(function (p) { return { src: p.photo, caption: p.caption }; })));
+    art.appendChild(slot);
+    return art;
+  }
   function showMedia() {
-    document.querySelectorAll('.lesson-media[data-lesson]').forEach(function (slot) {
-      const l = LESSONS[slot.getAttribute('data-lesson')];
-      if (!l) return;
-      slot.textContent = '';
-      if (l.video) { slot.appendChild(make('h4', 'media-h', 'Video')); slot.appendChild(videoBlock(l.video)); }
-      slot.appendChild(make('h4', 'media-h', 'Photos')); slot.appendChild(photoBlock(l.photos));
-    });
+    const grid = document.getElementById('learn-grid'); if (!grid || !LESSONS.length) return;
+    grid.textContent = '';
+    LESSONS.forEach(function (l, i) { grid.appendChild(lessonCard(l, i)); });
+    const n = document.getElementById('learn-count');
+    if (n) n.textContent = LESSONS.length + (LESSONS.length === 1 ? ' lesson' : ' lessons') + ' · photos · videos';
   }
 
   window.SSCPCLearn = { pick: pick, weekIndex: weekIndex, ytId: ytId, lessons: LESSONS };

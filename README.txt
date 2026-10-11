@@ -396,22 +396,19 @@ the rounded edge. Open tools/pdf-preview.html and choose "SSCPC Membership Card"
 
 LEARN SECTION (a card on the home page opens a lessons page)
 -------------------------------------------------------------
-index.html, id="learn": a single card, "Photography Basics". Clicking it opens the lessons page (id="learn-hub", shown over the site, not a menu tab), which holds
-the four lessons, a video and photos for each lesson, the weekly challenge and the buttons for the tips PDF and the assistant.
-To change a lesson, edit the words in id="learn-hub". To change the card title or text, edit id="learn". Style: css/learn.css.
-THIS WEEK'S CHALLENGE changes by itself every Monday: js/learn.js holds a list of 12 challenges and shows the next one each
-week, then starts again. Edit the list to add your own, or set PIN at the top of js/learn.js to keep one challenge for a while.
+Edit it from the admin portal: admin > Learn. There you can add, remove and reorder lessons; edit each lesson's title, points
+(one per line) and "Try this" task; paste a YouTube link for its video (any other link shows a Watch button; empty shows
+"Coming soon"); and upload photos with captions. The weekly challenges are one line each ("Title: what to do"); the site shows
+the next one every Monday. Press Publish in the admin to put changes live.
+The content is stored in js/data.js (LEARN and LEARN_CHALLENGES). The page itself is index.html (id="learn" is the card on the
+home page, id="learn-hub" is the lessons page), drawn by js/learn.js and styled by css/learn.css.
+Photos uploaded in the admin are saved in images/learn/. Video links must start with https:// (YouTube is best; the admin does not upload videos).
 
-VIDEOS AND PHOTOS INSIDE EACH LESSON
-------------------------------------
-In js/learn.js, the LESSONS list has one entry per lesson (composition, light, exposure, phone) with a "video" and a "photos" list.
-There is no separate video tutorials section any more. To add a video, paste its link into "url":
-  - a YouTube link: it plays on the page. The player loads only when the visitor presses play (youtube-nocookie.com).
-  - your own file, for example url: 'videos/composition.mp4' (.mp4 or .webm, ideally under 30 MB), optional poster: 'images/learn/composition.jpg'.
-  - any other link (for example a Facebook video): a "Watch" button opens it in a new tab.
-  Leave url empty to show "Coming soon".
-To add photos, put the files in images/learn/ and list them, e.g. photos: [{ src: 'images/learn/composition-1.jpg', caption: 'Rule of thirds' }].
-If the site has a Content-Security-Policy (vercel.json), allow youtube-nocookie.com in frame-src and i.ytimg.com in img-src.
+ADMIN AND ALBUM BUILDER FONTS
+-----------------------------
+Secondary (body) font, always bold: admin = Nexa Heavy (fonts/Nexa-Heavy.ttf); album builder = Heading Now Bold/Extrabold
+(fonts/HeadingNow-*.ttf). They are set at the top of admin/index.html and tools/album-builder.html (:root --body).
+Heading Now is licensed CC BY-NC (non-commercial); its licence is fonts/HeadingNow-License.pdf.
 
 GALLERY VIEWS PER ALBUM (admin page)
 ------------------------------------
@@ -426,13 +423,6 @@ same Google Apps Script as the forms. Setup, once:
 Shared album links (?album=...) are counted without step 3.
 
 
-ADMIN AND ALBUM BUILDER FONTS
------------------------------
-Secondary font, always bold:
-  Admin page    : Nexa Heavy          (fonts/Nexa-Heavy.ttf, css/admin-fonts.css)
-  Album builder : Heading Now Bold    (fonts/HeadingNow-*.ttf, css/album-builder-fonts.css)
-Add the matching <link rel="stylesheet"> line (written at the top of each CSS file) to the end of that page's <head>.
-Heading Now is licensed CC BY-NC (non-commercial); keep its licence PDF if you publish the site.
 
 HOW TO UPDATE THE LIVE WEBSITE
 ------------------------------

@@ -9,12 +9,13 @@
 <link rel="icon" href="../images/crown-mark.png">
 <link rel="stylesheet" href="../css/style.css">
 <style>
-@font-face{font-family:'Killega';font-weight:100 900;font-style:normal;font-display:swap;src:url(../fonts/killega.ttf) format('truetype')}
+@font-face{font-family:'Nexa';font-weight:100 900;font-style:normal;font-display:swap;src:url(../fonts/Nexa-Heavy.ttf) format('truetype')}
 @font-face{font-family:'Sparling';font-weight:100 900;font-style:normal;font-display:swap;src:url(../fonts/sparling-demo.ttf) format('truetype')}
 @font-face{font-family:'Roboto';font-weight:400;font-style:normal;font-display:swap;src:url(../fonts/roboto-regular.ttf) format('truetype')}
 @font-face{font-family:'Roboto';font-weight:600 900;font-style:normal;font-display:swap;src:url(../fonts/roboto-bold.ttf) format('truetype')}
-:root{--body:'Killega','Roboto','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif;--heading:'Sparling','Killega','Roboto','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif}
+:root{--body:'Nexa','Roboto','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif;--heading:'Sparling','Nexa','Roboto','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif}
 h1,h2,h3,h4,.ttl,legend,.brand{font-family:var(--heading)}
+body,input,select,textarea,button,td,th,label,summary{font-family:var(--body);font-weight:700}
 </style>
 <style>
 .hide{display:none!important}
@@ -100,7 +101,9 @@ const NAMES=t=>[...t.matchAll(/^const (\w+) =/gm)].map(m=>m[1]);
 const parse=t=>new Function(t+';return {'+NAMES(t).join(',')+'}')();
 const ser=d=>'/* SSCPC site data. Written by the admin portal (admin/index.html). Notes: README.txt */\n\n'+Object.keys(d).map(k=>`const ${k} = ${JSON.stringify(d[k],null,2)};`).join('\n\n')+'\n';
 let D,B,KEYS,key='',X=null,sub='registrations',tab='home',flt='All',hist=[],hi=0,GH=JSON.parse(localStorage.gh||'{}');
-const ST={},URLS={},SEC={MEMBERS:'members',SLIDES:'announcements',EVENTS:'events'};
+const ST={},URLS={},SEC={MEMBERS:'members',SLIDES:'announcements',EVENTS:'events',LEARN:'learn'};
+/* blank item shapes for lists that can start empty (used by the + Add button) */
+const TPL={photos:{photo:'',caption:''},LEARN:{title:'',points:[],tryIt:'',videoTitle:'',videoUrl:'',videoLength:'',videoBy:'SSCPC',photos:[]}};
 const snapK=()=>Object.fromEntries(KEYS.map(k=>[k,JSON.stringify(D[k])]));
 const changed=()=>KEYS.filter(k=>JSON.stringify(D[k])!==B[k]);
 const lab=x=>x&&typeof x==='object'?(x.name||x.title||x.alt||x.image||''):'';
@@ -143,7 +146,7 @@ function list(a,label,sec){
       s.ondragstart=e=>{dr=i;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','x')};
       d.ondragover=e=>{if(dr>-1)e.preventDefault()};d.ondrop=e=>{e.preventDefault();e.stopPropagation();if(dr<0||dr===i)return;const[x]=a.splice(dr,1);a.splice(i,0,x);dr=-1;dirty();draw()};
       const bd=h('div','bd');Object.keys(it).forEach(k=>bd.append(ed(it,k,k,sec)));d.append(s,bd);box.append(d)});
-    if(a.length||label)box.append(btn('+ Add',()=>{const n=blank(a[0]||{});label==='members'?a.push(n):a.unshift(n);dirty();draw()},'ghost'))};
+    if(a.length||label||sec==='LEARN')box.append(btn('+ Add',()=>{const n=blank(a[0]||TPL[label]||TPL[sec]||{});label==='members'||sec==='LEARN'?a.push(n):a.unshift(n);dirty();draw()},'ghost'))};
   draw();return box}
 const blank=v=>Array.isArray(v)?[]:v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,blank(x)])):typeof v==='number'?0:typeof v==='boolean'?false:'';
 /* ---------- checks + change review ---------- */
@@ -221,6 +224,13 @@ function albums(){
     [['↑',-1],['↓',1],['✕',0]].forEach(([t,dx])=>{const b=h('button','mini',t);b.type='button';b.onclick=e=>{e.preventDefault();
       if(!dx){if(!confirm('Remove "'+a.name+'" from the gallery? Its photo files stay in the repo.'))return;D.ALBUMS.splice(i,1)}else{const j=i+dx;if(j<0||j>=D.ALBUMS.length)return;[D.ALBUMS[i],D.ALBUMS[j]]=[D.ALBUMS[j],D.ALBUMS[i]]}dirty();draw()};s.append(b)});
     d.append(s);d.querySelector('summary').style.cursor='default';box.append(d)})};draw();w.append(box);return w}
+function learn(){
+  const w=h('div');
+  w.append(h('p','note','Lessons shown when a visitor opens <b>Learn Photography</b> on the home page. Add or remove lessons, edit the points, paste a YouTube link for the video, and upload photos for each lesson. Use the arrows or drag to reorder. Then press <b>Publish</b>.'));
+  w.append(h('h3',0,'Lessons'),ed(D,'LEARN',''));
+  const c=h('div');c.style.marginTop='1.5rem';
+  c.append(h('h3',0,'Weekly challenges'),h('p','note','One challenge per line, written as <b>Title: what to do</b>. The site shows the next line every Monday and starts again from the top after the last one.'),ed(D,'LEARN_CHALLENGES',''));
+  w.append(c);return w}
 function site(){const w=h('div','bd'),d=h('input','in');d.type='datetime-local';d.value=D.EVENT_DATE.slice(0,16);
   d.onchange=()=>{if(d.value){D.EVENT_DATE=d.value+':00+05:30';dirty()}};
   w.append(h('p','note','The countdown date. The Spectrum entry under Events (date, time, calendar start/end) is edited separately.'),field('Spectrum countdown (Sri Lanka time)',d));
@@ -240,7 +250,7 @@ function publish(){
     st.textContent='Publishing…';pb.disabled=true;try{await pub();show('publish');$('#main').append(h('p','note','Published. The live site updates in about a minute.'))}catch(e){st.textContent=e.message;pb.disabled=false}});
   bar.append(pb);w.append(bar,st,g,h('p','note','The token is kept in this browser only (shared with the Album Builder). Use a device you trust, and sign out of shared computers.'));return w}
 /* ---------- shell ---------- */
-const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['site','Site',site],['publish','Publish',publish]];
+const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['site','Site',site],['publish','Publish',publish]];
 TABS.forEach(([k,t])=>{const b=h('button','tab',t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))});
 function show(n){tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
   const m=$('#main'),t=TABS.find(x=>x[0]===n);m.innerHTML='';m.append(h('div','ttl',t[1]),t[2]());scrollTo(0,0)}

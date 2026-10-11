@@ -1178,3 +1178,77 @@ const PDF_CONFIG = {
   /* QR codes in the PDFs (they link to siteUrl). size is in mm, between 22 and 40. enabled:false removes them. */
   qr: { enabled: true, size: 28 }
 };
+
+const LEARN = [
+  {
+    "title": "Composition",
+    "points": [
+      "Switch on the grid and place your subject on a line or crossing point (rule of thirds).",
+      "Use leading lines such as roads, railings and shadows to pull the eye to your subject.",
+      "Simplify. Remove clutter, or move closer."
+    ],
+    "tryIt": "take five photos of one object, each from a different angle.",
+    "videoTitle": "Composition: the rule of thirds",
+    "videoUrl": "",
+    "videoLength": "",
+    "videoBy": "SSCPC",
+    "photos": []
+  },
+  {
+    "title": "Light",
+    "points": [
+      "The hour after sunrise and the hour before sunset give soft, warm light.",
+      "Midday sun is harsh: look for shade, or shoot with the sun behind you.",
+      "Window light is excellent for portraits. Turn your subject towards it."
+    ],
+    "tryIt": "photograph the same spot in the morning and in the evening.",
+    "videoTitle": "Using natural light",
+    "videoUrl": "",
+    "videoLength": "",
+    "videoBy": "SSCPC",
+    "photos": []
+  },
+  {
+    "title": "Exposure basics",
+    "points": [
+      "Wide aperture gives a blurry background; narrow keeps more in focus.",
+      "Fast shutter freezes motion; slow shutter blurs it.",
+      "Keep ISO as low as the light allows."
+    ],
+    "tryIt": "freeze a moving friend, then blur them on purpose.",
+    "videoTitle": "Aperture, shutter and ISO",
+    "videoUrl": "",
+    "videoLength": "",
+    "videoBy": "SSCPC",
+    "photos": []
+  },
+  {
+    "title": "Phone photography",
+    "points": [
+      "A phone is a real camera. Clean the lens before you shoot.",
+      "Tap to focus, then slide to set the brightness.",
+      "Skip digital zoom. Walk closer instead."
+    ],
+    "tryIt": "shoot a portrait with a window beside your subject.",
+    "videoTitle": "Better photos with your phone",
+    "videoUrl": "",
+    "videoLength": "",
+    "videoBy": "SSCPC",
+    "photos": []
+  }
+];
+
+const LEARN_CHALLENGES = [
+  "Shadows: Find a strong shadow and make it the subject of your photo.",
+  "Leading lines: Use a road, fence or railing to lead the eye to your subject.",
+  "Reflections: Photograph a reflection in a window, puddle or glass of water.",
+  "Golden hour: Shoot one scene in the hour after sunrise or before sunset.",
+  "Frame within a frame: Use a door, window or archway to frame your subject.",
+  "Close up: Get close to an everyday object and show a detail most people miss.",
+  "Patterns: Find a repeating pattern, then break it with one different thing.",
+  "Motion: Freeze a moving subject, then try to blur it on purpose.",
+  "People at work: Photograph someone at work (with permission) and show what they do.",
+  "Black and white: Take a photo that works because of contrast and shape, not colour.",
+  "Minimal: Make a photo with one subject and lots of empty space.",
+  "School life: Tell a small story of an ordinary moment at school in one frame."
+];
