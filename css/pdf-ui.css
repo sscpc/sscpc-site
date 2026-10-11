@@ -46,7 +46,7 @@
 .join-done .pdf-opts{margin-top:.2rem}
 
 /* Language pop-up */
-.lang-dlg{width:min(26rem,92vw);padding:1.5rem 1.4rem 1.2rem;border:1px solid var(--line);border-radius:.9rem;background:var(--bg,#0a0d26);color:var(--ink,#f4f1e4);box-shadow:0 24px 70px rgba(0,0,0,.6)}
+.lang-dlg{position:fixed;inset:0;margin:auto!important;height:fit-content;max-height:90vh;overflow:auto;width:min(26rem,92vw);padding:1.5rem 1.4rem 1.2rem;border:1px solid var(--line);border-radius:.9rem;background:var(--bg,#0a0d26);color:var(--ink,#f4f1e4);box-shadow:0 24px 70px rgba(0,0,0,.6)}
 .lang-dlg::backdrop{background:rgba(2,6,18,.72);backdrop-filter:blur(3px)}
 .lang-dlg[open]{animation:langIn .28s cubic-bezier(.22,1,.36,1)}
 @keyframes langIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
