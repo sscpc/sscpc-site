@@ -126,7 +126,7 @@ function imgf(p,k,L,sec,v){
   w.append(pv,i,f);return w}
 function ed(p,k,label,sec){
   sec=sec||k;const v=p[k],L=nice(label||k);
-  if(Array.isArray(v)&&v.every(x=>typeof x==='string')){const t=h('textarea','in');t.rows=Math.min(8,v.length+1);t.value=v.join('\n');t.oninput=()=>{p[k]=t.value.split('\n').map(s=>s.trim()).filter(Boolean);dirty()};return field(L+' (one per line)',t)}
+  if(Array.isArray(v)&&k!=='photos'&&v.every(x=>typeof x==='string')){const t=h('textarea','in');t.rows=Math.min(8,v.length+1);t.value=v.join('\n');t.oninput=()=>{p[k]=t.value.split('\n').map(s=>s.trim()).filter(Boolean);dirty()};return field(L+' (one per line)',t)}
   if(Array.isArray(v))return list(v,label,sec);
   if(v&&typeof v==='object'){const f=h('fieldset');f.append(h('legend',0,esc(L)));Object.keys(v).forEach(x=>f.append(ed(v,x,x,sec)));return f}
   if(typeof v==='boolean'){const c=h('input');c.type='checkbox';c.checked=v;c.onchange=()=>{p[k]=c.checked;dirty()};return field(c,L)}
