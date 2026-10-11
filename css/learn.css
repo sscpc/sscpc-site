@@ -69,3 +69,18 @@ body.learn-lock{overflow:hidden}
 .learn-overlay.is-in .learn-foot{animation-delay:.52s}
 @keyframes learnRise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.learn-overlay{transition:none;transform:none}.learn-overlay.is-in .learn-card,.learn-overlay.is-in .learn-foot{animation:none}}
+
+/* Lessons page: one lesson per row, big and roomy, scroll down for the next */
+#learn-hub .learn-grid{grid-template-columns:1fr!important;max-width:52rem;margin:1.6rem auto 2rem;gap:1.8rem}
+#learn-hub .learn-card{padding:1.8rem 1.8rem 1.6rem}
+#learn-hub .learn-card h3{font-size:1.45rem;margin:.2rem 0 .8rem}
+#learn-hub .learn-pts{font-size:1rem;line-height:1.7}
+#learn-hub .learn-pts li{margin-bottom:.5rem}
+#learn-hub .learn-try{font-size:.98rem;margin-top:1rem}
+#learn-hub .lesson-media{margin-top:1.4rem;padding-top:1.2rem}
+#learn-hub .ph-grid{grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:.8rem}
+#learn-hub .ph-fig img{border-radius:.6rem}
+#learn-hub .ph-fig figcaption{font-size:.8rem}
+#learn-hub .learn-foot{max-width:52rem;margin-left:auto;margin-right:auto}
+#learn-hub h2,#learn-hub .lead{max-width:52rem;margin-left:auto;margin-right:auto}
+@media(max-width:560px){#learn-hub .learn-card{padding:1.3rem 1.2rem}}

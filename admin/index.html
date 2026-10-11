@@ -146,7 +146,10 @@ function list(a,label,sec){
       s.ondragstart=e=>{dr=i;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','x')};
       d.ondragover=e=>{if(dr>-1)e.preventDefault()};d.ondrop=e=>{e.preventDefault();e.stopPropagation();if(dr<0||dr===i)return;const[x]=a.splice(dr,1);a.splice(i,0,x);dr=-1;dirty();draw()};
       const bd=h('div','bd');Object.keys(it).forEach(k=>bd.append(ed(it,k,k,sec)));d.append(s,bd);box.append(d)});
-    if(a.length||label||sec==='LEARN')box.append(btn('+ Add',()=>{const n=blank(a[0]||TPL[label]||TPL[sec]||{});label==='members'||sec==='LEARN'?a.push(n):a.unshift(n);dirty();draw()},'ghost'))};
+    if(a.length||label||sec==='LEARN')box.append(btn('+ Add',()=>{const n=blank(a[0]||TPL[label]||TPL[sec]||{});label==='members'||sec==='LEARN'?a.push(n):a.unshift(n);dirty();draw()},'ghost'));
+    if(label==='photos'){const u=h('input','in');u.type='file';u.accept='image/*';u.multiple=true;
+      u.onchange=async()=>{const fs=[...u.files];for(let n=0;n<fs.length;n++){const png=fs[n].type==='image/png',b=await shrink(fs[n],png,1600),path='images/learn/photo-'+Date.now().toString(36)+n+(png?'.png':'.jpg');ST[path]=b;URLS[path]=URL.createObjectURL(b);a.push({photo:path,caption:''})}dirty();draw()};
+      box.append(field('Upload photos (choose one or several)',u))}};
   draw();return box}
 const blank=v=>Array.isArray(v)?[]:v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,blank(x)])):typeof v==='number'?0:typeof v==='boolean'?false:'';
 /* ---------- checks + change review ---------- */
@@ -226,7 +229,7 @@ function albums(){
     d.append(s);d.querySelector('summary').style.cursor='default';box.append(d)})};draw();w.append(box);return w}
 function learn(){
   const w=h('div');
-  w.append(h('p','note','Lessons shown when a visitor opens <b>Learn Photography</b> on the home page. Add or remove lessons, edit the points, paste a YouTube link for the video, and upload photos for each lesson. Use the arrows or drag to reorder. Then press <b>Publish</b>.'));
+  w.append(h('p','note','Lessons shown when a visitor opens <b>Learn Photography</b> on the home page. Add or remove lessons, edit the points, paste a YouTube link for the video, and upload photos for each lesson (open a lesson, then use <b>Upload photos</b> under Photos; you can pick several at once). Use the arrows or drag to reorder. Then press <b>Publish</b>.'));
   w.append(h('h3',0,'Lessons'),ed(D,'LEARN',''));
   const c=h('div');c.style.marginTop='1.5rem';
   c.append(h('h3',0,'Weekly challenges'),h('p','note','One challenge per line, written as <b>Title: what to do</b>. The site shows the next line every Monday and starts again from the top after the last one.'),ed(D,'LEARN_CHALLENGES',''));

@@ -1,0 +1,86 @@
+/* Learn section (home page, above the footer). Re-uses the Helpdesk look; add or edit lessons in index.html (id="learn"). */
+.learn .learn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15.5rem,1fr));gap:1rem;margin-top:1.2rem}
+.learn-card{position:relative}
+.learn-no{display:inline-flex;align-items:center;justify-content:center;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--glow);color:#04101e;font-weight:700;font-size:.85rem;margin-bottom:.4rem}
+.learn-pts{margin:.5rem 0 .8rem;padding-left:1.1rem;font-size:.9rem;line-height:1.55;color:var(--muted)}
+.learn-pts li{margin:.3rem 0}
+.learn-try{margin:0;padding:.55rem .7rem;border-left:3px solid var(--glow);background:rgba(108,200,255,.08);border-radius:0 .4rem .4rem 0;font-size:.85rem;line-height:1.5}
+.learn-foot{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between;margin-top:1.4rem;padding:1rem 1.1rem;border:1px solid var(--line);border-radius:.6rem;background:var(--surface)}
+.learn-challenge{flex:1 1 18rem}
+.learn-challenge p{margin:.3rem 0 0;line-height:1.55}
+.learn-foot .btns{display:flex;flex-wrap:wrap;gap:.6rem}
+
+/* Video tutorials */
+.vid-title{margin:.6rem 0 .2rem;font-size:.95rem}
+.vid-meta{margin:0;font-size:.78rem;color:var(--muted)}
+.vid-media{position:relative;aspect-ratio:16/9;border-radius:.5rem;overflow:hidden;background:#04101e}
+.vid-media iframe,.vid-media video,.vid-media img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+.vid-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:.5rem;border:0;padding:0;background:transparent;color:#fff;cursor:pointer;text-decoration:none;font:inherit;font-weight:600}
+.vid-play svg,.vid-soon svg{position:relative;width:3.2rem;height:3.2rem;padding:.8rem;border-radius:50%;background:rgba(4,16,30,.72);fill:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.35)}
+.vid-play:hover svg,.vid-play:focus-visible svg{background:var(--glow);fill:#04101e}
+.vid-play:focus-visible{outline:2px solid var(--glow);outline-offset:-4px}
+.vid-out{flex-direction:column;background:linear-gradient(135deg,#0a2a4a,#04101e)}
+.vid-soon{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:#b4cae6;font-size:.85rem;background:linear-gradient(135deg,#0a2a4a,#04101e)}
+.vid-soon svg{opacity:.6}
+
+/* Home card that opens the lessons page */
+.learn-open{display:flex;align-items:center;gap:1.1rem;margin-top:1.2rem;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s}
+.learn-open:hover,.learn-open:focus-visible{transform:translateY(-2px);box-shadow:0 0 0 1px var(--glow),0 10px 30px rgba(0,0,0,.25)}
+.learn-open:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
+.learn-open-ico{flex:none;display:inline-flex;align-items:center;justify-content:center;width:3.4rem;height:3.4rem;border-radius:50%;background:var(--glow)}
+.learn-open-ico svg{width:1.7rem;height:1.7rem;fill:#04101e}
+.learn-open-txt{flex:1 1 auto;display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.learn-open-txt b{font-size:1.2rem}
+.learn-open-txt span{color:var(--muted);font-size:.9rem;line-height:1.5}
+.learn-open-txt em{font-style:normal;font-size:.78rem;color:var(--glow)}
+.learn-open-go{flex:none;font-weight:700;color:var(--glow);white-space:nowrap}
+@media(max-width:560px){.learn-open{flex-wrap:wrap}.learn-open-go{width:100%}}
+
+/* Lessons page: media inside each lesson */
+.lesson-media{margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--line)}
+.media-h{margin:.6rem 0 .4rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(7rem,1fr));gap:.5rem}
+.ph-fig{margin:0}
+.ph-fig img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:.4rem}
+.ph-fig figcaption{margin-top:.25rem;font-size:.72rem;color:var(--muted)}
+.ph-soon{grid-column:1/-1;margin:0;padding:.9rem;border:1px dashed var(--line);border-radius:.4rem;text-align:center;font-size:.82rem;color:var(--muted)}
+
+button.learn-open{width:100%;font:inherit;text-align:left;cursor:pointer}
+.learn-overlay{position:fixed;inset:0;z-index:9000;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--bg,#04101e);color:var(--text,inherit);padding:1.2rem 0 3rem;
+  transform:translateY(100%);opacity:0;transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .45s ease;will-change:transform}
+.learn-overlay.is-in{transform:none;opacity:1}
+.learn-overlay[hidden]{display:none}
+.learn-overlay .wrap{max-width:68rem;margin:0 auto;padding:0 1.2rem}
+.learn-bar{margin:0 0 1rem;padding:0;background:none;border:0;box-shadow:none;height:auto}
+.learn-bar .btn{display:inline-flex}
+body.learn-lock{overflow:hidden}
+
+/* the lesson cards: spaced apart (this grid is outside the home .learn block, so it needs its own rules) */
+#learn-hub .learn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr));gap:1.5rem;margin:1.6rem 0 2rem}
+#learn-hub .learn-card{padding:1.3rem 1.3rem 1.2rem;border:1px solid var(--line,rgba(128,140,170,.3));border-radius:.8rem;background:var(--surface,rgba(255,255,255,.04))}
+#learn-hub .learn-foot{margin-top:2rem}
+
+/* cards rise in one after another */
+.learn-overlay.is-in .learn-card,.learn-overlay.is-in .learn-foot{animation:learnRise .7s cubic-bezier(.22,1,.36,1) both}
+.learn-overlay.is-in .learn-card:nth-child(1){animation-delay:.20s}
+.learn-overlay.is-in .learn-card:nth-child(2){animation-delay:.28s}
+.learn-overlay.is-in .learn-card:nth-child(3){animation-delay:.36s}
+.learn-overlay.is-in .learn-card:nth-child(4){animation-delay:.44s}
+.learn-overlay.is-in .learn-foot{animation-delay:.52s}
+@keyframes learnRise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.learn-overlay{transition:none;transform:none}.learn-overlay.is-in .learn-card,.learn-overlay.is-in .learn-foot{animation:none}}
+
+/* Lessons page: one lesson per row, big and roomy, scroll down for the next */
+#learn-hub .learn-grid{grid-template-columns:1fr!important;max-width:52rem;margin:1.6rem auto 2rem;gap:1.8rem}
+#learn-hub .learn-card{padding:1.8rem 1.8rem 1.6rem}
+#learn-hub .learn-card h3{font-size:1.45rem;margin:.2rem 0 .8rem}
+#learn-hub .learn-pts{font-size:1rem;line-height:1.7}
+#learn-hub .learn-pts li{margin-bottom:.5rem}
+#learn-hub .learn-try{font-size:.98rem;margin-top:1rem}
+#learn-hub .lesson-media{margin-top:1.4rem;padding-top:1.2rem}
+#learn-hub .ph-grid{grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:.8rem}
+#learn-hub .ph-fig img{border-radius:.6rem}
+#learn-hub .ph-fig figcaption{font-size:.8rem}
+#learn-hub .learn-foot{max-width:52rem;margin-left:auto;margin-right:auto}
+#learn-hub h2,#learn-hub .lead{max-width:52rem;margin-left:auto;margin-right:auto}
+@media(max-width:560px){#learn-hub .learn-card{padding:1.3rem 1.2rem}}
