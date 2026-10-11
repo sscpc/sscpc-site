@@ -98,12 +98,54 @@
     return box;
   };
 
-  /* o: { id, data, dl, share, shareTitle, shareText, optionsEl }
+  /* Pop-up that asks which language a download should be in. The choice is optional:
+     "Continue in English" (or any language button) downloads straight away; Esc, the X or a tap outside
+     cancels. Resolves to 'en' | 'si' | 'ta', or null if cancelled. o: { title, note } */
+  NS.chooseLanguage = function (o) {
+    o = o || {};
+    if (!NS.LANGS || typeof HTMLDialogElement === 'undefined') return Promise.resolve('en');
+    return new Promise(resolve => {
+      const dlg = document.createElement('dialog');
+      dlg.className = 'lang-dlg';
+      dlg.setAttribute('aria-labelledby', 'lang-dlg-t');
+      let result = null;
+      const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+      const x = mk('button', 'lang-x', '\u00d7'); x.type = 'button'; x.setAttribute('aria-label', 'Close');
+      x.addEventListener('click', () => dlg.close());
+      const t = mk('h3', 'lang-t', o.title || 'Choose a language'); t.id = 'lang-dlg-t';
+      const note = mk('p', 'lang-note', o.note || 'This is optional. Skip it to get the English version.');
+      const row = mk('div', 'lang-row');
+      NS.LANGS.forEach(l => {
+        const b = mk('button', 'lang-opt' + (l.code === 'en' ? ' is-main' : ''), l.label);
+        b.type = 'button'; b.lang = l.code;
+        b.addEventListener('click', () => { result = l.code; dlg.close(); });
+        row.appendChild(b);
+      });
+      const skip = mk('button', 'lang-skip', 'Skip and continue in English'); skip.type = 'button';
+      skip.addEventListener('click', () => { result = 'en'; dlg.close(); });
+      dlg.append(x, t, note, row, skip);
+      dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); }); /* tap outside = cancel */
+      dlg.addEventListener('close', () => { dlg.remove(); resolve(result); });
+      document.body.appendChild(dlg);
+      try { dlg.showModal(); } catch (e) { dlg.remove(); resolve('en'); }
+    });
+  };
+  /* saves a {blob, name} pdf to the device. suffix is added before .pdf (for example '-si') */
+  NS.saveBlob = function (pdf, suffix) {
+    const u = URL.createObjectURL(pdf.blob), a = document.createElement('a');
+    a.href = u; a.download = pdf.name.replace(/\.pdf$/i, '') + (suffix || '') + '.pdf';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(u), 4000);
+  };
+
+  /* o: { id, data, dl, share, shareTitle, shareText, optionsEl, languagePrompt }
+     languagePrompt: true asks for the language in a pop-up when Download is pressed (and does not add the
+     collapsed "Sinhala or Tamil copy" box).
      Resolves to the English pdf ({blob, name, doc}) or null if it could not be built.
      English is always the main PDF. For documents with languages: true an optional box offers
      extra Sinhala / Tamil downloads above optionsEl. */
   NS.deliver = async function (o) {
-    let url = null, seq = 0;
+    let url = null, seq = 0, current = null;
     const def = NS.get(o.id);
     async function run() {
       const mine = ++seq; /* if the visitor changes an option quickly, only the newest build is used */
@@ -113,6 +155,7 @@
       if (url) { URL.revokeObjectURL(url); url = null; }
       if (o.dl) o.dl.hidden = !pdf;
       if (o.share) { o.share.hidden = true; o.share.onclick = null; }
+      current = pdf;
       if (pdf) {
         url = URL.createObjectURL(pdf.blob);
         if (o.dl) { o.dl.href = url; o.dl.download = pdf.name; }
@@ -125,8 +168,22 @@
       return pdf;
     }
     const first = await run();
+    if (o.languagePrompt && o.dl && def && def.languages) {
+      o.dl.onclick = async e => {
+        e.preventDefault();
+        if (o.dl.dataset.busy) return;
+        const code = await NS.chooseLanguage({ title: 'Choose a language for your PDF' });
+        if (!code) return;
+        o.dl.dataset.busy = '1';
+        try {
+          const pdf = code === 'en' ? (current || await NS.generate(o.id, o.data, { lang: 'en' })) : await NS.generate(o.id, o.data, { lang: code });
+          if (pdf) NS.saveBlob(pdf, code === 'en' ? '' : '-' + code); else alert('Sorry, that PDF could not be created on this device.');
+        } catch (err) { if (window.console) console.warn('PDF could not be created:', err); alert('Sorry, that PDF could not be created on this device.'); }
+        delete o.dl.dataset.busy;
+      };
+    }
     if (o.optionsEl) {
-      if (def && def.languages) NS.mountLanguage(o.optionsEl, async code => {
+      if (def && def.languages && !o.languagePrompt) NS.mountLanguage(o.optionsEl, async code => {
         try { return await NS.generate(o.id, o.data, { lang: code }); } catch (e) { if (window.console) console.warn('PDF could not be created:', e); return null; }
       });
       NS.mountOptions(o.optionsEl, () => { run(); });

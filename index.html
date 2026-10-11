@@ -531,15 +531,23 @@
             <div class="full"><button class="btn cut" type="submit" id="join-btn">Submit application</button></div>
           </form>
           <div class="join-done" id="join-done" hidden>
-            <p class="reg-msg" id="join-status" role="status"></p>
-            <div class="btns">
-              <a class="btn cut" id="join-dl">Download PDF</a>
-              <a class="btn ghost" id="join-card" hidden>Download membership card</a>
+            <div class="join-ok">
+              <span class="join-ok-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+              <p class="join-ok-msg" id="join-status" role="status"></p>
+            </div>
+            <h4 class="join-h">Your documents</h4>
+            <div class="join-actions">
+              <a class="btn cut" id="join-dl" role="button" href="#join">Download PDF</a>
+              <a class="btn ghost" id="join-card" role="button" hidden>Download membership card</a>
+            </div>
+            <p class="join-hint">You can pick Sinhala or Tamil when you download. It is optional.</p>
+            <h4 class="join-h">Send it to the club</h4>
+            <div class="join-actions">
               <button class="btn cut" type="button" id="join-share" hidden>Share PDF on WhatsApp</button>
               <a class="btn ghost" id="join-wa" target="_blank" rel="noopener">Message the president on WhatsApp</a>
             </div>
             <details class="pdf-opts" id="join-pdf-opts" hidden></details>
-            <p class="reg-note" style="margin-top:1rem">To send the PDF, tap "Share PDF on WhatsApp" and choose the president's chat. If that button is missing, download the PDF and attach it in the president's WhatsApp chat.</p>
+            <p class="join-hint">To send the PDF, tap &ldquo;Share PDF on WhatsApp&rdquo; and choose the president&rsquo;s chat. If that button is missing, download the PDF and attach it in the president&rsquo;s WhatsApp chat.</p>
           </div>
         </div>
       </div>
@@ -581,52 +589,7 @@
       <div class="learn-bar"><button type="button" class="btn ghost" data-learn-close>&larr; Back</button></div>
       <h2 id="learn-hub-title">Photography Basics</h2>
       <p class="lead">Short, practical lessons from the club. Read a lesson, watch the video, study the photos, then try the challenge and share your best frame with us.</p>
-      <div class="learn-grid">
-      <article class="hd-card learn-card" id="lesson-composition">
-        <span class="learn-no" aria-hidden="true">1</span>
-        <h3>Composition</h3>
-        <ul class="learn-pts">
-          <li>Switch on the grid and place your subject on a line or crossing point (rule of thirds).</li>
-          <li>Use leading lines such as roads, railings and shadows to pull the eye to your subject.</li>
-          <li>Simplify. Remove clutter, or move closer.</li>
-        </ul>
-        <p class="learn-try"><b>Try this:</b> take five photos of one object, each from a different angle.</p>
-        <div class="lesson-media" data-lesson="composition"></div>
-      </article>
-      <article class="hd-card learn-card" id="lesson-light">
-        <span class="learn-no" aria-hidden="true">2</span>
-        <h3>Light</h3>
-        <ul class="learn-pts">
-          <li>The hour after sunrise and the hour before sunset give soft, warm light.</li>
-          <li>Midday sun is harsh: look for shade, or shoot with the sun behind you.</li>
-          <li>Window light is excellent for portraits. Turn your subject towards it.</li>
-        </ul>
-        <p class="learn-try"><b>Try this:</b> photograph the same spot in the morning and in the evening.</p>
-        <div class="lesson-media" data-lesson="light"></div>
-      </article>
-      <article class="hd-card learn-card" id="lesson-exposure">
-        <span class="learn-no" aria-hidden="true">3</span>
-        <h3>Exposure basics</h3>
-        <ul class="learn-pts">
-          <li>Wide aperture gives a blurry background; narrow keeps more in focus.</li>
-          <li>Fast shutter freezes motion; slow shutter blurs it.</li>
-          <li>Keep ISO as low as the light allows.</li>
-        </ul>
-        <p class="learn-try"><b>Try this:</b> freeze a moving friend, then blur them on purpose.</p>
-        <div class="lesson-media" data-lesson="exposure"></div>
-      </article>
-      <article class="hd-card learn-card" id="lesson-phone">
-        <span class="learn-no" aria-hidden="true">4</span>
-        <h3>Phone photography</h3>
-        <ul class="learn-pts">
-          <li>A phone is a real camera. Clean the lens before you shoot.</li>
-          <li>Tap to focus, then slide to set the brightness.</li>
-          <li>Skip digital zoom. Walk closer instead.</li>
-        </ul>
-        <p class="learn-try"><b>Try this:</b> shoot a portrait with a window beside your subject.</p>
-        <div class="lesson-media" data-lesson="phone"></div>
-      </article>
-      </div>
+      <div class="learn-grid" id="learn-grid"></div>
       <div class="learn-foot">
       <div class="learn-challenge" id="learn-challenge">
         <span class="hd-eyebrow">This week's challenge</span>
@@ -705,7 +668,7 @@
       <span class="learn-open-txt">
         <b>Photography Basics</b>
         <span>Composition, light, exposure and phone photography: lessons, photos and video tutorials in one place.</span>
-        <em>4 lessons &middot; photos &middot; videos</em>
+        <em id="learn-count">Lessons &middot; photos &middot; videos</em>
       </span>
       <span class="learn-open-go" aria-hidden="true">Open &rarr;</span>
     </button>

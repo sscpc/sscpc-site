@@ -129,7 +129,7 @@
     const dl=$('join-dl'),share=$('join-share'),wa=$('join-wa');
     let pdf=null;
     try{pdf=await window.SSCPCPdf.deliver({id:'join',data:Object.assign({},d,{ref:ref}),dl:dl,share:share,
-      shareTitle:'SSCPC membership application',shareText:'SSCPC membership application'+(ref?' '+ref:''),optionsEl:$('join-pdf-opts')})}catch(err){pdf=null}
+      shareTitle:'SSCPC membership application',shareText:'SSCPC membership application'+(ref?' '+ref:''),optionsEl:$('join-pdf-opts'),languagePrompt:true})}catch(err){pdf=null}
 
     /* the membership card (js/pdf/docs/card.js): offered once the club has given a membership number */
     const cardBtn=$('join-card');
@@ -137,19 +137,24 @@
       cardBtn.hidden=true;
       if(ref){
         try{
-          const card=await window.SSCPCPdf.generate('card',{name:d.name,grade:d.grade,ref:ref,photo:photoData});
-          cardBtn.href=URL.createObjectURL(card.blob);cardBtn.download=card.name;cardBtn.hidden=false;
-          /* optional Sinhala / Tamil copies of the card (English stays the main card) */
-          document.querySelectorAll('.join-card-x').forEach(n=>n.remove());
-          let after=cardBtn;
-          for(const l of (window.SSCPCPdf.LANGS||[]).filter(l=>l.code!=='en')){
+          const cd={name:d.name,grade:d.grade,ref:ref,photo:photoData};
+          const card=await window.SSCPCPdf.generate('card',cd);
+          cardBtn.removeAttribute('href');cardBtn.setAttribute('role','button');cardBtn.tabIndex=0;cardBtn.hidden=false;
+          /* the language is chosen in a pop-up (optional; English if skipped) */
+          const run=async e=>{
+            e.preventDefault();
+            if(cardBtn.dataset.busy)return;
+            const code=await window.SSCPCPdf.chooseLanguage({title:'Choose a language for your card'});
+            if(!code)return;
+            cardBtn.dataset.busy='1';
             try{
-              const c=await window.SSCPCPdf.generate('card',{name:d.name,grade:d.grade,ref:ref,photo:photoData},{lang:l.code});
-              const a=document.createElement('a');a.className='btn ghost join-card-x';a.textContent='Card in '+l.label;a.lang=l.code;
-              a.href=URL.createObjectURL(c.blob);a.download=c.name.replace(/\.pdf$/i,'')+'-'+l.code+'.pdf';
-              after.insertAdjacentElement('afterend',a);after=a;
-            }catch(e){/* that language copy is optional */}
-          }
+              const c=code==='en'?card:await window.SSCPCPdf.generate('card',cd,{lang:code});
+              window.SSCPCPdf.saveBlob(c,code==='en'?'':'-'+code);
+            }catch(err){alert('Sorry, the card could not be created on this device.')}
+            delete cardBtn.dataset.busy;
+          };
+          cardBtn.onclick=run;
+          cardBtn.onkeydown=e=>{if(e.key==='Enter'||e.key===' ')run(e)};
         }catch(err){cardBtn.hidden=true}
       }
     }
