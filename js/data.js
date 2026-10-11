@@ -1182,7 +1182,8 @@ const PDF_CONFIG = {
 const LEARN = [
   {
     "title": "Composition",
-    "points": [
+    "summary": "Composition is how you arrange everything inside the frame. A few simple habits, like the rule of thirds and leading lines, instantly make a photo stronger.",
+    "facts": [
       "Switch on the grid and place your subject on a line or crossing point (rule of thirds).",
       "Use leading lines such as roads, railings and shadows to pull the eye to your subject.",
       "Simplify. Remove clutter, or move closer."
@@ -1196,7 +1197,8 @@ const LEARN = [
   },
   {
     "title": "Light",
-    "points": [
+    "summary": "Light shapes the mood of a photo more than any camera setting. Learn when it is softest and how to use it from the side, from behind or through a window.",
+    "facts": [
       "The hour after sunrise and the hour before sunset give soft, warm light.",
       "Midday sun is harsh: look for shade, or shoot with the sun behind you.",
       "Window light is excellent for portraits. Turn your subject towards it."
@@ -1210,7 +1212,8 @@ const LEARN = [
   },
   {
     "title": "Exposure basics",
-    "points": [
+    "summary": "Exposure is how bright or dark your photo turns out. Aperture, shutter speed and ISO work together, and each one changes the look of the picture.",
+    "facts": [
       "Wide aperture gives a blurry background; narrow keeps more in focus.",
       "Fast shutter freezes motion; slow shutter blurs it.",
       "Keep ISO as low as the light allows."
@@ -1224,7 +1227,8 @@ const LEARN = [
   },
   {
     "title": "Phone photography",
-    "points": [
+    "summary": "You do not need an expensive camera to take great photos. A few phone habits, from a clean lens to tapping to focus, make a big difference.",
+    "facts": [
       "A phone is a real camera. Clean the lens before you shoot.",
       "Tap to focus, then slide to set the brightness.",
       "Skip digital zoom. Walk closer instead."

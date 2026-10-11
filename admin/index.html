@@ -103,7 +103,7 @@ const ser=d=>'/* SSCPC site data. Written by the admin portal (admin/index.html)
 let D,B,KEYS,key='',X=null,sub='registrations',tab='home',flt='All',hist=[],hi=0,GH=JSON.parse(localStorage.gh||'{}');
 const ST={},URLS={},SEC={MEMBERS:'members',SLIDES:'announcements',EVENTS:'events',LEARN:'learn'};
 /* blank item shapes for lists that can start empty (used by the + Add button) */
-const TPL={photos:{photo:'',caption:''},LEARN:{title:'',points:[],tryIt:'',videoTitle:'',videoUrl:'',videoLength:'',videoBy:'SSCPC',photos:[]}};
+const TPL={photos:{photo:'',caption:''},LEARN:{title:'',summary:'',facts:[],tryIt:'',videoTitle:'',videoUrl:'',videoLength:'',videoBy:'SSCPC',photos:[]}};
 const snapK=()=>Object.fromEntries(KEYS.map(k=>[k,JSON.stringify(D[k])]));
 const changed=()=>KEYS.filter(k=>JSON.stringify(D[k])!==B[k]);
 const lab=x=>x&&typeof x==='object'?(x.name||x.title||x.alt||x.image||''):'';
@@ -229,8 +229,8 @@ function albums(){
     d.append(s);d.querySelector('summary').style.cursor='default';box.append(d)})};draw();w.append(box);return w}
 function learn(){
   const w=h('div');
-  w.append(h('p','note','Lessons shown when a visitor opens <b>Learn Photography</b> on the home page. Add or remove lessons, edit the points, paste a YouTube link for the video, and upload photos for each lesson (open a lesson, then use <b>Upload photos</b> under Photos; you can pick several at once). Use the arrows or drag to reorder. Then press <b>Publish</b>.'));
-  w.append(h('h3',0,'Lessons'),ed(D,'LEARN',''));
+  w.append(h('p','note','Each topic is a card on the Learn page (its <b>Title</b> and a two-sentence <b>Summary</b>). Clicking the card opens that topic’s own section with its <b>Facts</b> (one per line), <b>Try it</b>, video and photos. Add or remove topics, paste a YouTube link for the video, and upload photos for each topic (open a lesson, then use <b>Upload photos</b> under Photos; you can pick several at once). Use the arrows or drag to reorder. Then press <b>Publish</b>.'));
+  w.append(h('h3',0,'Topics'),ed(D,'LEARN',''));
   const c=h('div');c.style.marginTop='1.5rem';
   c.append(h('h3',0,'Weekly challenges'),h('p','note','One challenge per line, written as <b>Title: what to do</b>. The site shows the next line every Monday and starts again from the top after the last one.'),ed(D,'LEARN_CHALLENGES',''));
   w.append(c);return w}
