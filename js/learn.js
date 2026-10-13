@@ -49,48 +49,10 @@
   }
 
   /* ---------- lessons (kept in js/data.js as LEARN, edited in the admin portal under Learn) ----------
-     Each topic: title, summary (two sentences, shown on the card), facts (list), tryIt, videoTitle, videoUrl, videoLength, videoBy, photos (list of { photo, caption }).
-     videoUrl: a YouTube link plays on the page (privacy-friendly player, loads only on press); any other link shows a Watch button;
-     empty shows "Coming soon". */
+     Each topic: title, summary (two sentences, shown on the card), facts (list), tryIt, photos (list of { photo, caption }). */
   const LESSONS = (typeof LEARN !== 'undefined' && Array.isArray(LEARN)) ? LEARN : [];
 
-  function ytId(u) {
-    const m = String(u).match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/))([A-Za-z0-9_-]{11})/);
-    return m ? m[1] : '';
-  }
   function make(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
-  function playIcon() {
-    const ns = 'http://www.w3.org/2000/svg', s = document.createElementNS(ns, 'svg'), p = document.createElementNS(ns, 'path');
-    s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true'); p.setAttribute('d', 'M8 5v14l11-7z'); s.appendChild(p); return s;
-  }
-  function videoBlock(v) {
-    const art = make('div', 'vid-card'), media = make('div', 'vid-media'), url = String(v.url || '').trim();
-    const id = ytId(url), isFile = /\.(mp4|webm)(\?.*)?$/i.test(url);
-    const meta = [v.length, v.by].filter(Boolean).join('  ·  ');
-    if (id) { /* YouTube: a still picture with a play button; the player loads only on click */
-      const b = make('button', 'vid-play'); b.type = 'button'; b.setAttribute('aria-label', 'Play video: ' + v.title);
-      const img = make('img'); img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; img.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
-      img.addEventListener('error', function () { img.remove(); }); /* no picture? the dark card and play button remain */
-      b.appendChild(img); b.appendChild(playIcon()); media.appendChild(b);
-      b.addEventListener('click', function () {
-        const f = make('iframe'); f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
-        f.title = v.title; f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true; f.referrerPolicy = 'strict-origin-when-cross-origin';
-        media.textContent = ''; media.appendChild(f);
-      });
-    } else if (isFile) {
-      const vd = make('video'); vd.controls = true; vd.preload = 'none'; vd.playsInline = true; vd.src = url; if (v.poster) vd.poster = v.poster; vd.setAttribute('aria-label', v.title);
-      media.appendChild(vd);
-    } else if (url) {
-      const a = make('a', 'vid-play vid-out'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('aria-label', 'Watch: ' + v.title);
-      a.appendChild(playIcon()); a.appendChild(make('span', null, 'Watch')); media.appendChild(a);
-    } else {
-      const soon = make('div', 'vid-soon'); soon.appendChild(playIcon()); soon.appendChild(make('span', null, 'Coming soon')); media.appendChild(soon);
-    }
-    art.appendChild(media);
-    art.appendChild(make('h4', 'vid-title', v.title));
-    if (meta) art.appendChild(make('p', 'vid-meta', meta));
-    return art;
-  }
   /* ---------- photo viewer: tap a photo to see it large, with the caption and next / previous ---------- */
   let lb = null;
   function lightbox(list, start) {
@@ -134,7 +96,6 @@
   const pad = function (n) { return n < 10 ? '0' + n : String(n); };
   function summaryOf(l) { return (l.summary && String(l.summary).trim()) || (Array.isArray(l.facts) && l.facts[0]) || ''; }
   function photosOf(l) { return (Array.isArray(l.photos) ? l.photos : []).filter(function (p) { return p && p.photo; }).map(function (p) { return { src: p.photo, caption: p.caption }; }); }
-  function hasVideo(l) { return !!String(l.videoUrl || '').trim(); }
   function renderList() {
     const grid = document.getElementById('learn-grid'); if (!grid || !LESSONS.length) return;
     grid.textContent = '';
@@ -145,17 +106,16 @@
       b.appendChild(make('h3', 'tc-title', l.title || 'Topic ' + (i + 1)));
       b.appendChild(make('p', 'tc-sum', summaryOf(l)));
       const ph = photosOf(l).length, meta = [];
-      if (hasVideo(l)) meta.push('Video');
       if (ph) meta.push(ph + (ph === 1 ? ' photo' : ' photos'));
       if (meta.length) b.appendChild(make('span', 'tc-meta', meta.join('  ·  ')));
       b.appendChild(make('span', 'tc-go', 'Open lesson \u2192'));
       grid.appendChild(b);
     });
     const n = document.getElementById('learn-count');
-    if (n) n.textContent = LESSONS.length + (LESSONS.length === 1 ? ' topic' : ' topics') + ' \u00b7 facts \u00b7 photos \u00b7 videos';
+    if (n) n.textContent = LESSONS.length + (LESSONS.length === 1 ? ' topic' : ' topics') + ' \u00b7 facts \u00b7 photos';
   }
 
-  /* ---------- the separate section for one topic: summary, facts, try this, video, photos ---------- */
+  /* ---------- the separate section for one topic: summary, facts, try this, photos ---------- */
   function section(cls, heading) { const s = make('section', 'ld-sec ' + cls); s.appendChild(make('h3', 'ld-h', heading)); return s; }
   function renderDetail(root, i) {
     const l = LESSONS[i]; if (!l) return;
@@ -177,10 +137,6 @@
       const s = make('section', 'ld-sec ld-try'); s.appendChild(make('h3', 'ld-h', 'Try this'));
       s.appendChild(make('p', null, String(l.tryIt).charAt(0).toUpperCase() + String(l.tryIt).slice(1))); root.appendChild(s);
     }
-    if (hasVideo(l)) {
-      const s = section('ld-video', 'Video');
-      s.appendChild(videoBlock({ title: l.videoTitle || l.title || 'Video', url: l.videoUrl, length: l.videoLength, by: l.videoBy })); root.appendChild(s);
-    }
     const ph = photosOf(l);
     if (ph.length) { const s = section('ld-photos', 'Photos'); s.appendChild(photoBlock(ph)); root.appendChild(s); }
     if (LESSONS.length > 1) {
@@ -194,7 +150,7 @@
     }
   }
 
-  window.SSCPCLearn = { pick: pick, weekIndex: weekIndex, ytId: ytId, lessons: LESSONS };
+  window.SSCPCLearn = { pick: pick, weekIndex: weekIndex, lessons: LESSONS };
   /* ---------- the Learn hub: a list of topic cards, and a separate section for each topic ----------
      It opens over the site (no menu router). History is used so the phone's Back button goes
      detail -> topics -> site. */

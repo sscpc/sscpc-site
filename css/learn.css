@@ -10,18 +10,6 @@
 .learn-challenge p{margin:.3rem 0 0;line-height:1.55}
 .learn-foot .btns{display:flex;flex-wrap:wrap;gap:.6rem}
 
-/* Video tutorials */
-.vid-title{margin:.6rem 0 .2rem;font-size:.95rem}
-.vid-meta{margin:0;font-size:.78rem;color:var(--muted)}
-.vid-media{position:relative;aspect-ratio:16/9;border-radius:.5rem;overflow:hidden;background:#04101e}
-.vid-media iframe,.vid-media video,.vid-media img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
-.vid-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:.5rem;border:0;padding:0;background:transparent;color:#fff;cursor:pointer;text-decoration:none;font:inherit;font-weight:600}
-.vid-play svg,.vid-soon svg{position:relative;width:3.2rem;height:3.2rem;padding:.8rem;border-radius:50%;background:rgba(4,16,30,.72);fill:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.35)}
-.vid-play:hover svg,.vid-play:focus-visible svg{background:var(--glow);fill:#04101e}
-.vid-play:focus-visible{outline:2px solid var(--glow);outline-offset:-4px}
-.vid-out{flex-direction:column;background:linear-gradient(135deg,#0a2a4a,#04101e)}
-.vid-soon{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:#b4cae6;font-size:.85rem;background:linear-gradient(135deg,#0a2a4a,#04101e)}
-.vid-soon svg{opacity:.6}
 
 /* Home card that opens the lessons page */
 .learn-open{display:flex;align-items:center;gap:1.1rem;margin-top:1.2rem;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s}
@@ -117,8 +105,6 @@ body.learn-lock{overflow:hidden}
 .ld-try{padding:1.2rem 1.3rem;border-left:3px solid var(--glow);border-radius:.4rem;background:var(--surface,rgba(255,255,255,.04))}
 .ld-try .ld-h{color:var(--glow);margin-bottom:.4rem}
 .ld-try p{margin:0;font-size:1.02rem;line-height:1.65}
-.ld-video .vid-card{max-width:100%}
-.ld-photos .ph-grid{grid-template-columns:repeat(auto-fill,minmax(12rem,1fr));gap:.9rem}
 .ld-photos .ph-fig img{border-radius:.6rem}
 .ld-photos .ph-fig a{display:block;cursor:zoom-in}
 .ld-photos .ph-fig figcaption{font-size:.82rem;margin-top:.35rem}

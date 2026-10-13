@@ -1189,10 +1189,6 @@ const LEARN = [
       "Simplify. Remove clutter, or move closer."
     ],
     "tryIt": "take five photos of one object, each from a different angle.",
-    "videoTitle": "Composition: the rule of thirds",
-    "videoUrl": "",
-    "videoLength": "",
-    "videoBy": "SSCPC",
     "photos": []
   },
   {
@@ -1204,10 +1200,6 @@ const LEARN = [
       "Window light is excellent for portraits. Turn your subject towards it."
     ],
     "tryIt": "photograph the same spot in the morning and in the evening.",
-    "videoTitle": "Using natural light",
-    "videoUrl": "",
-    "videoLength": "",
-    "videoBy": "SSCPC",
     "photos": []
   },
   {
@@ -1219,10 +1211,6 @@ const LEARN = [
       "Keep ISO as low as the light allows."
     ],
     "tryIt": "freeze a moving friend, then blur them on purpose.",
-    "videoTitle": "Aperture, shutter and ISO",
-    "videoUrl": "",
-    "videoLength": "",
-    "videoBy": "SSCPC",
     "photos": []
   },
   {
@@ -1234,10 +1222,6 @@ const LEARN = [
       "Skip digital zoom. Walk closer instead."
     ],
     "tryIt": "shoot a portrait with a window beside your subject.",
-    "videoTitle": "Better photos with your phone",
-    "videoUrl": "",
-    "videoLength": "",
-    "videoBy": "SSCPC",
     "photos": []
   }
 ];
