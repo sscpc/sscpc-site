@@ -127,3 +127,11 @@ body.learn-lock{overflow:hidden}
 .ph-link:hover img,.ph-link.on img{transform:scale(1.06)}
 .ph-link:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){.ph-link img,.ph-ov,.ph-txt{transition:none}.ph-link:hover img,.ph-link.on img{transform:none}}
+
+/* bigger photos in a topic: two per row on a wide screen, one per row on a phone */
+#learn-detail{max-width:58rem}
+#learn-detail .ld-lead,#learn-detail .ld-facts,#learn-detail .ld-try{max-width:46rem}
+#learn-detail .ld-photos .ph-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));gap:1.2rem}
+#learn-detail .ld-photos .ph-fig img{aspect-ratio:4/3;border-radius:.8rem}
+#learn-detail .ld-photos .ph-link{border-radius:.8rem}
+#learn-detail .ld-photos .ph-txt{font-size:1.1rem}
