@@ -1288,7 +1288,12 @@ const LEARN = [
       "Review Before You Leave: Check your photos after shooting and correct exposure problems while you can still retake the image."
     ],
     "tryIt": "freeze a moving friend, then blur them on purpose.",
-    "photos": []
+    "photos": [
+      {
+        "photo": "images/learn/photo-mv89carr0.jpg",
+        "caption": "Correct Exposure"
+      }
+    ]
   },
   {
     "title": "Phone photography",
