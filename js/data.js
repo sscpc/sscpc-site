@@ -1292,6 +1292,10 @@ const LEARN = [
       {
         "photo": "images/learn/photo-mv89carr0.jpg",
         "caption": "Correct Exposure"
+      },
+      {
+        "photo": "images/learn/img-mv89h1qp.jpg",
+        "caption": "Over exposed"
       }
     ]
   },
