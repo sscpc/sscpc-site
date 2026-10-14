@@ -1308,6 +1308,18 @@ const LEARN = [
       {
         "photo": "images/learn/img-mv89iukt.jpg",
         "caption": "Fast shutter speed"
+      },
+      {
+        "photo": "images/learn/img-mv89lf8q.jpg",
+        "caption": "Wide aperture"
+      },
+      {
+        "photo": "images/learn/img-mv89lplt.jpg",
+        "caption": "ISO and Noise"
+      },
+      {
+        "photo": "images/learn/img-mv89ly6k.jpg",
+        "caption": "Exposing for Highlights"
       }
     ]
   },
