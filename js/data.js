@@ -1220,7 +1220,48 @@ const LEARN = [
       "Notice the Direction of Light: Front, side, and backlighting each create a different effect."
     ],
     "tryIt": "photograph the same spot in the morning and in the evening.",
-    "photos": []
+    "photos": [
+      {
+        "photo": "images/learn/img-mv8672ek.jpg",
+        "caption": "Rembrandt Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv86764p.jpg",
+        "caption": "Butterfly Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv86792c.jpg",
+        "caption": "Split Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv868gnp.jpg",
+        "caption": "Loop Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv86as20.jpg",
+        "caption": "Silhouette Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv88b07k.jpg",
+        "caption": "Rim Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv88elxh.jpg",
+        "caption": "Soft Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv88lb9j.jpg",
+        "caption": "Hard Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv88mjkh.jpg",
+        "caption": "Bounce lighting "
+      },
+      {
+        "photo": "images/learn/img-mv88n7tn.jpg",
+        "caption": "Low-Key Lighting"
+      }
+    ]
   },
   {
     "title": "Exposure basics",
