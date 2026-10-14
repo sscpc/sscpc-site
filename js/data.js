@@ -1304,6 +1304,10 @@ const LEARN = [
       {
         "photo": "images/learn/img-mv89i230.jpg",
         "caption": "Slow shutter speed"
+      },
+      {
+        "photo": "images/learn/img-mv89iukt.jpg",
+        "caption": "Fast shutter speed"
       }
     ]
   },
