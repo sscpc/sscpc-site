@@ -1159,24 +1159,31 @@ const SLIDES = [
 
 const FORMS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyAHz3S7XpEbTAfYYXuhJDoVZoKPNY5his_4kfAh4ElJYyvgeAd4-14XVT_Vlp06f-j/exec";
 
-/* PDF settings (used by every PDF the site makes, see js/pdf/).
-   Change colours, footer text or defaults here. Colours are hex. Leave footerText empty
-   to show "SSCPC · sscpc.vercel.app" and the club email in the footer.
-   defaults: template = standard | print | compact, pageSize = a4 | a5,
-   orientation = portrait | landscape, textSize = normal | large. A visitor's own choice in
-   the "PDF options" panel overrides these defaults on their device. */
 const PDF_CONFIG = {
-  siteUrl: "https://sscpc.vercel.app",
-  siteLabel: "sscpc.vercel.app",
-  email: "sylvestrian.photography@gmail.com",
-  clubName: "St. Sylvester's College Photography Club",
-  shortName: "SSCPC",
-  footerText: "",
-  logo: "images/pdf-logo.png",
-  colors: { navy: "#04101E", blue: "#2882E6", maroon: "#7D1526", red: "#8A1228", gold: "#E6B022" },
-  defaults: { template: "standard", pageSize: "a4", orientation: "portrait", textSize: "normal" },
-  /* QR codes in the PDFs (they link to siteUrl). size is in mm, between 22 and 40. enabled:false removes them. */
-  qr: { enabled: true, size: 28 }
+  "siteUrl": "https://sscpc.vercel.app",
+  "siteLabel": "sscpc.vercel.app",
+  "email": "sylvestrian.photography@gmail.com",
+  "clubName": "St. Sylvester's College Photography Club",
+  "shortName": "SSCPC",
+  "footerText": "",
+  "logo": "images/pdf-logo.png",
+  "colors": {
+    "navy": "#04101E",
+    "blue": "#2882E6",
+    "maroon": "#7D1526",
+    "red": "#8A1228",
+    "gold": "#E6B022"
+  },
+  "defaults": {
+    "template": "standard",
+    "pageSize": "a4",
+    "orientation": "portrait",
+    "textSize": "normal"
+  },
+  "qr": {
+    "enabled": true,
+    "size": 28
+  }
 };
 
 const LEARN = [
@@ -1195,9 +1202,22 @@ const LEARN = [
     "title": "Light",
     "summary": "Light shapes the mood of a photo more than any camera setting. Learn when it is softest and how to use it from the side, from behind or through a window.",
     "facts": [
-      "The hour after sunrise and the hour before sunset give soft, warm light.",
-      "Midday sun is harsh: look for shade, or shoot with the sun behind you.",
-      "Window light is excellent for portraits. Turn your subject towards it."
+      "Use Natural Light: Window light or outdoor daylight can create beautiful photos.",
+      "Shoot During Golden Hour: Early morning and late afternoon offer warm, soft light.",
+      "Face the Light: Position your subject toward a light source for a brighter, clearer image.",
+      "Try Side Lighting: Light coming from one side adds texture, depth, and shadows.",
+      "Avoid Harsh Midday Sun: Strong sunlight can create dark shadows and bright highlights.",
+      "Use Backlighting: Place the light behind your subject for glowing edges or silhouettes.",
+      "Watch the Shadows: Shadows add mood, shape, and dimension to your photos.",
+      "Avoid Overexposure: Reduce exposure if bright areas lose their details.",
+      "Use Window Light: Place your subject near a window for soft, flattering portraits.",
+      "Understand White Balance: Adjust color temperature to keep whites looking natural.",
+      "Use Reflectors: A white card or reflector can bounce light into dark areas.",
+      "Make Use of Shade: Open shade provides softer, more even light for portraits.",
+      "Experiment with Silhouettes: Expose for the bright background to create a dark subject outline.",
+      "Control Indoor Lighting: Move your subject near a lamp or window for better illumination.",
+      "Use Low Light Carefully: Keep your phone steady and avoid unnecessarily high ISO settings.",
+      "Notice the Direction of Light: Front, side, and backlighting each create a different effect."
     ],
     "tryIt": "photograph the same spot in the morning and in the evening.",
     "photos": []
