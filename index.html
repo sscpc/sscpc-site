@@ -34,6 +34,7 @@
 <link rel="stylesheet" href="css/committee.css">
 <link rel="stylesheet" href="css/gallery-tools.css">
 <link rel="stylesheet" href="css/judges-v6.css">
+<link rel="stylesheet" href="css/selection-done.css">
 <script>document.documentElement.classList.add('loading','intro-hold');document.documentElement.dataset.theme='dark';try{localStorage.removeItem('sscpc-theme')}catch(e){}</script>
 <noscript><style>#loader{display:none}html.loading{overflow:auto}</style></noscript>
 </head>
@@ -335,6 +336,16 @@
             </figure>
           </li>
         </ul>
+
+        <div class="sel-done" id="sel-done" aria-labelledby="sel-done-title">
+          <p class="sel-k" id="sd-k">Photo Selection &middot; Completed</p>
+          <h2 id="sel-done-title"><span id="sd-t1">Selection Day</span><span class="hl" id="sd-t2">Was a Success.</span></h2>
+          <p class="lead sel-lead" id="sd-text">The photo selection for Spectrum 2026 has been completed successfully. Thank you to every school photographer who took part, to our judges and teachers for their time and guidance, and to the members who worked behind the scenes to make the day run smoothly.</p>
+          <figure class="sel-group" id="sd-fig">
+            <img id="sd-img" src="images/spectrum/selection-day.jpg" alt="SSCPC members and guests at the photo selection" width="1800" height="1200" loading="lazy" decoding="async" onerror="document.getElementById('sd-fig').hidden=true">
+            <figcaption id="sd-cap">SSCPC members and guests on photo selection day.</figcaption>
+          </figure>
+        </div>
 
         <aside class="sel-partner" aria-label="Selection Day Partner">
           <p class="sel-partner-k">Selection Day Partner</p>
@@ -798,6 +809,7 @@
 <script src="js/gallery-tools.js"></script>
 <script src="js/album-views.js"></script>
 <script src="js/learn.js"></script>
+<script src="js/selection-done.js"></script>
 <script src="js/chatbot.js"></script>
 <script src="js/music.js"></script>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script><!--vercel-->

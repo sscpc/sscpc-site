@@ -1,0 +1,9 @@
+/* Photo selection: "completed" announcement with the group photo (sits inside .sel, above the Selection Day Partner) */
+.sel-done{margin:clamp(3rem,7vw,5rem) 0 clamp(2.5rem,6vw,4rem);padding-top:clamp(2.5rem,6vw,4rem);border-top:1px solid var(--line,#12324f)}
+.sel-done[hidden],.sel-group[hidden]{display:none}
+.sel-group{position:relative;margin:2rem 0 0;max-width:62rem;border-radius:1rem;overflow:hidden;border:1px solid var(--line,#12324f);background:#08182b;box-shadow:0 0 0 1px rgba(108,200,255,.08),0 24px 60px rgba(0,0,0,.5)}
+.sel-group img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.sel-group::after{content:"";position:absolute;inset:auto 0 0 0;height:38%;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(2,8,22,.82))}
+.sel-group figcaption{position:absolute;z-index:1;left:0;right:0;bottom:0;padding:1.1rem 1.4rem;font-size:.82rem;letter-spacing:.06em;color:#f4f1e4}
+.sel-group figcaption::before{content:"";display:inline-block;width:1.6rem;height:2px;margin-right:.7rem;vertical-align:middle;background:#6cc8ff}
+@media(max-width:560px){.sel-group{border-radius:.7rem}.sel-group figcaption{position:static;padding:.8rem 1rem;background:#08182b}.sel-group::after{display:none}}

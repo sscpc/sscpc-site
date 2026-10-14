@@ -101,7 +101,7 @@ const NAMES=t=>[...t.matchAll(/^const (\w+) =/gm)].map(m=>m[1]);
 const parse=t=>new Function(t+';return {'+NAMES(t).join(',')+'}')();
 const ser=d=>'/* SSCPC site data. Written by the admin portal (admin/index.html). Notes: README.txt */\n\n'+Object.keys(d).map(k=>`const ${k} = ${JSON.stringify(d[k],null,2)};`).join('\n\n')+'\n';
 let D,B,KEYS,key='',X=null,sub='registrations',tab='home',flt='All',hist=[],hi=0,GH=JSON.parse(localStorage.gh||'{}');
-const ST={},URLS={},SEC={MEMBERS:'members',SLIDES:'announcements',EVENTS:'events',LEARN:'learn'};
+const ST={},URLS={},SEC={MEMBERS:'members',SLIDES:'announcements',EVENTS:'events',LEARN:'learn',SELECTION_DONE:'spectrum'};
 /* blank item shapes for lists that can start empty (used by the + Add button) */
 const TPL={photos:{photo:'',caption:''},LEARN:{title:'',summary:'',facts:[],tryIt:'',photos:[]}};
 const snapK=()=>Object.fromEntries(KEYS.map(k=>[k,JSON.stringify(D[k])]));
@@ -168,7 +168,8 @@ function diff(a,b,p,o){
 /* ---------- GitHub (same saved settings as the album builder) ---------- */
 const gql=async(q,v)=>{const r=await fetch('https://api.github.com/graphql',{method:'POST',headers:{Authorization:'Bearer '+GH.token,'Content-Type':'application/json'},body:JSON.stringify({query:q,variables:v})});
   const j=await r.json().catch(()=>({}));if(!r.ok||j.errors)throw Error((j.errors&&j.errors[0].message)||j.message||('GitHub said '+r.status));return j.data};
-async function head(){const[o,n]=GH.repo.split('/'),b=GH.branch||'main';
+function normRepo(s){s=String(s||'').trim().replace(/^https?:\/\/(www\.)?github\.com\//i,'').replace(/\.git$/i,'').replace(/^\/+|\/+$/g,'');return s.split('/').slice(0,2).join('/')}
+async function head(){const[o,n]=normRepo(GH.repo).split('/'),b=GH.branch||'main';if(!o||!n)throw Error('Repository must look like owner/name, for example sscpc/sscpc-site. Check the GitHub box.');
   const d=(await gql('query($o:String!,$n:String!,$q:String!,$e:String!){repository(owner:$o,name:$n){ref(qualifiedName:$q){target{oid}} object(expression:$e){...on Blob{text isTruncated}}}}',{o,n,q:'refs/heads/'+b,e:b+':js/data.js'})).repository;
   if(!d||!d.ref)throw Error('Repository or branch not found');if(!d.object||d.object.isTruncated)throw Error('Could not read js/data.js');return{oid:d.ref.target.oid,text:d.object.text}}
 const b64=b=>new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result.split(',')[1]);r.readAsDataURL(b)});
@@ -179,7 +180,7 @@ function merge(rd){ // per-section 3-way merge: base (when loaded) / ours / thei
 async function pub(){
   for(let t=0;;t++)try{const hd=await head(),m=merge(parse(hd.text)),add=[{path:'js/data.js',contents:await b64(new Blob([ser(m)]))}];
     for(const p in ST)add.push({path:p,contents:await b64(ST[p])});
-    await gql('mutation($i:CreateCommitOnBranchInput!){createCommitOnBranch(input:$i){commit{oid}}}',{i:{branch:{repositoryNameWithOwner:GH.repo,branchName:GH.branch||'main'},message:{headline:'Update site data from admin portal'},expectedHeadOid:hd.oid,fileChanges:{additions:add}}});
+    await gql('mutation($i:CreateCommitOnBranchInput!){createCommitOnBranch(input:$i){commit{oid}}}',{i:{branch:{repositoryNameWithOwner:normRepo(GH.repo),branchName:GH.branch||'main'},message:{headline:'Update site data from admin portal'},expectedHeadOid:hd.oid,fileChanges:{additions:add}}});
     D=m;KEYS=Object.keys(D);B=snapK();for(const p in ST)delete ST[p];hist=[JSON.stringify(D)];hi=0;dirty();return}
   catch(e){if(t>=2||!/oid|head|expected/i.test(e.message))throw e}}
 /* ---------- inbox ---------- */
@@ -227,6 +228,10 @@ function albums(){
     [['↑',-1],['↓',1],['✕',0]].forEach(([t,dx])=>{const b=h('button','mini',t);b.type='button';b.onclick=e=>{e.preventDefault();
       if(!dx){if(!confirm('Remove "'+a.name+'" from the gallery? Its photo files stay in the repo.'))return;D.ALBUMS.splice(i,1)}else{const j=i+dx;if(j<0||j>=D.ALBUMS.length)return;[D.ALBUMS[i],D.ALBUMS[j]]=[D.ALBUMS[j],D.ALBUMS[i]]}dirty();draw()};s.append(b)});
     d.append(s);d.querySelector('summary').style.cursor='default';box.append(d)})};draw();w.append(box);return w}
+function selDone(){
+  const w=h('div');
+  w.append(h('p','note','The “Photo selection completed” announcement on the home page, just above the Selection Day Partner. Change the heading (two lines), the message, and the group photo with its caption. Set <b>Show</b> to <b>no</b> to hide the whole block. Then press <b>Publish</b>.'),ed(D,'SELECTION_DONE',''));
+  return w}
 function learn(){
   const w=h('div');
   w.append(h('p','note','Each topic is a card on the Learn page (its <b>Title</b> and a two-sentence <b>Summary</b>). Clicking the card opens that topic’s own section with its <b>Facts</b> (one per line), <b>Try it</b> and photos. Add or remove topics and upload photos for each topic (open a lesson, then use <b>Upload photos</b> under Photos; you can pick several at once). Use the arrows or drag to reorder. Then press <b>Publish</b>.'));
@@ -248,12 +253,12 @@ function publish(){
   bar.append(btn('Discard all changes',()=>{if(!(ch.length||ni)||!confirm('Throw away all unpublished changes?'))return;D=JSON.parse(JSON.stringify(Object.fromEntries(KEYS.map(k=>[k,JSON.parse(B[k])]))));for(const p in ST)delete ST[p];hist=[JSON.stringify(D)];hi=0;dirty();show('publish')},'ghost'),
     btn('Download data.js',()=>save('data.js',ser(D),'text/javascript'),'ghost'));
   const f={};const g=h('div','bd');[['repo','GitHub repository (owner/name)'],['branch','Branch'],['token','Fine-grained access token (Contents: read and write, this repo only)']].forEach(([k,l])=>{const i=h('input','in');if(k==='token')i.type='password';i.value=GH[k]||(k==='branch'?'main':'');f[k]=i;g.append(field(l,i))});
-  const pb=btn('Publish to GitHub',async()=>{GH={repo:f.repo.value.trim(),branch:f.branch.value.trim()||'main',token:f.token.value.trim()};localStorage.gh=JSON.stringify(GH);
+  const pb=btn('Publish to GitHub',async()=>{GH={repo:normRepo(f.repo.value),branch:f.branch.value.trim()||'main',token:f.token.value.trim()};localStorage.gh=JSON.stringify(GH);
     if(errs.length||!(ch.length||ni)){st.textContent=errs.length?'Fix the problems above first.':'Nothing to publish.';return}
     st.textContent='Publishing…';pb.disabled=true;try{await pub();show('publish');$('#main').append(h('p','note','Published. The live site updates in about a minute.'))}catch(e){st.textContent=e.message;pb.disabled=false}});
   bar.append(pb);w.append(bar,st,g,h('p','note','The token is kept in this browser only (shared with the Album Builder). Use a device you trust, and sign out of shared computers.'));return w}
 /* ---------- shell ---------- */
-const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['site','Site',site],['publish','Publish',publish]];
+const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['selection','Selection',selDone],['site','Site',site],['publish','Publish',publish]];
 TABS.forEach(([k,t])=>{const b=h('button','tab',t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))});
 function show(n){tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
   const m=$('#main'),t=TABS.find(x=>x[0]===n);m.innerHTML='';m.append(h('div','ttl',t[1]),t[2]());scrollTo(0,0)}
