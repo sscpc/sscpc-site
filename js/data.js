@@ -1300,6 +1300,10 @@ const LEARN = [
       {
         "photo": "images/learn/img-mv89hl1b.jpg",
         "caption": "Under exposed"
+      },
+      {
+        "photo": "images/learn/img-mv89i230.jpg",
+        "caption": "Slow shutter speed"
       }
     ]
   },
