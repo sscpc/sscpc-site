@@ -1361,6 +1361,14 @@ const LEARN = [
       {
         "photo": "images/learn/img-mv89xlf5.jpg",
         "caption": "NIght shoot"
+      },
+      {
+        "photo": "images/learn/img-mv89y8ug.jpg",
+        "caption": "Close up photography"
+      },
+      {
+        "photo": "images/learn/img-mv89yk44.jpg",
+        "caption": "Reflection"
       }
     ]
   }
