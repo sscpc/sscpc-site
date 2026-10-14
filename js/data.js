@@ -1369,6 +1369,18 @@ const LEARN = [
       {
         "photo": "images/learn/img-mv89yk44.jpg",
         "caption": "Reflection"
+      },
+      {
+        "photo": "images/learn/img-mv89z1e7.jpg",
+        "caption": "Wide angle photos"
+      },
+      {
+        "photo": "images/learn/img-mv89zdc2.jpg",
+        "caption": "Action shoots"
+      },
+      {
+        "photo": "images/learn/img-mv89zmdh.jpg",
+        "caption": "Industry shootings"
       }
     ]
   }
