@@ -1353,6 +1353,14 @@ const LEARN = [
       {
         "photo": "images/learn/img-mv89vxld.jpg",
         "caption": "Natural light"
+      },
+      {
+        "photo": "images/learn/img-mv89x62j.jpg",
+        "caption": "Portrait mode"
+      },
+      {
+        "photo": "images/learn/img-mv89xlf5.jpg",
+        "caption": "NIght shoot"
       }
     ]
   }
