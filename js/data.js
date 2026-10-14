@@ -1159,24 +1159,31 @@ const SLIDES = [
 
 const FORMS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyAHz3S7XpEbTAfYYXuhJDoVZoKPNY5his_4kfAh4ElJYyvgeAd4-14XVT_Vlp06f-j/exec";
 
-/* PDF settings (used by every PDF the site makes, see js/pdf/).
-   Change colours, footer text or defaults here. Colours are hex. Leave footerText empty
-   to show "SSCPC · sscpc.vercel.app" and the club email in the footer.
-   defaults: template = standard | print | compact, pageSize = a4 | a5,
-   orientation = portrait | landscape, textSize = normal | large. A visitor's own choice in
-   the "PDF options" panel overrides these defaults on their device. */
 const PDF_CONFIG = {
-  siteUrl: "https://sscpc.vercel.app",
-  siteLabel: "sscpc.vercel.app",
-  email: "sylvestrian.photography@gmail.com",
-  clubName: "St. Sylvester's College Photography Club",
-  shortName: "SSCPC",
-  footerText: "",
-  logo: "images/pdf-logo.png",
-  colors: { navy: "#04101E", blue: "#2882E6", maroon: "#7D1526", red: "#8A1228", gold: "#E6B022" },
-  defaults: { template: "standard", pageSize: "a4", orientation: "portrait", textSize: "normal" },
-  /* QR codes in the PDFs (they link to siteUrl). size is in mm, between 22 and 40. enabled:false removes them. */
-  qr: { enabled: true, size: 28 }
+  "siteUrl": "https://sscpc.vercel.app",
+  "siteLabel": "sscpc.vercel.app",
+  "email": "sylvestrian.photography@gmail.com",
+  "clubName": "St. Sylvester's College Photography Club",
+  "shortName": "SSCPC",
+  "footerText": "",
+  "logo": "images/pdf-logo.png",
+  "colors": {
+    "navy": "#04101E",
+    "blue": "#2882E6",
+    "maroon": "#7D1526",
+    "red": "#8A1228",
+    "gold": "#E6B022"
+  },
+  "defaults": {
+    "template": "standard",
+    "pageSize": "a4",
+    "orientation": "portrait",
+    "textSize": "normal"
+  },
+  "qr": {
+    "enabled": true,
+    "size": 28
+  }
 };
 
 const LEARN = [
@@ -1184,12 +1191,58 @@ const LEARN = [
     "title": "Composition",
     "summary": "Composition is how you arrange everything inside the frame. A few simple habits, like the rule of thirds and leading lines, instantly make a photo stronger.",
     "facts": [
-      "Switch on the grid and place your subject on a line or crossing point (rule of thirds).",
-      "Use leading lines such as roads, railings and shadows to pull the eye to your subject.",
-      "Simplify. Remove clutter, or move closer."
+      "Rule of Thirds: Place your subject along a grid line or intersection.",
+      "Leading Lines: Use roads, paths, or shadows to guide the viewer’s eye.",
+      "Keep It Simple: Remove distractions and focus on your main subject.",
+      "Use Symmetry: Look for balanced shapes and reflections.",
+      "Frame Your Subject: Use windows, arches, or branches as natural frames.",
+      "Create Depth: Include foreground, middle ground, and background.",
+      "Try Different Angles: Shoot from above, below, or eye level.",
+      "Use Negative Space: Leave empty space around your subject.",
+      "Fill the Frame: Move closer to highlight important details.",
+      "Balance the Image: Distribute visual elements across the frame.",
+      "Look for Patterns: Use repeating shapes, lines, and textures.",
+      "Use Color Contrast: Make your subject stand out with contrasting colors.",
+      "Watch the Background: Avoid objects that distract from your subject.",
+      "Capture Movement: Photograph action at the right moment.",
+      "Leave Looking Space: Give people or moving subjects room in front of them.",
+      "Experiment with Light: Use light and shadows to add depth and interest."
     ],
     "tryIt": "take five photos of one object, each from a different angle.",
-    "photos": []
+    "photos": [
+      {
+        "photo": "images/learn/photo-mv82u8oy0.jpg",
+        "caption": "Rule of third"
+      },
+      {
+        "photo": "images/learn/img-mv82uq5x.jpg",
+        "caption": "Leading lines"
+      },
+      {
+        "photo": "images/learn/img-mv82v2q2.jpg",
+        "caption": "Frame in the frame"
+      },
+      {
+        "photo": "images/learn/img-mv82vfh6.jpg",
+        "caption": "Symmetry"
+      },
+      {
+        "photo": "images/learn/img-mv82wt3d.jpg",
+        "caption": "Negative Space"
+      },
+      {
+        "photo": "images/learn/img-mv82x4vi.jpg",
+        "caption": "Fill the frame"
+      },
+      {
+        "photo": "images/learn/img-mv82yb4b.jpg",
+        "caption": "Patterns"
+      },
+      {
+        "photo": "images/learn/img-mv82yqds.jpg",
+        "caption": "Color Contrast"
+      }
+    ]
   },
   {
     "title": "Light",
