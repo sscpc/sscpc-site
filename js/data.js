@@ -1242,7 +1242,7 @@ const LEARN = [
         "caption": "Silhouette Lighting"
       },
       {
-        "photo": "images/learn/img-mv88b07k.jpg",
+        "photo": "images/learn/img-mv88qwix.jpg",
         "caption": "Rim Lighting"
       },
       {
