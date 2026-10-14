@@ -115,3 +115,15 @@ body.learn-lock{overflow:hidden}
 .ld-step small{font-size:.7rem;letter-spacing:.08em;color:var(--glow)}
 @media(max-width:560px){.ld-nav{grid-template-columns:1fr}.ld-step:last-child{text-align:left}.ld-facts li{padding-left:3rem}}
 @media(prefers-reduced-motion:reduce){.learn-pane.pane-in{animation:none}.topic-card,.tc-go{transition:none}}
+
+/* photos: darken + text on hover (PC) or first touch (phone) */
+.ph-link{position:relative;display:block;overflow:hidden;border-radius:.6rem;cursor:zoom-in}
+.ph-link img{transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.ph-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45rem;padding:.9rem;text-align:center;color:#fff;background:rgba(2,8,22,.74);opacity:0;transition:opacity .3s ease}
+.ph-txt{font-size:.95rem;font-weight:700;line-height:1.4;transform:translateY(10px);transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.ph-hint{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--glow)}
+.ph-link:hover .ph-ov,.ph-link:focus-visible .ph-ov,.ph-link.on .ph-ov{opacity:1}
+.ph-link:hover .ph-txt,.ph-link:focus-visible .ph-txt,.ph-link.on .ph-txt{transform:none}
+.ph-link:hover img,.ph-link.on img{transform:scale(1.06)}
+.ph-link:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.ph-link img,.ph-ov,.ph-txt{transition:none}.ph-link:hover img,.ph-link.on img{transform:none}}

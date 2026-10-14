@@ -78,16 +78,33 @@
     draw(); document.body.appendChild(box); lb = box;
     const x = box.querySelector('.lv-x'); if (x) x.focus();
   }
+  /* Photos: on a PC, moving the cursor over a photo darkens it and shows its text (the caption set in the admin).
+     On a phone or tablet, the first touch does the same and a second touch opens the large view. */
+  const touchOnly = function () { return !!(window.matchMedia && window.matchMedia('(hover: none)').matches); };
+  document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('.ph-link')) return;
+    document.querySelectorAll('.ph-link.on').forEach(function (x) { x.classList.remove('on'); });
+  });
   function photoBlock(list) {
     const wrap = make('div', 'ph-grid');
     if (!list || !list.length) { wrap.appendChild(make('p', 'ph-soon', 'Photos coming soon')); return wrap; }
     list.forEach(function (p, n) {
-      const fig = make('figure', 'ph-fig'), a = make('a'), img = make('img');
+      const fig = make('figure', 'ph-fig'), a = make('a', 'ph-link'), img = make('img');
       a.href = p.src; a.setAttribute('aria-label', 'View photo' + (p.caption ? ': ' + p.caption : ''));
-      a.addEventListener('click', function (e) { e.preventDefault(); lightbox(list, n); }); /* opens in the page; middle-click still opens the file */
       img.src = p.src; img.alt = p.caption || ''; img.loading = 'lazy'; img.decoding = 'async';
-      a.appendChild(img); fig.appendChild(a);
-      if (p.caption) fig.appendChild(make('figcaption', null, p.caption));
+      a.appendChild(img);
+      const ov = make('span', 'ph-ov');
+      if (p.caption) ov.appendChild(make('span', 'ph-txt', p.caption));
+      ov.appendChild(make('span', 'ph-hint', 'View larger'));
+      a.appendChild(ov); fig.appendChild(a);
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (touchOnly() && !a.classList.contains('on')) {            /* first touch: darken + show the text */
+          wrap.querySelectorAll('.ph-link.on').forEach(function (x) { x.classList.remove('on'); });
+          a.classList.add('on'); return;
+        }
+        lightbox(list, n);                                            /* click on a PC, or second touch */
+      });
       wrap.appendChild(fig);
     });
     return wrap;
