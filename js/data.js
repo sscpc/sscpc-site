@@ -1349,7 +1349,12 @@ const LEARN = [
       "Know Your Camera: Explore your phone's features to get the most from it."
     ],
     "tryIt": "shoot a portrait with a window beside your subject.",
-    "photos": []
+    "photos": [
+      {
+        "photo": "images/learn/img-mv89vxld.jpg",
+        "caption": "Natural light"
+      }
+    ]
   }
 ];
 
