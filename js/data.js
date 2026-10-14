@@ -1111,6 +1111,10 @@ const SLIDE_SECONDS = 6.5;
 
 const SLIDES = [
   {
+    "image": "images/announcements/img-mv88tzgz.jpg",
+    "alt": "Successfully concluded"
+  },
+  {
     "image": "images/announcements/Submissions-are-closed.jpeg",
     "alt": "Spectrum 2026 poster: Submissions closed"
   },
