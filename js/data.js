@@ -1199,7 +1199,7 @@ const LEARN = [
     "photos": []
   },
   {
-    "title": "Light",
+    "title": "Lighting",
     "summary": "Light shapes the mood of a photo more than any camera setting. Learn when it is softest and how to use it from the side, from behind or through a window.",
     "facts": [
       "Use Natural Light: Window light or outdoor daylight can create beautiful photos.",
