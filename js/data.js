@@ -1230,8 +1230,16 @@ const LEARN = [
         "caption": "Symmetry"
       },
       {
-        "photo": "",
-        "caption": ""
+        "photo": "images/learn/img-mv9ray5p.jpg",
+        "caption": "Golden spiral"
+      },
+      {
+        "photo": "images/learn/img-mv9r7rd5.jpg",
+        "caption": "Colour contrast"
+      },
+      {
+        "photo": "images/learn/img-mv9rbu9v.jpg",
+        "caption": "Golden triangle"
       }
     ]
   },
