@@ -1200,7 +1200,20 @@ const LEARN = [
       "Simplify. Remove clutter, or move closer."
     ],
     "tryIt": "take five photos of one object, each from a different angle.",
-    "photos": []
+    "photos": [
+      {
+        "photo": "images/learn/img-mv9qv495.jpg",
+        "caption": "Rule of Thirds"
+      },
+      {
+        "photo": "images/learn/img-mv9qwcqf.jpg",
+        "caption": "Leading Lines"
+      },
+      {
+        "photo": "",
+        "caption": ""
+      }
+    ]
   },
   {
     "title": "Lighting",
@@ -1268,7 +1281,7 @@ const LEARN = [
     ]
   },
   {
-    "title": "Exposure basics",
+    "title": "Exposure ",
     "summary": "Exposure is how bright or dark your photo turns out. Aperture, shutter speed and ISO work together, and each one changes the look of the picture.",
     "facts": [
       "Exposure Triangle: Understand how aperture, shutter speed, and ISO work together to control the brightness of your photograph.",
