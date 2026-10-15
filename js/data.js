@@ -1210,8 +1210,20 @@ const LEARN = [
         "caption": "Leading Lines"
       },
       {
-        "photo": "",
-        "caption": ""
+        "photo": "images/learn/img-mv9qyaem.jpg",
+        "caption": "Depth of Field"
+      },
+      {
+        "photo": "images/learn/img-mv9qzeqq.jpg",
+        "caption": "Golden Hour"
+      },
+      {
+        "photo": "images/learn/img-mv9r0vy6.jpg",
+        "caption": "Golden Hour"
+      },
+      {
+        "photo": "images/learn/img-mv9r12f6.jpg",
+        "caption": "Natural Framing"
       }
     ]
   },
