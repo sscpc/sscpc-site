@@ -1214,8 +1214,8 @@ const LEARN = [
         "caption": "Depth of Field"
       },
       {
-        "photo": "images/learn/img-mv9qzeqq.jpg",
-        "caption": "Golden Hour"
+        "photo": "images/learn/img-mv9r4r8o.jpg",
+        "caption": "Minimalism"
       },
       {
         "photo": "images/learn/img-mv9r0vy6.jpg",
@@ -1224,6 +1224,14 @@ const LEARN = [
       {
         "photo": "images/learn/img-mv9r12f6.jpg",
         "caption": "Natural Framing"
+      },
+      {
+        "photo": "images/learn/img-mv9r2tea.jpg",
+        "caption": "Symmetry"
+      },
+      {
+        "photo": "",
+        "caption": ""
       }
     ]
   },
