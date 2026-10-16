@@ -1469,8 +1469,16 @@ const LEARN = [
     "tryIt": "Find one popular model from each brand.",
     "photos": [
       {
-        "photo": "",
-        "caption": ""
+        "photo": "images/learn/img-mvaycdv2.jpg",
+        "caption": "Canon"
+      },
+      {
+        "photo": "images/learn/img-mvayclz8.jpg",
+        "caption": "Nikon "
+      },
+      {
+        "photo": "images/learn/img-mvayctik.jpg",
+        "caption": "Sony"
       }
     ]
   }
