@@ -1441,6 +1441,38 @@ const LEARN = [
         "caption": "Industry shootings"
       }
     ]
+  },
+  {
+    "title": "Understanding Camera Brands",
+    "summary": "Explore popular camera brands and discover what makes each one unique. Learn about their strengths, camera systems, and features to help you choose the right camera for your photography style.",
+    "facts": [
+      "Canon: Known for user-friendly cameras, excellent portraits, and a wide range of lenses.",
+      "Nikon: Popular for detailed images, landscape photography, and versatile camera systems.",
+      "Sony: Famous for mirrorless cameras, fast autofocus, and advanced video features.",
+      "Fujifilm: Loved for its film-inspired colors, creative image styles, and retro camera designs.",
+      "Panasonic Lumix: Known for video capabilities, hybrid photography, and filmmaking features.",
+      "OM System: Offers compact camera systems and useful features for wildlife and outdoor photography.",
+      "Leica: Recognized for premium craftsmanship, optical quality, and distinctive photographic experiences.",
+      "Hasselblad: Specializes in high-resolution medium-format cameras often used for commercial and fine-art photography.",
+      "Pentax: Known for DSLR cameras, optical viewfinders, and rugged weather-resistant designs.",
+      "GoPro: Designed for action, travel, sports, and capturing adventures in challenging environments.",
+      "Sigma: Known for high-quality lenses and specialized compact cameras.Ricoh – Known for compact cameras, especially those used in street photography.",
+      "Kodak – Recognized for photographic film, imaging products, and consumer cameras.",
+      "Insta360 – Specializes in 360-degree cameras and immersive video.",
+      "DJI – Known for camera drones, aerial photography, and stabilized cameras.",
+      "Blackmagic Design – Specializes in professional cinema cameras and filmmaking equipment.",
+      "Phase One – Produces high-resolution medium-format imaging systems for professional photography.",
+      "RED Digital Cinema – Known for professional cinema cameras used in filmmaking.",
+      "Yashica – Associated with vintage film cameras and classic photography.",
+      "Mamiya – Known for medium-format cameras used in studio and professional photography."
+    ],
+    "tryIt": "Find one popular model from each brand.",
+    "photos": [
+      {
+        "photo": "",
+        "caption": ""
+      }
+    ]
   }
 ];
 
