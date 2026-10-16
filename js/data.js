@@ -1479,6 +1479,18 @@ const LEARN = [
       {
         "photo": "images/learn/img-mvayctik.jpg",
         "caption": "Sony"
+      },
+      {
+        "photo": "images/learn/img-mvayd9vc.jpg",
+        "caption": "Fujifilm"
+      },
+      {
+        "photo": "images/learn/img-mvayfya3.jpg",
+        "caption": "Panasonic Lumix"
+      },
+      {
+        "photo": "images/learn/img-mvaygabe.jpg",
+        "caption": "Leica"
       }
     ]
   }
