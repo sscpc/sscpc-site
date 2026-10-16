@@ -1515,6 +1515,18 @@ const LEARN = [
       {
         "photo": "images/learn/img-mvayq0bj.jpg",
         "caption": "Kodak"
+      },
+      {
+        "photo": "images/learn/img-mvayuo9x.jpg",
+        "caption": "Insta 360"
+      },
+      {
+        "photo": "images/learn/img-mvayuzty.jpg",
+        "caption": "DJI"
+      },
+      {
+        "photo": "images/learn/img-mvayv6b0.jpg",
+        "caption": "Red digital cinema"
       }
     ]
   }
