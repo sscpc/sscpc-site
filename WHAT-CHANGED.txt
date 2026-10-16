@@ -1,11 +1,15 @@
-Light sweep tab transition
-Copy these three files into the repo, keeping the same folders, then commit:
-  js/router.js    (rewritten: plays the sweep when a tab link is clicked)
-  js/reveal.js    (one line changed: don't replay the old tab under the sweep)
-  css/style.css   (new styles added at the very bottom)
+Home hero: tilted photo wall (effect B) behind the hand, orb and text
+Copy these files into the repo, keeping the same folders, then commit:
+  js/intro-wall.js   (NEW: builds the wall from the photos in js/data.js)
+  index.html         (adds the wall layers inside #introStage and the intro-wall.js script tag)
+  css/style.css      (new styles added at the very bottom)
 
-Tuning (js/router.js):
-  MS = 470            time of each half of the sweep (ms)
-  S = H*.45           how much the edge leans
-  E = W*.5            how long the screen stays fully covered
-Colour comes from --bg and --glow in css/style.css.
+Photos: every album cover plus evenly spaced photos from each album (small thumbs where an
+album has a thumbs folder). New albums added in the admin portal appear automatically.
+Tuning:
+  css/style.css   --ws (.55)     how strong the photos are, 0.15 faint to 1 full
+  css/style.css   .intro__duo    the blue tint over the photos (opacity .62)
+  css/style.css   introWallPan   70s = pan speed; make it bigger for slower
+  js/intro-wall.js  WANT (24)    different photos used;  CELLS (70 desktop / 40 phone)  tiles on the wall
+The wall does not follow the cursor. It stops animating once the intro has scrolled away,
+and is a still image for visitors who prefer reduced motion.
