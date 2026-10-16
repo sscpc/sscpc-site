@@ -1503,6 +1503,18 @@ const LEARN = [
       {
         "photo": "images/learn/img-mvaykz23.jpg",
         "caption": "Pentax"
+      },
+      {
+        "photo": "images/learn/img-mvaypht6.jpg",
+        "caption": "Go pro"
+      },
+      {
+        "photo": "images/learn/img-mvaypqb8.jpg",
+        "caption": "Sigma"
+      },
+      {
+        "photo": "images/learn/img-mvayq0bj.jpg",
+        "caption": "Kodak"
       }
     ]
   }
