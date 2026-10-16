@@ -1489,8 +1489,20 @@ const LEARN = [
         "caption": "Panasonic Lumix"
       },
       {
+        "photo": "images/learn/img-mvayhwcd.jpg",
+        "caption": "OM System"
+      },
+      {
         "photo": "images/learn/img-mvaygabe.jpg",
         "caption": "Leica"
+      },
+      {
+        "photo": "images/learn/img-mvaykmib.jpg",
+        "caption": "Hasselblad"
+      },
+      {
+        "photo": "images/learn/img-mvaykz23.jpg",
+        "caption": "Pentax"
       }
     ]
   }
