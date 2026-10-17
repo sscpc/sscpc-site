@@ -1,15 +1,6 @@
-Home hero: fainter photos, true-colour cursor lens, black scroll story restored
+Home hero tuning: fainter photos, bluer mood, slower rows, smaller colour lens
 Copy these files into the repo, keeping the same folders, then commit:
-  js/intro.js        (one new line: fades the photo wall to black as you start scrolling)
-  js/intro-wall.js   (stops work once the wall has faded out)
-  css/style.css      (home-hero block at the bottom updated)
-  (index.html is unchanged since the last update)
-
-What you will see
-  - Photos are fainter: --ws is .32 (was .55). Raise it for stronger photos.
-  - The cursor lens now cuts through the dark wash, the blue tint and the edge shading, so photos
-    inside it show in their original colours.
-  - Scrolling: the photo wall fades out between 10% and 40% of the intro scroll, so the black
-    background, the SSCPC signature, the KEEP FOCUSING / CAPTURE THE BEST rows and the text that
-    follows play on black again, as before.
-Tuning: css/style.css --ws; js/intro.js the line with --wop (band(p, 0.10, 0.40) = where the fade happens).
+  js/intro-wall.js   (SPEED 38 -> 24, BOOST 2.2 -> 1.6, LENS 210 -> 130 desktop / 120 -> 80 phone)
+  css/style.css      (--ws .32 -> .22 photo strength, blue tint .62 -> .8, lens edge softer)
+  (index.html and js/intro.js are unchanged since the last update)
+Tuning: js/intro-wall.js SPEED, BOOST, LENS at the top; css/style.css --ws and .intro__duo opacity.

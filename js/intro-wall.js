@@ -14,10 +14,10 @@
   const stage = document.getElementById('introStage');
   if (!wall || !stage) return;
 
-  const SPEED = 38;
-  const BOOST = 2.2;
+  const SPEED = 24;
+  const BOOST = 1.6;
   const small = window.matchMedia('(max-width:640px)').matches;
-  const LENS = small ? 120 : 210;
+  const LENS = small ? 80 : 130;
   const WANT_ALBUM = 26;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
