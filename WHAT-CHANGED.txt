@@ -1,7 +1,7 @@
-Home hero: labels around the orb now use a soft dark haze instead of a box
+Home hero: darker overall, and a black gradient behind the top bar
 Copy this file into the repo, keeping the same folder, then commit:
-  css/style.css   (the label rules at the very bottom were replaced)
-SINCE 1945, KEEP FOCUSING and CAPTURE THE BEST are bold white text with a soft dark haze fading out
-behind them (no border or box), so they stay readable over bright photos and under the cursor lens.
-Tuning: in the ".intro__stat b::before" rule, the .45 / .28 numbers are how dark the haze is, and the
-left/right/top/bottom values are how far it spreads.
+  css/style.css   (two values changed in the home-hero block, new rules at the very bottom)
+  - Darker: photo strength --ws .15 (was .22), and the edge/centre shading is stronger.
+  - Top bar: the logo, tabs and Register button now sit on a black gradient that fades straight down
+    (solid black at the top, clear after about 8.5rem). It only shows while the pinned intro is on screen.
+Tuning: css/style.css --ws; the ".nav::before" rule at the bottom (height 8.5rem and the rgba .95/.78/.4 numbers).
