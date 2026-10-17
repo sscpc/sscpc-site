@@ -92,6 +92,14 @@
   window.addEventListener('scroll', requestUpdate, { passive: true });
   window.addEventListener('resize', requestUpdate);
   requestUpdate();
+  /* the router adds .on-home a moment after load: re-check the moment it changes, so the hero's top bar
+     is styled correctly from the first frame instead of only after the first scroll or mouse move */
+  let wasHome = document.documentElement.classList.contains('on-home');
+  new MutationObserver(() => {
+    const h = document.documentElement.classList.contains('on-home');
+    if (h !== wasHome) { wasHome = h; requestUpdate(); }
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  window.addEventListener('load', requestUpdate);
 
   /* ---- pointer-reactive viewfinder (desktop / any fine pointer) ---- */
   let pointerInside = false;

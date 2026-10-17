@@ -1,7 +1,7 @@
-Home hero: darker overall, and a black gradient behind the top bar
-Copy this file into the repo, keeping the same folder, then commit:
-  css/style.css   (two values changed in the home-hero block, new rules at the very bottom)
-  - Darker: photo strength --ws .15 (was .22), and the edge/centre shading is stronger.
-  - Top bar: the logo, tabs and Register button now sit on a black gradient that fades straight down
-    (solid black at the top, clear after about 8.5rem). It only shows while the pinned intro is on screen.
-Tuning: css/style.css --ws; the ".nav::before" rule at the bottom (height 8.5rem and the rgba .95/.78/.4 numbers).
+Home hero: top bar is a clean gradient again (no line under it)
+Copy these files into the repo, keeping the same folders, then commit:
+  js/intro.js      (new lines: re-checks the hero state the moment the router marks the page as Home)
+  css/style.css    (the black top-bar gradient and darker hero from the last update)
+Cause of the line: on first load the page could still be in its "scrolled past the hero" look (grey
+line under the bar, countdown badge showing) until the first scroll or mouse move. It now starts in the
+correct hero look immediately.
