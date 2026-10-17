@@ -1,6 +1,7 @@
-Home hero tuning: fainter photos, bluer mood, slower rows, smaller colour lens
-Copy these files into the repo, keeping the same folders, then commit:
-  js/intro-wall.js   (SPEED 38 -> 24, BOOST 2.2 -> 1.6, LENS 210 -> 130 desktop / 120 -> 80 phone)
-  css/style.css      (--ws .32 -> .22 photo strength, blue tint .62 -> .8, lens edge softer)
-  (index.html and js/intro.js are unchanged since the last update)
-Tuning: js/intro-wall.js SPEED, BOOST, LENS at the top; css/style.css --ws and .intro__duo opacity.
+Home hero: labels around the orb now use a soft dark haze instead of a box
+Copy this file into the repo, keeping the same folder, then commit:
+  css/style.css   (the label rules at the very bottom were replaced)
+SINCE 1945, KEEP FOCUSING and CAPTURE THE BEST are bold white text with a soft dark haze fading out
+behind them (no border or box), so they stay readable over bright photos and under the cursor lens.
+Tuning: in the ".intro__stat b::before" rule, the .45 / .28 numbers are how dark the haze is, and the
+left/right/top/bottom values are how far it spreads.

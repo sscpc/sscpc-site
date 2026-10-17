@@ -1132,3 +1132,9 @@ html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:vi
 @media (max-width:640px){.intro__stage{--th:clamp(96px,13vh,130px);--g:8px}}
 @media (hover:none){.intro__lens{display:none}}
 @media (prefers-reduced-motion:reduce){.intro__lens{display:none}}
+
+/* Hero labels around the orb (SINCE 1945 / KEEP FOCUSING / CAPTURE THE BEST): bold white text with a soft
+   dark haze behind it (no box), so it stays readable over bright photos and under the cursor lens. */
+.intro__stat b{position:relative;display:inline-block;font-weight:600;font-size:.82rem;letter-spacing:.16em;color:#fff;padding:.3rem .2rem;text-shadow:0 1px 3px rgba(0,0,0,.85),0 0 10px rgba(2,8,22,.6)}
+.intro__stat b::before{content:"";position:absolute;z-index:-1;left:-1.6rem;right:-1.6rem;top:-.8rem;bottom:-.8rem;pointer-events:none;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(2,6,16,.45) 0%,rgba(2,6,16,.28) 45%,rgba(2,6,16,0) 100%)}
+.intro__stat--top{top:calc(var(--cy) - var(--d)/2 - 3rem)}
