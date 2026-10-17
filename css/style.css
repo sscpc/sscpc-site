@@ -1111,22 +1111,24 @@ html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:vi
 #tsweep .ts-trail{background:var(--glow,#6cc8ff);opacity:.5}
 @media(prefers-reduced-motion:reduce){#tsweep{display:none!important}}
 
-/* ===== Home hero: tilted photo wall behind the hand, orb and text (js/intro-wall.js) =====
-   Layer order inside .intro__stage: blue/black gradient -> photo wall -> blue tint -> shade
-   -> hand (z2) -> orb (z3) -> labels and text (z6). Make the photos stronger or fainter with --ws. */
-.intro__stage{--ws:.55}
-.intro__photos{position:absolute;inset:0;z-index:1;overflow:hidden;opacity:var(--ws);filter:saturate(.75) contrast(1.05);pointer-events:none}
-.intro__wall{position:absolute;left:50%;top:50%;width:calc(max(100vw,100vh)*1.9);transform:translate(-50%,-50%) rotate(-14deg);display:grid;grid-template-columns:repeat(10,1fr);gap:1.2%;animation:introWallPan 70s ease-in-out infinite alternate;will-change:transform}
-.intro__wall .iw-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;display:block;opacity:0;transition:opacity .9s ease;user-select:none}
-.intro__wall .iw-img.is-in{opacity:1}
-@keyframes introWallPan{from{transform:translate(-47%,-47%) rotate(-14deg)}to{transform:translate(-53%,-53%) rotate(-14deg)}}
-.intro__duo{position:absolute;inset:0;z-index:1;background:#0a4aa8;mix-blend-mode:color;opacity:.62;pointer-events:none}
-.intro__shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,rgba(3,12,32,.1),rgba(2,6,16,.78) 78%),linear-gradient(180deg,rgba(2,6,16,.55),rgba(2,6,16,0) 30%,rgba(2,6,16,.9))}
-/* stop painting the wall once the intro has scrolled away or the tab changed */
-html:not(.intro-pinned) .intro__wall{animation-play-state:paused}
-@media (max-width:640px){
-  .intro__wall{grid-template-columns:repeat(8,1fr);width:calc(max(100vw,100vh)*2.1)}
-}
-@media (prefers-reduced-motion:reduce){
-  .intro__wall{animation:none;transform:translate(-50%,-50%) rotate(-14deg)}
-}
+/* ===== Home hero: tilted wall of photo rows behind the hand, orb and text (js/intro-wall.js) =====
+   Layer order inside .intro__stage: blue/black gradient -> photo rows -> dark wash -> blue tint -> shade
+   -> lens ring -> hand (z2) -> orb (z3) -> labels and text (z6).
+   --ws = how strong the photos are (0.15 faint .. 1 full). The wash and tint are cut open around the
+   cursor by the "lens" (--lx --ly --lr are set from JS), so the photos show in true colour there. */
+.intro__stage{--ws:.32;--wop:1;--lx:-999px;--ly:-999px;--lr:1px;--lo:0}
+.intro__photos{position:absolute;inset:0;z-index:1;overflow:hidden;opacity:var(--wop);pointer-events:none}
+.intro__wall{position:absolute;left:50%;top:50%;width:calc(max(100vw,100vh)*1.5);height:calc(max(100vw,100vh)*1.5);transform:translate(-50%,-50%) rotate(-14deg);display:flex;flex-direction:column;justify-content:center;gap:var(--g)}
+.intro__stage{--th:clamp(104px,16vh,180px);--g:10px}
+.iw-row{display:flex;gap:var(--g);width:max-content;flex:none;will-change:transform}
+.iw-img{height:var(--th);aspect-ratio:4/3;width:auto;object-fit:cover;border-radius:6px;display:block;flex:none;opacity:0;transition:opacity .9s ease;user-select:none}
+.iw-img.is-in{opacity:1}
+.intro__dim,.intro__duo,.intro__shade,.intro__lens{position:absolute;inset:0;z-index:1;pointer-events:none}
+.intro__dim{background:#02060f;opacity:calc(1 - var(--ws))}
+.intro__duo{background:#0a4aa8;mix-blend-mode:color;opacity:.62}
+.intro__dim,.intro__duo,.intro__shade{-webkit-mask-image:radial-gradient(circle var(--lr) at var(--lx) var(--ly),transparent 0,transparent 45%,#000 100%);mask-image:radial-gradient(circle var(--lr) at var(--lx) var(--ly),transparent 0,transparent 45%,#000 100%)}
+.intro__shade{background:radial-gradient(ellipse at 50% 42%,rgba(3,12,32,.1),rgba(2,6,16,.78) 78%),linear-gradient(180deg,rgba(2,6,16,.55),rgba(2,6,16,0) 30%,rgba(2,6,16,.9))}
+.intro__lens{inset:auto;left:var(--lx);top:var(--ly);width:calc(var(--lr)*1.5);height:calc(var(--lr)*1.5);transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(244,241,228,.38);box-shadow:0 0 28px rgba(108,200,255,.18),inset 0 0 26px rgba(108,200,255,.12);opacity:calc(var(--lo)*var(--wop))}
+@media (max-width:640px){.intro__stage{--th:clamp(96px,13vh,130px);--g:8px}}
+@media (hover:none){.intro__lens{display:none}}
+@media (prefers-reduced-motion:reduce){.intro__lens{display:none}}

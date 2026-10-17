@@ -55,6 +55,9 @@
     stage.style.setProperty('--lsc', (1 + logoOut * 0.22).toFixed(3));
     stage.style.setProperty('--glowop', (1 - logoOut).toFixed(3)); /* blue backdrop glow fades out with the logo */
 
+    /* photo wall fades to black before the signature draws in, so the scroll story plays on the same black as before */
+    stage.style.setProperty('--wop', (1 - ease(band(p, 0.10, 0.40))).toFixed(3));
+
     /* signature draws in, then holds solid */
     const sigIn = ease(band(p, 0.24, 0.55));
     stage.style.setProperty('--sigop', p < 0.22 ? 0 : 1);
