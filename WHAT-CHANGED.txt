@@ -1,9 +1,9 @@
-Home hero: blue glow removed everywhere, photos a little brighter
-Copy this file into the repo, keeping the same folder, then commit:
-  css/style.css   (glow rules removed or switched off; two values changed; a few lines added at the bottom)
+Home hero + gallery covers
+Copy these two files into the repo (same folders), then commit:
+  css/style.css       (rules added at the bottom)
+  js/letter-burst.js  (adds the bubble to the SSCPC signature letters)
 
-Glow removed: headline, SSCPC signature, the two scrolling rows, the letter burst flash, the cursor lens ring,
-the photo pop-up edge, the halo around the orb and the glow on the top-bar logo (home page only).
-Kept: the blue-to-cyan colour sweep on the headline, signature and rows.
-Brighter: photo strength --ws .1 -> .2, and the centre and edge shading is lighter.
-Tuning: css/style.css --ws (.2) and the ".intro__shade" rule (.3 / .88 are how dark the middle and edges are).
+1. Letters (headline, SSCPC, KEEP FOCUSING, CAPTURE THE BEST): spin removed. On hover/touch a small glass water-drop bubble forms over the letter, the letter swells a little and turns pale ice-blue, then both settle (1.6s).
+   Tuning in css/style.css: ".95em" bubble size, "1.08" swell, 1.6s timing, @keyframes lbDropBubble / lbDropLetter / lbDropSig.
+2. Intro wall: colour lens removed; photos slightly lighter (--ws .2 -> .26, ".intro__shade" .3/.88 -> .22/.8).
+3. Gallery album covers: frame and "ALBUM 01" label removed.

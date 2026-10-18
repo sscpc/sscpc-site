@@ -1213,3 +1213,53 @@ html.on-home.intro-pinned .nav::before{opacity:1}
 .intro__logo::before{display:none}
 html.on-home .brand-ico::before{display:none}
 html.on-home .brand-ico{animation:none;filter:none}
+
+/* ===== Update: no letter spin, no colour lens, lighter wall, plain gallery covers ===== */
+
+/* 1. Letters (headline, SSCPC signature, KEEP FOCUSING / CAPTURE THE BEST rows): no spin. On hover / touch a small glass
+   water-drop bubble forms over the letter (js/letter-burst.js adds ".is-burst"), the letter swells a little and turns pale
+   ice-blue while the bubble is there, then both settle back. Kept subtle on purpose.
+   Tuning: 1.6s (all the animations below must keep the same length), .95em = bubble size, 1.08 = how much the letter swells. */
+.intro__title .lb,.intro__row .lb{position:relative}
+.intro__title .lb.is-burst,.intro__row .lb.is-burst{animation:lbDropLetter 1.6s ease-in-out}
+@keyframes lbDropLetter{
+  0%{transform:scale(1);-webkit-text-fill-color:#6fc0ff}
+  25%,70%{transform:scale(1.08);-webkit-text-fill-color:#d9f6ff}
+  100%{transform:scale(1);-webkit-text-fill-color:#6fc0ff}
+}
+.intro__title .lb.is-burst::after,.intro__row .lb.is-burst::after{
+  content:"";position:absolute;left:50%;top:52%;width:.95em;height:.95em;margin:-.475em 0 0 -.475em;border-radius:50%;pointer-events:none;opacity:0;
+  background:
+    radial-gradient(circle at 30% 26%,rgba(255,255,255,.7) 0,rgba(255,255,255,.7) 5%,rgba(255,255,255,0) 17%),
+    radial-gradient(circle at 70% 78%,rgba(255,255,255,.28) 0,rgba(255,255,255,0) 22%),
+    radial-gradient(circle at 50% 50%,rgba(150,215,255,.04) 45%,rgba(70,160,235,.26) 100%);
+  border:1px solid rgba(205,240,255,.55);
+  box-shadow:inset 0 -.1em .16em rgba(0,70,140,.28),inset 0 .06em .12em rgba(255,255,255,.4),0 .12em .22em rgba(0,25,60,.28);
+  animation:lbDropBubble 1.6s ease-in-out}
+@keyframes lbDropBubble{
+  0%{opacity:0;transform:scale(.35)}
+  22%{opacity:1;transform:scale(1.06)}
+  32%{transform:scale(.97)}
+  42%,70%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(1.12)}
+}
+/* SSCPC signature: the letter swells and turns pale; the bubble is an SVG circle added by js/letter-burst.js */
+.intro__sig .lbp.is-burst{animation:lbDropSig 1.6s ease-in-out}
+@keyframes lbDropSig{
+  0%{transform:scale(1)}
+  25%,70%{transform:scale(1.08);stroke:#d9f6ff}
+  100%{transform:scale(1)}
+}
+.intro__sig .lbb{transform-box:fill-box;transform-origin:center;pointer-events:none;opacity:0;animation:lbDropBubble 1.6s ease-in-out}
+
+/* 2. Intro wall: the cursor no longer opens a true-colour lens, and the photos are a touch lighter
+   (--ws .2 -> .26, ".intro__shade" .3/.88 -> .22/.8). */
+.intro__stage{--ws:.26}
+.intro__dim,.intro__duo,.intro__shade{-webkit-mask-image:none;mask-image:none}
+.intro__lens{display:none}
+.intro__shade{background:radial-gradient(ellipse at 50% 42%,rgba(3,12,32,.22),rgba(2,6,16,.8) 78%),linear-gradient(180deg,rgba(2,6,16,.5),rgba(2,6,16,0) 30%,rgba(2,6,16,.84))}
+
+/* 3. Gallery covers: no frame/cage and no "ALBUM 01" label. */
+.album{padding:0;background:none;clip-path:none}
+.album .inner{clip-path:none}
+.album .tag{display:none}
