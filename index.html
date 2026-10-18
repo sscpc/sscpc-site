@@ -21,7 +21,9 @@
 <meta name="twitter:image" content="https://sscpc.vercel.app/images/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@200;300&display=swap" rel="stylesheet">
+<!-- Google Fonts must never block the page: it loads in the background and applies when it arrives (the site shows fine without it). -->
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@200;300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@200;300&display=swap" rel="stylesheet"></noscript>
 <link rel="icon" href="images/logo.png">
 <link rel="manifest" href="manifest.webmanifest"><!--pwa-->
 <meta name="theme-color" content="#02060d"><!--pwa-->
@@ -751,7 +753,7 @@
 <script src="js/gallery.js"></script>
 <script src="js/events.js"></script>
 <script src="js/members.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><!-- async: only needed when a PDF is made; must not hold up the scripts after it -->
 <script src="js/pdf/text.js"></script>
 <script src="js/pdf/i18n.js"></script>
 <script src="js/vendor/qrcode.js"></script>
