@@ -1150,3 +1150,56 @@ html.on-home.intro-pinned .nav::before{opacity:1}
 .iw-pop{position:absolute;z-index:4;pointer-events:none;border:3px solid rgba(244,241,228,.92);border-bottom-width:10px;border-radius:3px;box-shadow:0 12px 28px rgba(0,0,0,.65),0 0 22px rgba(108,200,255,.22);opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(.95);animation:iwPop 2.5s cubic-bezier(.2,.8,.2,1) forwards}
 .iw-pop img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
 @keyframes iwPop{0%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(.95)}12%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(1.2)}78%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(1.2)}100%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(1.26)}}
+
+/* ===== Letter burst text effect (js/letter-burst.js): a letter spins a full turn, swells and flashes blue ===== */
+.intro__title .lb,.intro__row .lb{all:unset;display:inline-block;white-space:pre;cursor:default}
+.intro__title .lb,.intro__rows .lb{pointer-events:auto}
+.intro__title .lb.is-burst,.intro__row .lb.is-burst{animation:lbBurst 1.5s cubic-bezier(.68,-.55,.265,1.55)}
+@keyframes lbBurst{
+  0%{transform:scale(1) rotate(0);opacity:1}
+  50%{transform:scale(1.3) rotate(180deg);opacity:.9;color:#6cc8ff;text-shadow:0 0 18px rgba(108,200,255,.95),0 0 40px rgba(30,120,230,.7);filter:brightness(1.6)}
+  100%{transform:scale(1) rotate(360deg);opacity:1}
+}
+/* SSCPC signature letters: each is its own path, drawn in order like before */
+.intro__sig .lbp{fill:none;stroke:#f4f1e4;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;pointer-events:all;cursor:default;
+  transform-box:fill-box;transform-origin:center;
+  stroke-dasharray:var(--pl) calc(var(--pl) * 2);
+  stroke-dashoffset:calc(var(--pl) - clamp(0, (var(--siglen) - var(--sigoff)) - var(--ps), var(--pl)))}
+.intro__sig .lbp.is-burst{animation:lbSig 1.5s cubic-bezier(.68,-.55,.265,1.55)}
+@keyframes lbSig{
+  0%{transform:scale(1) rotate(0)}
+  50%{transform:scale(1.3) rotate(180deg);stroke:#6cc8ff;filter:drop-shadow(0 0 10px rgba(108,200,255,.95)) brightness(1.6)}
+  100%{transform:scale(1) rotate(360deg)}
+}
+.intro__sig{pointer-events:none}
+
+/* Hero headline: blue glow + gradient sweep (same blues as vits.lk: #3b82f6 / #06b6d4).
+   A bright blue-to-cyan band slides slowly across the letters while a soft blue glow pulses behind them. */
+.intro__title{background:linear-gradient(100deg,#2f6fe8 0%,#4fb4ff 28%,#a5f3ff 50%,#4fb4ff 72%,#2f6fe8 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:introTitleSweep 7s ease-in-out infinite alternate,introTitleGlow 3.2s ease-in-out infinite}
+@keyframes introTitleSweep{from{background-position:0% 50%}to{background-position:100% 50%}}
+@keyframes introTitleGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(59,130,246,.45)) drop-shadow(0 0 16px rgba(59,130,246,.22))}50%{filter:drop-shadow(0 0 10px rgba(59,130,246,.85)) drop-shadow(0 0 28px rgba(6,182,212,.4))}}
+@media (prefers-reduced-motion:reduce){.intro__title{animation:none;background-position:50% 50%;filter:drop-shadow(0 0 10px rgba(59,130,246,.55))}}
+
+/* Home scroll story: the SSCPC signature and the two scrolling rows get the same blue glow + gradient sweep
+   as the hero headline. The signature's stroke colour sweeps (see the gradient in index.html) and its glow pulses. */
+.intro__sig path{stroke:url(#introSigGrad);stroke-width:7}
+.intro__sig svg{animation:introSigGlow 3.2s ease-in-out infinite}
+@keyframes introSigGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(59,130,246,.5)) drop-shadow(0 0 18px rgba(59,130,246,.25))}50%{filter:drop-shadow(0 0 10px rgba(59,130,246,.9)) drop-shadow(0 0 30px rgba(6,182,212,.45))}}
+.intro__row span,.intro__row--b span{background:repeating-linear-gradient(100deg,#2f6fe8 0,#4fb4ff 220px,#a5f3ff 440px,#4fb4ff 660px,#2f6fe8 880px);background-size:880px 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 8px rgba(59,130,246,.55))}
+.intro__row--a span{animation:introMarqL 22s linear infinite,introRowSweep 7s linear infinite}
+.intro__row--b span{animation:introMarqR 26s linear infinite,introRowSweep 7s linear infinite reverse}
+@keyframes introRowSweep{from{background-position:0 0}to{background-position:880px 0}}
+@media (prefers-reduced-motion:reduce){
+  .intro__sig svg{animation:none;filter:drop-shadow(0 0 10px rgba(59,130,246,.6))}
+  .intro__row--a span,.intro__row--b span{animation:none}
+}
+
+/* Works together with the letter burst (js/letter-burst.js): the blue sweep is painted by background-clip:text,
+   so a spinning letter needs a solid blue fill while it moves, then hands back to the sweep when it settles. */
+.intro__title .lb.is-burst,.intro__row .lb.is-burst{animation:lbBurstBlue 1.5s cubic-bezier(.68,-.55,.265,1.55)}
+@keyframes lbBurstBlue{
+  0%{transform:scale(1) rotate(0);opacity:1;-webkit-text-fill-color:#6fc0ff}
+  50%{transform:scale(1.3) rotate(180deg);opacity:.95;-webkit-text-fill-color:#b6f3ff;text-shadow:0 0 18px rgba(108,200,255,.95),0 0 40px rgba(30,120,230,.7);filter:brightness(1.5)}
+  100%{transform:scale(1) rotate(360deg);opacity:1;-webkit-text-fill-color:#6fc0ff}
+}
+.intro__sig .lbp{stroke:url(#introSigGrad);stroke-width:7}

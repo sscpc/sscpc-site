@@ -1,10 +1,10 @@
-Home hero: last two rounds together (fainter/darker/slower + phone touch and small tap pop-up)
+Home hero: no photo pop-up on phones, plus the blue glow / gradient sweep text (last two rounds combined)
 Copy these files into the repo, keeping the same folders, then commit:
-  js/intro-wall.js   (SPEED 11, BOOST 0.8, touch lens, tap pop-up)
-  css/style.css      (--ws .1, darker shading, touch-action, small pop-up)
+  js/intro-wall.js     (photo pop-up now only on mouse click; on phones and tablets it is off)
+  css/style.css        (blue glow + gradient sweep on the headline, SSCPC signature and the two scrolling rows)
+  index.html           (animated blue gradient inside the signature SVG; loads js/letter-burst.js)
+  js/letter-burst.js   (the letter spin-and-flash effect already in this project folder; skip if your repo has it)
 
-Photos: fainter (--ws .1) and the hero is darker. Rows move slowly (11 px per second).
-Phones: press and drag sideways on the hero and the colour lens follows your finger; vertical drags still scroll.
-Click / tap: the photo under the pointer pops up a small amount (about 20% larger) in its real colours with a
-thin frame, then fades after about 2.5 seconds.
-Tuning: js/intro-wall.js SPEED, BOOST, LENS; css/style.css --ws, and the scale(1.2) numbers in "@keyframes iwPop".
+Phones: pressing and dragging sideways on the hero still moves the colour lens. Tapping no longer pops a photo up.
+Blue text: headline (CAPTURE. CREATE. INSPIRE.), the SSCPC signature and the KEEP FOCUSING / CAPTURE THE BEST rows
+have a blue-to-cyan sweep and a blue glow; hovering or touching a letter still spins and flashes it.

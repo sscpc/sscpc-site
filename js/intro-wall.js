@@ -3,7 +3,7 @@
    - Photos are shuffled on every visit, from the album photos (js/data.js) and the About page photos.
    - Cursor: a "developing lens" follows the pointer and shows the photos in true colour (the dim blue
      wash opens up inside it), and the rows speed up the further the cursor is from the middle of the screen.
-   - Click or tap: the photo under the pointer pops up a little, in its real colours, then fades away.
+   - Click (mouse only, not on touch screens): the photo under the pointer pops up a little, in its real colours, then fades away.
    - Phones: press and drag sideways on the hero and the lens follows your finger (vertical drags still scroll).
    Tuning (all at the top of this file):
      SPEED      pixels per second the rows slide at rest
@@ -148,6 +148,8 @@
 
   /* ---- click / tap: the photo under the pointer pops up in its real colours ---- */
   stage.addEventListener('click', e => {
+    /* no photo pop-up on phones and tablets (touch screens): the colour lens drag is enough there */
+    if (window.matchMedia('(hover: none)').matches || e.pointerType === 'touch') return;
     if (e.target.closest && e.target.closest('a,button')) return;
     if (parseFloat(stage.style.getPropertyValue('--wop')) < 0.3) return;   /* wall has faded out while scrolling */
     const tile = document.elementsFromPoint(e.clientX, e.clientY).find(x => x.classList && x.classList.contains('iw-img'));
