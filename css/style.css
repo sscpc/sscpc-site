@@ -1116,7 +1116,7 @@ html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:vi
    -> lens ring -> hand (z2) -> orb (z3) -> labels and text (z6).
    --ws = how strong the photos are (0.15 faint .. 1 full). The wash and tint are cut open around the
    cursor by the "lens" (--lx --ly --lr are set from JS), so the photos show in true colour there. */
-.intro__stage{--ws:.1;--wop:1;--lx:-999px;--ly:-999px;--lr:1px;--lo:0}
+.intro__stage{--ws:.2;--wop:1;--lx:-999px;--ly:-999px;--lr:1px;--lo:0}
 .intro__photos{position:absolute;inset:0;z-index:1;overflow:hidden;opacity:var(--wop);pointer-events:none}
 .intro__wall{position:absolute;left:50%;top:50%;width:calc(max(100vw,100vh)*1.5);height:calc(max(100vw,100vh)*1.5);transform:translate(-50%,-50%) rotate(-14deg);display:flex;flex-direction:column;justify-content:center;gap:var(--g)}
 .intro__stage{--th:clamp(104px,16vh,180px);--g:10px}
@@ -1127,8 +1127,8 @@ html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:vi
 .intro__dim{background:#02060f;opacity:calc(1 - var(--ws))}
 .intro__duo{background:#0a4aa8;mix-blend-mode:color;opacity:.8}
 .intro__dim,.intro__duo,.intro__shade{-webkit-mask-image:radial-gradient(circle var(--lr) at var(--lx) var(--ly),transparent 0,transparent 38%,#000 100%);mask-image:radial-gradient(circle var(--lr) at var(--lx) var(--ly),transparent 0,transparent 38%,#000 100%)}
-.intro__shade{background:radial-gradient(ellipse at 50% 42%,rgba(3,12,32,.4),rgba(2,6,16,.93) 78%),linear-gradient(180deg,rgba(2,6,16,.55),rgba(2,6,16,0) 30%,rgba(2,6,16,.9))}
-.intro__lens{inset:auto;left:var(--lx);top:var(--ly);width:calc(var(--lr)*1.5);height:calc(var(--lr)*1.5);transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(244,241,228,.38);box-shadow:0 0 28px rgba(108,200,255,.18),inset 0 0 26px rgba(108,200,255,.12);opacity:calc(var(--lo)*var(--wop))}
+.intro__shade{background:radial-gradient(ellipse at 50% 42%,rgba(3,12,32,.3),rgba(2,6,16,.88) 78%),linear-gradient(180deg,rgba(2,6,16,.55),rgba(2,6,16,0) 30%,rgba(2,6,16,.9))}
+.intro__lens{inset:auto;left:var(--lx);top:var(--ly);width:calc(var(--lr)*1.5);height:calc(var(--lr)*1.5);transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(244,241,228,.38);opacity:calc(var(--lo)*var(--wop))}
 @media (max-width:640px){.intro__stage{--th:clamp(96px,13vh,130px);--g:8px}}
 @media (prefers-reduced-motion:reduce){.intro__lens{display:none}}
 
@@ -1147,7 +1147,7 @@ html.on-home.intro-pinned .nav::before{opacity:1}
 .intro__stage{touch-action:pan-y pinch-zoom}
 .iw-img{pointer-events:auto;-webkit-touch-callout:none}
 /* click / tap pop-up: the photo under the pointer lifts out in its real colours (js/intro-wall.js) */
-.iw-pop{position:absolute;z-index:4;pointer-events:none;border:3px solid rgba(244,241,228,.92);border-bottom-width:10px;border-radius:3px;box-shadow:0 12px 28px rgba(0,0,0,.65),0 0 22px rgba(108,200,255,.22);opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(.95);animation:iwPop 2.5s cubic-bezier(.2,.8,.2,1) forwards}
+.iw-pop{position:absolute;z-index:4;pointer-events:none;border:3px solid rgba(244,241,228,.92);border-bottom-width:10px;border-radius:3px;box-shadow:0 12px 28px rgba(0,0,0,.65);opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(.95);animation:iwPop 2.5s cubic-bezier(.2,.8,.2,1) forwards}
 .iw-pop img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
 @keyframes iwPop{0%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(.95)}12%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(1.2)}78%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(1.2)}100%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(1.26)}}
 
@@ -1175,22 +1175,18 @@ html.on-home.intro-pinned .nav::before{opacity:1}
 
 /* Hero headline: blue glow + gradient sweep (same blues as vits.lk: #3b82f6 / #06b6d4).
    A bright blue-to-cyan band slides slowly across the letters while a soft blue glow pulses behind them. */
-.intro__title{background:linear-gradient(100deg,#2f6fe8 0%,#4fb4ff 28%,#a5f3ff 50%,#4fb4ff 72%,#2f6fe8 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:introTitleSweep 7s ease-in-out infinite alternate,introTitleGlow 3.2s ease-in-out infinite}
+.intro__title{background:linear-gradient(100deg,#2f6fe8 0%,#4fb4ff 28%,#a5f3ff 50%,#4fb4ff 72%,#2f6fe8 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:introTitleSweep 7s ease-in-out infinite alternate}
 @keyframes introTitleSweep{from{background-position:0% 50%}to{background-position:100% 50%}}
-@keyframes introTitleGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(59,130,246,.45)) drop-shadow(0 0 16px rgba(59,130,246,.22))}50%{filter:drop-shadow(0 0 10px rgba(59,130,246,.85)) drop-shadow(0 0 28px rgba(6,182,212,.4))}}
-@media (prefers-reduced-motion:reduce){.intro__title{animation:none;background-position:50% 50%;filter:drop-shadow(0 0 10px rgba(59,130,246,.55))}}
+@media (prefers-reduced-motion:reduce){.intro__title{animation:none;background-position:50% 50%}}
 
 /* Home scroll story: the SSCPC signature and the two scrolling rows get the same blue glow + gradient sweep
    as the hero headline. The signature's stroke colour sweeps (see the gradient in index.html) and its glow pulses. */
 .intro__sig path{stroke:url(#introSigGrad);stroke-width:7}
-.intro__sig svg{animation:introSigGlow 3.2s ease-in-out infinite}
-@keyframes introSigGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(59,130,246,.5)) drop-shadow(0 0 18px rgba(59,130,246,.25))}50%{filter:drop-shadow(0 0 10px rgba(59,130,246,.9)) drop-shadow(0 0 30px rgba(6,182,212,.45))}}
-.intro__row span,.intro__row--b span{background:repeating-linear-gradient(100deg,#2f6fe8 0,#4fb4ff 220px,#a5f3ff 440px,#4fb4ff 660px,#2f6fe8 880px);background-size:880px 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 8px rgba(59,130,246,.55))}
+.intro__row span,.intro__row--b span{background:repeating-linear-gradient(100deg,#2f6fe8 0,#4fb4ff 220px,#a5f3ff 440px,#4fb4ff 660px,#2f6fe8 880px);background-size:880px 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;}
 .intro__row--a span{animation:introMarqL 22s linear infinite,introRowSweep 7s linear infinite}
 .intro__row--b span{animation:introMarqR 26s linear infinite,introRowSweep 7s linear infinite reverse}
 @keyframes introRowSweep{from{background-position:0 0}to{background-position:880px 0}}
 @media (prefers-reduced-motion:reduce){
-  .intro__sig svg{animation:none;filter:drop-shadow(0 0 10px rgba(59,130,246,.6))}
   .intro__row--a span,.intro__row--b span{animation:none}
 }
 
@@ -1199,7 +1195,21 @@ html.on-home.intro-pinned .nav::before{opacity:1}
 .intro__title .lb.is-burst,.intro__row .lb.is-burst{animation:lbBurstBlue 1.5s cubic-bezier(.68,-.55,.265,1.55)}
 @keyframes lbBurstBlue{
   0%{transform:scale(1) rotate(0);opacity:1;-webkit-text-fill-color:#6fc0ff}
-  50%{transform:scale(1.3) rotate(180deg);opacity:.95;-webkit-text-fill-color:#b6f3ff;text-shadow:0 0 18px rgba(108,200,255,.95),0 0 40px rgba(30,120,230,.7);filter:brightness(1.5)}
+  50%{transform:scale(1.3) rotate(180deg);opacity:.95;-webkit-text-fill-color:#b6f3ff}
   100%{transform:scale(1) rotate(360deg);opacity:1;-webkit-text-fill-color:#6fc0ff}
 }
 .intro__sig .lbp{stroke:url(#introSigGrad);stroke-width:7}
+
+/* No glow on the letter burst or the signature: the letters just spin, swell and turn bright blue. */
+.intro__sig .lbp.is-burst{animation:lbSigPlain 1.5s cubic-bezier(.68,-.55,.265,1.55)}
+@keyframes lbSigPlain{
+  0%{transform:scale(1) rotate(0)}
+  50%{transform:scale(1.3) rotate(180deg);stroke:#8fd8ff}
+  100%{transform:scale(1) rotate(360deg)}
+}
+
+/* Home hero: no blue glow halo around the orb or the top-bar logo. */
+.intro__logo{filter:blur(var(--lbl,0px))}
+.intro__logo::before{display:none}
+html.on-home .brand-ico::before{display:none}
+html.on-home .brand-ico{animation:none;filter:none}
