@@ -1,15 +1,10 @@
-Home hero + gallery covers
-Copy these three files into the repo (same folders), then commit:
-  css/style.css       (rules added at the bottom)
-  index.html          (slow-connection fix, item 4)
-  js/letter-burst.js  (adds the bubble to the SSCPC signature letters)
+Home hero + gallery covers + slow-connection fix
+Copy these two files into the repo (same folders), then commit:
+  css/style.css   (rules added at the bottom)
+  index.html      (slow-connection fix)
+(js/letter-burst.js is NOT needed: if you copied the bubble version earlier, restore the original from git.)
 
-1. Letters (headline, SSCPC, KEEP FOCUSING, CAPTURE THE BEST): spin removed. On hover/touch a small glass water-drop bubble forms over the letter, the letter swells a little and turns pale ice-blue, then both settle (1.6s).
-   Tuning in css/style.css: ".95em" bubble size, "1.08" swell, 1.6s timing, @keyframes lbDropBubble / lbDropLetter / lbDropSig.
+1. Letters (headline, SSCPC, KEEP FOCUSING, CAPTURE THE BEST): spin on hover removed. No other effect.
 2. Intro wall: colour lens removed; photos slightly lighter (--ws .2 -> .26, ".intro__shade" .3/.88 -> .22/.8).
-3. Gallery album covers: frame and "ALBUM 01" label removed.
-
-4. Slow-connection fix (index.html): the page no longer waits for outside servers.
-   - Google Fonts stylesheet now loads in the background (before, a slow/blocked fonts.googleapis.com froze the whole page on a blank screen).
-   - The jsPDF script from cdnjs is now "async" (before, it was a blocking script, and every script after it - page routing, intro wall, letters, chatbot, music - waited for it; if it was slow or failed, the site did not start).
-   Copy index.html into the repo root too.
+3. Gallery album covers: cut-corner frame kept; only the "ALBUM 01" label removed.
+4. index.html: Google Fonts loads in the background and the jsPDF script is async, so a slow connection no longer holds up the page.
