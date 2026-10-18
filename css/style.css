@@ -1229,3 +1229,9 @@ html.on-home .brand-ico{animation:none;filter:none}
 
 /* 3. Gallery covers: the cut-corner frame stays; only the "ALBUM 01" label is removed. */
 .album .tag{display:none}
+
+/* Album cards: the caption under the cover (event name, date, premises, photo count, "Open album") is now visible.
+   A general ".cap" rule (the photo-viewer caption, line ~534) was sliding it out of the card; this switches that off for album cards. */
+.album .cap{transform:none;transition:none;max-height:none;overflow:visible;box-shadow:none;left:auto;right:auto;bottom:auto}
+.album .meta{display:block;margin-top:.35rem;color:#cfd6ee;font-size:.74rem;line-height:1.45;letter-spacing:.03em}
+.album .meta span{display:block}

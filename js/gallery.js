@@ -25,10 +25,11 @@
     const w=document.createElement('div');w.className='aw';
     const b=document.createElement('button');b.type='button';b.className='album';
     const c=a.photos.length;
-    b.innerHTML='<span class="inner"><span class="tag"></span><img alt=""><span class="holo"></span><span class="cap"><b></b><small></small><em>Open album</em></span></span>';
+    b.innerHTML='<span class="inner"><span class="tag"></span><img alt=""><span class="holo"></span><span class="cap"><b></b><span class="meta"></span><small></small><em>Open album</em></span></span>';
     b.querySelector('.tag').textContent='ALBUM '+String(i+1).padStart(2,'0');
     b.querySelector('img').src=a.cover||a.photos[0];
     b.querySelector('b').textContent=a.name;lang(b.querySelector('b'),a.name);
+    {const m=b.querySelector('.meta'),inf=a.info||{};[inf.date,(inf.venue||'').replace(/\.$/,'')].filter(Boolean).forEach(t=>{const l=document.createElement('span');l.textContent=t;lang(l,t);m.append(l)});if(!m.firstChild)m.remove()}
     b.querySelector('small').textContent=String(c).padStart(2,'0')+(c===1?' photo':' photos');
     b.setAttribute('aria-label','Open album '+a.name);
     b.onclick=()=>openAlbum(i);w.append(b);grid.append(w);tilt(w,b);items.push({a,w});
