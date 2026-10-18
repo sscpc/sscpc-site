@@ -1,12 +1,12 @@
 Home hero + gallery covers + slow-connection fix
-Copy these three files into the repo (same folders), then commit:
+Copy these four files into the repo (same folders), then commit:
   css/style.css
   js/gallery.js
+  js/letter-burst.js   (the ORIGINAL file: it replaces the bubble version, which left circles behind the SSCPC letters)
   index.html
-(js/letter-burst.js is NOT needed: if you copied the bubble version earlier, restore the original from git.)
 
 1. Letters (headline, SSCPC, KEEP FOCUSING, CAPTURE THE BEST): spin on hover removed. No other effect.
 2. Intro wall: colour lens removed; photos slightly lighter (--ws .2 -> .26, ".intro__shade" .3/.88 -> .22/.8).
-3. Gallery album cards: cut-corner frame kept; "ALBUM 01" label removed. The caption under the cover was hidden by a general ".cap" rule; it now shows:
-   event name / date / premises (from js/data.js info) / photo count / "Open album". Albums without info show name + count only.
-4. index.html: Google Fonts loads in the background and the jsPDF script is async, so a slow connection no longer holds up the page.
+3. Gallery album cards: cut-corner frame kept; "ALBUM 01" label removed; caption now visible (event name / date / premises / photo count / "Open album").
+4. SSCPC signature: all five letters now draw in together instead of one after another (css/style.css, last rule).
+5. index.html: Google Fonts loads in the background and the jsPDF script is async, so a slow connection no longer holds up the page.

@@ -1,4 +1,5 @@
-/* "Letter burst" text effect (the one on vits.lk): a letter swells and a glass-drop bubble forms over it (see css/style.css "lbDropBubble"), then settles back.
+/* "Letter burst" text effect (the one on vits.lk): a letter spins a full turn, swells, and flashes
+   bright blue for 1.5 seconds, then settles back.
    Where it runs on the home hero:
      - the headline "CAPTURE. CREATE. INSPIRE."  (hover or touch a letter; plus one wave when the page opens)
      - the big SSCPC signature that draws in while you scroll  (hover or touch a letter)
@@ -81,27 +82,9 @@
   }
 
   /* ---- 3. trigger: hover or touch a letter ---- */
-  /* SVG letters can't have a ::after, so a glass-drop circle is drawn over the letter instead */
-  function sigBubble(el) {
-    try {
-      const svg = el.ownerSVGElement, g = el.parentNode, NS = 'http://www.w3.org/2000/svg';
-      if (!svg.querySelector('#lbBubGrad')) {
-        const defs = svg.querySelector('defs') || svg.insertBefore(document.createElementNS(NS, 'defs'), svg.firstChild);
-        defs.insertAdjacentHTML('beforeend', '<radialGradient id="lbBubGrad" cx=".5" cy=".5" r=".5" fx=".3" fy=".74"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset=".08" stop-color="#fff" stop-opacity=".6"/><stop offset=".2" stop-color="#9bd6ff" stop-opacity=".1"/><stop offset="1" stop-color="#46a0eb" stop-opacity=".3"/></radialGradient>');
-      }
-      const b = el.getBBox(), c = document.createElementNS(NS, 'circle');
-      c.setAttribute('cx', b.x + b.width / 2); c.setAttribute('cy', b.y + b.height / 2);
-      c.setAttribute('r', Math.max(b.width, b.height) * 0.55);
-      c.setAttribute('fill', 'url(#lbBubGrad)'); c.setAttribute('stroke', 'rgba(205,240,255,.55)'); c.setAttribute('stroke-width', '5');
-      c.setAttribute('class', 'lbb');
-      c.addEventListener('animationend', () => c.remove(), { once: true });
-      g.appendChild(c);
-    } catch (e) { /* no bubble if unsupported */ }
-  }
   function burst(el) {
     if (!el || el.classList.contains('is-burst')) return;
     el.classList.add('is-burst');
-    if (el.classList.contains('lbp')) sigBubble(el);
     el.addEventListener('animationend', () => el.classList.remove('is-burst'), { once: true });
   }
   const letterAt = e => e.target && e.target.closest ? e.target.closest('.lb') : null;

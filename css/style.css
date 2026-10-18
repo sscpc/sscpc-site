@@ -1235,3 +1235,11 @@ html.on-home .brand-ico{animation:none;filter:none}
 .album .cap{transform:none;transition:none;max-height:none;overflow:visible;box-shadow:none;left:auto;right:auto;bottom:auto}
 .album .meta{display:block;margin-top:.35rem;color:#cfd6ee;font-size:.74rem;line-height:1.45;letter-spacing:.03em}
 .album .meta span{display:block}
+
+/* Safety: the old bubble circles drawn over the SSCPC letters by an earlier js/letter-burst.js are never shown. */
+.intro__sig .lbb{display:none!important}
+
+/* SSCPC signature: all five letters draw in together (before, they drew one after another, S > S > C > P > C).
+   Each letter path (".lbp", made by js/letter-burst.js) now uses the same progress: its dash offset is its own length
+   times (remaining / total), so every letter reaches "fully drawn" at the same moment while you scroll. */
+.intro__sig .lbp{stroke-dashoffset:calc(var(--pl) * var(--sigoff) / var(--siglen))}
