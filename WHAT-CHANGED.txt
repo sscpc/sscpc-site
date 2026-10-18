@@ -1,7 +1,10 @@
-Home hero: top bar is a clean gradient again (no line under it)
+Home hero: last two rounds together (fainter/darker/slower + phone touch and small tap pop-up)
 Copy these files into the repo, keeping the same folders, then commit:
-  js/intro.js      (new lines: re-checks the hero state the moment the router marks the page as Home)
-  css/style.css    (the black top-bar gradient and darker hero from the last update)
-Cause of the line: on first load the page could still be in its "scrolled past the hero" look (grey
-line under the bar, countdown badge showing) until the first scroll or mouse move. It now starts in the
-correct hero look immediately.
+  js/intro-wall.js   (SPEED 11, BOOST 0.8, touch lens, tap pop-up)
+  css/style.css      (--ws .1, darker shading, touch-action, small pop-up)
+
+Photos: fainter (--ws .1) and the hero is darker. Rows move slowly (11 px per second).
+Phones: press and drag sideways on the hero and the colour lens follows your finger; vertical drags still scroll.
+Click / tap: the photo under the pointer pops up a small amount (about 20% larger) in its real colours with a
+thin frame, then fades after about 2.5 seconds.
+Tuning: js/intro-wall.js SPEED, BOOST, LENS; css/style.css --ws, and the scale(1.2) numbers in "@keyframes iwPop".

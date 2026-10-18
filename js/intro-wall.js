@@ -3,6 +3,8 @@
    - Photos are shuffled on every visit, from the album photos (js/data.js) and the About page photos.
    - Cursor: a "developing lens" follows the pointer and shows the photos in true colour (the dim blue
      wash opens up inside it), and the rows speed up the further the cursor is from the middle of the screen.
+   - Click or tap: the photo under the pointer pops up a little, in its real colours, then fades away.
+   - Phones: press and drag sideways on the hero and the lens follows your finger (vertical drags still scroll).
    Tuning (all at the top of this file):
      SPEED      pixels per second the rows slide at rest
      BOOST      extra speed when the cursor is at the far left or right (1 = doubles the speed)
@@ -14,10 +16,10 @@
   const stage = document.getElementById('introStage');
   if (!wall || !stage) return;
 
-  const SPEED = 24;
-  const BOOST = 1.6;
+  const SPEED = 11;
+  const BOOST = 0.8;
   const small = window.matchMedia('(max-width:640px)').matches;
-  const LENS = small ? 80 : 130;
+  const LENS = small ? 95 : 130;
   const WANT_ALBUM = 26;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -89,6 +91,7 @@
         order.forEach(pk => {
           const im = new Image();
           im.alt = ''; im.decoding = 'async'; im.draggable = false; im.className = 'iw-img';
+          if (pk.full) im.dataset.full = pk.full;
           im.onload = () => im.classList.add('is-in');
           im.onerror = () => { if (pk.full && im.src.indexOf(pk.full) === -1) im.src = pk.full; else im.style.visibility = 'hidden'; };
           im.src = pk.src;
@@ -121,7 +124,10 @@
   let inside = false;
   const root = document.documentElement;
 
+  let lt = 0;
+  const close = () => { inside = false; tr = 0; };
   function point(e) {
+    clearTimeout(lt);
     const b = stage.getBoundingClientRect();
     tx = e.clientX - b.left; ty = e.clientY - b.top;
     mx = Math.min(1, Math.max(0, tx / b.width));
@@ -130,10 +136,35 @@
   }
   stage.addEventListener('pointerdown', point, { passive: true });
   stage.addEventListener('pointermove', point, { passive: true });
-  function leave(e) { if (e.type === 'pointerup' && e.pointerType === 'mouse') return; inside = false; tr = 0; }
+  function leave(e) {
+    if (e.type === 'pointerup' && e.pointerType === 'mouse') return;
+    if (e.pointerType === 'mouse') { close(); return; }
+    /* finger: let the lens linger a moment after lifting so a tap is seen */
+    clearTimeout(lt); lt = setTimeout(close, e.type === 'pointerup' ? 650 : 0);
+  }
   stage.addEventListener('pointerleave', leave, { passive: true });
   stage.addEventListener('pointerup', leave, { passive: true });
   stage.addEventListener('pointercancel', leave, { passive: true });
+
+  /* ---- click / tap: the photo under the pointer pops up in its real colours ---- */
+  stage.addEventListener('click', e => {
+    if (e.target.closest && e.target.closest('a,button')) return;
+    if (parseFloat(stage.style.getPropertyValue('--wop')) < 0.3) return;   /* wall has faded out while scrolling */
+    const tile = document.elementsFromPoint(e.clientX, e.clientY).find(x => x.classList && x.classList.contains('iw-img'));
+    if (!tile || !tile.naturalWidth) return;
+    const sb = stage.getBoundingClientRect(), tb = tile.getBoundingClientRect();
+    stage.querySelectorAll('.iw-pop').forEach(n => n.remove());
+    const pop = document.createElement('div');
+    pop.className = 'iw-pop';
+    pop.style.cssText = 'left:' + (tb.left + tb.width / 2 - sb.left).toFixed(1) + 'px;top:' + (tb.top + tb.height / 2 - sb.top).toFixed(1) + 'px;width:' + tile.offsetWidth + 'px';
+    const im = new Image(); im.alt = ''; im.draggable = false; im.src = tile.currentSrc || tile.src;
+    pop.appendChild(im);
+    stage.appendChild(pop);
+    /* swap in the full-size photo once it has loaded, so the pop-up is sharp */
+    const full = tile.dataset.full;
+    if (full && im.src.indexOf(full) === -1) { const hi = new Image(); hi.onload = () => { if (pop.isConnected) im.src = hi.src; }; hi.src = full; }
+    setTimeout(() => pop.remove(), 2500);
+  });
 
   let last = 0;
   function tick(t) {

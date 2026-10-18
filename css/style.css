@@ -1116,7 +1116,7 @@ html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:vi
    -> lens ring -> hand (z2) -> orb (z3) -> labels and text (z6).
    --ws = how strong the photos are (0.15 faint .. 1 full). The wash and tint are cut open around the
    cursor by the "lens" (--lx --ly --lr are set from JS), so the photos show in true colour there. */
-.intro__stage{--ws:.15;--wop:1;--lx:-999px;--ly:-999px;--lr:1px;--lo:0}
+.intro__stage{--ws:.1;--wop:1;--lx:-999px;--ly:-999px;--lr:1px;--lo:0}
 .intro__photos{position:absolute;inset:0;z-index:1;overflow:hidden;opacity:var(--wop);pointer-events:none}
 .intro__wall{position:absolute;left:50%;top:50%;width:calc(max(100vw,100vh)*1.5);height:calc(max(100vw,100vh)*1.5);transform:translate(-50%,-50%) rotate(-14deg);display:flex;flex-direction:column;justify-content:center;gap:var(--g)}
 .intro__stage{--th:clamp(104px,16vh,180px);--g:10px}
@@ -1127,10 +1127,9 @@ html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:vi
 .intro__dim{background:#02060f;opacity:calc(1 - var(--ws))}
 .intro__duo{background:#0a4aa8;mix-blend-mode:color;opacity:.8}
 .intro__dim,.intro__duo,.intro__shade{-webkit-mask-image:radial-gradient(circle var(--lr) at var(--lx) var(--ly),transparent 0,transparent 38%,#000 100%);mask-image:radial-gradient(circle var(--lr) at var(--lx) var(--ly),transparent 0,transparent 38%,#000 100%)}
-.intro__shade{background:radial-gradient(ellipse at 50% 42%,rgba(3,12,32,.28),rgba(2,6,16,.88) 78%),linear-gradient(180deg,rgba(2,6,16,.55),rgba(2,6,16,0) 30%,rgba(2,6,16,.9))}
+.intro__shade{background:radial-gradient(ellipse at 50% 42%,rgba(3,12,32,.4),rgba(2,6,16,.93) 78%),linear-gradient(180deg,rgba(2,6,16,.55),rgba(2,6,16,0) 30%,rgba(2,6,16,.9))}
 .intro__lens{inset:auto;left:var(--lx);top:var(--ly);width:calc(var(--lr)*1.5);height:calc(var(--lr)*1.5);transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(244,241,228,.38);box-shadow:0 0 28px rgba(108,200,255,.18),inset 0 0 26px rgba(108,200,255,.12);opacity:calc(var(--lo)*var(--wop))}
 @media (max-width:640px){.intro__stage{--th:clamp(96px,13vh,130px);--g:8px}}
-@media (hover:none){.intro__lens{display:none}}
 @media (prefers-reduced-motion:reduce){.intro__lens{display:none}}
 
 /* Hero labels around the orb (SINCE 1945 / KEEP FOCUSING / CAPTURE THE BEST): bold white text with a soft
@@ -1143,3 +1142,11 @@ html.alb-open.alb-photos:has(#gallery.active) .album-nav{opacity:1;visibility:vi
    Only while the pinned intro is showing; afterwards the bar uses its normal background. */
 .nav::before{content:"";position:absolute;z-index:-1;left:0;right:0;top:0;height:8.5rem;pointer-events:none;opacity:0;transition:opacity .35s ease;background:linear-gradient(180deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.78) 32%,rgba(0,0,0,.4) 66%,rgba(0,0,0,0) 100%)}
 html.on-home.intro-pinned .nav::before{opacity:1}
+
+/* Phones: horizontal drags on the hero move the colour lens, vertical drags still scroll the page. */
+.intro__stage{touch-action:pan-y pinch-zoom}
+.iw-img{pointer-events:auto;-webkit-touch-callout:none}
+/* click / tap pop-up: the photo under the pointer lifts out in its real colours (js/intro-wall.js) */
+.iw-pop{position:absolute;z-index:4;pointer-events:none;border:3px solid rgba(244,241,228,.92);border-bottom-width:10px;border-radius:3px;box-shadow:0 12px 28px rgba(0,0,0,.65),0 0 22px rgba(108,200,255,.22);opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(.95);animation:iwPop 2.5s cubic-bezier(.2,.8,.2,1) forwards}
+.iw-pop img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+@keyframes iwPop{0%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(.95)}12%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(1.2)}78%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(1.2)}100%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(1.26)}}
