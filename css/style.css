@@ -1213,3 +1213,40 @@ html.on-home.intro-pinned .nav::before{opacity:1}
 .intro__logo::before{display:none}
 html.on-home .brand-ico::before{display:none}
 html.on-home .brand-ico{animation:none;filter:none}
+
+/* ===== Update: bubble letters, no colour lens, lighter wall, plain gallery covers ===== */
+
+/* 1. Letters no longer spin: they pop like a small bubble (swell, squish, settle) with a thin ring that fades out. */
+.intro__title .lb,.intro__row .lb{position:relative}
+.intro__title .lb.is-burst,.intro__row .lb.is-burst{animation:lbBubble .85s cubic-bezier(.34,1.56,.64,1)}
+@keyframes lbBubble{
+  0%{transform:translateY(0) scale(1)}
+  30%{transform:translateY(-.12em) scale(1.28,1.18)}
+  55%{transform:translateY(-.04em) scale(.94,1.05)}
+  80%{transform:translateY(0) scale(1.06)}
+  100%{transform:translateY(0) scale(1)}
+}
+.intro__title .lb.is-burst::after,.intro__row .lb.is-burst::after{
+  content:"";position:absolute;left:50%;top:50%;width:1.1em;height:1.1em;margin:-.55em 0 0 -.55em;border-radius:50%;
+  border:2px solid rgba(165,243,255,.85);pointer-events:none;opacity:0;animation:lbRing .85s ease-out}
+@keyframes lbRing{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(1.6)}}
+.intro__sig .lbp.is-burst{animation:lbSigBubble .85s cubic-bezier(.34,1.56,.64,1)}
+@keyframes lbSigBubble{
+  0%{transform:scale(1)}
+  30%{transform:scale(1.18,1.12)}
+  55%{transform:scale(.97,1.02)}
+  80%{transform:scale(1.04)}
+  100%{transform:scale(1)}
+}
+
+/* 2. Intro wall: the cursor no longer opens a true-colour lens (the wash/tint/shade stay put and the ring is hidden),
+   and the photos are a touch lighter: --ws .2 -> .26, shade .3/.88 -> .22/.8. */
+.intro__stage{--ws:.26}
+.intro__dim,.intro__duo,.intro__shade{-webkit-mask-image:none;mask-image:none}
+.intro__lens{display:none}
+.intro__shade{background:radial-gradient(ellipse at 50% 42%,rgba(3,12,32,.22),rgba(2,6,16,.8) 78%),linear-gradient(180deg,rgba(2,6,16,.5),rgba(2,6,16,0) 30%,rgba(2,6,16,.84))}
+
+/* 3. Gallery covers: no frame/cage and no "ALBUM 01" label. */
+.album{padding:0;background:none;clip-path:none}
+.album .inner{clip-path:none}
+.album .tag{display:none}
