@@ -1,12 +1,7 @@
-Home hero + gallery covers + slow-connection fix
-Copy these four files into the repo (same folders), then commit:
-  css/style.css
-  js/gallery.js
-  js/letter-burst.js   (the ORIGINAL file: it replaces the bubble version, which left circles behind the SSCPC letters)
-  index.html
-
-1. Letters (headline, SSCPC, KEEP FOCUSING, CAPTURE THE BEST): spin on hover removed. No other effect.
-2. Intro wall: colour lens removed; photos slightly lighter (--ws .2 -> .26, ".intro__shade" .3/.88 -> .22/.8).
-3. Gallery album cards: cut-corner frame kept; "ALBUM 01" label removed; caption now visible (event name / date / premises / photo count / "Open album").
-4. SSCPC signature: all five letters now draw in together instead of one after another (css/style.css, last rule).
-5. index.html: Google Fonts loads in the background and the jsPDF script is async, so a slow connection no longer holds up the page.
+SECURITY ROUND (pre-launch)
+Changed files:  api/chat.js, tools/google-sheet-script.gs, vercel.json
+Deleted (stale copies): sscpc-update/, sscpc-update (1)/, sscpc-tab-sweep-update/, sscpc-join-language-popup (1)/, data (1).js, css/style (1).css
+ - api/chat.js: hard-coded API keys removed (use Vercel Environment Variables); chat API now rejects requests from other websites.
+ - google-sheet-script.gs: lock-out after 8 wrong tries. You MUST paste the script into Apps Script and deploy a New version.
+ - vercel.json: security headers added.
+GitHub: delete the stale folders in the repo too (zips cannot delete files).
