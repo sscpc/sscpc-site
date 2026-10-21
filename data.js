@@ -1167,7 +1167,7 @@ const FORMS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyAHz3S7XpEbTAfY
    the "PDF options" panel overrides these defaults on their device. */
 const PDF_CONFIG = {
   siteUrl: "https://sscpc.vercel.app",
-  siteLabel: "sscpc.vercel.app",
+  siteLabel: "ssckphotography.com",
   email: "sylvestrian.photography@gmail.com",
   clubName: "St. Sylvester's College Photography Club",
   shortName: "SSCPC",

@@ -1,7 +1,2 @@
-SECURITY ROUND (pre-launch)
-Changed files:  api/chat.js, tools/google-sheet-script.gs, vercel.json
-Deleted (stale copies): sscpc-update/, sscpc-update (1)/, sscpc-tab-sweep-update/, sscpc-join-language-popup (1)/, data (1).js, css/style (1).css
- - api/chat.js: hard-coded API keys removed (use Vercel Environment Variables); chat API now rejects requests from other websites.
- - google-sheet-script.gs: lock-out after 8 wrong tries. You MUST paste the script into Apps Script and deploy a New version.
- - vercel.json: security headers added.
-GitHub: delete the stale folders in the repo too (zips cannot delete files).
+PDF footer text changed: sscpc.vercel.app -> ssckphotography.com (siteLabel only; the QR code and links still point to sscpc.vercel.app).
+Changed files: js/data.js, data.js, js/pdf/core.js, pdf/core.js

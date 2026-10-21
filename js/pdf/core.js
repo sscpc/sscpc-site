@@ -14,7 +14,7 @@
 
   /* ---------- config (defaults, overridden by PDF_CONFIG in js/data.js) ---------- */
   const BASE = {
-    siteUrl: 'https://sscpc.vercel.app', siteLabel: 'sscpc.vercel.app',
+    siteUrl: 'https://sscpc.vercel.app', siteLabel: 'ssckphotography.com',
     email: 'sylvestrian.photography@gmail.com',
     clubName: "St. Sylvester's College Photography Club", shortName: 'SSCPC',
     footerText: '', logo: 'images/pdf-logo.png',
