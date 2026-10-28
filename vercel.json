@@ -74,5 +74,6 @@
       "destination": "/tools/album-builder.html",
       "permanent": false
     }
-  ]
+  ],
+  "ignoreCommand": "git log -1 --pretty=%B | grep -q 'photos batch' && exit 0 || exit 1"
 }

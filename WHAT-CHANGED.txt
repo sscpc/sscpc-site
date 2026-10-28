@@ -1,2 +1,5 @@
-PDF footer text changed: sscpc.vercel.app -> ssckphotography.com (siteLabel only; the QR code and links still point to sscpc.vercel.app).
-Changed files: js/data.js, data.js, js/pdf/core.js, pdf/core.js
+BIG ALBUMS (800+ photos)
+Changed files: tools/album-builder.html, js/gallery-tools.js, vercel.json
+ - Album builder: handles 800+ photos smoothly (preview grid no longer freezes), shows a size warning before publishing (about 0.26 MB per photo; GitHub recommends < 1000 MB), retries on network hiccups, and if publishing stops half-way you can press Publish again and it carries on without re-uploading finished photos.
+ - Photo uploads are sent as "photos batch" commits. vercel.json tells Vercel NOT to rebuild for those, so only the final commit (which adds the album to js/data.js) triggers one deploy.
+ - Gallery: "Download album (ZIP)" for big albums is saved as several ZIP files of 150 photos each, so phones do not run out of memory.
