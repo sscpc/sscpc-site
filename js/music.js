@@ -1,4 +1,4 @@
-/* SSCPC background music player: plays audio/track-1..5 one after another, forever (5 -> 1).
+/* SSCPC background music player: plays audio/background.mp3 on a loop (add more entries to TRACKS to make a playlist; Previous/Next appear automatically).
    Bottom-right. Round button = music icon. Hover (or keyboard focus / a tap on touch screens) slides out
    three controls: Previous, Play/Pause, Next. No progress line.
    Previous: one click restarts the current song, a quick double click goes to the previous song.
@@ -6,11 +6,7 @@
    switched it off earlier (remembered on their device). */
 (function(){
   var TRACKS=[
-    {src:'audio/track-1.mp3',title:'Slow Building Movement',artist:'BTVN Labs'},
-    {src:'audio/track-2.mp3',title:'Cinematic Night Journey',artist:'BTVN Labs'},
-    {src:'audio/track-3.mp3',title:'Quiet Space',artist:'BTVN Labs'},
-    {src:'audio/track-4.mp3',title:'Noctlonging',artist:'BTVN Labs'},
-    {src:'audio/track-5.mp3',title:'静谧的呼吸',artist:'BTVN Labs'}
+    {src:'audio/background.mp3',title:'apathy',artist:'øneheart'}
   ];
   var KEY='sscpc-music', VOL=.5, FADE=800, DBL=450, TOUCH_OPEN_MS=5000;
   var a=new Audio(), idx=0, wanted=true, resume=false, errs=0, fadeT=null, armed=false, lastPrev=0, closeT=null;
@@ -41,7 +37,9 @@
       '<path class="mus-off" d="M4 20 20 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>'+
     '</button>';
   document.body.appendChild(w);
-  var b=w.querySelector('#music-btn'), bPrev=w.querySelector('.mus-prev'), bPP=w.querySelector('.mus-pp'), bNext=w.querySelector('.mus-next');
+  if(TRACKS.length<2){ w.querySelector('.mus-prev').remove(); w.querySelector('.mus-next').remove(); }   /* one song: only play/pause */
+  var b=w.querySelector('#music-btn'), bPrev=w.querySelector('.mus-prev')||document.createElement('i'), bPP=w.querySelector('.mus-pp'), bNext=w.querySelector('.mus-next')||document.createElement('i');
+  if(TRACKS.length<2) a.loop=true;
 
   function ui(){
     var on=!a.paused;

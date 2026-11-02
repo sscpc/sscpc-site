@@ -237,7 +237,7 @@ H7) NAMES LINKED TO THE COMMITTEE
 
 H8) LINK PREVIEW, VISITOR COUNTER, THANK-YOU EMAILS
    - Link preview: index.html has title, description and picture tags that use
-     https://sscpc.vercel.app/ and images/og-image.jpg. If the web address changes
+     https://ssckphotography.com/ and images/og-image.jpg. If the web address changes
      (for example a new domain), replace that address in the og: and twitter: lines
      near the top of index.html. WhatsApp and Facebook keep old previews for a while.
    - Visitor counter: in Vercel open the project > Analytics tab > Enable. Then
@@ -304,9 +304,9 @@ the change. Everything needed is in this folder.
 
 BACKGROUND MUSIC
 ----------------
-audio/track-1..5.mp3 play one after another and loop (js/music.js). The round music button is
-at the bottom-right. Hover over it (or tap it on a phone) and three icons slide out: Previous,
-Play/Pause and Next. Previous: one click restarts the current song, a quick double click goes
+audio/background.mp3 plays on a loop (js/music.js). The round music button is
+at the bottom-right. Hover over it (or tap it on a phone) and the Play/Pause icon slides out (with one song there is no Previous or Next;
+with several songs they appear. Previous: one click restarts the current song, a quick double click goes
 to the previous song. Browsers block autoplay, so music starts on the visitor's first
 tap/click; if they switch it off, it stays off on their device. To change the order or titles,
 edit the TRACKS list at the top of js/music.js. Replace a track by overwriting its mp3.
