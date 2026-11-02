@@ -1,4 +1,6 @@
-BACKGROUND MUSIC
-Changed: js/music.js, README.txt. New: audio/background.mp3 (oneheart - apathy, loops).
-DELETE from GitHub: audio/track-1.mp3 ... audio/track-5.mp3 (zips cannot delete files).
-With one song the player shows only Play/Pause.
+BACKGROUND MUSIC PLAYLIST
+Changed: js/music.js, README.txt.
+New: audio/apathy.mp3, audio/felt-echoes.mp3, audio/rainy-night-pads.mp3, audio/weightless-drift.mp3
+Order: apathy -> Felt Echoes -> Rainy Night Pads -> Weightless Drift -> (repeats)
+DELETE from GitHub (zips cannot delete files): audio/background.mp3 and audio/track-1.mp3 ... audio/track-5.mp3 (if still there).
+With several songs the player shows Previous, Play/Pause and Next.

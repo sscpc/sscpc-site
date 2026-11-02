@@ -1,4 +1,4 @@
-/* SSCPC background music player: plays audio/background.mp3 on a loop (add more entries to TRACKS to make a playlist; Previous/Next appear automatically).
+/* SSCPC background music player: plays the playlist in TRACKS in order, then starts again from the first song (Previous/Next appear automatically).
    Bottom-right. Round button = music icon. Hover (or keyboard focus / a tap on touch screens) slides out
    three controls: Previous, Play/Pause, Next. No progress line.
    Previous: one click restarts the current song, a quick double click goes to the previous song.
@@ -6,7 +6,10 @@
    switched it off earlier (remembered on their device). */
 (function(){
   var TRACKS=[
-    {src:'audio/background.mp3',title:'apathy',artist:'øneheart'}
+    {src:'audio/apathy.mp3',title:'apathy',artist:'øneheart'},
+    {src:'audio/felt-echoes.mp3',title:'Felt Echoes',artist:'BTVN Labs'},
+    {src:'audio/rainy-night-pads.mp3',title:'Rainy Night Pads',artist:'BTVN Labs'},
+    {src:'audio/weightless-drift.mp3',title:'Weightless Drift',artist:'BTVN Labs'}
   ];
   var KEY='sscpc-music', VOL=.5, FADE=800, DBL=450, TOUCH_OPEN_MS=5000;
   var a=new Audio(), idx=0, wanted=true, resume=false, errs=0, fadeT=null, armed=false, lastPrev=0, closeT=null;
