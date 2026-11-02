@@ -67,28 +67,35 @@
     if(zipCtl)return;
     const a=A(),i=API.cur;
     if(!list.length){toast('No photos to download');return}
-    if(list.length>60&&!confirm('This will download '+list.length+' photos as one ZIP file. It can be large, so use Wi-Fi if you can. Continue?'))return;
+    if(list.length>60&&!confirm('This will download '+list.length+' photos'+(list.length>150?' as several ZIP files (150 photos each)':' as one ZIP file')+'. It can be large, so use Wi-Fi if you can. Continue?'))return;
     zipCtl=new AbortController();
     const box=$('gt-prog')||(()=>{const b=el('div','gt-prog');b.id='gt-prog';b.setAttribute('role','status');
       b.innerHTML='<div class="gt-prog-t"></div><div class="gt-prog-bar"><i></i></div><button type="button" class="gt-prog-x">Cancel</button>';document.body.append(b);return b})();
     const txt=box.querySelector('.gt-prog-t'),bar=box.querySelector('i');box.classList.add('on');
     box.querySelector('.gt-prog-x').onclick=()=>zipCtl&&zipCtl.abort();
-    const files=new Array(list.length);let done=0,next=0;
-    txt.textContent='Preparing '+label+'… 0 / '+list.length;bar.style.width='0%';
-    async function worker(){
-      while(next<list.length){
-        const k=next++,j=list[k];
-        const r=await fetch(a.photos[j],{signal:zipCtl.signal});if(!r.ok)throw new Error('fetch');
-        files[k]={name:fileName(a,i,j),data:new Uint8Array(await r.arrayBuffer())};
-        done++;txt.textContent='Preparing '+label+'… '+done+' / '+list.length;bar.style.width=(done/list.length*100)+'%';
-      }
-    }
+    /* big albums are saved as several ZIP files of at most 150 photos, so phones and browsers do not run out of memory */
+    const PART=150,parts=Math.ceil(list.length/PART);let done=0;
     try{
-      await Promise.all([1,2,3,4,5].map(worker));
-      txt.textContent='Building ZIP…';
-      await new Promise(r=>setTimeout(r,30));
-      saveBlob(new Blob([makeZip(files)],{type:'application/zip'}),'SSCPC_'+slug(a,i)+(label==='favourites'?'_favourites':label==='selected photos'?'_selected':'')+'.zip');
-      toast('ZIP downloaded');
+      for(let pi=0;pi<parts;pi++){
+        const sub=list.slice(pi*PART,(pi+1)*PART),files=new Array(sub.length);let next=0;
+        const tag=parts>1?' (part '+(pi+1)+' of '+parts+')':'';
+        const say=()=>{txt.textContent='Preparing '+label+tag+'… '+done+' / '+list.length;bar.style.width=(done/list.length*100)+'%'};
+        say();
+        async function worker(){
+          while(next<sub.length){
+            const k=next++,j=sub[k];
+            const r=await fetch(a.photos[j],{signal:zipCtl.signal});if(!r.ok)throw new Error('fetch');
+            files[k]={name:fileName(a,i,j),data:new Uint8Array(await r.arrayBuffer())};
+            done++;say();
+          }
+        }
+        await Promise.all([1,2,3,4,5].map(worker));
+        txt.textContent='Building ZIP'+tag+'…';
+        await new Promise(r=>setTimeout(r,30));
+        saveBlob(new Blob([makeZip(files)],{type:'application/zip'}),'SSCPC_'+slug(a,i)+(label==='favourites'?'_favourites':label==='selected photos'?'_selected':'')+(parts>1?'_part'+(pi+1)+'of'+parts:'')+'.zip');
+        await new Promise(r=>setTimeout(r,600));
+      }
+      toast(parts>1?parts+' ZIP files downloaded':'ZIP downloaded');
     }catch(e){
       toast(e&&e.name==='AbortError'?'Download cancelled':'Download failed. Please try again.');
     }finally{box.classList.remove('on');zipCtl=null}

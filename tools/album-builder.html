@@ -71,7 +71,7 @@ details.gh{border:1px solid var(--line);background:var(--surface);padding:.6rem 
 <script src="zip.js"></script>
 <script>
 const $=s=>document.querySelector(s),h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
-const FULL=1280,THUMB=480,COVER=900,BATCH=12e6,PART=60e6;
+const FULL=1280,THUMB=480,COVER=900,BATCH=8e6,PART=60e6;
 let D=null,E=null,GH=JSON.parse(localStorage.gh||'{}'),busy=false;
 const NAMES=t=>[...t.matchAll(/^const (\w+) =/gm)].map(m=>m[1]);
 const parse=t=>new Function(t+';return {'+NAMES(t).join(',')+'}')();
@@ -101,7 +101,7 @@ async function prep(t){
   const p=x.getImageData(0,0,9,8).data,v=i=>p[i*4]*.3+p[i*4+1]*.59+p[i*4+2]*.11;let s='';
   for(let y=0;y<8;y++)for(let k=0;k<8;k++)s+=v(y*9+k)>v(y*9+k+1)?1:0;t.hash=s;im.close&&im.close();
 }
-async function prepAll(list){let i=0;const run=async()=>{while(i<list.length){const t=list[i++];try{await prep(t)}catch(e){t.url='';t.bad=true}draw()}};
+async function prepAll(list){let i=0;const run=async()=>{while(i<list.length){const t=list[i++];try{await prep(t)}catch(e){t.url='';t.bad=true}drawSoon()}};
   await Promise.all([run(),run(),run()]);markDups()}
 function markDups(){const T=E.tiles.filter(t=>t.hash);T.forEach(t=>t.dup=false);
   for(let i=0;i<T.length;i++)for(let j=i+1;j<T.length;j++){if(T[j].dup)continue;let d=0;for(let k=0;k<64&&d<4;k++)if(T[i].hash[k]!==T[j].hash[k])d++;if(d<4)T[j].dup=true}
@@ -122,7 +122,7 @@ async function commit(files,msg,fin){
     if(fin)all.push({path:'js/data.js',blob:new Blob([ser(fin(parse(hd.text)))])});
     const add=[];for(const f of all)add.push({path:f.path,contents:await b64(f.blob)});
     await gql('mutation($i:CreateCommitOnBranchInput!){createCommitOnBranch(input:$i){commit{oid}}}',{i:{branch:{repositoryNameWithOwner:GH.repo,branchName:GH.branch||'main'},message:{headline:msg},expectedHeadOid:hd.oid,fileChanges:{additions:add}}});return}
-  catch(e){if(t>=2||!/oid|head|expected/i.test(e.message))throw e}}
+  catch(e){if(t>=3||!/oid|head|expected|fetch|network|load failed|timeout|50\d|rate|abuse|secondary/i.test(e.message))throw e;await new Promise(r=>setTimeout(r,1500*(t+1)))}}
 
 /* ---------- library ---------- */
 function library(){
@@ -167,7 +167,7 @@ function edit(i){
   ex.append(e2,tyL,tx('time','Time (optional)'),tx('about','About (optional)',1));eb.append(cl,ex);L.append(eb);
   /* photos */
   const pb=h('div','box');pb.append(h('h3',0,'Photos'));
-  const dz=h('label','drop');dz.append('Drop photos here or tap to choose (any number). Drag tiles to reorder, ★ sets the cover.');
+  const dz=h('label','drop');dz.append('Drop photos here or tap to choose (works with 800+ photos; they are resized for you). Drag tiles to reorder, ★ sets the cover.');
   const fi=h('input');fi.type='file';fi.accept='image/*';fi.multiple=true;fi.hidden=true;dz.append(fi);
   const add=fs=>{fs=[...fs].filter(f=>f.type.startsWith('image/')).sort((x,y)=>x.name.localeCompare(y.name,undefined,{numeric:true}));
     const ts=fs.map((f,k)=>({id:'n'+Date.now()+'_'+k,file:f,on:true,url:''}));E.tiles.push(...ts);draw();prepAll(ts)};
@@ -192,7 +192,8 @@ function edit(i){
   document.body.append(ab);ab.id='actbar';$('#pub').onclick=()=>run('gh');$('#zip').onclick=()=>run('zip');
   draw();
 }
-let drag=-1;
+let drag=-1,dt0=0;
+function drawSoon(){clearTimeout(dt0);dt0=setTimeout(()=>{if(E)draw()},250)}   /* 800 photos: redraw in bursts, not after every single photo */
 function draw(){
   const g=$('#tiles');if(!g||!E)return;g.textContent='';
   const first=E.tiles.find(t=>t.on),cov=E.cover&&E.tiles.find(t=>t.id===E.cover&&t.on)?E.cover:null;
@@ -242,7 +243,11 @@ async function run(mode){
     if(!f.name.trim())throw Error('Give the album a name');if(!on.length)throw Error('Tick at least one photo');
     if(!s.orig&&D.ALBUMS.some(a=>a.name===f.name.trim()))throw Error('An album with this name already exists. Pick it from the list to edit it.');
     if(mode==='gh'&&!(GH.repo&&GH.token)){$('#gh').open=true;scrollTo(0,0);throw Error('Connect GitHub first (top of page), or use the ZIP button')}
-    busy=true;$('#pub').disabled=$('#zip').disabled=true;$('#pgw').hidden=false;f.name=f.name.trim();
+    if(mode==='gh'){const nNew=on.filter(t=>t.file).length;
+      if(nNew>=150){let cur=0;try{const r=await fetch('https://api.github.com/repos/'+GH.repo,{headers:{Authorization:'Bearer '+GH.token}});if(r.ok)cur=(await r.json()).size/1024}catch(e){}
+        const est=nNew*0.26;
+        if(!confirm('This album adds about '+Math.round(est)+' MB to your GitHub repository'+(cur?' (it is about '+Math.round(cur)+' MB now)':'')+'. GitHub recommends staying under 1000 MB in total.'+(cur+est>900?'\n\nThis would take you close to or over that limit. Consider splitting the album or removing old photos first.':'')+'\n\nKeep this tab open until it says Published. Continue?'))return}}
+    busy=true;$('#pub').disabled=$('#zip').disabled=true;$('#pgw').hidden=false;f.name=f.name.trim();s.committed=s.committed||new Set();
     const dirs=new Set(D.ALBUMS.map(dirOf)),slug=slugify(f.name,f.date);let dir=s.orig?dirOf(s.orig):'images/albums/'+slug;
     if(!s.orig){for(let k=2;dirs.has(dir);k++)dir='images/albums/'+slug+'-'+k}
     let n=s.next;const w=s.orig?s.pad:Math.max(2,String(on.length).length),nameOf={};
@@ -257,15 +262,15 @@ async function run(mode){
     /* sinks */
     const parts=[];let buf=[],size=0,part=1;
     const flush=async last=>{
-      if(mode==='gh'){if(buf.length){say('Uploading to GitHub...');await commit(buf,(s.orig?'Update album: ':'Add album: ')+f.name+' (photos)')}}
+      if(mode==='gh'){if(buf.length){say('Uploading to GitHub...');await commit(buf,'photos batch: '+f.name+' ('+buf.length+' files)');buf.forEach(x=>s.committed.add(x.path))}}
       else if(buf.length){const es=[];for(const x of buf)es.push({name:x.path,data:new Uint8Array(await x.blob.arrayBuffer())});
         parts.push({n:part++,blob:new Blob([makeZip(es)],{type:'application/zip'})})}
       buf=[];size=0};
     const put=async x=>{buf.push(x);size+=x.blob.size;if(size>(mode==='gh'?BATCH:PART))await flush()};
-    if(coverSrc){say('Preparing the cover...');const src=typeof coverSrc==='string'?await (await fetch(coverSrc)).blob():coverSrc;await put({path:cover,blob:await makeCover(src)})}
-    pg.value=1;const todo=on.filter(t=>t.file);
+    if(coverSrc&&!s.committed.has(cover)){say('Preparing the cover...');const src=typeof coverSrc==='string'?await (await fetch(coverSrc)).blob():coverSrc;await put({path:cover,blob:await makeCover(src)})}
+    pg.value=1;const todo=on.filter(t=>t.file),skip=t=>s.committed.has(dir+'/'+nameOf[t.id])&&s.committed.has(dir+'/thumbs/'+nameOf[t.id]);
     for(let i=0;i<todo.length;i+=3){
-      const grp=todo.slice(i,i+3);say('Preparing photo '+(i+1)+' of '+todo.length+'... keep this tab open');
+      const grp=todo.slice(i,i+3).filter(t=>{if(skip(t)){pg.value=1+ ++done;return false}return true});if(!grp.length)continue;say('Preparing photo '+(i+1)+' of '+todo.length+'... keep this tab open');
       const rs=await Promise.all(grp.map(t=>make(t.file)));
       for(let k=0;k<grp.length;k++){const nm=nameOf[grp[k].id];await put({path:dir+'/'+nm,blob:rs[k].full});await put({path:dir+'/thumbs/'+nm,blob:rs[k].thumb});pg.value=1+ ++done}}
     if(mode==='gh'){say('Publishing...');await commit(buf,(s.orig?'Update album: ':'Add album: ')+f.name,apply);buf=[];
