@@ -304,11 +304,10 @@ the change. Everything needed is in this folder.
 
 BACKGROUND MUSIC
 ----------------
-The playlist is audio/apathy.mp3, felt-echoes.mp3, rainy-night-pads.mp3, weightless-drift.mp3,
-played in that order and then repeated (js/music.js). The round music button is at the bottom-right.
-Hover over it (or tap it on a phone) and Previous / Play-Pause / Next slide out. Previous: one click
-restarts the current song, a quick double click goes to the previous song. Browsers block autoplay, so
-music starts on the visitor's first tap/click; if they switch it off, it stays off on their device.
+The background music is audio/apathy.mp3 (apathy by oneheart), looped (js/music.js). The round music
+button is at the bottom-right; hover over it (or tap it on a phone) and Play/Pause slides out.
+Browsers block autoplay, so music starts on the visitor's first tap/click; if they switch it off,
+it stays off on their device.
 To change the order or titles, edit the TRACKS list at the top of js/music.js. Replace a track by
 overwriting its mp3. (With only one song in TRACKS it loops and shows just Play/Pause.)
 
