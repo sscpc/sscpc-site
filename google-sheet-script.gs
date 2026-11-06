@@ -42,6 +42,7 @@ function doPost(e) {
   const p = {};
   Object.keys(e.parameters).forEach(k => p[k] = e.parameters[k].join(', '));
   if (p['bot-field']) return out({ ok: true });                 // spam trap
+  if (p.form_type === 'vote') return handleVote(p);               // Most Popular Photograph vote
   const type = p.form_type === 'join' ? 'join' : p.form_type === 'contact' ? 'contact' : 'registration';
   // Contact messages go to their own spreadsheet (CONTACT_SHEET_ID) when one
   // is set; Registrations and Join requests always stay in this spreadsheet.
@@ -122,6 +123,53 @@ function doPost(e) {
    the next one. This is self-healing: it works the first time the column
    is created, and keeps working correctly even if rows are ever deleted,
    reordered, or the sheet is edited by hand. */
+/* ---------- Most Popular Photograph vote ----------
+   Votes are saved on the "Votes" tab; totals appear on the "Vote results" tab (made automatically).
+   The two times below MUST match VOTE_OPEN / VOTE_CLOSE in js/data.js. Votes outside this window are rejected here.
+   One vote per device per day. Totals are never sent to the website, so nobody can see them while voting is open. */
+const VOTE_OPEN = new Date('2026-11-13T09:00:00+05:30');
+const VOTE_CLOSE = new Date('2026-11-13T17:00:00+05:30');
+const VOTE_PHOTO_COUNT = 48;
+
+function handleVote(p) {
+  const now = new Date();
+  if (now < VOTE_OPEN) return out({ ok: false, error: 'not_open' });
+  if (now > VOTE_CLOSE) return out({ ok: false, error: 'closed' });
+  const photo = parseInt(p.photo, 10);
+  const dev = String(p.device || '').replace(/[^a-zA-Z0-9]/g, '').slice(0, 64);
+  if (!(photo >= 1 && photo <= VOTE_PHOTO_COUNT) || dev.length < 16) return out({ ok: false, error: 'invalid' });
+  const day = Utilities.formatDate(now, 'Asia/Colombo', 'yyyy-MM-dd');
+  const key = dev + '|' + day;
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sh = ss.getSheetByName('Votes') || ss.insertSheet('Votes');
+    if (sh.getLastRow() === 0) sh.appendRow(['Timestamp', 'Photo', 'Key (device|day)']);
+    const last = sh.getLastRow();
+    if (last > 1) {
+      const rows = sh.getRange(2, 2, last - 1, 2).getValues();
+      for (let i = 0; i < rows.length; i++) if (String(rows[i][1]) === key) return out({ ok: false, error: 'already', photo: Number(rows[i][0]) });
+    }
+    sh.appendRow([now, photo, key]);
+    ensureVoteResults(ss);
+  } finally { lock.releaseLock(); }
+  return out({ ok: true });
+}
+
+function ensureVoteResults(ss) {
+  if (ss.getSheetByName('Vote results')) return;
+  const r = ss.insertSheet('Vote results');
+  r.getRange(1, 1, 1, 2).setValues([['Photo', 'Votes']]);
+  const rows = [];
+  for (let i = 1; i <= VOTE_PHOTO_COUNT; i++) rows.push([i, '=COUNTIF(Votes!B:B,A' + (i + 1) + ')']);
+  r.getRange(2, 1, rows.length, 2).setValues(rows);
+  r.getRange(1, 4, 1, 3).setValues([['Rank', 'Photo', 'Votes']]);
+  r.getRange(2, 5).setFormula('=SORT(A2:B' + (VOTE_PHOTO_COUNT + 1) + ',2,FALSE)');
+  r.getRange(2, 4, VOTE_PHOTO_COUNT, 1).setFormulas(Array.from({ length: VOTE_PHOTO_COUNT }, (_, i) => ['=ROW()-1']));
+  r.setFrozenRows(1);
+}
+
 function nextMembershipNumber(sh, header) {
   const col = header.indexOf(MEMBERSHIP_COL) + 1;
   const lastRow = sh.getLastRow();

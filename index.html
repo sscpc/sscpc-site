@@ -37,6 +37,7 @@
 <link rel="stylesheet" href="css/gallery-tools.css">
 <link rel="stylesheet" href="css/judges-v6.css">
 <link rel="stylesheet" href="css/selection-done.css">
+<link rel="stylesheet" href="css/vote.css">
 <script>document.documentElement.classList.add('loading','intro-hold');document.documentElement.dataset.theme='dark';try{localStorage.removeItem('sscpc-theme')}catch(e){}</script>
 <noscript><style>#loader{display:none}html.loading{overflow:auto}</style></noscript>
 </head>
@@ -432,6 +433,16 @@
             <p class="arp-end-3">Spectrum 2026 &bull; St. Sylvester&rsquo;s College</p>
           </div>
         </section>
+      </div>
+    </section>
+
+    <section class="vote" id="most-popular" aria-labelledby="vote-title">
+      <div class="wrap">
+        <p class="vote-k">Photography Day &bull; Public Vote</p>
+        <h2 id="vote-title"><span>Most Popular</span> <span class="hl">Photograph</span></h2>
+        <p class="lead vote-lead">48 photographs were selected from the Spectrum 2026 competition. Which one is your favourite? Choose one photograph and vote for it. You can vote once per day, and the results stay hidden until voting closes.</p>
+        <div class="vote-status" id="vote-status" role="status" aria-live="polite"></div>
+        <div class="vote-grid" id="vote-grid"></div>
       </div>
     </section>
 
@@ -898,6 +909,7 @@
 <script src="js/album-views.js"></script>
 <script src="js/learn.js"></script>
 <script src="js/selection-done.js"></script>
+<script src="js/vote.js"></script>
 <script src="js/chatbot.js"></script>
 <script src="js/music.js"></script>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script><!--vercel-->
