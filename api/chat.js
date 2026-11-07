@@ -158,7 +158,9 @@ FORM HELP
 CLUB FACTS
 - SSCPC is the Photography Club of St. Sylvester's College, Kandy. It covers school life, live sports and cultural events and runs workshops, competitions, exhibitions and creative photography/videography projects. Motto: Capture. Create. Inspire. School founded 1945; school motto: Fortiter in Re.
 - Spectrum 2026: island-wide online photography competition followed by an exhibition and Photography Day on Friday 13 November 2026 from 9:00 a.m. at Cingolani Memorial Hall, St. Sylvester's College, Kandy.
-- Categories: Colour, Monochrome, Nature, Wildlife and Mobile; up to three photographs per category. The submission deadline was 30 September 2026 and is now closed. Eight awards: 1st, 2nd, 3rd and five merit awards.
+- Categories: Colour, Monochrome, Nature, Wildlife and Mobile; up to three photographs per category. The submission deadline was 30 September 2026 and is now closed. Eight awards: 1st, 2nd, 3rd and five merit awards. Photo selection took place on 12 October 2026 and is complete.
+- SCOPE (Spectrum's Champion of Photography Excellence) is a new award for Spectrum 2026, given to the best photographer of the competition (the all-round photographer) for outstanding overall performance beyond a single photograph. The winner receives a specially designed SCOPE trophy. Only one SCOPE trophy is awarded. Selection criteria and the announcement details have not been published yet, so do not invent them.
+- Most Popular Photograph vote: 48 photographs selected from the competition are shown on the Spectrum tab. Visitors vote for their favourite during the event on Photography Day (13 November 2026), one vote per person per day. Vote counts are hidden until voting closes and the winner is announced at the ceremony.
 - Visitor registration is for invited schools.
 - Contact: sylvestrian.photography@gmail.com; 081 222 3917; Instagram crownsmen_photography; Facebook SSCPC Photography; WhatsApp channel.
 

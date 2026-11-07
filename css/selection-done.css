@@ -7,3 +7,51 @@
 .sel-group figcaption{position:absolute;z-index:1;left:0;right:0;bottom:0;padding:1.1rem 1.4rem;font-size:.82rem;letter-spacing:.06em;color:#f4f1e4}
 .sel-group figcaption::before{content:"";display:inline-block;width:1.6rem;height:2px;margin-right:.7rem;vertical-align:middle;background:#6cc8ff}
 @media(max-width:560px){.sel-group{border-radius:.7rem}.sel-group figcaption{position:static;padding:.8rem 1rem;background:#08182b}.sel-group::after{display:none}}
+
+/* All-Round Photographer Award (sits inside .sel, under the Selection Day Partner box) */
+.arp{--gold:#e8b94a;--gold2:#f7e3a1;--gold3:#9c6d1c;margin:clamp(3rem,7vw,5rem) 0 0;padding-top:clamp(2.5rem,6vw,4rem);border-top:1px solid var(--line,#12324f)}
+.arp-head{text-align:center}
+.arp-k{margin:0 0 1rem;font-family:var(--mono);font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:#6cc8ff}
+.arp h2{margin:0;display:flex;flex-direction:column;align-items:center;line-height:1.02;text-transform:uppercase}
+.arp-t1,.arp-t3{font-size:clamp(1.5rem,5.4vw,3rem);letter-spacing:.06em;color:#f4f1e4}
+.arp-t1{display:flex;align-items:center;gap:1rem;font-size:clamp(1.1rem,3.6vw,2rem)}
+.arp-t1::before,.arp-t1::after{content:"";width:clamp(1.5rem,8vw,5rem);height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.arp-t1::after{transform:scaleX(-1)}
+.arp-t2{font-size:clamp(2.6rem,11vw,6rem);letter-spacing:.02em;background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,var(--gold3));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.arp-tag{margin:1.1rem 0 0;font-style:italic;color:#d6e2f2;font-size:clamp(.95rem,2.4vw,1.2rem)}
+.arp-tag::after{content:"";display:block;width:min(22rem,70%);height:1px;margin:1.4rem auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.arp-list{list-style:none;margin:2rem auto 0;padding:0;max-width:62rem;display:grid;gap:1.1rem}
+.arp-c{position:relative;display:flex;align-items:center;gap:clamp(1rem,3vw,1.8rem);padding:clamp(1.1rem,3vw,1.6rem) clamp(1.1rem,3vw,1.8rem);border:1px solid rgba(108,200,255,.45);border-radius:1.1rem;background:linear-gradient(135deg,rgba(10,32,64,.75),rgba(4,14,30,.85));box-shadow:0 0 22px rgba(60,140,255,.12) inset,0 14px 40px rgba(0,0,0,.35);overflow:hidden}
+.arp-n{flex:none;align-self:stretch;display:flex;align-items:flex-start;padding-right:clamp(.9rem,2.5vw,1.5rem);border-right:1px solid rgba(108,200,255,.4);font-family:var(--mono);font-size:clamp(1.8rem,5vw,2.6rem);line-height:1;color:#35b4ff}
+.arp-tx{flex:1;min-width:0;position:relative;z-index:1}
+.arp-ck{margin:0 0 .35rem;font-family:var(--mono);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:#35b4ff}
+.arp-c h3{margin:0 0 .5rem;font-size:clamp(1.15rem,3vw,1.6rem);color:#fff}
+.arp-tx p:not(.arp-ck):not(.arp-badge){margin:0;color:#d6e2f2;line-height:1.65;font-size:.95rem;max-width:46ch}
+.arp-ic{flex:none;width:clamp(3.2rem,9vw,5rem);color:var(--gold)}
+.arp-cam{padding:.7rem;border:1px solid rgba(108,200,255,.45);border-radius:.4rem;width:clamp(4.2rem,11vw,6.2rem);box-sizing:border-box}
+.arp-trophy{align-items:stretch;min-height:15rem}
+.arp-trophy .arp-tx{max-width:55%}
+.arp-badge{display:inline-flex;align-items:center;gap:.8rem;margin:1.2rem 0 0;padding:.55rem 1.6rem .55rem 1.1rem;border:1px solid var(--gold);border-radius:2rem;background:rgba(0,0,0,.35);color:var(--gold)}
+.arp-badge svg{width:1.9rem;height:1.9rem;flex:none}
+.arp-badge span{display:flex;flex-direction:column;line-height:1.2}
+.arp-badge b{font-size:1.15rem;letter-spacing:.08em;text-transform:uppercase}
+.arp-badge small{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:#f4f1e4}
+.arp-art{position:absolute;right:clamp(.5rem,3vw,2.5rem);bottom:0;top:.5rem;width:clamp(8rem,34%,16rem);display:flex;align-items:flex-end;justify-content:center;background:radial-gradient(60% 60% at 50% 70%,rgba(232,185,74,.28),transparent 70%)}
+.arp-art img,.arp-art svg{display:block;max-width:100%;max-height:100%;height:auto}
+.arp-art img+svg{display:none}
+.arp-end{margin:2rem auto 0;max-width:62rem;padding:1.6rem 1rem;text-align:center;border:1px solid rgba(232,185,74,.7);border-radius:1.2rem;background:linear-gradient(180deg,rgba(232,185,74,.06),rgba(0,0,0,.35))}
+.arp-end p{margin:0}
+.arp-end-1{font-family:var(--mono);font-size:clamp(.85rem,2.8vw,1.5rem);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.arp-end-2{margin-top:1.1rem!important;font-size:clamp(.8rem,2.2vw,1.1rem);letter-spacing:.3em;text-transform:uppercase;color:#f4f1e4}
+.arp-end-3{margin-top:.5rem!important;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#d6e2f2}
+@media(max-width:640px){
+  .arp-c{gap:.9rem}
+  .arp-n{padding-right:.8rem}
+  .arp-ic{width:2.8rem}.arp-cam{width:3.6rem;padding:.45rem}
+  .arp-trophy{flex-wrap:wrap}
+  .arp-trophy .arp-tx{max-width:none;flex-basis:calc(100% - 4rem)}
+  .arp-art{position:static;width:100%;height:11rem;order:3;flex-basis:100%}
+}
+.arp h2::after,.arp h2::before{display:none!important}
+.arp h2 .arp-t1{display:flex!important;flex-direction:row}
+.arp h2 .arp-t3{font-size:clamp(.95rem,3.4vw,1.7rem);letter-spacing:.1em;margin-top:.5rem;text-align:center;line-height:1.25}

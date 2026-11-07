@@ -1556,3 +1556,19 @@ const SELECTION_DONE = {
   "caption": "SSCPC members and guests on photo selection day.",
   "show": "yes"
 };
+
+/* ---------- Most Popular Photograph vote (Spectrum tab) ----------
+   Voting is open only between VOTE_OPEN and VOTE_CLOSE (Sri Lanka time).
+   IMPORTANT: the same two times are in google-sheet-script.gs (VOTE_OPEN / VOTE_CLOSE) -- change both.
+   Put the 48 photos in images/vote/ named 01.jpg ... 48.jpg (ideally about 1200px wide).
+   Fill "by" (photographer's name) and "school" for each photo: both are shown on the card and in the large view.
+   "title" is optional. Example: { id: 1, by: "Kasun Perera", school: "St. Sylvester's College, Kandy" } */
+const VOTE_OPEN  = "2026-11-13T09:00:00+05:30";
+const VOTE_CLOSE = "2026-11-13T17:00:00+05:30";
+const VOTE_PHOTOS = Array.from({ length: 48 }, (_, i) => ({
+  id: i + 1,
+  src: "images/vote/" + String(i + 1).padStart(2, "0") + ".jpg",
+  title: "",
+  by: "",
+  school: ""
+}));
