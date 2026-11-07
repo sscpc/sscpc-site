@@ -232,8 +232,24 @@ function doGet(e) {
     v: 2,
     registrations: sheetRows(ss, 'Registrations'),
     joins: sheetRows(ss, 'Join requests'),
-    messages: sheetRows(cs, 'Messages')
+    messages: sheetRows(cs, 'Messages'),
+    votes: voteStats(ss)
   });
+}
+
+/* Vote totals for the admin portal. Only reachable with the admin passkey (doGet above); never sent to the public site. */
+function voteStats(ss) {
+  const counts = [];
+  for (let i = 0; i < VOTE_PHOTO_COUNT; i++) counts.push(0);
+  let total = 0, last = '';
+  const sh = ss.getSheetByName('Votes');
+  if (sh && sh.getLastRow() > 1) {
+    const rows = sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues();
+    rows.forEach(function (r) { const n = Number(r[1]); if (n >= 1 && n <= VOTE_PHOTO_COUNT) { counts[n - 1]++; total++; } });
+    const t = rows[rows.length - 1][0];
+    last = t instanceof Date ? Utilities.formatDate(t, 'Asia/Colombo', 'd MMM yyyy, h:mm:ss a') : String(t);
+  }
+  return { total: total, counts: counts, last: last, open: VOTE_OPEN.toISOString(), close: VOTE_CLOSE.toISOString() };
 }
 
 function sheetRows(ss, name) {
