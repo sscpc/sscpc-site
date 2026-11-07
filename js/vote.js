@@ -193,7 +193,7 @@
         jump(); setTimeout(jump, 350); setTimeout(jump, 900);   /* re-aim once images and fade-ins have settled */
         return;
       }
-      if (++tries < 40) setTimeout(go, 100);
+      if (++tries < 80) setTimeout(go, 100);
     })();
   }
   btn.addEventListener('click', e => {
@@ -201,5 +201,10 @@
     if (onSpectrum) { e.preventDefault(); scrollToVote(); }
     else setTimeout(scrollToVote, 400);   /* the tab sweep runs first, then we glide to the vote section */
   });
+  /* Direct link for QR codes: https://your-site/vote  ->  /?vote#spectrum  ->  opens the Spectrum tab at the vote section */
+  if (/[?&]vote(=|&|$)/.test(location.search)) {
+    const go = () => setTimeout(scrollToVote, 600);
+    if (document.readyState === 'complete') go(); else addEventListener('load', go);
+  }
   paint();
 })();
