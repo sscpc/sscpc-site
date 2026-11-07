@@ -1111,6 +1111,10 @@ const SLIDE_SECONDS = 6.5;
 
 const SLIDES = [
   {
+    "image": "images/announcements/img-mv88tzgz.jpg",
+    "alt": "Successfully concluded"
+  },
+  {
     "image": "images/announcements/Submissions-are-closed.jpeg",
     "alt": "Spectrum 2026 poster: Submissions closed"
   },
@@ -1159,22 +1163,412 @@ const SLIDES = [
 
 const FORMS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyAHz3S7XpEbTAfYYXuhJDoVZoKPNY5his_4kfAh4ElJYyvgeAd4-14XVT_Vlp06f-j/exec";
 
-/* PDF settings (used by every PDF the site makes, see js/pdf/).
-   Change colours, footer text or defaults here. Colours are hex. Leave footerText empty
-   to show "SSCPC · sscpc.vercel.app" and the club email in the footer.
-   defaults: template = standard | print | compact, pageSize = a4 | a5,
-   orientation = portrait | landscape, textSize = normal | large. A visitor's own choice in
-   the "PDF options" panel overrides these defaults on their device. */
 const PDF_CONFIG = {
-  siteUrl: "https://sscpc.vercel.app",
-  siteLabel: "ssckphotography.com",
-  email: "sylvestrian.photography@gmail.com",
-  clubName: "St. Sylvester's College Photography Club",
-  shortName: "SSCPC",
-  footerText: "",
-  logo: "images/pdf-logo.png",
-  colors: { navy: "#04101E", blue: "#2882E6", maroon: "#7D1526", red: "#8A1228", gold: "#E6B022" },
-  defaults: { template: "standard", pageSize: "a4", orientation: "portrait", textSize: "normal" },
-  /* QR codes in the PDFs (they link to siteUrl). size is in mm, between 22 and 40. enabled:false removes them. */
-  qr: { enabled: true, size: 28 }
+  "siteUrl": "https://sscpc.vercel.app",
+  "siteLabel": "ssckphotography.com",
+  "email": "sylvestrian.photography@gmail.com",
+  "clubName": "St. Sylvester's College Photography Club",
+  "shortName": "SSCPC",
+  "footerText": "",
+  "logo": "images/pdf-logo.png",
+  "colors": {
+    "navy": "#04101E",
+    "blue": "#2882E6",
+    "maroon": "#7D1526",
+    "red": "#8A1228",
+    "gold": "#E6B022"
+  },
+  "defaults": {
+    "template": "standard",
+    "pageSize": "a4",
+    "orientation": "portrait",
+    "textSize": "normal"
+  },
+  "qr": {
+    "enabled": true,
+    "size": 28
+  }
 };
+
+const LEARN = [
+  {
+    "title": "Composition",
+    "summary": "Composition is how you arrange everything inside the frame. A few simple habits, like the rule of thirds and leading lines, instantly make a photo stronger.",
+    "facts": [
+      "Rule of Thirds: Place your subject along grid lines or at their intersections to create a balanced photo.",
+      "Leading Lines: Use roads, paths, or walls to guide the viewer’s eyes toward your subject.",
+      "Depth of Field: Blur the background to make your main subject stand out.",
+      "Framing: Use windows, trees, or arches to naturally frame your subject.",
+      "Symmetry: Arrange elements evenly on both sides for a balanced and pleasing image.",
+      "Minimalism: Keep only essential elements in the frame to create a clean, powerful photo.",
+      "Perspective: Change your shooting angle to make ordinary subjects look more interesting.",
+      "Contrast: Combine different colors, brightness levels, or shapes to make your subject stand out.",
+      "Negative Space: Leave empty space around your subject to draw attention to it.",
+      "Fill the Frame: Move closer to remove distractions and highlight important details.",
+      "Patterns: Capture repeated shapes or objects to create visual interest.",
+      "Balance: Distribute visual elements throughout the frame to make the image feel stable.",
+      "Diagonal Lines: Use diagonal shapes to add movement and energy to your composition.",
+      "Foreground Interest: Include an object in the foreground to add depth to landscapes.",
+      "Look for Details: Focus on small textures, shapes, and details to create unique photographs.",
+      "Natural Light Direction: Position your subject in relation to the light to enhance shape and texture.",
+      "Subject Placement: Place your subject thoughtfully to create a clear focal point.",
+      "Avoid Distractions: Check the edges and background of your frame before taking the shot.",
+      "Experiment with Angles: Shoot from above, below, or the side to discover fresh compositions.",
+      "Tell a Story: Arrange subjects and surroundings to communicate a feeling, idea, or moment."
+    ],
+    "tryIt": "take five photos of one object, each from a different angle.",
+    "photos": [
+      {
+        "photo": "images/learn/img-mv9qv495.jpg",
+        "caption": "Rule of Thirds"
+      },
+      {
+        "photo": "images/learn/img-mv9qwcqf.jpg",
+        "caption": "Leading Lines"
+      },
+      {
+        "photo": "images/learn/img-mv9qyaem.jpg",
+        "caption": "Depth of Field"
+      },
+      {
+        "photo": "images/learn/img-mv9r4r8o.jpg",
+        "caption": "Minimalism"
+      },
+      {
+        "photo": "images/learn/img-mv9r0vy6.jpg",
+        "caption": "Golden Hour"
+      },
+      {
+        "photo": "images/learn/img-mv9r12f6.jpg",
+        "caption": "Natural Framing"
+      },
+      {
+        "photo": "images/learn/img-mv9r2tea.jpg",
+        "caption": "Symmetry"
+      },
+      {
+        "photo": "images/learn/img-mv9ray5p.jpg",
+        "caption": "Golden spiral"
+      },
+      {
+        "photo": "images/learn/img-mv9r7rd5.jpg",
+        "caption": "Colour contrast"
+      },
+      {
+        "photo": "images/learn/img-mv9rbu9v.jpg",
+        "caption": "Golden triangle"
+      }
+    ]
+  },
+  {
+    "title": "Lighting",
+    "summary": "Light shapes the mood of a photo more than any camera setting. Learn when it is softest and how to use it from the side, from behind or through a window.",
+    "facts": [
+      "Use Natural Light: Window light or outdoor daylight can create beautiful photos.",
+      "Shoot During Golden Hour: Early morning and late afternoon offer warm, soft light.",
+      "Face the Light: Position your subject toward a light source for a brighter, clearer image.",
+      "Try Side Lighting: Light coming from one side adds texture, depth, and shadows.",
+      "Avoid Harsh Midday Sun: Strong sunlight can create dark shadows and bright highlights.",
+      "Use Backlighting: Place the light behind your subject for glowing edges or silhouettes.",
+      "Watch the Shadows: Shadows add mood, shape, and dimension to your photos.",
+      "Avoid Overexposure: Reduce exposure if bright areas lose their details.",
+      "Use Window Light: Place your subject near a window for soft, flattering portraits.",
+      "Understand White Balance: Adjust color temperature to keep whites looking natural.",
+      "Use Reflectors: A white card or reflector can bounce light into dark areas.",
+      "Make Use of Shade: Open shade provides softer, more even light for portraits.",
+      "Experiment with Silhouettes: Expose for the bright background to create a dark subject outline.",
+      "Control Indoor Lighting: Move your subject near a lamp or window for better illumination.",
+      "Use Low Light Carefully: Keep your phone steady and avoid unnecessarily high ISO settings.",
+      "Notice the Direction of Light: Front, side, and backlighting each create a different effect."
+    ],
+    "tryIt": "photograph the same spot in the morning and in the evening.",
+    "photos": [
+      {
+        "photo": "images/learn/img-mv8672ek.jpg",
+        "caption": "Rembrandt Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv86764p.jpg",
+        "caption": "Butterfly Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv86792c.jpg",
+        "caption": "Split Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv868gnp.jpg",
+        "caption": "Loop Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv86as20.jpg",
+        "caption": "Silhouette Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv88qwix.jpg",
+        "caption": "Rim Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv88elxh.jpg",
+        "caption": "Soft Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv88lb9j.jpg",
+        "caption": "Hard Lighting"
+      },
+      {
+        "photo": "images/learn/img-mv88mjkh.jpg",
+        "caption": "Bounce lighting "
+      },
+      {
+        "photo": "images/learn/img-mv88n7tn.jpg",
+        "caption": "Low-Key Lighting"
+      }
+    ]
+  },
+  {
+    "title": "Exposure ",
+    "summary": "Exposure is how bright or dark your photo turns out. Aperture, shutter speed and ISO work together, and each one changes the look of the picture.",
+    "facts": [
+      "Exposure Triangle: Understand how aperture, shutter speed, and ISO work together to control the brightness of your photograph.",
+      "Aperture: Use a wide aperture to let in more light and blur the background, or a narrow aperture to keep more of the scene in focus.",
+      "Shutter Speed: Choose a fast shutter speed to freeze action or a slow shutter speed to capture motion blur.",
+      "ISO: Keep ISO low for cleaner images in bright conditions. Increase it when shooting in low light, but watch for image noise.",
+      "Exposure Compensation: Adjust exposure up or down when your camera makes a photo too bright or too dark.",
+      "Avoid Overexposure: Protect bright areas such as skies and clouds to preserve their details.",
+      "Avoid Underexposure: Make sure important parts of your subject aren't too dark to see clearly.",
+      "Check the Histogram: Use the brightness graph to evaluate exposure and identify possible loss of detail.",
+      "Use Exposure Lock: Lock exposure on your subject when lighting conditions or framing might otherwise change the brightness.",
+      "Shoot in RAW: Capture more image data for greater flexibility when adjusting highlights and shadows during editing.",
+      "Understand Metering: Learn how your camera measures light to determine the appropriate exposure.",
+      "Experiment with Manual Mode: Adjust aperture, shutter speed, and ISO yourself to gain more control over the final image.",
+      "Use Exposure Bracketing: Take multiple photos at different brightness levels when a scene has challenging lighting.",
+      "Expose for the Subject: Prioritize the correct brightness of your main subject, especially when the background is much brighter or darker.",
+      "Review Before You Leave: Check your photos after shooting and correct exposure problems while you can still retake the image."
+    ],
+    "tryIt": "freeze a moving friend, then blur them on purpose.",
+    "photos": [
+      {
+        "photo": "images/learn/photo-mv89carr0.jpg",
+        "caption": "Correct Exposure"
+      },
+      {
+        "photo": "images/learn/img-mv89h1qp.jpg",
+        "caption": "Over exposed"
+      },
+      {
+        "photo": "images/learn/img-mv89hl1b.jpg",
+        "caption": "Under exposed"
+      },
+      {
+        "photo": "images/learn/img-mv89i230.jpg",
+        "caption": "Slow shutter speed"
+      },
+      {
+        "photo": "images/learn/img-mv89iukt.jpg",
+        "caption": "Fast shutter speed"
+      },
+      {
+        "photo": "images/learn/img-mv89lf8q.jpg",
+        "caption": "Wide aperture"
+      },
+      {
+        "photo": "images/learn/img-mv89lplt.jpg",
+        "caption": "ISO and Noise"
+      },
+      {
+        "photo": "images/learn/img-mv89ly6k.jpg",
+        "caption": "Exposing for Highlights"
+      }
+    ]
+  },
+  {
+    "title": "Phone photography",
+    "summary": "You do not need an expensive camera to take great photos. A few phone habits, from a clean lens to tapping to focus, make a big difference.",
+    "facts": [
+      "Clean Your Lens: Wipe your camera lens before taking photos for sharper results.",
+      "Use Natural Light: Soft daylight helps create clear, beautiful photos.",
+      "Tap to Focus: Tap your subject on the screen to keep it sharp.",
+      "Adjust Brightness: After tapping to focus, adjust exposure for the right brightness.",
+      "Use Grid Lines: Align subjects and improve composition with the camera grid.",
+      "Avoid Digital Zoom: Move closer to your subject to maintain image quality.",
+      "Keep It Steady: Hold your phone with both hands to reduce blur.",
+      "Explore Angles: Try low, high, and side angles for more interesting shots.",
+      "Use Portrait Mode: Create a soft background blur for portraits.",
+      "Try Wide-Angle Shots: Capture more of the scene in landscapes and architecture.",
+      "Avoid Harsh Light: Strong midday sunlight can create deep shadows.",
+      "Use Night Mode: Capture brighter photos in low-light conditions when available.",
+      "Turn Off the Flash: Try natural or nearby light for a more realistic look.",
+      "Use Leading Lines: Roads, walls, and paths can guide the viewer's eyes.",
+      "Keep the Background Simple: Remove distractions to make your subject stand out.",
+      "Capture Candid Moments: Natural expressions often make photos more engaging.",
+      "Use Burst Mode: Take several shots to capture fast-moving subjects.",
+      "Try Reflections: Use mirrors, windows, or puddles for creative compositions.",
+      "Edit Gently: Adjust brightness, contrast, and color without overdoing it.",
+      "Know Your Camera: Explore your phone's features to get the most from it."
+    ],
+    "tryIt": "shoot a portrait with a window beside your subject.",
+    "photos": [
+      {
+        "photo": "images/learn/img-mv89vxld.jpg",
+        "caption": "Natural light"
+      },
+      {
+        "photo": "images/learn/img-mv89x62j.jpg",
+        "caption": "Portrait mode"
+      },
+      {
+        "photo": "images/learn/img-mv89xlf5.jpg",
+        "caption": "NIght shoot"
+      },
+      {
+        "photo": "images/learn/img-mv89y8ug.jpg",
+        "caption": "Close up photography"
+      },
+      {
+        "photo": "images/learn/img-mv89yk44.jpg",
+        "caption": "Reflection"
+      },
+      {
+        "photo": "images/learn/img-mv89z1e7.jpg",
+        "caption": "Wide angle photos"
+      },
+      {
+        "photo": "images/learn/img-mv89zdc2.jpg",
+        "caption": "Action shoots"
+      },
+      {
+        "photo": "images/learn/img-mv89zmdh.jpg",
+        "caption": "Industry shootings"
+      }
+    ]
+  },
+  {
+    "title": "Understanding Camera Brands",
+    "summary": "Explore popular camera brands and discover what makes each one unique. Learn about their strengths, camera systems, and features to help you choose the right camera for your photography style.",
+    "facts": [
+      "Canon: Known for user-friendly cameras, excellent portraits, and a wide range of lenses.",
+      "Nikon: Popular for detailed images, landscape photography, and versatile camera systems.",
+      "Sony: Famous for mirrorless cameras, fast autofocus, and advanced video features.",
+      "Fujifilm: Loved for its film-inspired colors, creative image styles, and retro camera designs.",
+      "Panasonic Lumix: Known for video capabilities, hybrid photography, and filmmaking features.",
+      "OM System: Offers compact camera systems and useful features for wildlife and outdoor photography.",
+      "Leica: Recognized for premium craftsmanship, optical quality, and distinctive photographic experiences.",
+      "Hasselblad: Specializes in high-resolution medium-format cameras often used for commercial and fine-art photography.",
+      "Pentax: Known for DSLR cameras, optical viewfinders, and rugged weather-resistant designs.",
+      "GoPro: Designed for action, travel, sports, and capturing adventures in challenging environments.",
+      "Sigma: Known for high-quality lenses and specialized compact cameras.Ricoh – Known for compact cameras, especially those used in street photography.",
+      "Kodak – Recognized for photographic film, imaging products, and consumer cameras.",
+      "Insta360 – Specializes in 360-degree cameras and immersive video.",
+      "DJI – Known for camera drones, aerial photography, and stabilized cameras.",
+      "Blackmagic Design – Specializes in professional cinema cameras and filmmaking equipment.",
+      "Phase One – Produces high-resolution medium-format imaging systems for professional photography.",
+      "RED Digital Cinema – Known for professional cinema cameras used in filmmaking.",
+      "Yashica – Associated with vintage film cameras and classic photography.",
+      "Mamiya – Known for medium-format cameras used in studio and professional photography."
+    ],
+    "tryIt": "Find one popular model from each brand.",
+    "photos": [
+      {
+        "photo": "images/learn/img-mvaycdv2.jpg",
+        "caption": "Canon"
+      },
+      {
+        "photo": "images/learn/img-mvayclz8.jpg",
+        "caption": "Nikon "
+      },
+      {
+        "photo": "images/learn/img-mvayctik.jpg",
+        "caption": "Sony"
+      },
+      {
+        "photo": "images/learn/img-mvayd9vc.jpg",
+        "caption": "Fujifilm"
+      },
+      {
+        "photo": "images/learn/img-mvayfya3.jpg",
+        "caption": "Panasonic Lumix"
+      },
+      {
+        "photo": "images/learn/img-mvayhwcd.jpg",
+        "caption": "OM System"
+      },
+      {
+        "photo": "images/learn/img-mvaygabe.jpg",
+        "caption": "Leica"
+      },
+      {
+        "photo": "images/learn/img-mvaykmib.jpg",
+        "caption": "Hasselblad"
+      },
+      {
+        "photo": "images/learn/img-mvaykz23.jpg",
+        "caption": "Pentax"
+      },
+      {
+        "photo": "images/learn/img-mvaypht6.jpg",
+        "caption": "Go pro"
+      },
+      {
+        "photo": "images/learn/img-mvaypqb8.jpg",
+        "caption": "Sigma"
+      },
+      {
+        "photo": "images/learn/img-mvayq0bj.jpg",
+        "caption": "Kodak"
+      },
+      {
+        "photo": "images/learn/img-mvayuo9x.jpg",
+        "caption": "Insta 360"
+      },
+      {
+        "photo": "images/learn/img-mvayuzty.jpg",
+        "caption": "DJI"
+      },
+      {
+        "photo": "images/learn/img-mvayv6b0.jpg",
+        "caption": "Red digital cinema"
+      }
+    ]
+  }
+];
+
+const LEARN_CHALLENGES = [
+  "Shadows: Find a strong shadow and make it the subject of your photo.",
+  "Leading lines: Use a road, fence or railing to lead the eye to your subject.",
+  "Reflections: Photograph a reflection in a window, puddle or glass of water.",
+  "Golden hour: Shoot one scene in the hour after sunrise or before sunset.",
+  "Frame within a frame: Use a door, window or archway to frame your subject.",
+  "Close up: Get close to an everyday object and show a detail most people miss.",
+  "Patterns: Find a repeating pattern, then break it with one different thing.",
+  "Motion: Freeze a moving subject, then try to blur it on purpose.",
+  "People at work: Photograph someone at work (with permission) and show what they do.",
+  "Black and white: Take a photo that works because of contrast and shape, not colour.",
+  "Minimal: Make a photo with one subject and lots of empty space.",
+  "School life: Tell a small story of an ordinary moment at school in one frame."
+];
+
+const SELECTION_DONE = {
+  "kicker": "Photo Selection · Completed",
+  "title": "Selection Day",
+  "highlight": "Was a Success.",
+  "text": "The photo selection for Spectrum 2026 has been completed successfully. Thank you to every school photographer who took part, to our judges and teachers for their time and guidance, and to the members who worked behind the scenes to make the day run smoothly.",
+  "photo": "images/spectrum/selection-day.jpg",
+  "caption": "SSCPC members and guests on photo selection day.",
+  "show": "yes"
+};
+
+/* ---------- Most Popular Photograph vote (Spectrum tab) ----------
+   Voting is open only between VOTE_OPEN and VOTE_CLOSE (Sri Lanka time).
+   IMPORTANT: the same two times are in google-sheet-script.gs (VOTE_OPEN / VOTE_CLOSE) -- change both.
+   Put the 48 photos in images/vote/ named 01.jpg ... 48.jpg (ideally about 1200px wide).
+   Fill "by" (photographer's name) and "school" for each photo: both are shown on the card and in the large view.
+   "title" is optional. Example: { id: 1, by: "Kasun Perera", school: "St. Sylvester's College, Kandy" } */
+const VOTE_OPEN  = "2026-11-13T09:00:00+05:30";
+const VOTE_CLOSE = "2026-11-13T17:00:00+05:30";
+const VOTE_PHOTOS = Array.from({ length: 48 }, (_, i) => ({
+  id: i + 1,
+  src: "images/vote/" + String(i + 1).padStart(2, "0") + ".jpg",
+  title: "",
+  by: "",
+  school: ""
+}));

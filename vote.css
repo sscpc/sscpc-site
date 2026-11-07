@@ -1,0 +1,73 @@
+:root{--day:#39e75f;--day-soft:#8dffa8;--day-deep:#1fb84a}
+/* Most Popular Photograph vote (Spectrum tab) */
+.vote{padding:clamp(3rem,7vw,5rem) 0;border-top:1px solid var(--line)}
+.vote-k{margin:0 0 .8rem;font-family:var(--mono);font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--glow)}
+.vote h2{margin:0 0 .8rem;font-size:clamp(2rem,6vw,3.6rem);line-height:1.05;text-transform:uppercase}
+.vote h2 .hl{background:linear-gradient(180deg,#f7e3a1,#e8b94a 55%,#9c6d1c);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.vote-lead{max-width:44rem;color:var(--muted)}
+.vote-status{margin:1.4rem 0 1.8rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-left:4px solid var(--glow);border-radius:.6rem;background:var(--surface);color:var(--ink);line-height:1.55}
+.vote-status[data-phase="open"]{border-left-color:#4cd08a}
+.vote-status[data-phase="closed"]{border-left-color:#e8b94a}
+.vote-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,15rem),1fr));gap:1rem}
+.vote-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:.8rem;background:var(--surface);overflow:hidden;transition:border-color .2s,transform .2s}
+.vote-card:hover{border-color:var(--glow)}
+.vote-card.is-mine{border-color:#e8b94a;box-shadow:0 0 0 1px #e8b94a,0 0 24px rgba(232,185,74,.25)}
+.vote-img{position:relative;display:block;width:100%;aspect-ratio:4/3;padding:0;border:0;background:#06121f;cursor:zoom-in;overflow:hidden}
+.vote-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.vote-ph{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:2.6rem;color:rgba(108,200,255,.35)}
+.vote-img.has-img .vote-ph{display:none}
+.vote-num{position:absolute;left:.5rem;top:.5rem;padding:.15rem .5rem;border-radius:2rem;background:rgba(3,11,22,.78);color:#f7e3a1;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em}
+.vote-meta{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.7rem .8rem}
+.vote-cap{display:flex;flex-direction:column;min-width:0;line-height:1.3}
+.vote-cap b{font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vote-cap small{color:var(--muted);font-size:.74rem}
+.vote-btn{flex:none;min-height:2.5rem;padding:.45rem 1rem;border:1px solid #e8b94a;border-radius:2rem;background:linear-gradient(180deg,#f7e3a1,#e8b94a);color:#1a1204;font:inherit;font-weight:700;font-size:.82rem;cursor:pointer}
+.vote-btn:disabled{background:transparent;color:var(--muted);border-color:var(--line);cursor:default;font-weight:500}
+.vote-card.is-mine .vote-btn:disabled{color:#e8b94a;border-color:#e8b94a}
+.vote-btn:not(:disabled):hover{filter:brightness(1.08)}
+.vote-btn:focus-visible,.vote-img:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
+.vote-lock{overflow:hidden}
+.vote-dlg{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:1rem;background:rgba(2,8,16,.86);backdrop-filter:blur(6px)}
+.vote-dlg[hidden]{display:none}
+.vote-dlg-in{position:relative;width:min(100%,46rem);max-height:100%;overflow:auto;padding:1rem;border:1px solid var(--line);border-radius:1rem;background:var(--surface);color:var(--ink)}
+.vote-x{position:absolute;right:.5rem;top:.3rem;z-index:2;width:2.6rem;height:2.6rem;border:0;border-radius:50%;background:rgba(3,11,22,.7);color:#fff;font-size:1.6rem;line-height:1;cursor:pointer}
+.vote-dlg-img{display:grid;place-items:center;background:#06121f;border-radius:.6rem;overflow:hidden}
+.vote-dlg-img img{display:block;max-width:100%;max-height:60vh;object-fit:contain}
+.vote-ph-big{display:grid;place-items:center;width:100%;aspect-ratio:4/3;font-family:var(--mono);font-size:4rem;color:rgba(108,200,255,.35)}
+.vote-dlg-t{margin:.8rem 0 .2rem;font-weight:700}
+.vote-dlg-msg{min-height:1.4rem;margin:.2rem 0 .8rem;color:var(--muted)}
+.vote-dlg-act{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:flex-end}
+@media(max-width:480px){.vote-grid{grid-template-columns:repeat(2,1fr);gap:.6rem}.vote-meta{flex-direction:column;align-items:stretch}.vote-btn{width:100%}.vote-ph{font-size:1.8rem}}
+@media(prefers-reduced-motion:reduce){.vote-card{transition:none}}
+
+/* Photography Day green (#39e75f): used for letters and small accents only; the blue look stays */
+.vote-k{color:var(--day)}
+.vote h2 .hl{background:linear-gradient(180deg,var(--day-soft),var(--day) 55%,var(--day-deep));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.vote-status b{color:var(--day)}
+.vote-status[data-phase="open"]{border-left-color:var(--day)}
+.vote-num{color:var(--day)}
+.vote-card:hover{border-color:rgba(57,231,95,.55)}
+.vote-card.is-mine{border-color:var(--day);box-shadow:0 0 0 1px var(--day),0 0 24px rgba(57,231,95,.22)}
+.vote-btn{border-color:var(--day);background:rgba(57,231,95,.08);color:var(--day);transition:background .2s,color .2s,box-shadow .2s}
+.vote-btn:not(:disabled):hover,.vote-btn:not(:disabled):focus-visible{background:var(--day);color:#04140a;box-shadow:0 0 18px rgba(57,231,95,.45)}
+.vote-btn:disabled{border-color:rgba(108,200,255,.35);background:transparent;color:#9fb6d3}
+.vote-card.is-mine .vote-btn:disabled{color:var(--day);border-color:var(--day);background:rgba(57,231,95,.08)}
+
+/* Floating vote button, under the small countdown (site blue; the green is kept for the vote section only) */
+.vbtn{position:fixed;top:7.8rem;right:1rem;z-index:44;display:flex;align-items:center;gap:.7rem;padding:.42rem 1rem .42rem .45rem;border-radius:3rem;text-decoration:none;color:#f4f1e4;background:linear-gradient(135deg,rgba(6,22,40,.94),rgba(3,10,20,.94));border:1px solid rgba(108,200,255,.7);box-shadow:0 0 0 1px rgba(108,200,255,.12) inset,0 8px 26px rgba(0,0,0,.5),0 0 22px rgba(108,200,255,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity .35s ease,transform .25s ease,box-shadow .25s ease}
+.vbtn[hidden]{display:none}
+.vbtn:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(108,200,255,.25) inset,0 12px 30px rgba(0,0,0,.55),0 0 30px rgba(108,200,255,.4)}
+.vbtn:focus-visible{outline:2px solid #6cc8ff;outline-offset:3px}
+.vbtn.is-off{opacity:0;pointer-events:none;transform:translateY(8px)}
+html.intro-pinned .vbtn{opacity:0;pointer-events:none}
+.vbtn-ic{position:relative;flex:none;display:grid;place-items:center;width:2.15rem;height:2.15rem;border-radius:50%;background:linear-gradient(180deg,#bfe6ff,#6cc8ff 60%,#2f8fd6);color:#04101c}
+.vbtn-ic svg{width:1.15rem;height:1.15rem}
+.vbtn[data-phase="open"] .vbtn-ic::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid #6cc8ff;opacity:0;animation:vbtnRing 2s ease-out infinite}
+@keyframes vbtnRing{0%{transform:scale(.85);opacity:.8}100%{transform:scale(1.5);opacity:0}}
+.vbtn-tx{display:flex;flex-direction:column;line-height:1.15}
+.vbtn-t{font-family:var(--heading);font-weight:700;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#6cc8ff}
+.vbtn-s{font-size:.62rem;letter-spacing:.04em;color:#aeb9d3;white-space:nowrap}
+.vbtn[data-phase="soon"]{border-color:rgba(108,200,255,.45);box-shadow:0 8px 26px rgba(0,0,0,.5)}
+.vbtn[data-phase="soon"] .vbtn-ic{filter:saturate(.7) brightness(.9)}
+@media(max-width:640px){.vbtn{gap:.55rem;padding:.35rem .8rem .35rem .38rem}.vbtn-ic{width:1.9rem;height:1.9rem}.vbtn-t{font-size:.66rem}.vbtn-s{font-size:.56rem}}
+@media(prefers-reduced-motion:reduce){.vbtn-ic::after{animation:none!important}.vbtn,.vbtn:hover{transition:none;transform:none}}
