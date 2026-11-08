@@ -21,10 +21,10 @@ PREVIEW ANY STATE ANY TIME (display only, nothing is counted): add to the addres
 CHANGED: index.html, js/photographs.js, css/photographs.css, js/router.js, admin/index.html, tools/photo-votes.gs
 (unchanged from last time: js/data.js, images/spectrum-photos/)
 
-ONE-TIME SETUP FOR VOTES (the Votes tab in the admin stays empty until this is done; if you already did it, only step 4 is needed again)
+ONE-TIME SETUP FOR VOTES
  1. Open your Google Apps Script project (the one behind the forms).
- 2. Paste all of tools/photo-votes.gs into it (replace the old copy of this file).
- 3. Add the first line shown at the top of that file inside doPost(e) and the second inside doGet(e), as the very first line of each function.
- 4. Deploy > Manage deployments > pencil > Version: New version > Deploy.
- The script only counts votes between 9 a.m. and 5 p.m. on 13 Nov (Sri Lanka time). To test it earlier, set PHOTO_VOTE_OPENS and PHOTO_VOTE_CLOSES to '' (empty), then put the times back.
+ 2. Delete ALL the code there and paste ALL of tools/google-sheet-script-merged.gs (it is your old script with the vote code merged in; the old vote code is gone and the vote hooks are already in the right places).
+ 3. Deploy > Manage deployments > pencil > Version: New version > Deploy.
+ Votes are counted only 9 a.m.-5 p.m. on 13 Nov (Sri Lanka time). To test earlier, set PHOTO_VOTE_OPENS and PHOTO_VOTE_CLOSES to '' then put them back.
+ The floating Vote button now opens the vote page both before and during voting.
 GitHub: do NOT put the words "photos batch" in the commit message (vercel.json skips the deploy for those).

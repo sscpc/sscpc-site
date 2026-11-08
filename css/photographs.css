@@ -15,7 +15,7 @@ html.loading .vote-fab,html.intro-hold .vote-fab,html.vm-open .vote-fab{display:
 .vote-fab.is-open .vf-tx b{font-size:.74rem}
 .vote-fab.is-open:hover,.vote-fab.is-open:focus-visible{transform:translateY(-2px)}
 .vote-fab.is-open:focus-visible{outline:2px solid #f4f1e4;outline-offset:3px}
-.vote-fab.is-before{cursor:default;pointer-events:none}
+.vote-fab.is-before{cursor:pointer}
 @keyframes vfpulse{0%,100%{box-shadow:0 0 0 3px rgba(61,240,122,.16),0 0 22px -4px rgba(61,240,122,.55),0 10px 30px -12px rgba(0,0,0,.8)}50%{box-shadow:0 0 0 6px rgba(61,240,122,.1),0 0 28px -2px rgba(61,240,122,.75),0 10px 30px -12px rgba(0,0,0,.8)}}
 .vote-fab.is-open{animation:vfpulse 2.6s ease-in-out infinite}
 @media(max-width:640px){.vote-fab.is-before .vf-tx span{font-size:.72rem}}

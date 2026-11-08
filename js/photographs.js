@@ -28,8 +28,8 @@
       const k=lk(T0);
       fab.className='vote-fab '+(s==='open'?'is-open':'is-before');
       fab.innerHTML='<span class="vf-ic">'+ICON+'</span><span class="vf-tx"><b>'+(s==='open'?'Vote now':'Vote on '+k.day+' '+k.mon)+'</b><span>'+(s==='open'?'Most popular photograph':'Most popular photo \u2022 opens '+clockShort(T0))+'</span></span>';
-      if(s==='open'){fab.setAttribute('href','#vote');fab.setAttribute('aria-label','Vote now for the most popular photograph');fab.removeAttribute('aria-disabled');fab.removeAttribute('tabindex')}
-      else{fab.removeAttribute('href');fab.setAttribute('aria-label','Voting for the most popular photograph opens on '+k.day+' '+k.monL+' at '+clockShort(T0));fab.setAttribute('aria-disabled','true');fab.setAttribute('tabindex','-1')}
+      fab.setAttribute('href','#vote');fab.removeAttribute('aria-disabled');fab.removeAttribute('tabindex');
+      fab.setAttribute('aria-label',s==='open'?'Vote now for the most popular photograph':'Voting opens on '+k.day+' '+k.monL+' at '+clockShort(T0)+'. Open the vote page');
       fabState=s;
     }
   }
