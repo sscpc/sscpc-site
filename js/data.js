@@ -4,6 +4,38 @@ const EVENT_DATE = "2026-11-13T09:00:00+05:30";
 
 const ALBUMS = [
   {
+    "name": "86th Founder's Day Celebration",
+    "facebook": "https://www.facebook.com/share/p/1EBohai2qq/",
+    "info": {
+      "date": "1 November 2026",
+      "venue": "School premises",
+      "captured": [
+        "Sasidu Shanelka",
+        "Chethiya Sulakshana",
+        "Sithum Hansana",
+        "Dulsan Bandara",
+        "Abhiman Thennakoon"
+      ],
+      "edited": [
+        "Sasidu Shanelka"
+      ]
+    },
+    "cover": "images/albums/86th-founder-s-day-celebration/cover.jpg",
+    "thumbs": "images/albums/86th-founder-s-day-celebration/thumbs/",
+    "photos": [
+      "images/albums/86th-founder-s-day-celebration/photo-01.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-02.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-03.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-04.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-05.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-06.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-07.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-08.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-09.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-10.jpg"
+    ]
+  },
+  {
     "name": "Hypnotic Elixir '26",
     "facebook": "https://www.facebook.com/share/p/18mQ6xfMSe/",
     "info": {
