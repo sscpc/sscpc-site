@@ -983,7 +983,7 @@ const EVENTS = [
     "category": "main",
     "type": "Annual Photography Day and Exhibition",
     "status": "upcoming",
-    "date": "Friday, 13 November 2026",
+    "date": "Friday, 13th November 2026",
     "time": "9:30 a.m. onwards",
     "venue": "Cingolani Memorial Hall",
     "about": "Photographs by club members are displayed together, and everyone is welcome to walk through and see the school through our lenses.",
