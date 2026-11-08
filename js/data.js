@@ -114,7 +114,17 @@ const ALBUMS = [
       "images/albums/86th-founder-s-day-celebration/photo-89.jpg",
       "images/albums/86th-founder-s-day-celebration/photo-90.jpg",
       "images/albums/86th-founder-s-day-celebration/photo-91.jpg",
-      "images/albums/86th-founder-s-day-celebration/photo-92.jpg"
+      "images/albums/86th-founder-s-day-celebration/photo-92.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-93.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-94.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-95.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-96.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-97.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-98.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-99.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-100.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-101.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-102.jpg"
     ]
   },
   {
