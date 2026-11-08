@@ -1,57 +1,148 @@
-/* Spectrum 2026 photographs page.
-   Shows only: photo, photo name, photographer name and school (from SPECTRUM_PHOTOS in js/data.js, edited in Admin > Photographs).
-   The order is shuffled every time the page is opened. */
+/* Spectrum 2026: "Most Popular Photograph" public vote + the floating vote button.
+   - Voting is open only on Photography Day (VOTE_OPENS to VOTE_CLOSES, Sri Lanka time).
+   - One vote per person per day (kept in this browser). Visitors never see counts; the admin portal does.
+   - Photos come from SPECTRUM_PHOTOS in js/data.js (edited in Admin > Votes), shown in a new random order each visit.
+   - Preview any state without waiting: add ?preview=before, ?preview=open or ?preview=closed to the address (display only). */
 (function(){
-  const grid=document.getElementById('ph-grid');
-  if(!grid||typeof SPECTRUM_PHOTOS==='undefined')return;
-  const list=SPECTRUM_PHOTOS.filter(p=>p&&p.photo);
-  for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}
+  const VOTE_OPENS='2026-11-13T09:00:00+05:30',VOTE_CLOSES='2026-11-13T17:00:00+05:30';
+  const T0=Date.parse(VOTE_OPENS),T1=Date.parse(VOTE_CLOSES);
+  const KEY='sscpc-photo-vote-day';
   const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
-  const thumb=p=>{const k=p.lastIndexOf('/');return p.slice(0,k+1)+'thumbs/'+p.slice(k+1)};
-  const alt=p=>(p.title||'Photograph')+(p.photographer?' by '+p.photographer:'');
-  /* voting: one vote per photo per browser (can be taken back). Only the photo id is sent; counts are read in the admin portal. */
-  const KEY='sscpc-photo-votes';
-  let mine=[];try{mine=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
-  if(!Array.isArray(mine))mine=[];
-  const endpoint=()=>{try{return typeof FORMS_ENDPOINT==='string'?FORMS_ENDPOINT:''}catch(e){return ''}};
-  const has=p=>mine.indexOf(p.photo)>-1;
-  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(mine))}catch(e){}};
-  const send=(p,delta)=>{const u=endpoint();if(!u)return;try{fetch(u,{method:'POST',mode:'no-cors',keepalive:true,body:new URLSearchParams({form:'photo-vote',photo:p.photo,title:p.title||'',photographer:p.photographer||'',delta:String(delta)})}).catch(()=>{})}catch(e){}};
-  const refresh=[];
-  const voteBtn=(p,cls)=>{
-    const b=el('button','ph-vote '+cls);b.type='button';
-    const paint=()=>{const on=has(p);b.setAttribute('aria-pressed',on);b.innerHTML='<span class="ph-heart" aria-hidden="true">'+(on?'\u2665':'\u2661')+'</span><span class="ph-vt">'+(on?'Voted':'Vote')+'</span>';b.setAttribute('aria-label',(on?'Remove your vote for ':'Vote for ')+alt(p))};
-    b.onclick=e=>{e.stopPropagation();if(has(p)){mine=mine.filter(x=>x!==p.photo);send(p,-1)}else{mine.push(p.photo);send(p,1)}save();refresh.forEach(f=>f())};
-    paint();refresh.push(paint);return b};
-  const caption=(p,c)=>{const f=el('div',c);f.append(el('b','ph-t',p.title||''));if(p.photographer)f.append(el('span','ph-by',p.photographer));if(p.school)f.append(el('span','ph-sc',p.school));return f};
+  const pad=n=>(n<10?'0':'')+n;
+  const lk=t=>{const d=new Date(t+5.5*36e5),h=d.getUTCHours(),m=d.getUTCMinutes();return{day:d.getUTCDate(),mon:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getUTCMonth()],monL:['January','February','March','April','May','June','July','August','September','October','November','December'][d.getUTCMonth()],h12:h%12||12,mm:pad(m),m:m,ap:h<12?'a.m.':'p.m.',ymd:d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate())}};
+  const clock=t=>{const k=lk(t);return k.h12+':'+k.mm+' '+k.ap};
+  const clockShort=t=>{const k=lk(t);return k.h12+(k.m?':'+k.mm:'')+' '+k.ap};
+  const today=()=>lk(Date.now()).ymd;
+  const previewMode=(()=>{try{const m=/[?&]preview=(before|open|closed)/.exec(location.search);return m?m[1]:''}catch(e){return ''}})();
+  const state=()=>{if(previewMode)return previewMode;const n=Date.now();return n<T0?'before':n<T1?'open':'closed'};
 
-  list.forEach((p,i)=>{
-    const li=el('li','ph-item'),b=el('button','ph-card');b.type='button';b.setAttribute('aria-label','View '+alt(p));
-    const fr=el('span','ph-img ld'),im=document.createElement('img');im.loading='lazy';im.decoding='async';im.alt=alt(p);
-    const done=()=>fr.classList.remove('ld');im.onload=done;im.onerror=()=>{im.onerror=done;im.src=p.photo};im.src=thumb(p.photo);
-    fr.append(im);b.append(fr,caption(p,'ph-cap'));b.onclick=()=>open(i,b);li.append(b,voteBtn(p,'ph-vote--card'));grid.append(li);
+  /* ---------- floating vote button ---------- */
+  const fab=document.getElementById('vote-fab');
+  const ICON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3H5a2 2 0 0 0-2 2v2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M12 16.2s-3.8-2.3-3.8-5a2.1 2.1 0 0 1 3.8-1.2 2.1 2.1 0 0 1 3.8 1.2c0 2.7-3.8 5-3.8 5z"/></svg>';
+  let fabState='';
+  function paintFab(s){
+    if(!fab)return;
+    if(s==='closed'){fab.hidden=true;fabState=s;return}
+    fab.hidden=false;
+    if(fabState!==s){
+      const k=lk(T0);
+      fab.className='vote-fab '+(s==='open'?'is-open':'is-before');
+      fab.innerHTML='<span class="vf-ic">'+ICON+'</span><span class="vf-tx"><b>'+(s==='open'?'Vote now':'Vote on '+k.day+' '+k.mon)+'</b><span>'+(s==='open'?'Most popular photograph':'Most popular photo \u2022 opens '+clockShort(T0))+'</span></span>';
+      if(s==='open'){fab.setAttribute('href','#vote');fab.setAttribute('aria-label','Vote now for the most popular photograph');fab.removeAttribute('aria-disabled');fab.removeAttribute('tabindex')}
+      else{fab.removeAttribute('href');fab.setAttribute('aria-label','Voting for the most popular photograph opens on '+k.day+' '+k.monL+' at '+clockShort(T0));fab.setAttribute('aria-disabled','true');fab.setAttribute('tabindex','-1')}
+      fabState=s;
+    }
+  }
+  /* sit under the small countdown when it is showing, otherwise just under the menu bar */
+  function placeFab(){
+    if(!fab||fab.hidden)return;
+    const onVote=location.hash==='#vote';
+    fab.style.display=onVote?'none':'';
+    if(onVote)return;
+    let top=83;
+    const pc=document.getElementById('pcd');
+    if(pc&&!pc.classList.contains('docked')){
+      const cs=getComputedStyle(pc),r=pc.getBoundingClientRect();
+      if(cs.display!=='none'&&cs.visibility!=='hidden'&&+cs.opacity>.05&&r.width>0&&r.height>0&&r.top<innerHeight*.5)top=Math.max(top,Math.round(r.bottom+10));
+    }
+    fab.style.top=top+'px';
+  }
+
+  /* ---------- vote page ---------- */
+  const grid=document.getElementById('ph-grid');
+  const banner=document.getElementById('vt-banner');
+  const leadEl=document.getElementById('vt-lead');
+  const list=(typeof SPECTRUM_PHOTOS!=='undefined'?SPECTRUM_PHOTOS:[]).filter(p=>p&&p.photo).map((p,i)=>({p:p,n:i+1}));
+  for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}
+  const thumb=p=>{const k=p.lastIndexOf('/');return p.slice(0,k+1)+'thumbs/'+p.slice(k+1)};
+  const nm=it=>it.p.title||('Photo '+pad(it.n));
+  const who=it=>[it.p.photographer,it.p.school].filter(Boolean).join(' \u2022 ')||nm(it);
+  const endpoint=()=>{try{return typeof FORMS_ENDPOINT==='string'?FORMS_ENDPOINT:''}catch(e){return ''}};
+  let mine=null; /* {day, photo} when this browser has already voted today */
+  const readMine=()=>{try{const v=JSON.parse(localStorage.getItem(KEY)||'null');mine=v&&v.day===today()?v:null}catch(e){mine=mine&&mine.day===today()?mine:null}};
+  const writeMine=v=>{mine=v;try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}};
+  const buttons=[];
+
+  function paintButtons(s){
+    readMine();
+    buttons.forEach(o=>{
+      const b=o.b;b.className='ph-vote';b.disabled=false;
+      if(s==='closed'){b.textContent='Closed';b.classList.add('is-closed');b.disabled=true;b.setAttribute('aria-label','Voting has closed')}
+      else if(s==='before'){b.textContent='Soon';b.classList.add('is-closed');b.disabled=true}
+      else if(mine&&mine.photo===o.it.p.photo){b.textContent='\u2713 Voted';b.classList.add('is-mine');b.setAttribute('aria-label','You voted for '+nm(o.it))}
+      else if(mine){b.textContent='Vote';b.classList.add('is-used');b.setAttribute('aria-label','You have already voted today')}
+      else{b.textContent='Vote';b.setAttribute('aria-label','Vote for '+nm(o.it)+' by '+(o.it.p.photographer||'this photographer'))}
+    });
+  }
+  function paintBanner(s){
+    if(!banner)return;
+    const k=lk(T0);
+    banner.className='vt-banner is-'+s;
+    if(s==='open')banner.innerHTML='<b>Voting is open</b> until '+clock(T1)+' today. Tap a photograph to view it, then press Vote. One vote per person per day.';
+    else if(s==='before')banner.innerHTML='<b>Voting opens</b> on '+k.day+' '+k.monL+' at '+clock(T0)+', on Spectrum Photography Day. Come back then to choose your favourite photograph.';
+    else banner.innerHTML='<b>Voting has closed.</b> Thank you to everyone who voted. The Most Popular Photograph will be announced at the ceremony.';
+    if(grid)grid.hidden=s==='before';
+  }
+  if(leadEl)leadEl.textContent=(list.length||'The')+' photographs were selected from the Spectrum 2026 competition. Which one is your favourite? Choose one photograph and vote for it. You can vote once per day, and the results stay hidden until voting closes.';
+
+  if(grid)list.forEach((it,i)=>{
+    const li=el('li','ph-item'),card=el('button','ph-card');card.type='button';card.setAttribute('aria-label','View '+nm(it));
+    const fr=el('span','ph-img ld'),im=document.createElement('img');im.loading='lazy';im.decoding='async';im.alt=nm(it)+(it.p.photographer?' by '+it.p.photographer:'');
+    const done=()=>fr.classList.remove('ld');im.onload=done;im.onerror=()=>{im.onerror=done;im.src=it.p.photo};im.src=thumb(it.p.photo);
+    fr.append(im);card.append(el('span','ph-no',pad(i+1)),fr);
+    const foot=el('div','ph-foot'),cap=el('div','ph-cap');
+    cap.append(el('b','ph-t',it.p.photographer||nm(it)));
+    if(it.p.photographer&&it.p.school)cap.append(el('span','ph-sc',it.p.school));
+    const b=el('button','ph-vote','Vote');b.type='button';
+    foot.append(cap,b);li.append(card,foot);grid.append(li);
+    const go=()=>openBox(it,card);card.onclick=go;b.onclick=go;buttons.push({b:b,it:it});
   });
 
-  /* viewer */
-  const box=el('div','ph-lb');box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','Photograph viewer');
-  const x=el('button','ph-x','×');x.type='button';x.setAttribute('aria-label','Close');
-  const pv=el('button','ph-nav ph-prev','‹');pv.type='button';pv.setAttribute('aria-label','Previous photograph');
-  const nx=el('button','ph-nav ph-next','›');nx.type='button';nx.setAttribute('aria-label','Next photograph');
-  const fig=el('figure','ph-fig'),big=document.createElement('img');fig.append(big);
-  box.append(x,pv,fig,nx);document.body.append(box);
-  let cur=0,opener=null,cap=null;
-  function show(i){
-    cur=(i+list.length)%list.length;const p=list[cur];
-    big.classList.remove('in');big.alt=alt(p);big.src=p.photo;void big.offsetWidth;big.classList.add('in');
-    if(cap)cap.remove();cap=caption(p,'ph-lcap');cap.append(voteBtn(p,'ph-vote--lb'));fig.append(cap);
-    [cur+1,cur-1].forEach(k=>{new Image().src=list[(k+list.length)%list.length].photo});
+  /* ---------- confirm window ---------- */
+  const box=el('div','vm');box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','Vote for this photograph');
+  const bx=el('div','vm-box'),xb=el('button','vm-x','\u00d7');xb.type='button';xb.setAttribute('aria-label','Close');
+  const imgw=el('div','vm-img'),big=document.createElement('img');imgw.append(big);
+  const capEl=el('p','vm-cap'),msg=el('p','vm-msg');msg.setAttribute('aria-live','polite');
+  const btns=el('div','vm-btns'),cl=el('button','vm-btn vm-close','Close'),ok=el('button','vm-btn vm-ok','Confirm my vote');cl.type='button';ok.type='button';
+  btns.append(cl,ok);bx.append(imgw,xb,capEl,msg,btns);box.append(bx);document.body.append(box);
+  let cur=null,opener=null,sending=false;
+  function note(){
+    if(!cur)return;
+    const s=state();readMine();ok.disabled=false;ok.textContent='Confirm my vote';
+    if(s!=='open'){msg.textContent=s==='before'?'Voting has not opened yet.':'Voting has closed. Thank you for taking part.';ok.disabled=true}
+    else if(mine&&mine.photo===cur.p.photo){msg.textContent='\u2713 Your vote for '+nm(cur)+' has been counted. Thank you!';ok.disabled=true}
+    else if(mine){msg.textContent='You have already voted today. Thank you for taking part!';ok.disabled=true}
+    else msg.textContent='Vote for '+nm(cur)+'? You can only vote once today.';
   }
-  function open(i,from){opener=from||null;show(i);box.hidden=false;document.documentElement.classList.add('ph-open');x.focus()}
-  function close(){box.hidden=true;document.documentElement.classList.remove('ph-open');big.removeAttribute('src');if(opener)opener.focus()}
-  x.onclick=close;pv.onclick=()=>show(cur-1);nx.onclick=()=>show(cur+1);
-  box.addEventListener('click',e=>{if(e.target===box||e.target===fig)close()});
-  addEventListener('keydown',e=>{if(box.hidden)return;if(e.key==='Escape')close();else if(e.key==='ArrowLeft')show(cur-1);else if(e.key==='ArrowRight')show(cur+1)});
-  let sx=null;box.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
-  box.addEventListener('touchend',e=>{if(sx===null)return;const d=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(d)>50)show(cur+(d<0?1:-1))});
-  addEventListener('hashchange',()=>{if(!box.hidden)close()});
+  function openBox(it,from){
+    cur=it;opener=from||null;big.src=it.p.photo;big.alt=nm(it)+(it.p.photographer?' by '+it.p.photographer:'');
+    capEl.textContent=who(it);note();box.hidden=false;document.documentElement.classList.add('vm-open');
+    (ok.disabled?cl:ok).focus();
+  }
+  function closeBox(){box.hidden=true;document.documentElement.classList.remove('vm-open');big.removeAttribute('src');cur=null;if(opener&&document.contains(opener))opener.focus()}
+  function confirm(){
+    if(!cur||sending||state()!=='open')return;
+    readMine();if(mine)return note();
+    const it=cur,u=endpoint();
+    const finish=()=>{writeMine({day:today(),photo:it.p.photo});sending=false;paintButtons(state());if(cur===it)note()};
+    if(!u){finish();return}
+    sending=true;ok.disabled=true;ok.textContent='Sending\u2026';
+    let p;
+    try{p=fetch(u,{method:'POST',mode:'no-cors',keepalive:true,body:new URLSearchParams({form:'photo-vote',photo:it.p.photo,title:it.p.title||'',photographer:it.p.photographer||'',delta:'1',day:today()})})}catch(e){p=Promise.reject(e)}
+    p.then(finish,()=>{sending=false;if(cur===it){ok.disabled=false;ok.textContent='Confirm my vote';msg.textContent='We could not send your vote. Please check your connection and try again.'}});
+  }
+  xb.onclick=closeBox;cl.onclick=closeBox;ok.onclick=confirm;
+  box.addEventListener('click',e=>{if(e.target===box)closeBox()});
+  addEventListener('keydown',e=>{if(box.hidden)return;if(e.key==='Escape')closeBox();else if(e.key==='Tab'){const f=[xb,cl,ok].filter(x=>!x.disabled),i=f.indexOf(document.activeElement);if(!f.length)return;e.preventDefault();f[(i+(e.shiftKey?-1:1)+f.length)%f.length].focus()}});
+  addEventListener('hashchange',()=>{if(!box.hidden)closeBox();placeFab()});
+
+  /* ---------- keep everything in step with the clock ---------- */
+  let last='';
+  function tick(){
+    const s=state();
+    if(s!==last){last=s;paintFab(s);paintBanner(s);paintButtons(s);if(!box.hidden)note()}
+    placeFab();
+  }
+  tick();setInterval(tick,1000);
+  addEventListener('resize',placeFab);addEventListener('scroll',placeFab,{passive:true});
 })();

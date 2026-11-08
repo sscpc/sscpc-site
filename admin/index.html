@@ -259,7 +259,7 @@ function votesPanel(){
   go();return box}
 function photos(){
   const w=h('div'),n=()=>D.SPECTRUM_PHOTOS.filter(p=>!String(p.school||'').trim()).length,m=h('p','note');
-  const upd=()=>{m.innerHTML='These are the photographs on the voting page (yoursite/#vote, reached from the <b>Vote</b> button under the small countdown). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
+  const upd=()=>{m.innerHTML='These are the photographs on the voting page (yoursite/#vote, reached from the floating <b>Vote</b> button; voting is open 9 a.m. to 5 p.m. on 13 November). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
   const L=ed(D,'SPECTRUM_PHOTOS','');upd();w.append(m,votesPanel(),h('h3',0,'Photos'),L);
   w.addEventListener('input',()=>setTimeout(()=>{upd();L.querySelectorAll(':scope>details.it').forEach((d,i)=>{const s=d.querySelector('summary span');if(s&&D.SPECTRUM_PHOTOS[i])s.textContent='⠿ '+lab(D.SPECTRUM_PHOTOS[i])})},0));
   return w}

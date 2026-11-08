@@ -23,6 +23,9 @@
        etc. lands right on that section with nothing to scroll through */
     root.classList.toggle('on-home',id==='home');
     scrollTo({top:0,behavior:'instant'});
+    /* a link with data-scroll="some-id" lands on that part of the new tab instead of its top */
+    const to=window.__scrollTo;window.__scrollTo=null;
+    if(to){const t=document.getElementById(to);if(t)t.scrollIntoView({block:'start',behavior:'instant'})}
     shown=id;
   }
 
@@ -89,6 +92,8 @@
     await swapTo(id);
     uncover();
   }
+
+  document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[data-scroll]');if(a)window.__scrollTo=a.getAttribute('data-scroll')},true);
 
   /* any in-page link to a tab (menu, logo, buttons, footer...) plays the sweep */
   document.addEventListener('click',e=>{

@@ -9,8 +9,12 @@
    4. Deploy > Manage deployments > pencil > Version: New version > Deploy (the web app address stays the same).
 
    Votes are stored on a tab called "Photo votes": Photo | Photo name | Photographer | Votes | Last voted.
-   Visitors cannot read the numbers; only the admin portal can (with the admin key). */
+   Visitors cannot read the numbers; only the admin portal can (with the admin key).
+   Votes are counted only between PHOTO_VOTE_OPENS and PHOTO_VOTE_CLOSES (below). */
 var PHOTO_VOTES_SHEET = 'Photo votes';
+/* Votes are only counted on Photography Day (Sri Lanka time). Set both to '' to accept votes at any time (e.g. while testing). */
+var PHOTO_VOTE_OPENS = '2026-11-13T09:00:00+05:30';
+var PHOTO_VOTE_CLOSES = '2026-11-13T17:00:00+05:30';
 
 function photoVotesSheet_() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -28,14 +32,16 @@ function pvText_(v) {
 function recordPhotoVote_(p) {
   var id = String(p.photo || '').trim().slice(0, 200);
   if (!/^images\/spectrum-photos\/[A-Za-z0-9._-]+$/.test(id)) return;   /* only real photo ids */
-  var delta = String(p.delta) === '-1' ? -1 : 1;
+  var now = Date.now();   /* one vote per person per day is enforced on the website; the window is enforced here */
+  if (PHOTO_VOTE_OPENS && now < Date.parse(PHOTO_VOTE_OPENS)) return;
+  if (PHOTO_VOTE_CLOSES && now > Date.parse(PHOTO_VOTE_CLOSES)) return;
+  var delta = 1;
   var lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try {
     var sh = photoVotesSheet_(), last = sh.getLastRow(), ids = last > 1 ? sh.getRange(2, 1, last - 1, 1).getValues() : [], row = -1;
     for (var i = 0; i < ids.length; i++) { if (String(ids[i][0]) === id) { row = i + 2; break; } }
     if (row < 0) {
-      if (delta < 0) return;
       sh.appendRow([id, pvText_(p.title), pvText_(p.photographer), 1, new Date()]);
     } else {
       var n = Math.max(0, (Number(sh.getRange(row, 4).getValue()) || 0) + delta);
