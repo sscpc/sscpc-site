@@ -981,17 +981,17 @@ const EVENTS = [
   {
     "name": "Spectrum 2026",
     "category": "main",
-    "type": "Annual photography exhibition",
+    "type": "Annual Photography Day and Exhibition",
     "status": "upcoming",
     "date": "Friday, 13 November 2026",
-    "time": "9:00 a.m. onwards",
+    "time": "9:30 a.m. onwards",
     "venue": "Cingolani Memorial Hall",
     "about": "Photographs by club members are displayed together, and everyone is welcome to walk through and see the school through our lenses.",
     "album": "",
     "link": "#register",
     "linkLabel": "Register to attend",
-    "start": "2026-11-13T09:00:00+05:30",
-    "end": "2026-11-13T17:00:00+05:30",
+    "start": "2026-11-13T09:30:00+05:30",
+    "end": "2026-11-13T13:30:00+05:30",
     "mapsQuery": "Cingolani Memorial Hall, St. Sylvester’s College, Kandy"
   },
   {
