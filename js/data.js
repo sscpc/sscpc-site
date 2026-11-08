@@ -1111,6 +1111,14 @@ const SLIDE_SECONDS = 6.5;
 
 const SLIDES = [
   {
+    "image": "images/announcements/img-mw7en48j.jpg",
+    "alt": "5 days remaining for the day"
+  },
+  {
+    "image": "images/announcements/img-mw7emtlc.jpg",
+    "alt": "save the date"
+  },
+  {
     "image": "images/announcements/img-mv88tzgz.jpg",
     "alt": "Successfully concluded"
   },
