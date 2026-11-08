@@ -1,5 +1,6 @@
-BACKGROUND MUSIC: apathy only
-Changed: js/music.js, README.txt, WHAT-CHANGED.txt
-audio/apathy.mp3 is the same file as before (unchanged, so not included in the changed-files zip).
-The song now loops on its own; the player shows only Play/Pause.
-DELETE from GitHub (optional, no longer used): audio/felt-echoes.mp3, audio/rainy-night-pads.mp3, audio/weightless-drift.mp3
+SPECTRUM 2026 PHOTOGRAPHS PAGE (48 photos)
+New page: Spectrum > "View the photographs" (#photographs). Shows only photo name, photographer name and school, in a random order every time it is opened. No category, place or award is shown.
+Admin portal: new "Photographs" tab. Edit photo name / photographer / school, add or remove photos, then Publish. Photos with no school are marked in the list.
+Changed: index.html, js/data.js (new SPECTRUM_PHOTOS list), js/router.js, admin/index.html
+New: js/photographs.js, css/photographs.css, images/spectrum-photos/ (48 photos + thumbs/)
+GitHub: do NOT put the words "photos batch" in the commit message (vercel.json skips the deploy for those).

@@ -101,12 +101,13 @@ const NAMES=t=>[...t.matchAll(/^const (\w+) =/gm)].map(m=>m[1]);
 const parse=t=>new Function(t+';return {'+NAMES(t).join(',')+'}')();
 const ser=d=>'/* SSCPC site data. Written by the admin portal (admin/index.html). Notes: README.txt */\n\n'+Object.keys(d).map(k=>`const ${k} = ${JSON.stringify(d[k],null,2)};`).join('\n\n')+'\n';
 let D,B,KEYS,key='',X=null,sub='registrations',tab='home',flt='All',hist=[],hi=0,GH=JSON.parse(localStorage.gh||'{}');
-const ST={},URLS={},SEC={MEMBERS:'members',SLIDES:'announcements',EVENTS:'events',LEARN:'learn',SELECTION_DONE:'spectrum'};
+const ST={},URLS={},SEC={MEMBERS:'members',SLIDES:'announcements',EVENTS:'events',LEARN:'learn',SELECTION_DONE:'spectrum',SPECTRUM_PHOTOS:'spectrum-photos'};
 /* blank item shapes for lists that can start empty (used by the + Add button) */
-const TPL={photos:{photo:'',caption:''},LEARN:{title:'',summary:'',facts:[],tryIt:'',photos:[]}};
+const PHL={photo:'Photo',title:'Photo name',photographer:'Photographer name',school:'School'};
+const TPL={SPECTRUM_PHOTOS:{photo:'',title:'',photographer:'',school:''},photos:{photo:'',caption:''},LEARN:{title:'',summary:'',facts:[],tryIt:'',photos:[]}};
 const snapK=()=>Object.fromEntries(KEYS.map(k=>[k,JSON.stringify(D[k])]));
 const changed=()=>KEYS.filter(k=>JSON.stringify(D[k])!==B[k]);
-const lab=x=>x&&typeof x==='object'?(x.name||x.title||x.alt||x.image||''):'';
+const lab=x=>x&&typeof x==='object'?((x.name||x.title||x.alt||x.image||'')+('photographer' in x?(x.photographer?' · '+x.photographer:'')+(x.school?'':' · ⚠ school missing'):'')):'';
 /* ---------- undo + unpublished marker ---------- */
 let ht;const ub=()=>{$('#undo').disabled=hi<1;$('#redo').disabled=hi>=hist.length-1};
 function snap(){const s=JSON.stringify(D);if(s===hist[hi])return;hist=hist.slice(0,hi+1);hist.push(s);hi=hist.length-1;if(hist.length>60){hist.shift();hi--}ub()}
@@ -125,7 +126,7 @@ function imgf(p,k,L,sec,v){
     ST[path]=b;URLS[path]=URL.createObjectURL(b);p[k]=v=path;i.value=path;sh();dirty()};
   w.append(pv,i,f);return w}
 function ed(p,k,label,sec){
-  sec=sec||k;const v=p[k],L=nice(label||k);
+  sec=sec||k;const v=p[k],L=sec==='SPECTRUM_PHOTOS'&&PHL[k]||nice(label||k);
   if(Array.isArray(v)&&k!=='photos'&&v.every(x=>typeof x==='string')){const t=h('textarea','in');t.rows=Math.min(8,v.length+1);t.value=v.join('\n');t.oninput=()=>{p[k]=t.value.split('\n').map(s=>s.trim()).filter(Boolean);dirty()};return field(L+' (one per line)',t)}
   if(Array.isArray(v))return list(v,label,sec);
   if(v&&typeof v==='object'){const f=h('fieldset');f.append(h('legend',0,esc(L)));Object.keys(v).forEach(x=>f.append(ed(v,x,x,sec)));return f}
@@ -211,27 +212,11 @@ function inbox(){
       if(sup()){const td=h('td'),b=h('button','mini',isH(r)?'✓':'○');b.title=isH(r)?'Handled (tap to reopen)':'Mark handled';b.onclick=async e=>{e.stopPropagation();try{await setRow(r,isH(r)?'New':'Handled',r.Note||'');show('inbox')}catch(x){alert(x.message)}};td.append(b);tr.append(td)}
       cols.forEach(c=>{const td=h('td',0,esc(r[c]));td.title=r[c]||'';tr.append(td)});tr.onclick=()=>openRow(r,()=>show('inbox'));t.append(tr)});tb.append(t)};
   q.oninput=draw;draw();w.append(bar,tb);return w}
-/* ---------- Most Popular Photograph votes (private: totals are only ever shown here) ---------- */
-function votes(){
-  const w=h('div'),V=X&&X.votes;
-  const refresh=btn('Refresh',async()=>{try{await load();show('votes')}catch(e){alert('Could not refresh')}},'ghost');
-  if(!V){w.append(h('div','box err','Vote totals are not available yet. Paste the newest google-sheet-script.gs into Apps Script and deploy a new version (Deploy, Manage deployments, pencil, New version, Deploy), then press Refresh.'));const b=h('div','bar');b.append(refresh);w.append(b);return w}
-  const P=D.VOTE_PHOTOS||[],rows=V.counts.map((n,i)=>({id:i+1,n,p:P[i]||{}})),max=Math.max(1,...V.counts);
-  const sorted=[...rows].sort((a,b)=>b.n-a.n||a.id-b.id);let rk=0,prev=null;sorted.forEach((r,i)=>{if(r.n!==prev){rk=i+1;prev=r.n}r.rank=rk});
-  const now=Date.now(),st=now<Date.parse(V.open)?'Not open yet':now>Date.parse(V.close)?'Closed':'Open now',lead=sorted[0],tie=sorted.filter(r=>r.n===lead.n).length>1;
-  const pad=n=>String(n).padStart(2,'0');
-  w.append(h('div','stats',[['Voting',st],['Total votes',V.total],['Photos with votes',rows.filter(r=>r.n>0).length+' / '+rows.length],['Leading photo',V.total?('Photo '+pad(lead.id)+(tie?' (tied)':'')):'–'],['Last vote',V.last||'–']].map(([a,b])=>`<div class="card"><small>${a}</small><strong style="font-size:${String(b).length>12?'.9rem':'1.4rem'}">${esc(b)}</strong></div>`).join('')));
-  w.append(h('p','note','These totals are private. They are never shown on the website, only here after you sign in. Press Refresh to see the newest votes. Voting is one vote per device per day.'));
-  const bar=h('div','bar');bar.append(refresh,btn('Export CSV',()=>save('sscpc-vote-results.csv',csv(sorted.map(r=>({Rank:r.rank,Photo:pad(r.id),Photographer:r.p.by||'',School:r.p.school||'',Votes:r.n})),['Rank','Photo','Photographer','School','Votes']),'text/csv')));w.append(bar);
-  const tb=h('div','tbl'),t=h('table');t.innerHTML='<tr><th>Rank</th><th>Photo</th><th>Photographer</th><th>School</th><th>Votes</th><th style="min-width:9rem">Share</th></tr>'+
-    sorted.map(r=>{const src='../'+(r.p.src||('images/vote/'+pad(r.id)+'.jpg')),pc=V.total?Math.round(r.n*100/V.total):0;
-      return `<tr><td>${r.rank}</td><td><img src="${esc(src)}" alt="" onerror="this.style.visibility='hidden'" style="width:3.2rem;height:2.4rem;object-fit:cover;vertical-align:middle;margin-right:.5rem;background:#0003">${pad(r.id)}</td><td>${esc(r.p.by||'')}</td><td>${esc(r.p.school||'')}</td><td><b>${r.n}</b></td><td><div style="height:.5rem;background:var(--line)"><div style="height:100%;width:${Math.round(r.n*100/max)}%;background:var(--accent)"></div></div><small style="color:var(--muted)">${pc}%</small></td></tr>`}).join('');
-  tb.append(t);w.append(tb);return w}
 /* ---------- home, albums, site, publish ---------- */
 function home(){
   const w=h('div'),R=X.registrations,J=X.joins,M=X.messages,nw=a=>sup()?a.filter(r=>!isH(r)).length:a.length;
   const days=Math.ceil((new Date(D.EVENT_DATE)-Date.now())/864e5),ph=D.ALBUMS.reduce((n,a)=>n+a.photos.length,0),mem=D.MEMBERS.reduce((n,g)=>n+g.members.length,0);
-  const C=[['Days to Spectrum',days>0?days:'Done'],[sup()?'New registrations':'Registrations',nw(R)],['Students attending',R.reduce((n,r)=>n+(+r.students||0),0)],[sup()?'New join requests':'Join requests',nw(J)],[sup()?'New messages':'Messages',nw(M)],['Albums',D.ALBUMS.length],['Photos',ph],['Members',mem],['Votes',X.votes?X.votes.total:'–']];
+  const C=[['Days to Spectrum',days>0?days:'Done'],[sup()?'New registrations':'Registrations',nw(R)],['Students attending',R.reduce((n,r)=>n+(+r.students||0),0)],[sup()?'New join requests':'Join requests',nw(J)],[sup()?'New messages':'Messages',nw(M)],['Albums',D.ALBUMS.length],['Photos',ph],['Members',mem]];
   w.append(h('div','stats',C.map(([a,b])=>`<div class="card"><small>${a}</small><strong>${b}</strong></div>`).join('')));
   const bar=h('div','bar');bar.append(btn('Open inbox',()=>show('inbox')),Object.assign(h('a','btn ghost sm','Album Builder'),{href:'../tools/album-builder.html'}),btn('Review and publish',()=>show('publish'),'ghost'),Object.assign(h('a','btn ghost sm','View site'),{href:'../index.html'}));w.append(bar);
   const ch=changed();w.append(h('p','note',ch.length||Object.keys(ST).length?'You have unpublished changes in: '+ch.map(nice).join(', ')+'.':'Everything here is published.'));
@@ -255,6 +240,12 @@ function learn(){
   const c=h('div');c.style.marginTop='1.5rem';
   c.append(h('h3',0,'Weekly challenges'),h('p','note','One challenge per line, written as <b>Title: what to do</b>. The site shows the next line every Monday and starts again from the top after the last one.'),ed(D,'LEARN_CHALLENGES',''));
   w.append(c);return w}
+function photos(){
+  const w=h('div'),n=()=>D.SPECTRUM_PHOTOS.filter(p=>!String(p.school||'').trim()).length,m=h('p','note');
+  const upd=()=>{m.innerHTML='These are the photographs on the <b>Spectrum 2026 Photographs</b> page (Spectrum &rarr; View the photographs). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
+  upd();w.append(m,ed(D,'SPECTRUM_PHOTOS',''));
+  w.addEventListener('input',()=>setTimeout(()=>{upd();w.querySelectorAll('details.it').forEach((d,i)=>{const s=d.querySelector('summary span');if(s&&D.SPECTRUM_PHOTOS[i])s.textContent='⠿ '+lab(D.SPECTRUM_PHOTOS[i])})},0));
+  return w}
 function site(){const w=h('div','bd'),d=h('input','in');d.type='datetime-local';d.value=D.EVENT_DATE.slice(0,16);
   d.onchange=()=>{if(d.value){D.EVENT_DATE=d.value+':00+05:30';dirty()}};
   w.append(h('p','note','The countdown date. The Spectrum entry under Events (date, time, calendar start/end) is edited separately.'),field('Spectrum countdown (Sri Lanka time)',d));
@@ -274,7 +265,7 @@ function publish(){
     st.textContent='Publishing…';pb.disabled=true;try{await pub();show('publish');$('#main').append(h('p','note','Published. The live site updates in about a minute.'))}catch(e){st.textContent=e.message;pb.disabled=false}});
   bar.append(pb);w.append(bar,st,g,h('p','note','The token is kept in this browser only (shared with the Album Builder). Use a device you trust, and sign out of shared computers.'));return w}
 /* ---------- shell ---------- */
-const TABS=[['home','Home',home],['inbox','Inbox',inbox],['votes','Votes',votes],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['selection','Selection',selDone],['site','Site',site],['publish','Publish',publish]];
+const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['selection','Selection',selDone],['photos','Photographs',photos],['site','Site',site],['publish','Publish',publish]];
 TABS.forEach(([k,t])=>{const b=h('button','tab',t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))});
 function show(n){tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
   const m=$('#main'),t=TABS.find(x=>x[0]===n);m.innerHTML='';m.append(h('div','ttl',t[1]),t[2]());scrollTo(0,0)}

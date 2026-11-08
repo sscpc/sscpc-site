@@ -1557,18 +1557,293 @@ const SELECTION_DONE = {
   "show": "yes"
 };
 
-/* ---------- Most Popular Photograph vote (Spectrum tab) ----------
-   Voting is open only between VOTE_OPEN and VOTE_CLOSE (Sri Lanka time).
-   IMPORTANT: the same two times are in google-sheet-script.gs (VOTE_OPEN / VOTE_CLOSE) -- change both.
-   Put the 48 photos in images/vote/ named 01.jpg ... 48.jpg (ideally about 1200px wide).
-   Fill "by" (photographer's name) and "school" for each photo: both are shown on the card and in the large view.
-   "title" is optional. Example: { id: 1, by: "Kasun Perera", school: "St. Sylvester's College, Kandy" } */
-const VOTE_OPEN  = "2026-11-13T09:00:00+05:30";
-const VOTE_CLOSE = "2026-11-13T17:00:00+05:30";
-const VOTE_PHOTOS = Array.from({ length: 48 }, (_, i) => ({
-  id: i + 1,
-  src: "images/vote/" + String(i + 1).padStart(2, "0") + ".jpg",
-  title: "",
-  by: "",
-  school: ""
-}));
+const SPECTRUM_PHOTOS = [
+  {
+    "photo": "images/spectrum-photos/p-1fabcb8e2d.jpg",
+    "title": "Carried by Love",
+    "photographer": "Prabhavee Mohottige",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-9422d021f9.jpg",
+    "title": "The Young Sportsman",
+    "photographer": "Pumindu Semika",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-74ac02b544.jpg",
+    "title": "Golden Hour Steps",
+    "photographer": "Methika Mihinula",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-63409f768d.jpg",
+    "title": "Harmony in Motion",
+    "photographer": "Mayon Minthaka",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-d2551547d1.jpg",
+    "title": "Night bright stupa",
+    "photographer": "Dulma Yuthmanthi",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-3ae86e8841.jpg",
+    "title": "The Framed Education",
+    "photographer": "Sandithi Kariyawasam",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-c13ca76c7b.jpg",
+    "title": "Teamwork",
+    "photographer": "Uthum Methsara",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-dd5c13e491.jpg",
+    "title": "Life Unfiltered",
+    "photographer": "Prabhavee Mohottige",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-ebb641d36f.jpg",
+    "title": "The harvest",
+    "photographer": "Mayon Minthaka",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-6b1689fa3c.jpg",
+    "title": "Double cities after the rain",
+    "photographer": "Vinudi Sehansa",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-d22efa20d0.jpg",
+    "title": "Riding the boat",
+    "photographer": "Shemika Anusara",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-3cd46f9e25.jpg",
+    "title": "The Threshold",
+    "photographer": "M.K.L.S. Karunarthna",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-bd12439166.jpg",
+    "title": "Upside down",
+    "photographer": "Methika Mihinula",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-32011c18f6.jpg",
+    "title": "Masters of Camouflage",
+    "photographer": "Vidun Nanayakkara",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-f01c9acf9d.jpg",
+    "title": "Patterns in the Crowd",
+    "photographer": "Bihandu Kalidasa",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-cf948e7353.jpg",
+    "title": "Silent Vesak",
+    "photographer": "Chanuth Hasnaka",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-a991c805e9.jpg",
+    "title": "The Evening Horizon",
+    "photographer": "Senuda Damsith",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-3e67e3b212.jpg",
+    "title": "The Living Urns",
+    "photographer": "Bihandu Kalidasa",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-62280136e7.jpg",
+    "title": "Grid Walker",
+    "photographer": "Bihandu Kalidasa",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-0c2c05bb7b.jpg",
+    "title": "The balancing",
+    "photographer": "Mayon Minthaka",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-3a0a4579a3.jpg",
+    "title": "Vibrant Buildings",
+    "photographer": "Bihandu Kalidasa",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-8b4bd64d28.jpg",
+    "title": "Gurdiance of the cross road",
+    "photographer": "Sathsara Yoshith",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-777364b997.jpg",
+    "title": "Hands of Heritage",
+    "photographer": "Methika Mihinula",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-f315ae9a1c.jpg",
+    "title": "I will Catch you",
+    "photographer": "Yethum Sandil Rupasinghe",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-35f08aeda9.jpg",
+    "title": "Acuatic Vibe",
+    "photographer": "Bihandu Kalidasa",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-ab95da17e1.jpg",
+    "title": "Daily work",
+    "photographer": "Sesath Wathsuka",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-1753f7f528.jpg",
+    "title": "Where Light Takes Shape",
+    "photographer": "Sayuru Gunathilaka",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-05036734b9.jpg",
+    "title": "Who's the 1st",
+    "photographer": "Mayon Minthaka",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-cc79eaecf3.jpg",
+    "title": "Refraction",
+    "photographer": "Kaveesha Gayanthi",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-f0ff2de657.jpg",
+    "title": "Waiting",
+    "photographer": "Kulan Kujan",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-38b1744fbd.jpg",
+    "title": "Hidden workplace",
+    "photographer": "Uthum Methsara",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-31d15b4097.jpg",
+    "title": "Affection",
+    "photographer": "Uthum Methsara",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-a8ccd6479e.jpg",
+    "title": "Moments of rest",
+    "photographer": "Risadi Pehansa",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-60fc0920ce.jpg",
+    "title": "Watching Life pass by",
+    "photographer": "Senuda Damsith",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-98c4e54275.jpg",
+    "title": "On Gulliver's Back",
+    "photographer": "Chamathki Fernando",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-9c2390cf02.jpg",
+    "title": "Look",
+    "photographer": "Kaveesha Gayanthi",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-33ab31f4ae.jpg",
+    "title": "Mothers Love",
+    "photographer": "Bihandu Kalidasa",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-dc4d3af7b0.jpg",
+    "title": "Beneath the Promises",
+    "photographer": "Prabhavee Mohottige",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-ed728c556c.jpg",
+    "title": "Call of Nature",
+    "photographer": "Mayon Devkalana",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-becbaea5e6.jpg",
+    "title": "Aerial ambush",
+    "photographer": "Mayon Minthaka",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-f92938cef6.jpg",
+    "title": "Sunday Market",
+    "photographer": "Isuli Surathya Liyanage",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-b2da5366a8.jpg",
+    "title": "Lost in Thought",
+    "photographer": "Dulshan Kokila",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-d68a8683cb.jpg",
+    "title": "Where Light Falls",
+    "photographer": "Jithuli Yesanga",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-0393d55a06.jpg",
+    "title": "Sunset",
+    "photographer": "Sesath Wathsuka",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-0dbec52aab.jpg",
+    "title": "Blossom in rain",
+    "photographer": "Pawani Prabhashwari",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-1225f6181e.jpg",
+    "title": "Hidden Smile",
+    "photographer": "Nantharupan Pramothan",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-9c2e97d2dc.jpg",
+    "title": "Midnight movements",
+    "photographer": "M.K.L.S. Karunarthna",
+    "school": ""
+  },
+  {
+    "photo": "images/spectrum-photos/p-6e0b8deb7f.jpg",
+    "title": "Melody of Devotion",
+    "photographer": "Prabhavee Mohottige",
+    "school": ""
+  }
+];
