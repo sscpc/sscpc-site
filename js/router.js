@@ -1,5 +1,5 @@
 (function(){
-  const ids=['home','about','gallery','spectrum','members','contact','register','join','what-is-spectrum','photographs'];
+  const ids=['home','about','gallery','spectrum','members','contact','register','join','what-is-spectrum','vote'];
   const root=document.documentElement;
   const reduce=matchMedia('(prefers-reduced-motion: reduce)');
   const idOf=()=>{const h=location.hash.slice(1);return ids.includes(h)?h:'home'};
@@ -8,7 +8,7 @@
   /* highlight the menu link for a tab */
   function mark(id){
     document.querySelectorAll('.menu a').forEach(a=>{
-      const on=a.getAttribute('href')==='#'+(id==='what-is-spectrum'||id==='photographs'?'spectrum':id);a.classList.toggle('on',on);
+      const on=a.getAttribute('href')==='#'+(id==='what-is-spectrum'||id==='vote'?'spectrum':id);a.classList.toggle('on',on);
       if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
     });
   }
@@ -98,7 +98,7 @@
     const id=a.getAttribute('href').slice(1);
     if(!ids.includes(id)||id===shown&&!busy)return;
     e.preventDefault();
-    mark(id==='what-is-spectrum'||id==='photographs'?'spectrum':id);
+    mark(id==='what-is-spectrum'||id==='vote'?'spectrum':id);
     if(busy){queued=id;return}
     start(id);
   });

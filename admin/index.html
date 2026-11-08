@@ -259,7 +259,7 @@ function votesPanel(){
   go();return box}
 function photos(){
   const w=h('div'),n=()=>D.SPECTRUM_PHOTOS.filter(p=>!String(p.school||'').trim()).length,m=h('p','note');
-  const upd=()=>{m.innerHTML='These are the photographs on the <b>Spectrum 2026 Photographs</b> page (Spectrum &rarr; View the photographs). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
+  const upd=()=>{m.innerHTML='These are the photographs on the voting page (yoursite/#vote, reached from the <b>Vote</b> button under the small countdown). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
   const L=ed(D,'SPECTRUM_PHOTOS','');upd();w.append(m,votesPanel(),h('h3',0,'Photos'),L);
   w.addEventListener('input',()=>setTimeout(()=>{upd();L.querySelectorAll(':scope>details.it').forEach((d,i)=>{const s=d.querySelector('summary span');if(s&&D.SPECTRUM_PHOTOS[i])s.textContent='⠿ '+lab(D.SPECTRUM_PHOTOS[i])})},0));
   return w}
@@ -282,7 +282,7 @@ function publish(){
     st.textContent='Publishing…';pb.disabled=true;try{await pub();show('publish');$('#main').append(h('p','note','Published. The live site updates in about a minute.'))}catch(e){st.textContent=e.message;pb.disabled=false}});
   bar.append(pb);w.append(bar,st,g,h('p','note','The token is kept in this browser only (shared with the Album Builder). Use a device you trust, and sign out of shared computers.'));return w}
 /* ---------- shell ---------- */
-const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['selection','Selection',selDone],['photos','Photographs',photos],['site','Site',site],['publish','Publish',publish]];
+const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['selection','Selection',selDone],['photos','Votes',photos],['site','Site',site],['publish','Publish',publish]];
 TABS.forEach(([k,t])=>{const b=h('button','tab',t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))});
 function show(n){tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
   const m=$('#main'),t=TABS.find(x=>x[0]===n);m.innerHTML='';m.append(h('div','ttl',t[1]),t[2]());scrollTo(0,0)}

@@ -1,7 +1,7 @@
 SPECTRUM 2026 PHOTOGRAPHS PAGE + VOTING
-Page: Spectrum > "View the photographs". Shows only photo name, photographer name and school, in a random order each time. No category, place or award is shown.
+Page: the Vote button under the small countdown (yoursite/#vote). Shows only photo name, photographer name and school, in a random order each time. No category, place or award is shown.
 Voting: each photo has a Vote button (one vote per photo per browser, can be taken back). Visitors never see the counts.
-Admin portal > Photographs tab: a Votes table (most votes first, with CSV export), then the list where you edit photo name / photographer / school, add or remove photos, and Publish.
+Admin portal > Votes tab: a Votes table (most votes first, with CSV export), then the list where you edit photo name / photographer / school, add or remove photos, and Publish.
 
 ONE-TIME SETUP FOR VOTES (the votes table stays empty until this is done):
  1. Open your Google Apps Script project (the one behind the forms).
