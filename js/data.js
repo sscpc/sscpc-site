@@ -112,7 +112,9 @@ const ALBUMS = [
       "images/albums/86th-founder-s-day-celebration/photo-87.jpg",
       "images/albums/86th-founder-s-day-celebration/photo-88.jpg",
       "images/albums/86th-founder-s-day-celebration/photo-89.jpg",
-      "images/albums/86th-founder-s-day-celebration/photo-90.jpg"
+      "images/albums/86th-founder-s-day-celebration/photo-90.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-91.jpg",
+      "images/albums/86th-founder-s-day-celebration/photo-92.jpg"
     ]
   },
   {
