@@ -1592,7 +1592,7 @@ const SPECTRUM_PHOTOS = [
     "photo": "images/spectrum-photos/p-3ae86e8841.jpg",
     "title": "The Framed Education",
     "photographer": "Sandithi Kariyawasam",
-    "school": ""
+    "school": "Mahamaya Girls' College"
   },
   {
     "photo": "images/spectrum-photos/p-c13ca76c7b.jpg",
