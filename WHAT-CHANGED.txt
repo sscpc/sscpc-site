@@ -1,6 +1,15 @@
-SPECTRUM 2026 PHOTOGRAPHS PAGE (48 photos)
-New page: Spectrum > "View the photographs" (#photographs). Shows only photo name, photographer name and school, in a random order every time it is opened. No category, place or award is shown.
-Admin portal: new "Photographs" tab. Edit photo name / photographer / school, add or remove photos, then Publish. Photos with no school are marked in the list.
-Changed: index.html, js/data.js (new SPECTRUM_PHOTOS list), js/router.js, admin/index.html
-New: js/photographs.js, css/photographs.css, images/spectrum-photos/ (48 photos + thumbs/)
+SPECTRUM 2026 PHOTOGRAPHS PAGE + VOTING
+Page: Spectrum > "View the photographs". Shows only photo name, photographer name and school, in a random order each time. No category, place or award is shown.
+Voting: each photo has a Vote button (one vote per photo per browser, can be taken back). Visitors never see the counts.
+Admin portal > Photographs tab: a Votes table (most votes first, with CSV export), then the list where you edit photo name / photographer / school, add or remove photos, and Publish.
+
+ONE-TIME SETUP FOR VOTES (the votes table stays empty until this is done):
+ 1. Open your Google Apps Script project (the one behind the forms).
+ 2. Paste all of tools/photo-votes.gs into it.
+ 3. Add the first line shown at the top of that file inside doPost(e) and the second inside doGet(e), as the very first line of each function.
+ 4. Deploy > Manage deployments > pencil > Version: New version > Deploy.
+Votes are stored in a "Photo votes" tab of the same Google Sheet.
+
+Changed: index.html, js/data.js, js/router.js, admin/index.html
+New: js/photographs.js, css/photographs.css, tools/photo-votes.gs, images/spectrum-photos/ (48 photos + thumbs/)
 GitHub: do NOT put the words "photos batch" in the commit message (vercel.json skips the deploy for those).

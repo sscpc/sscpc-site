@@ -240,11 +240,28 @@ function learn(){
   const c=h('div');c.style.marginTop='1.5rem';
   c.append(h('h3',0,'Weekly challenges'),h('p','note','One challenge per line, written as <b>Title: what to do</b>. The site shows the next line every Monday and starts again from the top after the last one.'),ed(D,'LEARN_CHALLENGES',''));
   w.append(c);return w}
+function votesPanel(){
+  const box=h('details','it'),sm=h('summary'),sp=h('span',0,'Votes'),bd=h('div','bd'),msg=h('p','note'),tb=h('div');
+  sm.append(sp);box.open=true;box.append(sm,bd);bd.append(msg,tb);let rows=[];
+  const bar=h('div','bar'),rf=btn('Refresh',()=>go(),'ghost'),ex=btn('Export CSV',()=>save('spectrum-votes.csv',csv(rows.map((r,i)=>({Rank:i+1,'Photo name':r.title,Photographer:r.photographer,School:r.school,Votes:r.votes})),['Rank','Photo name','Photographer','School','Votes']),'text/csv'));
+  bar.append(rf,ex);bd.insertBefore(bar,msg);
+  async function go(){msg.textContent='Loading votes…';tb.innerHTML='';
+    try{const j=await(await fetch(D0.FORMS_ENDPOINT+'?action=photo-votes&key='+encodeURIComponent(key),{redirect:'follow'})).json();
+      if(!j||!j.ok)throw 0;const by={};j.photos.forEach(v=>by[v.photo]=v);
+      rows=D.SPECTRUM_PHOTOS.map(p=>({photo:p.photo,title:p.title,photographer:p.photographer,school:p.school||'',votes:(by[p.photo]||{}).votes||0,last:(by[p.photo]||{}).last||''})).sort((a,b)=>b.votes-a.votes||a.title.localeCompare(b.title));
+      const tot=rows.reduce((n,r)=>n+r.votes,0),mx=Math.max(1,...rows.map(r=>r.votes));sp.textContent='Votes · '+tot+' in total';
+      msg.textContent=tot?'Photos with the most votes first. Only photos currently in the list are shown.':'No votes yet. They appear here after visitors press Vote on the photographs page.';
+      const t=h('table');t.innerHTML='<tr><th>#</th><th></th><th>Photo name</th><th>Photographer</th><th>School</th><th>Votes</th><th></th></tr>';
+      rows.forEach((r,i)=>{const tr=h('tr'),k=r.photo.lastIndexOf('/'),th='../'+r.photo.slice(0,k+1)+'thumbs/'+r.photo.slice(k+1);
+        tr.innerHTML='<td>'+(i+1)+'</td><td><img src="'+esc(th)+'" alt="" style="width:2.2rem;height:2.8rem;object-fit:cover;display:block"></td><td>'+esc(r.title)+'</td><td>'+esc(r.photographer)+'</td><td>'+esc(r.school)+'</td><td><b>'+r.votes+'</b></td><td style="min-width:7rem"><div style="height:.5rem;background:var(--accent);opacity:.8;width:'+Math.max(r.votes?3:0,Math.round(r.votes/mx*100))+'%"></div></td>';t.append(tr)});
+      tb.className='tbl';tb.append(t)}
+    catch(e){sp.textContent='Votes';msg.innerHTML='<b>Could not read the votes.</b> Voting needs a one-time setup: paste <code>tools/photo-votes.gs</code> into your Google Apps Script, add the two lines it explains, and deploy a new version. Then press Refresh.'}}
+  go();return box}
 function photos(){
   const w=h('div'),n=()=>D.SPECTRUM_PHOTOS.filter(p=>!String(p.school||'').trim()).length,m=h('p','note');
   const upd=()=>{m.innerHTML='These are the photographs on the <b>Spectrum 2026 Photographs</b> page (Spectrum &rarr; View the photographs). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
-  upd();w.append(m,ed(D,'SPECTRUM_PHOTOS',''));
-  w.addEventListener('input',()=>setTimeout(()=>{upd();w.querySelectorAll('details.it').forEach((d,i)=>{const s=d.querySelector('summary span');if(s&&D.SPECTRUM_PHOTOS[i])s.textContent='⠿ '+lab(D.SPECTRUM_PHOTOS[i])})},0));
+  const L=ed(D,'SPECTRUM_PHOTOS','');upd();w.append(m,votesPanel(),h('h3',0,'Photos'),L);
+  w.addEventListener('input',()=>setTimeout(()=>{upd();L.querySelectorAll(':scope>details.it').forEach((d,i)=>{const s=d.querySelector('summary span');if(s&&D.SPECTRUM_PHOTOS[i])s.textContent='⠿ '+lab(D.SPECTRUM_PHOTOS[i])})},0));
   return w}
 function site(){const w=h('div','bd'),d=h('input','in');d.type='datetime-local';d.value=D.EVENT_DATE.slice(0,16);
   d.onchange=()=>{if(d.value){D.EVENT_DATE=d.value+':00+05:30';dirty()}};
