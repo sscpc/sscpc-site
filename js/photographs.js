@@ -18,7 +18,7 @@
 
   /* ---------- floating vote button ---------- */
   const fab=document.getElementById('vote-fab');
-  const ICON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3H5a2 2 0 0 0-2 2v2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M12 16.2s-3.8-2.3-3.8-5a2.1 2.1 0 0 1 3.8-1.2 2.1 2.1 0 0 1 3.8 1.2c0 2.7-3.8 5-3.8 5z"/></svg>';
+  const ICON='<img class="vf-img" src="icons/vote-icon.webp" alt="" width="28" height="28" decoding="async" draggable="false">';
   let fabState='';
   function paintFab(s){
     if(!fab)return;
