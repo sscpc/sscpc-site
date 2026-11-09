@@ -33,19 +33,10 @@
       fabState=s;
     }
   }
-  /* sit under the small countdown when it is showing, otherwise just under the menu bar */
+  /* sits at the top-left, opposite the small countdown on the top-right; hidden on the vote page itself */
   function placeFab(){
     if(!fab||fab.hidden)return;
-    const onVote=location.hash==='#vote';
-    fab.style.display=onVote?'none':'';
-    if(onVote)return;
-    let top=83;
-    const pc=document.getElementById('pcd');
-    if(pc&&!pc.classList.contains('docked')){
-      const cs=getComputedStyle(pc),r=pc.getBoundingClientRect();
-      if(cs.display!=='none'&&cs.visibility!=='hidden'&&+cs.opacity>.05&&r.width>0&&r.height>0&&r.top<innerHeight*.5)top=Math.max(top,Math.round(r.bottom+10));
-    }
-    fab.style.top=top+'px';
+    fab.style.display=location.hash==='#vote'?'none':'';
   }
 
   /* ---------- vote page ---------- */
