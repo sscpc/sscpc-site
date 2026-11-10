@@ -1854,6 +1854,14 @@ const SLIDE_SECONDS = 6.5;
 
 const SLIDES = [
   {
+    "image": "images/announcements/img-mwawlsnr.png",
+    "alt": "scope introducing"
+  },
+  {
+    "image": "images/announcements/img-mwawle31.jpg",
+    "alt": "chief guests"
+  },
+  {
     "image": "images/announcements/img-mwawkt73.jpg",
     "alt": "3 days more"
   },
