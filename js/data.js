@@ -1854,6 +1854,22 @@ const SLIDE_SECONDS = 6.5;
 
 const SLIDES = [
   {
+    "image": "images/announcements/img-mwawkt73.jpg",
+    "alt": "3 days more"
+  },
+  {
+    "image": "images/announcements/img-mwawkaj1.jpg",
+    "alt": "4 days more"
+  },
+  {
+    "image": "images/announcements/img-mwawjxqk.jpg",
+    "alt": "5 days more"
+  },
+  {
+    "image": "images/announcements/img-mwawjnk3.jpg",
+    "alt": "save the date"
+  },
+  {
     "image": "images/announcements/img-mv88tzgz.jpg",
     "alt": "Successfully concluded"
   },
