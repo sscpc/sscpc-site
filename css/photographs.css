@@ -127,6 +127,7 @@ html.vm-open{overflow:hidden}
 .sc-pts li{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px solid #1c4468;font-size:.92rem;color:#c4d3e6}
 .sc-pts b{font-family:var(--mono);font-weight:700;font-size:.82rem;letter-spacing:.04em;color:var(--gold);white-space:nowrap}
 .sc-soon{color:#fff}
+.sc-body p.sc-gap{margin-top:.8rem}
 .sc-ic--chart svg{width:4.2rem;height:4.2rem;margin-right:1.4rem}
 .sc-ic--cam{width:4.5rem;height:4.5rem;margin-right:1.4rem;border:1px solid #2b4768;border-radius:6px;background:rgba(2,8,16,.35)}
 .sc-ic--cam svg{width:3.2rem;height:3.2rem}
