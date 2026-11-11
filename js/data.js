@@ -1931,12 +1931,12 @@ const SLIDES = [
 const FORMS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyAHz3S7XpEbTAfYYXuhJDoVZoKPNY5his_4kfAh4ElJYyvgeAd4-14XVT_Vlp06f-j/exec";
 
 const PDF_CONFIG = {
-  "siteUrl": "https://sscpc.vercel.app",
-  "siteLabel": "ssckphotography.com",
+  "siteUrl": "https://ssckphotography.com/",
+  "siteLabel": "www.ssckphotography.com",
   "email": "sylvestrian.photography@gmail.com",
   "clubName": "St. Sylvester's College Photography Club",
   "shortName": "SSCPC",
-  "footerText": "",
+  "footerText": "Keep Focusing, Capture the Best",
   "logo": "images/pdf-logo.png",
   "colors": {
     "navy": "#04101E",
