@@ -3,925 +3,572 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SSCK Photography | St. Sylvester's College Photography Club (SSCPC), Kandy</title>
-<meta name="description" content="SSCK Photography (ssckphotography.com) is the official website of the St. Sylvester's College Photography Club (SSCPC) in Kandy, Sri Lanka. Explore photo albums and galleries, club events, member profiles and photography workshops, learn how to join, and discover Spectrum, our annual photography exhibition on 13 November 2026 at Cingolani Memorial Hall.">
-<link rel="canonical" href="https://ssckphotography.com/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="SSCK Photography">
-<meta property="og:title" content="SSCK Photography | St. Sylvester's College Photography Club (SSCPC), Kandy">
-<meta property="og:description" content="SSCK Photography, the photography club of St. Sylvester's College, Kandy. Home of Spectrum, our photography competition and exhibition. Albums, events, members and registration.">
-<meta property="og:url" content="https://ssckphotography.com/">
-<meta property="og:image" content="https://ssckphotography.com/images/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="SSCPC, St. Sylvester's College Photography Club">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="SSCK Photography | St. Sylvester's College Photography Club (SSCPC), Kandy">
-<meta name="twitter:description" content="SSCK Photography, the photography club of St. Sylvester's College, Kandy. Home of Spectrum, our photography competition and exhibition. Albums, events, members and registration.">
-<meta name="twitter:image" content="https://ssckphotography.com/images/og-image.jpg">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"SSCK Photography","alternateName":["ssck photography","SSCPC","St. Sylvester's College Photography Club"],"url":"https://ssckphotography.com/"},{"@type":"Organization","name":"St. Sylvester's College Photography Club","alternateName":["SSCK Photography","ssck photography","SSCPC"],"url":"https://ssckphotography.com/","logo":"https://ssckphotography.com/images/logo.png","address":{"@type":"PostalAddress","addressLocality":"Kandy","addressCountry":"LK"}}]}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Google Fonts must never block the page: it loads in the background and applies when it arrives (the site shows fine without it). -->
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@200;300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@200;300&display=swap" rel="stylesheet"></noscript>
-<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512.png">
-<link rel="shortcut icon" href="/icons/icon-192.png">
-<link rel="manifest" href="manifest.webmanifest"><!--pwa-->
-<meta name="theme-color" content="#02060d"><!--pwa-->
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><!--pwa-->
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/chatbot.css">
-<link rel="stylesheet" href="css/pdf-ui.css">
-<link rel="stylesheet" href="css/learn.css">
-<link rel="stylesheet" href="css/music.css">
-<link rel="stylesheet" href="css/committee.css">
-<link rel="stylesheet" href="css/gallery-tools.css">
-<link rel="stylesheet" href="css/judges-v6.css">
-<link rel="stylesheet" href="css/selection-done.css">
-<link rel="stylesheet" href="css/photographs.css?v=5">
-<script>document.documentElement.classList.add('loading','intro-hold');document.documentElement.dataset.theme='dark';try{localStorage.removeItem('sscpc-theme')}catch(e){}</script>
-<noscript><style>#loader{display:none}html.loading{overflow:auto}</style></noscript>
-</head>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0a0d26">
+<title>SSCPC Admin</title>
+<link rel="icon" href="../images/crown-mark.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+@font-face{font-family:'Nexa';font-weight:100 900;font-style:normal;font-display:swap;src:url(../fonts/Nexa-Heavy.ttf) format('truetype')}
+@font-face{font-family:'Sparling';font-weight:100 900;font-style:normal;font-display:swap;src:url(../fonts/sparling-demo.ttf) format('truetype')}
+@font-face{font-family:'Roboto';font-weight:400;font-style:normal;font-display:swap;src:url(../fonts/roboto-regular.ttf) format('truetype')}
+@font-face{font-family:'Roboto';font-weight:600 900;font-style:normal;font-display:swap;src:url(../fonts/roboto-bold.ttf) format('truetype')}
+:root{--body:'Nexa','Roboto','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif;--heading:'Sparling','Nexa','Roboto','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif}
+h1,h2,h3,h4,.ttl,legend,.brand{font-family:var(--heading)}
+body,input,select,textarea,button,td,th,label,summary{font-family:var(--body);font-weight:700}
+</style>
+<style>
+.hide{display:none!important}
+#login{min-height:100vh;display:grid;place-items:center;padding:1.5rem;color:#f4f1e4;background:radial-gradient(55% 55% at 78% 18%,rgba(125,21,38,.6),transparent 70%),radial-gradient(50% 60% at 8% 95%,rgba(29,38,96,.95),transparent 70%),#080b22}
+#login .vf{width:min(24rem,100%);text-align:center}
+#login img{width:54px;margin-bottom:.8rem}
+.ttl{font-family:var(--heading);font-size:1.6rem;line-height:1.2;margin-bottom:1rem}
+.in{width:100%;padding:.7rem .85rem;background:var(--surface);color:var(--ink);border:1px solid var(--line);font:inherit;font-size:.85rem;border-radius:0}
+.in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 40%,transparent)}
+#login .in{background:#080b22;color:#f4f1e4;border-color:rgba(244,241,228,.28);margin:1rem 0}
+.app{display:grid;grid-template-columns:14rem 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;background:var(--surface);border-right:1px solid var(--line);padding:1.2rem .8rem;display:flex;flex-direction:column;gap:.2rem}
+.side .brand{padding:0 .5rem 1rem;font-family:var(--heading)}
+.side .brand img{width:30px}
+.tab{text-align:left;background:none;border:0;border-left:3px solid transparent;color:var(--ink);padding:.6rem .8rem;font:600 .72rem var(--body);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.tab:hover{color:var(--accent)}
+.tab[aria-selected=true]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.sp{flex:1}
+.badge{margin:.5rem;padding:.4rem .6rem;background:var(--accent);color:#f4f1e4;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-align:center}
+main{padding:clamp(1rem,3vw,2rem);min-width:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.8rem;margin-bottom:1.2rem}
+.stats .card{padding:1rem}
+.bar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1rem}
+.bar .in{flex:1;min-width:10rem}
+.sm{padding:.55rem 1.2rem!important;font-size:.68rem!important}
+.tbl{overflow:auto;max-height:65vh;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.75rem}
+th,td{padding:.55rem .7rem;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;max-width:16rem;overflow:hidden;text-overflow:ellipsis}
+th{position:sticky;top:0;background:var(--surface);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+details.it{border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--surface);margin:.5rem 0}
+details.it summary{cursor:pointer;padding:.7rem 1rem;font-weight:600;display:flex;gap:.4rem;align-items:center}
+details.it summary span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bd{padding:.2rem 1rem 1rem;display:grid;gap:.7rem}
+label.f{display:grid;gap:.25rem;font-size:.66rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;font-weight:600}
+fieldset{border:1px solid var(--line);padding:.8rem;display:grid;gap:.7rem;min-width:0}
+legend{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:0 .4rem}
+.mini{background:none;border:1px solid var(--line);color:var(--ink);cursor:pointer;padding:.1rem .5rem;font-size:.75rem}
+.mini:hover{border-color:var(--accent)}
+.note{color:var(--muted);font-size:.78rem;margin-bottom:1rem;max-width:44rem}
+@media(max-width:800px){.app{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:.5rem;align-items:center}.side .brand,.sp{display:none}.tab{white-space:nowrap;border-left:0;border-bottom:3px solid transparent}.tab[aria-selected=true]{border-color:var(--accent)}}
+.f,label.f,div.f{display:grid;gap:.25rem;font-size:.66rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;font-weight:600}
+.err{border-color:#c0392b!important;color:#ff8a8a}pre.box{white-space:pre-wrap;font:.72rem/1.6 var(--mono);padding:1rem;background:var(--surface);border:1px solid var(--line);max-height:50vh;overflow:auto}
+div.box{padding:.8rem 1rem;background:var(--surface);border:1px solid var(--line);margin-bottom:.8rem;font-size:.78rem}
+dialog{background:var(--surface);color:var(--ink);border:1px solid var(--line);width:min(36rem,94vw);max-height:90vh;overflow:auto;padding:1.2rem}dialog::backdrop{background:rgba(0,0,0,.65)}
+.kv{margin-bottom:.6rem}.kv small{color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:.62rem;display:block}
+.tab:disabled{opacity:.35;cursor:default}details.it summary img{flex:none}
+</style>
+
+<style id="sscpc-admin-glass-theme">
+/* SSCCPC Admin — glassmorphism refresh. Admin-only; public site styles remain unchanged. */
+:root{
+  --adm-bg:#070d1d;
+  --adm-panel:rgba(17,35,62,.58);
+  --adm-panel-strong:rgba(15,31,55,.82);
+  --adm-line:rgba(176,211,255,.15);
+  --adm-line-hi:rgba(153,205,255,.30);
+  --adm-blue:#69baff;
+  --adm-cyan:#9adfff;
+  --adm-cream:#f3f0e4;
+  --adm-muted:#a9bdd7;
+}
+html,body{min-height:100%;background:var(--adm-bg)}
+body{
+  background:
+    radial-gradient(900px 620px at 88% -8%,rgba(43,111,181,.28),transparent 66%),
+    radial-gradient(760px 560px at -8% 100%,rgba(43,69,159,.25),transparent 68%),
+    linear-gradient(135deg,#070d1d 0%,#09172b 52%,#080d1c 100%);
+  background-attachment:fixed;
+}
+#login{
+  position:relative;isolation:isolate;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 78% 16%,rgba(104,66,170,.22),transparent 45%),
+    radial-gradient(ellipse at 12% 90%,rgba(37,111,190,.25),transparent 48%),
+    linear-gradient(135deg,#070d1d,#0a1830 58%,#090d1d);
+}
+#login:before,#login:after{
+  content:"";position:absolute;z-index:-1;border:1px solid rgba(167,211,255,.10);
+  border-radius:50%;filter:blur(.2px);pointer-events:none
+}
+#login:before{width:38rem;height:38rem;right:-13rem;top:-17rem;box-shadow:0 0 100px rgba(76,153,231,.09),inset 0 0 90px rgba(76,153,231,.06)}
+#login:after{width:30rem;height:30rem;left:-15rem;bottom:-19rem;box-shadow:0 0 100px rgba(88,102,220,.12),inset 0 0 90px rgba(88,102,220,.07)}
+#login .vf{
+  position:relative;padding:3rem 2.6rem 2.5rem;
+  border:1px solid rgba(198,224,255,.22);border-radius:26px;
+  background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.035));
+  box-shadow:0 28px 90px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+}
+#login .vf i{display:none}
+#login img{width:62px;margin-bottom:1rem;filter:drop-shadow(0 5px 18px rgba(105,186,255,.2))}
+#login .ttl{font-size:1.9rem;letter-spacing:-.035em;margin-bottom:1.7rem;color:#f7f5ed}
+#login .in{
+  min-height:3.25rem;padding:.9rem 1rem;margin:.5rem 0 1rem;
+  background:rgba(3,12,27,.48);border:1px solid rgba(191,219,255,.22);
+  border-radius:12px;color:#f7f5ed;transition:border-color .2s,box-shadow .2s,background .2s
+}
+#login .in::placeholder{color:#90a6c2}
+#login .in:focus{border-color:rgba(105,186,255,.8);box-shadow:0 0 0 4px rgba(105,186,255,.12);background:rgba(3,12,27,.68)}
+#login .btn{
+  min-height:3.2rem;border-radius:12px;background:var(--adm-cream);color:#101a2b;
+  letter-spacing:.1em;box-shadow:0 8px 24px rgba(0,0,0,.18)
+}
+#login .btn:hover{box-shadow:0 12px 30px rgba(0,0,0,.28);transform:translateY(-2px)}
+#login #msg{min-height:1.2rem;color:#bcd4f2!important}
+
+/* Main application shell */
+.app{grid-template-columns:16rem minmax(0,1fr);min-height:100vh;gap:0}
+.side{
+  z-index:5;position:sticky;top:0;height:100vh;overflow-y:auto;
+  padding:1.35rem .95rem 1.2rem;gap:.42rem;
+  background:linear-gradient(180deg,rgba(12,28,49,.88),rgba(8,19,36,.78));
+  border-right:1px solid var(--adm-line);
+  box-shadow:12px 0 45px rgba(0,0,0,.12);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)
+}
+.side .brand{
+  display:flex;align-items:center;gap:.75rem;padding:.45rem .65rem 1.45rem;
+  margin-bottom:.5rem;font-family:var(--body);font-size:1rem;letter-spacing:.01em;color:#f4f6fb
+}
+.side .brand img{width:34px;height:34px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(105,186,255,.18))}
+.side .sp{flex:1;min-height:1rem}
+.tab{
+  display:flex;align-items:center;gap:.8rem;min-height:2.65rem;
+  padding:.68rem .85rem;border:1px solid transparent;border-left:1px solid transparent;
+  border-radius:11px;text-align:left;color:#b9cbe1;
+  font:600 .7rem var(--body);letter-spacing:.065em;transition:background .2s,border-color .2s,color .2s,transform .2s
+}
+.tab:before{
+  display:inline-grid;place-items:center;flex:none;width:1.2rem;
+  color:#85a9d1;font-size:.9rem;line-height:1
+}
+.tab[data-t="home"]:before{content:"⌂"}
+.tab[data-t="inbox"]:before{content:"✉"}
+.tab[data-t="events"]:before{content:"▦"}
+.tab[data-t="albums"]:before{content:"▣"}
+.tab[data-t="members"]:before{content:"♙"}
+.tab[data-t="slides"]:before{content:"▤"}
+.tab[data-t="learn"]:before{content:"⌘"}
+.tab[data-t="selection"]:before{content:"◇"}
+.tab[data-t="photos"]:before{content:"◎"}
+.tab[data-t="site"]:before{content:"◈"}
+.tab[data-t="publish"]:before{content:"↥"}
+#undo:before{content:"↶"} #redo:before{content:"↷"} #th:before{content:"◐"} #so:before{content:"⇥"}
+.tab:hover:not(:disabled){
+  color:#fff;background:rgba(125,183,239,.09);border-color:rgba(155,203,255,.10);
+  transform:translateX(2px)
+}
+.tab[aria-selected=true]{
+  color:#f7f5ed;background:linear-gradient(105deg,rgba(69,145,218,.24),rgba(69,145,218,.07));
+  border:1px solid rgba(126,190,255,.23);box-shadow:inset 3px 0 0 var(--adm-blue),0 8px 22px rgba(0,0,0,.10)
+}
+.tab[aria-selected=true]:before{color:var(--adm-cyan)}
+.tab:disabled{opacity:.3}
+.side .badge{
+  margin:.4rem .2rem .7rem;padding:.6rem .7rem;border:1px solid rgba(255,194,112,.28);
+  border-radius:9px;background:rgba(180,112,35,.15);color:#ffd69a;font-size:.6rem
+}
+.side a.tab{text-decoration:none}
+
+/* Main content */
+main{
+  position:relative;min-width:0;padding:clamp(1.35rem,3vw,2.8rem);
+  max-width:1800px;width:100%;margin:0 auto
+}
+main:before{
+  content:"SSCCPC  /  ADMIN WORKSPACE";display:block;margin:0 0 .55rem;
+  color:#82a9d2;font:600 .62rem var(--body);letter-spacing:.19em
+}
+main>.ttl{
+  position:relative;margin:0 0 1.8rem;padding:0 0 1.1rem;
+  color:#f4f6fb;font:700 clamp(1.65rem,2.5vw,2.15rem)/1.2 var(--body);
+  letter-spacing:-.045em
+}
+main>.ttl:after{
+  content:"";position:absolute;left:0;bottom:0;width:3.3rem;height:3px;border-radius:5px;
+  background:linear-gradient(90deg,var(--adm-blue),rgba(105,186,255,0))
+}
+h3{color:#edf4ff;font-size:1rem;letter-spacing:-.015em;margin:1.5rem 0 .85rem}
+.note{color:var(--adm-muted);font-size:.77rem;line-height:1.75;max-width:58rem}
+.stats{grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr));gap:1rem;margin-bottom:1.55rem}
+.stats .card{
+  position:relative;overflow:hidden;min-height:116px;padding:1.15rem 1.2rem;
+  border:1px solid var(--adm-line);border-radius:16px;border-left:1px solid var(--adm-line);
+  background:linear-gradient(145deg,rgba(29,59,94,.66),rgba(12,28,50,.62));
+  box-shadow:0 12px 30px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.055);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:transform .22s,border-color .22s,box-shadow .22s
+}
+.stats .card:after{
+  content:"";position:absolute;width:110px;height:110px;right:-48px;top:-58px;border-radius:50%;
+  background:rgba(87,171,245,.12);filter:blur(3px);pointer-events:none
+}
+.stats .card:hover{transform:translateY(-3px);border-color:var(--adm-line-hi);box-shadow:0 17px 38px rgba(0,0,0,.2)}
+.stats .card small{position:relative;z-index:1;color:#a9c5e5;font-size:.67rem;letter-spacing:.045em}
+.stats .card strong{position:relative;z-index:1;color:#f7f5ed;font-size:1.65rem;line-height:1.2;margin-top:.65rem;letter-spacing:-.04em}
+.bar{gap:.65rem;margin:1.25rem 0 1.15rem}
+.btn{
+  cursor:pointer;border-radius:999px;transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;
+  box-shadow:0 6px 18px rgba(0,0,0,.12)
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.btn.ghost{border:1px solid rgba(167,207,250,.3);background:rgba(19,43,71,.38);color:#dceaff}
+.btn.ghost:hover{background:rgba(76,143,207,.16);border-color:rgba(167,207,250,.55)}
+.btn:not(.ghost){background:linear-gradient(135deg,#f5f2e8,#dce8f6);color:#102039}
+.sm{min-height:2.45rem;padding:.62rem 1.05rem!important;font-size:.65rem!important}
+
+/* Tables and editor panels */
+.tbl{
+  max-width:100%;max-height:65vh;overflow:auto;border:1px solid var(--adm-line);
+  border-radius:15px;background:rgba(10,25,45,.48);
+  box-shadow:0 12px 30px rgba(0,0,0,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)
+}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:.74rem}
+th,td{padding:.82rem .95rem;border-bottom:1px solid rgba(173,207,245,.10);color:#e3edf9}
+th{background:rgba(25,51,80,.88);color:#a9c5e5;font-size:.62rem;letter-spacing:.09em}
+td{background:rgba(12,29,50,.24)}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:rgba(78,145,206,.09)}
+details.it{
+  margin:.7rem 0;border:1px solid var(--adm-line);border-left:1px solid var(--adm-line);
+  border-radius:13px;background:linear-gradient(145deg,rgba(24,48,76,.62),rgba(10,25,44,.62));
+  box-shadow:0 8px 24px rgba(0,0,0,.10);overflow:hidden
+}
+details.it[open]{border-color:var(--adm-line-hi)}
+details.it summary{padding:.9rem 1rem;color:#eaf3ff}
+details.it summary:hover{background:rgba(106,174,235,.07)}
+.bd{padding:.5rem 1rem 1.1rem;gap:.85rem}
+fieldset{
+  border:1px solid var(--adm-line);border-radius:12px;padding:1rem;
+  background:rgba(5,17,32,.2)
+}
+legend{color:#a9c5e5}
+label.f,.f,label.f,div.f{color:#a9c5e5;font-size:.64rem;letter-spacing:.075em;gap:.4rem}
+.in{
+  min-height:2.75rem;padding:.72rem .85rem;border:1px solid rgba(169,204,241,.2);
+  border-radius:10px;background:rgba(4,15,29,.58);color:#edf5ff;
+  font-size:.78rem;transition:border-color .2s,box-shadow .2s,background .2s
+}
+.in:focus{border-color:rgba(105,186,255,.8);box-shadow:0 0 0 3px rgba(105,186,255,.12);background:rgba(4,15,29,.8)}
+textarea.in{min-height:6rem}
+.in::placeholder{color:#8299b5}
+.mini{border-radius:7px;border-color:var(--adm-line);color:#c9dcf2;background:rgba(4,15,29,.4)}
+.mini:hover{background:rgba(105,186,255,.13);border-color:var(--adm-line-hi)}
+div.box,pre.box{
+  border:1px solid var(--adm-line);border-radius:12px;background:rgba(9,25,44,.65);color:#dbe9f9
+}
+dialog{
+  border:1px solid var(--adm-line-hi);border-radius:18px;
+  background:rgba(11,27,47,.96);color:#edf5ff;box-shadow:0 25px 90px rgba(0,0,0,.5);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)
+}
+dialog::backdrop{background:rgba(1,6,16,.72);backdrop-filter:blur(5px)}
+.err{border-color:rgba(255,111,111,.6)!important;color:#ffaaaa}
+
+/* Responsive */
+@media(max-width:900px){
+  .app{grid-template-columns:13rem minmax(0,1fr)}
+  .side{padding:.9rem .65rem}
+  main{padding:1.4rem}
+  .stats{grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr))}
+}
+@media(max-width:680px){
+  .app{display:block}
+  .side{
+    position:sticky;top:0;height:auto;max-height:none;overflow-x:auto;overflow-y:hidden;
+    flex-direction:row;align-items:center;gap:.35rem;padding:.55rem;
+    border-right:0;border-bottom:1px solid var(--adm-line);
+    background:rgba(7,18,34,.94);white-space:nowrap
+  }
+  .side .brand{display:flex;flex:none;padding:.25rem .45rem;margin:0 .25rem 0 0;font-size:.8rem}
+  .side .brand img{width:27px;height:27px}
+  .side .sp{display:none}
+  .side .badge{display:none!important}
+  .tab{flex:none;min-height:2.45rem;padding:.55rem .7rem;font-size:.61rem}
+  .tab:before{width:auto}
+  main{padding:1.25rem .9rem 2rem}
+  main:before{font-size:.55rem}
+  main>.ttl{font-size:1.55rem;margin-bottom:1.25rem}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
+  .stats .card{min-height:100px;padding:.9rem}
+  .stats .card strong{font-size:1.4rem}
+  .bar{align-items:stretch}
+  .bar .btn{flex:1}
+  .tbl{max-height:58vh}
+  th,td{padding:.65rem .7rem}
+  #login .vf{padding:2.4rem 1.35rem 2rem;border-radius:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+</style>
+
+<link rel="stylesheet" href="./admin-glass.css">\n</head>
 <body>
 
-<div id="loader" role="status" aria-label="Loading SSCPC">
-  <div class="ld-stage" aria-hidden="true">
-    <div class="ld-dot maroon" id="ld-maroon"></div>
-    <div class="ld-dot ivory" id="ld-ivory"></div>
-    <div class="ld-dot navy" id="ld-navy"></div>
-  </div>
-  <div class="ld-brand">
-    <img class="ld-crown" src="images/crown-mark.png" alt="">
-    <p class="ld-since">SINCE 1945</p>
+<div id="login">
+  <div class="vf"><i></i><i></i><i></i><i></i>
+    <img src="../images/crown-mark.png" alt="">
+    <div class="ttl">SSCPC Admin</div>
+    <form id="lf"><input class="in" id="key" type="password" placeholder="Admin key" autocomplete="current-password" required>
+    <button class="btn" style="width:100%">Sign in</button></form>
+    <p id="msg" style="margin-top:1rem;font-size:.78rem;color:#d9dbee"></p>
   </div>
 </div>
 
-<nav class="nav" aria-label="Main">
-  <div class="wrap">
-    <a class="brand" href="#home" id="brand-logo">
-      <span class="brand-ico" id="brand-ico">
-        <img src="images/brand-photo.png" alt="" width="34" height="40" draggable="false">
-        <span class="brand-glint" aria-hidden="true"></span>
-        <span class="brand-ring" aria-hidden="true"></span>
-      </span>
-      SSCPC
-    </a>
-    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Open menu" title="Menu">
-      <span class="bars" aria-hidden="true"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
-    </button>
-    <ul class="menu" id="menu">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#spectrum">Spectrum</a></li>
-      <li><a href="#members">Committee</a></li>
-      <li><a href="#join">Join Us</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li class="reg-m"><a class="reg" href="#register">Register</a></li>
-    </ul>
-    <a class="nav-cta" href="#register">Register</a>
-  </div>
-</nav>
-
-<section class="scroll-hero" id="intro" aria-hidden="true">
-  <div class="intro__pin">
-    <div class="intro__stage" id="introStage">
-      <div class="intro__photos" aria-hidden="true"><div class="intro__wall" id="introWall"></div></div>
-      <div class="intro__dim" aria-hidden="true"></div>
-      <div class="intro__duo" aria-hidden="true"></div>
-      <div class="intro__shade" aria-hidden="true"></div>
-      <div class="intro__lens" aria-hidden="true"></div>
-      <div class="intro__spot" id="introSpot" aria-hidden="true"></div>
-      <div class="intro__hint" id="introHint" aria-hidden="true"><span>Scroll</span><i></i></div>
-
-      <img class="intro__hand" src="images/hero-hand.webp" alt="" width="900" height="1657" draggable="false">
-
-      <div class="intro__logo" id="introLogo">
-        <div class="intro__tilt">
-          <div class="intro__orb" role="img" aria-label="SSCPC">
-            <i class="orb-slab orb-slab--3" aria-hidden="true"></i>
-            <i class="orb-slab orb-slab--2" aria-hidden="true"></i>
-            <i class="orb-slab orb-slab--1" aria-hidden="true"></i>
-            <i class="orb-body" aria-hidden="true"></i>
-            <img class="orb-face" src="images/logo-hero.webp" alt="" width="900" height="900" draggable="false">
-            <i class="orb-shine" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-      <div class="intro__reticle" id="introReticle" aria-hidden="true">
-        <i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i>
-      </div>
-      <div class="intro__ui" id="introUi">
-        <div class="intro__stat intro__stat--top"><b>SINCE 1945</b></div>
-        <div class="intro__stat intro__stat--left"><b>KEEP FOCUSING</b></div>
-        <div class="intro__stat intro__stat--right"><b>CAPTURE THE BEST</b></div>
-        <div class="intro__title">Capture. Create.<br>Inspire.</div>
-        <div class="intro__side">
-          <p>Welcome to the Photography Club of St. Sylvester's College &mdash; where moments become memories and creativity becomes a story.</p>
-          <a class="intro__pill" href="#gallery" tabindex="-1">Explore the gallery</a>
-        </div>
-      </div>
-
-      <div class="intro__flash" id="introFlash" aria-hidden="true"></div>
-
-      <div class="intro__sig" id="introSig" aria-hidden="true">
-        <svg viewBox="0 0 3560.6 711.4" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="introSigGrad" gradientUnits="userSpaceOnUse" x1="-1800" y1="0" x2="1800" y2="0" spreadMethod="reflect">
-              <stop offset="0" stop-color="#2f6fe8"/><stop offset=".35" stop-color="#4fb4ff"/><stop offset=".5" stop-color="#a5f3ff"/><stop offset=".65" stop-color="#4fb4ff"/><stop offset="1" stop-color="#2f6fe8"/>
-              <animate attributeName="x1" from="-1800" to="5320" dur="9s" repeatCount="indefinite"/>
-              <animate attributeName="x2" from="1800" to="8920" dur="9s" repeatCount="indefinite"/>
-            </linearGradient>
-          </defs>
-          <path id="introSigPath" transform="translate(-27,711.4) scale(1,-1)" d="M356.9 424.4C239.9 443.3 198.7 457.2 198.7 494.4C198.7 528.1 225.4 570.7 343.4 570.7C488.1 570.7 509.6 498.6 509.6 450.0C563.2 450.0 669.3 450.0 669.3 450.0C669.3 556.6 615.1 708.7 343.4 708.7C115.0 708.7 41.8 594.6 41.8 495.7C41.8 367.7 135.8 324.3 345.0 293.5C482.2 273.2 530.0 265.0 530.0 217.4C530.0 163.1 482.1 136.6 367.1 136.6C276.2 136.6 183.2 153.1 183.2 258.8C97.1 258.8 58.6 258.8 27.0 258.8C27.0 191.1 26.9 3.1e-05 371.9 3.1e-05C576.5 3.1e-05 692.3 43.7 692.3 217.5C692.3 375.8 513.8 398.9 356.9 424.4Z M1076.9 424.4C959.9 443.3 918.7 457.2 918.7 494.4C918.7 528.1 945.4 570.7 1063.4 570.7C1208.1 570.7 1229.6 498.6 1229.6 450.0C1283.2 450.0 1389.3 450.0 1389.3 450.0C1389.3 556.6 1335.1 708.7 1063.4 708.7C835.0 708.7 761.8 594.6 761.8 495.7C761.8 367.7 855.8 324.3 1065.0 293.5C1202.2 273.2 1250.0 265.0 1250.0 217.4C1250.0 163.1 1202.1 136.6 1087.1 136.6C996.2 136.6 903.2 153.1 903.2 258.8C817.1 258.8 778.6 258.8 747.0 258.8C747.0 191.1 746.9 3.1e-05 1091.9 3.1e-05C1296.5 3.1e-05 1412.3 43.7 1412.3 217.5C1412.3 375.8 1233.8 398.9 1076.9 424.4Z M2008.3 266.4C1989.1 197.4 1938.6 155.3 1821.4 155.3C1701.7 155.3 1618.9 216.6 1618.9 355.7C1618.9 494.8 1701.7 556.2 1821.4 556.2C1934.4 556.2 1986.9 520.3 2008.8 445.0H2166.5C2156.9 594.2 2016.7 711.4 1821.4 711.4C1620.5 711.4 1467.0 585.7 1467.0 355.7C1467.0 121.4 1620.5 -3.1e-05 1821.4 -3.1e-05C2016.7 -3.1e-05 2152.7 110.1 2166.6 266.4H2008.3Z M2534.8 700.0C2493.3 700.0 2410.4 699.6 2373.2 699.4V700.0H2221.0V1.5e-05H2373.2V196.0C2404.8 196.0 2508.8 196.0 2534.4 196.0C2600.9 196.0 2833.4 186.6 2833.4 447.7C2833.4 699.3 2619.0 700.0 2534.8 700.0ZM2540.0 327.3C2526.7 327.3 2407.3 327.3 2373.2 327.3V568.5C2414.7 568.5 2514.4 568.5 2542.3 568.5C2593.1 568.5 2690.9 568.8 2690.9 448.0C2690.9 321.5 2580.4 327.3 2540.0 327.3Z M3429.3 266.4C3410.1 197.4 3359.6 155.3 3242.4 155.3C3122.7 155.3 3039.9 216.6 3039.9 355.7C3039.9 494.8 3122.7 556.2 3242.4 556.2C3355.4 556.2 3407.9 520.3 3429.8 445.0H3587.5C3577.9 594.2 3437.7 711.4 3242.4 711.4C3041.5 711.4 2888.0 585.7 2888.0 355.7C2888.0 121.4 3041.5 -3.1e-05 3242.4 -3.1e-05C3437.7 -3.1e-05 3573.7 110.1 3587.6 266.4H3429.3Z"/>
-        </svg>
-      </div>
-
-      <div class="intro__rows" id="introRows" aria-hidden="true">
-        <div class="intro__row intro__row--a"><span>KEEP FOCUSING&nbsp; • &nbsp;KEEP FOCUSING&nbsp; • &nbsp;KEEP FOCUSING&nbsp; • &nbsp;KEEP FOCUSING&nbsp; • &nbsp;KEEP FOCUSING&nbsp; • &nbsp;</span><span>KEEP FOCUSING&nbsp; • &nbsp;KEEP FOCUSING&nbsp; • &nbsp;KEEP FOCUSING&nbsp; • &nbsp;KEEP FOCUSING&nbsp; • &nbsp;KEEP FOCUSING&nbsp; • &nbsp;</span></div>
-        <div class="intro__row intro__row--b"><span>CAPTURE THE BEST&nbsp; • &nbsp;CAPTURE THE BEST&nbsp; • &nbsp;CAPTURE THE BEST&nbsp; • &nbsp;CAPTURE THE BEST&nbsp; • &nbsp;CAPTURE THE BEST&nbsp; • &nbsp;</span><span>CAPTURE THE BEST&nbsp; • &nbsp;CAPTURE THE BEST&nbsp; • &nbsp;CAPTURE THE BEST&nbsp; • &nbsp;CAPTURE THE BEST&nbsp; • &nbsp;CAPTURE THE BEST&nbsp; • &nbsp;</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<a class="vote-fab" id="vote-fab" hidden></a>
-<div class="pcd" id="pcd" role="status" aria-label="Time left until Spectrum">
-  <span class="pcd-label">Spectrum in</span>
-  <div class="pcd-nums">
-    <span><b id="pcd-d">00</b><i>d</i></span>
-    <span><b id="pcd-h">00</b><i>h</i></span>
-    <span><b id="pcd-m">00</b><i>m</i></span>
-    <span><b id="pcd-s">00</b><i>s</i></span>
-  </div>
+<div class="app hide" id="app">
+  <nav class="side" id="side">
+    <div class="brand"><img src="../images/crown-mark.png" alt=""> Admin</div>
+    <div class="sp"></div>
+    <div class="badge hide" id="dirty">UNPUBLISHED CHANGES</div>
+    <button class="tab" id="undo" type="button" disabled>↶ Undo</button><button class="tab" id="redo" type="button" disabled>↷ Redo</button>
+    <button class="tab" id="th">Light / Dark</button>
+    <a class="tab" href="../tools/album-builder.html">Album Builder</a>
+    <a class="tab" href="../index.html">← View site</a>
+    <button class="tab" id="so">Sign out</button>
+  </nav>
+  <main id="main"></main>
 </div>
 
-<div class="view" id="home">
-
-<section class="intro" aria-label="Welcome">
-  <div class="wrap intro-grid">
-    <h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">SSCK Photography – St. Sylvester's College Photography Club, Kandy</h1>
-    <h2 class="motto"><span>Capture.</span><span>Create.</span><span>Inspire.</span></h2>
-    <div class="intro-text">
-      <p>Welcome to SSCK Photography, the Photography Club of St. Sylvester's College, Kandy — where moments become memories and creativity becomes a story.</p>
-      <p>Explore our photography, discover our events, celebrate the talent of our members, and see our school through a different lens.</p>
-      <p class="closer">Every frame has a story. We capture it. 📸</p>
-    </div>
-  </div>
-</section>
-</div>
-
-<main>
-  <section class="sec view" id="about">
-    <div class="wrap about2">
-      <div class="ab-hero">
-        <div class="ab-hero-copy">
-          <span class="ab-eyebrow">About SSCPC</span>
-          <h2>Where Every Frame Tells a Story</h2>
-          <p class="lead">The St. Sylvester's College Photography Club brings together students who see the world through a different lens — capturing moments, exploring creativity, and turning experiences into visual stories.</p>
-          <div class="ab-stats">
-            <div class="ab-stat"><b data-count="50" data-suffix="+">50+</b><span>Members</span></div>
-            <div class="ab-stat"><b data-count="81">81</b><span>Years</span></div>
-            <div class="ab-stat"><b>&infin;</b><span>Stories to Capture</span></div>
-          </div>
-          <div class="btns"><a class="btn cut" href="#join">Join SSCPC</a></div>
-        </div>
-        <div class="ab-collage">
-          <img class="ab-c1" src="images/about/hero-1-founders-flowers.jpg" alt="Students presenting flowers at Founder's Day">
-          <div class="ab-c2-wrap">
-            <img class="ab-c2" src="images/about/hero-2-founders-statue.jpg" alt="The statue of St. Sylvester overlooking Founder's Day">
-          </div>
-          <img class="ab-c3" src="images/about/hero-3-founders-blessing.jpg" alt="Blessing ceremony at Founder's Day">
-        </div>
-      </div>
-    </div>
-
-    <div class="ab-banner">
-      <img class="ab-banner-img" src="images/about/banner-cadets-haze.jpg" alt="Cadets marching through golden haze at the Interhouse Sports Meet">
-      <div class="ab-banner-in">
-        <h2>See More. Create More. Capture More.</h2>
-        <p>From the everyday moments of school life to the stories worth remembering, we turn what we see into something worth keeping.</p>
-        <div class="btns"><a class="btn ghost cut" href="#gallery">Explore Our Work</a></div>
-      </div>
-    </div>
-
-    <div class="wrap about2">
-      <div class="ab-feature">
-        <div class="ab-feature-collage">
-          <img class="ab-f1" src="images/about/feature-1-cricket.jpg" alt="Cricketer celebrating a wicket at the 36th One Day Encounter">
-          <img class="ab-f2" src="images/about/feature-2-dancer.jpg" alt="Traditional Kandyan dancer performing at Swarna Panhinda">
-          <div class="ab-mini-cards">
-            <div class="ab-mini"><b>Live Sports</b><p>Match days, close calls, the moments that decide games.</p></div>
-            <div class="ab-mini"><b>Cultural Events</b><p>Dance, music, and pageantry across the school calendar.</p></div>
-          </div>
-        </div>
-        <div class="ab-feature-copy">
-          <h2>Why Join SSCPC?</h2>
-          <p class="lead">Because a camera is more than a tool. It is a way to see, create, learn, and tell stories that might otherwise be forgotten.</p>
-          <ul class="ab-reasons" data-nosnippet>
-            <li>
-              <span class="ab-r-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
-              <div><b>Learn Behind the Lens</b><p>Develop practical photography and videography skills through real experiences, workshops, and creative projects.</p></div>
-            </li>
-            <li>
-              <span class="ab-r-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7Z"/><path d="M16 10.5 21 8v8l-5-2.5Z"/></svg></span>
-              <div><b>Create Without Limits</b><p>Experiment with ideas, explore different styles, and turn your creativity into photographs and films.</p></div>
-            </li>
-            <li>
-              <span class="ab-r-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17.5" cy="9" r="2.4"/><path d="M16 14.3c2.9.4 5 2.5 5 5.7"/></svg></span>
-              <div><b>Grow With Others</b><p>Learn from fellow creators, share ideas, collaborate on projects, and become part of a creative community.</p></div>
-            </li>
-          </ul>
-          <div class="btns"><a class="btn cut" href="#join">Join Us</a></div>
-        </div>
-      </div>
-
-      <div class="ab-moments">
-        <h3>Moments We've Captured</h3>
-        <p class="lead">A small slice of what our lenses have covered — musical evenings, match days, school ceremonies, and the everyday life in between.</p>
-        <div class="ab-moments-row" id="momentsRow" tabindex="0" aria-label="Photos from our events. Scroll sideways to see more."></div>
-      </div>
-
-      <div class="cta cut ab-follow ab-follow-border">
-        <h2>Follow Our Journey</h2>
-        <p>New albums, event highlights, and behind-the-scenes moments — posted as they happen.</p>
-        <div class="btns ab-social foot-social">
-          <a href="https://www.facebook.com/SSCKphotography" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 8.5H14a1 1 0 0 0-1 1V12h2.4l-.3 3H13v6h-3v-6H8v-3h2V9.2C10 6.9 11.7 5 14 5h1.5v3.5Z"/></svg></a>
-          <a href="https://www.instagram.com/ssck_photography" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="dot" cx="17.3" cy="6.7" r=".9"/></svg></a>
-          <a href="https://whatsapp.com/channel/0029VaeL6UB9mrGdT1CwN41w" target="_blank" rel="noopener" aria-label="WhatsApp Channel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L4 20l1.2-4.3a8.4 8.4 0 0 1-1.2-4.2A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.7 8.9c.2-.4.4-.4.6-.4h.4c.2 0 .3 0 .5.4l.6 1.4c.1.2 0 .3-.1.4l-.4.5c-.1.1-.1.2 0 .4.4.7 1.2 1.6 1.9 1.9.2.1.3.1.4 0l.5-.4c.1-.1.2-.1.4-.1l1.4.6c.3.1.3.3.3.5v.4c0 .3 0 .4-.4.6-1.3.5-2.9-.2-4.2-1.5-1.3-1.3-2-2.9-1.5-4.2Z" fill="none"/></svg></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec view" id="gallery">
-    <div class="wrap">
-      <h2>Gallery</h2>
-      <p class="lead">Explore moments captured through our lenses, from everyday school life to unforgettable events. Each photograph preserves a memory, tells a story, and reflects the unique perspectives of our members.</p>
-      <div id="albums">
-        <div class="filters" id="filters"></div>
-        <div class="albums-grid" id="albums-grid"></div>
-        <div class="viewer" id="viewer" hidden>
-          <div class="viewer-head"><button class="btn ghost" id="back" type="button">Back to albums</button><h3 id="v-title"></h3><a class="btn ghost" id="v-fb" target="_blank" rel="noopener" hidden>Facebook album</a></div>
-          <div class="info" id="v-info" hidden></div>
-          <div class="thumbs" id="thumbs"></div>
-        </div>
-      </div>
-      <div class="cta cut" style="margin-top:3.5rem">
-        <h2>More on Facebook</h2>
-        <p>Our Facebook page is home to photographs captured at St. Sylvester’s College events throughout the years. Follow our page to explore past event albums and stay updated whenever new photographs are published.</p>
-        <div class="btns"><a class="btn cut" href="https://www.facebook.com/SSCKphotography" target="_blank" rel="noopener">Visit our Facebook page</a></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec view" id="spectrum">
-    <div class="wrap">
-      <h2>Spectrum</h2>
-      <p class="lead">A celebration of creativity, vision, and the art of photography. Spectrum brings together our finest work, giving our members a space to share their perspectives and showcase the stories they have captured.</p>
-      <div class="btns"><a class="btn ghost" href="#what-is-spectrum">What is Spectrum?</a></div>
-      <p class="tminus">T-minus</p>
-      <div class="cd" id="cd" role="timer" aria-label="Time left until Spectrum">
-        <div><b id="cd-d">00</b><span>Days</span></div>
-        <div><b id="cd-h">00</b><span>Hrs</span></div>
-        <div><b id="cd-m">00</b><span>Min</span></div>
-        <div><b id="cd-s">00</b><span>Sec</span></div>
-      </div>
-      <p class="live" id="live" hidden>Spectrum is happening now.</p>
-      <div id="events-list"></div>
-    </div>
-    <div class="ticker" aria-hidden="true"><div class="track"><span>Capture</span><span>Create</span><span>Inspire</span><span>Capture</span><span>Create</span><span>Inspire</span><span>Capture</span><span>Create</span><span>Inspire</span><span>Capture</span><span>Create</span><span>Inspire</span><span>Capture</span><span>Create</span><span>Inspire</span><span>Capture</span><span>Create</span><span>Inspire</span></div></div>
-    <!-- Photo Selection + Jury: sits directly above Announcements. Assets expected at images/spectrum/judges/*.jpg and images/sponsors/camaralk-logo.jpg -->
-    <section class="sel" aria-labelledby="sel-title">
-      <div class="wrap">
-        <p class="sel-k">The Selection</p>
-        <h2 id="sel-title"><span>The Frames Were Submitted.</span><span class="hl">The Jury Has Chosen.</span></h2>
-        <p class="lead sel-lead">Following the conclusion of the Spectrum 2026 submission period on 30 September 2026, photographs submitted by school photographers from across Sri Lanka went through the official selection process on 12 October 2026.</p>
-
-        <div class="sel-date">
-          <div class="sel-date-in">
-            <div class="sd-when">
-              <time class="sd-main" datetime="2026-10-12"><span class="sd-day">12</span><span class="sd-my"><b>October</b><b>2026</b></span></time>
-              <p class="sd-tag">Spectrum 2026 &middot; Photo Selection Completed</p>
-            </div>
-            <ol class="sd-steps">
-              <li><time datetime="2026-09-30">30 September 2026</time><span>Submissions closed</span></li>
-              <li><time datetime="2026-10-12">12 October 2026</time><span>Photo selection completed</span></li>
-              <li class="is-next"><time datetime="2026-11-13">13 November 2026</time><span>Spectrum Photography Day</span></li>
-            </ol>
-          </div>
-        </div>
-
-        <div class="jury-head">
-          <p class="sel-k">The Jury</p>
-          <h2><span>Three Perspectives.</span><span class="hl">One Selection.</span></h2>
-        </div>
-
-        <ul class="jury-grid">
-          <li class="judge" data-judge="priyantha-bandara">
-            <figure>
-              <div class="judge-ph"><img src="images/spectrum/judges/priyantha-bandara.jpg" alt="Priyantha Bandara, judge" width="800" height="1000" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('no-img');this.remove()"><i></i><i></i><i></i><i></i><span class="judge-no" aria-hidden="true">01</span></div>
-              <figcaption>
-                <span class="judge-role">Judge 01</span>
-                <b class="judge-name">Priyantha Bandara</b>
-                <span class="judge-title">Landscape &amp; Fine-Art Photographer</span>
-                <span class="judge-fields">Landscape / Travel / Fine Art / Architecture / Commercial</span>
-                <button type="button" class="judge-open" aria-haspopup="dialog" aria-label="Open the editorial profile of Priyantha Bandara"><span>Open profile</span><svg viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h38M33 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="judge" data-judge="ravi-ranasinghe">
-            <figure>
-              <div class="judge-ph"><img src="images/spectrum/judges/ravi-ranasinghe.jpg" alt="Ravi Ranasinghe, judge" width="800" height="1000" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('no-img');this.remove()"><i></i><i></i><i></i><i></i><span class="judge-no" aria-hidden="true">02</span></div>
-              <figcaption>
-                <span class="judge-role">Judge 02</span>
-                <b class="judge-name">Ravi Ranasinghe</b>
-                <span class="judge-title">Street &amp; Fine-Art Photographer</span>
-                <span class="judge-fields">Street / Fine Art / Travel / Human &amp; Cultural Stories</span>
-                <button type="button" class="judge-open" aria-haspopup="dialog" aria-label="Open the editorial profile of Ravi Ranasinghe"><span>Open profile</span><svg viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h38M33 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="judge" data-judge="ravisara-jayamanna">
-            <figure>
-              <div class="judge-ph"><img src="images/spectrum/judges/ravisara-jayamanna.jpg" alt="Ravisara Jayamanna, judge" width="800" height="1000" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('no-img');this.remove()"><i></i><i></i><i></i><i></i><span class="judge-no" aria-hidden="true">03</span></div>
-              <figcaption>
-                <span class="judge-role">Judge 03</span>
-                <b class="judge-name">Ravisara Jayamanna</b>
-                <span class="judge-title">Wildlife &amp; Nature Photographer</span>
-                <span class="judge-fields">Wildlife / Nature / Conservation</span>
-                <button type="button" class="judge-open" aria-haspopup="dialog" aria-label="Open the editorial profile of Ravisara Jayamanna"><span>Open profile</span><svg viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h38M33 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
-              </figcaption>
-            </figure>
-          </li>
-        </ul>
-
-        <div class="sel-done" id="sel-done" aria-labelledby="sel-done-title">
-          <p class="sel-k" id="sd-k">Photo Selection &middot; Completed</p>
-          <h2 id="sel-done-title"><span id="sd-t1">Selection Day</span><span class="hl" id="sd-t2">Was a Success.</span></h2>
-          <p class="lead sel-lead" id="sd-text">The photo selection for Spectrum 2026 has been completed successfully. Thank you to every school photographer who took part, to our judges and teachers for their time and guidance, and to the members who worked behind the scenes to make the day run smoothly.</p>
-          <figure class="sel-group" id="sd-fig">
-            <img id="sd-img" src="images/spectrum/selection-day.jpg" alt="SSCPC members and guests at the photo selection" width="1800" height="1200" loading="lazy" decoding="async" onerror="document.getElementById('sd-fig').hidden=true">
-            <figcaption id="sd-cap">SSCPC members and guests on photo selection day.</figcaption>
-          </figure>
-        </div>
-
-        <aside class="sel-partner" aria-label="Selection Day Partner">
-          <p class="sel-partner-k">Selection Day Partner</p>
-          <img class="partner-logo" src="images/sponsors/camaralk-logo.jpg" alt="CameraLK" width="200" height="42" loading="lazy" decoding="async" onerror="this.hidden=true">
-          <p class="sel-partner-t">Proudly supporting the selection of Spectrum 2026.</p>
-        </aside>
-      </div>
-    </section>
-
-    <section class="scope" id="scope-award" aria-labelledby="scope-title">
-      <div class="sc-wrap">
-        <header class="sc-head">
-          <p class="sc-k">Spectrum 2026 &bull; Special Recognition</p>
-          <p class="sc-bt">Beyond the Frame</p>
-          <h2 class="sc-title" id="scope-title">SCOPE</h2>
-          <p class="sc-sub">Spectrum&rsquo;s Champion of Photography Excellence</p>
-          <p class="sc-tag">For the photographer who did well across the whole competition, not just once.</p>
-          <div class="sc-rule"></div>
-        </header>
-
-        <article class="sc-card">
-          <div class="sc-n" aria-hidden="true">01</div>
-          <div class="sc-body">
-            <p class="sc-ck">The Concept</p>
-            <h3>More Than One Good Shot</h3>
-            <p>Anyone can get lucky with one photograph. SCOPE is for the photographer who keeps producing strong work, category after category. It goes to the person who did best across all of Spectrum &rsquo;26, not just in a single frame.</p>
-          </div>
-        </article>
-
-        <article class="sc-card sc-card--trophy">
-          <div class="sc-n" aria-hidden="true">02</div>
-          <div class="sc-body">
-            <p class="sc-ck">The Recognition</p>
-            <h3>The Trophy</h3>
-            <p>The SCOPE title is awarded to the photographer who demonstrates the highest level of excellence and achieves the strongest overall performance across Spectrum &rsquo;26.</p>
-            <div class="sc-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 6H5a1 1 0 0 0-1 1c0 2 1.5 3.5 4 3.5M16 6h3a1 1 0 0 1 1 1c0 2-1.5 3.5-4 3.5M12 13v4M8.5 20h7M9.5 17h5v3h-5z"/></svg><span><b>One Trophy</b><i>One champion</i></span></div>
-          </div>
-          <div class="sc-ic sc-ic--trophy">
-            <img src="icons/scope-trophy.webp" alt="The SCOPE trophy: a curved glass award on a dark wooden base" width="433" height="900" loading="lazy" decoding="async">
-          </div>
-        </article>
-
-        <article class="sc-card">
-          <div class="sc-n" aria-hidden="true">03</div>
-          <div class="sc-body">
-            <p class="sc-ck">Selection Process</p>
-            <h3>How the Winner Is Picked</h3>
-            <p>The Champion is selected based on the photographer&rsquo;s overall performance throughout the competition, recognising consistency, creativity, technical skill, and photographic excellence across all categories.</p>
-            <ul class="sc-pts" aria-label="SCOPE point system">
-              <li><span>1st, 2nd &amp; 3rd place</span><b>10 points</b></li>
-              <li><span>Merit award</span><b>7 points</b></li>
-              <li><span>Exhibition selection</span><b>5 points</b></li>
-              <li><span>People&rsquo;s vote</span><b>3 points</b></li>
-            </ul>
-          </div>
-          <div class="sc-ic sc-ic--chart" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M6 36l14-12 10 8 28-22M46 10h12v12"/><rect x="8" y="42" width="10" height="14"/><rect x="26" y="34" width="10" height="22"/><rect x="44" y="24" width="10" height="32"/></svg></div>
-        </article>
-
-        <article class="sc-card">
-          <div class="sc-n" aria-hidden="true">04</div>
-          <div class="sc-body">
-            <p class="sc-ck">The Nominees</p>
-            <h3>SCOPE &rsquo;26 Nominees</h3>
-            <p><strong class="sc-soon">The wait is almost over! The SCOPE &rsquo;26 nominees will be revealed soon.</strong></p>
-            <p class="sc-gap">Recognising exceptional creativity, artistic vision, and photographic excellence, the nominees represent some of the most outstanding talents of Spectrum &rsquo;26.</p>
-            <p class="sc-gap">The spotlight is about to shine on those who have captured more than just moments. Stay tuned for the big reveal!</p>
-          </div>
-          <div class="sc-ic sc-ic--cam" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M8 20h12l4-7h16l4 7h12a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V22a2 2 0 0 1 2-2z"/><circle cx="32" cy="36" r="11"/><circle cx="32" cy="36" r="5"/></svg></div>
-        </article>
-
-        <div class="sc-end">
-          <p class="e1">Nominees revealed soon</p>
-          <p class="e2">SCOPE &middot; Spectrum&rsquo;s Champion of Photography Excellence</p>
-          <p class="e3">Spectrum 2026 &bull; St. Sylvester&rsquo;s College</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="ann" id="announcements" aria-label="Announcements" aria-roledescription="carousel">
-      <div class="wrap">
-        <div class="slider" id="ann-slider">
-          <div class="slider-in">
-            <div class="frame"><i></i><i></i><i></i><i></i><div class="stage"></div><div class="scanl"></div></div>
-            <div class="s-bar">
-              <button class="lb-btn" id="ann-prev" type="button" aria-label="Previous announcement">&lsaquo;</button>
-              <div class="segs"></div>
-              <button class="lb-btn" id="ann-next" type="button" aria-label="Next announcement">&rsaquo;</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="sec view" id="members">
-    <div class="wrap">
-      <h2>Committee</h2>
-      <p class="lead">Meet the students who lead, organize, and contribute to the journey of our Photography Club. Together, we work to create opportunities for learning, creativity, collaboration, and meaningful experiences.</p>
-
-      <div id="members-list"></div>
-    </div>
-  </section>
-
-  <!-- EDIT HERE: Contact page. See README.txt -->
-  <section class="sec view" id="contact">
-    <div class="wrap">
-      <h2>Contact</h2>
-      <p class="lead">Have a question, an idea, or simply want to connect with us? Reach out to the Photography Club and stay connected with our activities, creative work, and upcoming opportunities.</p>
-
-      <div class="contact-layout">
-        <div class="contact-info">
-          <h3 class="contact-sub">Contact information</h3>
-          <ul class="contact-info-list">
-            <li>
-              <span class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5"/><path d="M22 8v6"/></svg></span>
-              <span class="ci-body"><small>School</small><strong>St. Sylvester's College, Kandy</strong></span>
-            </li>
-            <li>
-              <span class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.1 7-12A7 7 0 0 0 5 10c0 5.9 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-              <span class="ci-body"><small>Location</small><strong>St. Sylvester's College, Kandy, Sri Lanka</strong></span>
-            </li>
-            <li>
-              <span class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
-              <span class="ci-body"><small>Email</small><a href="mailto:sylvestrian.photography@gmail.com">sylvestrian.photography@gmail.com</a></span>
-            </li>
-            <li>
-              <span class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2C9.6 21 3 14.4 3 6a2 2 0 0 1 1-2Z"/></svg></span>
-              <span class="ci-body"><small>Phone</small><a href="tel:+94812223917">081 222 3917</a></span>
-            </li>
-            <li>
-              <span class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></span>
-              <span class="ci-body"><small>Instagram</small><a href="https://www.instagram.com/ssck_photography" target="_blank" rel="noopener">ssck_photography</a></span>
-            </li>
-            <li>
-              <span class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 21v-7h2.5l.5-3H14V9c0-.9.3-1.5 1.6-1.5H17V4.8C16.7 4.7 15.8 4.6 14.8 4.6c-2.1 0-3.6 1.3-3.6 3.7V11H9v3h2.2v7Z"/></svg></span>
-              <span class="ci-body"><small>Facebook</small><a href="https://www.facebook.com/SSCKphotography" target="_blank" rel="noopener">SSCPC Photography</a></span>
-            </li>
-            <li>
-              <span class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.4 8.4 8.3 8.3 0 0 1-3.8-.9L3 21l1.9-5.7a8.3 8.3 0 0 1-.9-3.8A8.4 8.4 0 0 1 12.4 3h.1a8.5 8.5 0 0 1 8.5 8.4Z"/></svg></span>
-              <span class="ci-body"><small>WhatsApp</small><a href="https://whatsapp.com/channel/0029VaeL6UB9mrGdT1CwN41w" target="_blank" rel="noopener">Follow the channel</a></span>
-            </li>
-          </ul>
-          <p class="contact-note">Club committee -- President Sasidu Shanelka (<a href="tel:+94775312890">077 531 2890</a>), Secretary Chethiya Sulakshana (<a href="tel:+94769110822">076 911 0822</a>).</p>
-        </div>
-
-        <div class="info contact-form-wrap">
-          <div class="info-in">
-            <div class="info-h">Send a message</div>
-            <form class="reg-form" id="contact-form" name="contact-message" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-              <input type="hidden" name="form-name" value="contact-message">
-              <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-              <label class="fld full"><span>Full name</span><input name="name" placeholder="e.g. Kasun Perera" required autocomplete="name"></label>
-              <label class="fld full"><span>Email</span><input type="email" name="email" placeholder="e.g. name@gmail.com" required autocomplete="email"></label>
-              <label class="fld full"><span>Subject</span><input name="subject" placeholder="e.g. Question about Spectrum" required></label>
-              <label class="fld full"><span>Message</span><textarea name="message" placeholder="Write your message here..." required></textarea></label>
-              <div class="full"><button class="btn cut" type="submit" id="contact-btn">Send Message</button></div>
-              <div class="reg-msg full" id="contact-msg" role="status" hidden></div>
-            </form>
-            <div class="join-done" id="contact-done" hidden>
-              <p class="reg-msg" id="contact-status" role="status"></p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="contact-map-wrap">
-        <h3 class="contact-sub">Location</h3>
-        <div class="contact-map">
-          <iframe src="https://maps.google.com/maps?q=St.%20Sylvester%27s%20College%2C%20Kandy%2C%20Sri%20Lanka&z=16&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map showing St. Sylvester's College, Kandy"></iframe>
-        </div>
-        <a class="btn ghost" href="https://www.google.com/maps/dir/?api=1&destination=St.+Sylvester%27s+College%2C+Kandy%2C+Sri+Lanka" target="_blank" rel="noopener">Get directions</a>
-      </div>
-    </div>
-  </section>
-  <section class="sec view" id="register">
-    <div class="wrap">
-      <h2>Register</h2>
-      <p class="lead">Visitor registration for invited schools. Spectrum 2026 is on 13 November 2026, from 9:00 a.m., at Cingolani Memorial Hall. One teacher can register a whole group: just enter how many students are coming.</p>
-      <div class="info" style="margin-top:2rem">
-        <div class="info-in">
-          <div class="info-h">Visitor registration</div>
-          <form class="reg-form" id="reg-form" name="spectrum-registration" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="spectrum-registration">
-            <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-            <label class="fld full"><span>School name</span><input name="school" placeholder="e.g. Central College, Kandy" required autocomplete="organization"></label>
-            <label class="fld"><span>Teacher in charge name</span><input name="mic_name" placeholder="e.g. Nimal Perera" required autocomplete="name"></label>
-            <label class="fld"><span>Teacher in charge telephone number</span><input type="tel" name="mic_phone" placeholder="e.g. 077 123 4567" required autocomplete="tel"></label>
-            <label class="fld full"><span>Club email</span><input type="email" name="email" placeholder="e.g. club@gmail.com" required autocomplete="email"></label>
-            <label class="fld"><span>President's name</span><input name="president_name" placeholder="e.g. Kasun Silva" required autocomplete="off"></label>
-            <label class="fld"><span>President's phone / WhatsApp</span><input type="tel" name="phone" placeholder="e.g. 077 123 4567" required autocomplete="tel"></label>
-            <label class="fld"><span>Students attending</span><input type="number" name="students" id="reg-students" placeholder="e.g. 15" min="0" required></label>
-            <label class="fld"><span>Teachers attending</span><input type="number" name="teachers" placeholder="e.g. 2" min="0" required></label>
-            <div class="fld full" id="reg-student-names-wrap" hidden>
-              <span>Student names</span>
-              <p class="reg-help">Example: 1. Kamal Perera &nbsp; 2. Nimal Silva &nbsp; 3. Sahan Fernando</p>
-              <div id="reg-student-names"></div>
-              <p class="reg-help" id="reg-names-count" aria-live="polite"></p>
-            </div>
-            <label class="fld full"><span>Message (optional)</span><textarea name="message" id="reg-message" placeholder="e.g. We will arrive around 9.30 a.m. with our school photography society."></textarea></label>
-            <label class="chk full"><input type="checkbox" id="reg-message-none" name="message_none"><span>None / No message</span></label>
-            <label class="chk full"><input type="checkbox" name="confirm" required><span>I confirm that the details above are correct and that I am registering on behalf of my school.</span></label>
-            <div class="full"><button class="btn cut" type="submit" id="reg-btn">Submit registration</button></div>
-            <div class="reg-msg full" id="reg-msg" role="status" hidden></div>
-            <p class="reg-note full">Your details go only to the exhibition organisers.</p>
-          </form>
-          <div class="join-done" id="reg-done" hidden>
-            <p class="reg-msg" id="reg-status" role="status"></p>
-            <div class="btns">
-              <a class="btn cut" id="reg-dl">Download PDF</a>
-              <button class="btn cut" type="button" id="reg-share" hidden>Share PDF on WhatsApp</button>
-              <a class="btn ghost" id="reg-wa" target="_blank" rel="noopener">Message the president on WhatsApp</a>
-            </div>
-            <details class="pdf-opts" id="reg-pdf-opts" hidden></details>
-            <p class="reg-note" style="margin-top:1rem">Please send your registration to the president: tap "Share PDF on WhatsApp" and choose the president's chat. If that button is missing, download the PDF and attach it in the president's WhatsApp chat.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="sec view" id="join">
-    <div class="wrap">
-      <h2>Join Us</h2>
-      <p class="lead">Have a passion for photography, videography, or visual creativity? Join us, develop your skills, share your ideas, and become part of a community that learns, creates, and captures moments together.</p>
-      <div class="info" style="margin-top:2rem">
-        <div class="info-in">
-          <div class="info-h">Membership application</div>
-          <form class="reg-form" id="join-form" name="join-application" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="join-application">
-            <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-            <label class="fld full"><span>Full name</span><input name="name" placeholder="e.g. Kasun Perera" required autocomplete="name"></label>
-            <label class="fld"><span>Grade</span><select name="grade" required><option value="">Select</option><option>Grade 6</option><option>Grade 7</option><option>Grade 8</option><option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option><option>Grade 13</option></select></label>
-            <label class="fld"><span>Admission number</span><input name="admission" placeholder="e.g. 12345" required></label>
-            <label class="fld"><span>Phone / WhatsApp</span><input type="tel" name="phone" placeholder="e.g. 077 123 4567" required autocomplete="tel"></label>
-            <label class="fld"><span>Email (optional)</span><input type="email" name="email" placeholder="e.g. name@gmail.com" autocomplete="email"></label>
-            <label class="fld"><span>Parent / guardian name (optional)</span><input name="guardian" placeholder="e.g. Sunil Perera"></label>
-            <label class="fld"><span>Parent / guardian phone (optional)</span><input type="tel" name="guardian_phone" placeholder="e.g. 071 234 5678"></label>
-            <div class="fld full photo-fld">
-              <span>Your photo (for your membership card)</span>
-              <div class="photo-row">
-                <div class="photo-prev" id="join-photo-prev" aria-hidden="true">No photo</div>
-                <div class="photo-ctl">
-                  <input type="file" id="join-photo" accept="image/*" required>
-                  <small>A clear, front-facing photo of your face, in good light. It will be cropped to a portrait and printed on your membership card. It stays on your device and is not uploaded to the website.</small>
-                  <button type="button" class="btn ghost photo-clear" id="join-photo-clear" hidden>Remove photo</button>
-                </div>
-              </div>
-              <p class="reg-msg" id="join-photo-msg" role="status" hidden></p>
-            </div>
-            <label class="fld"><span>Photography experience</span><select name="experience" required><option value="">Select</option><option>Beginner</option><option>Some experience</option><option>Experienced</option></select></label>
-            <label class="fld"><span>Equipment</span><select name="equipment" required><option value="">Select</option><option>Phone only</option><option>Camera</option><option>Camera and phone</option><option>None yet</option></select></label>
-            <fieldset class="grp full"><legend>Interests</legend><div class="opts">
-              <label><input type="checkbox" name="interests" value="Portraits">Portraits</label>
-              <label><input type="checkbox" name="interests" value="School events">School events</label>
-              <label><input type="checkbox" name="interests" value="Nature">Nature</label>
-              <label><input type="checkbox" name="interests" value="Street">Street</label>
-              <label><input type="checkbox" name="interests" value="Photo editing">Photo editing</label>
-              <label><input type="checkbox" name="interests" value="Videography">Videography</label>
-            </div></fieldset>
-            <label class="fld full"><span>Why do you want to join?</span><textarea name="why" id="join-why" placeholder="e.g. I love taking nature photos and want to learn editing and join the team at school events." required></textarea></label>
-            <label class="chk full"><input type="checkbox" id="join-why-none" name="why_none"><span>None / Prefer not to say</span></label>
-            <label class="chk full"><input type="checkbox" name="confirm" required><span>I confirm that the details above are correct.</span></label>
-            <p class="reg-msg full" id="join-confirm-msg" role="status" hidden></p>
-            <div class="full"><button class="btn cut" type="submit" id="join-btn">Submit application</button></div>
-          </form>
-          <div class="join-done" id="join-done" hidden>
-            <div class="join-ok">
-              <span class="join-ok-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
-              <p class="join-ok-msg" id="join-status" role="status"></p>
-            </div>
-            <h4 class="join-h">Your documents</h4>
-            <div class="join-actions">
-              <a class="btn cut" id="join-dl" role="button" href="#join">Download PDF</a>
-              <a class="btn ghost" id="join-card" role="button" hidden>Download membership card</a>
-            </div>
-            <p class="join-hint">You can pick Sinhala or Tamil when you download. It is optional.</p>
-            <h4 class="join-h">Send it to the club</h4>
-            <div class="join-actions">
-              <button class="btn cut" type="button" id="join-share" hidden>Share PDF on WhatsApp</button>
-              <a class="btn ghost" id="join-wa" target="_blank" rel="noopener">Message the president on WhatsApp</a>
-            </div>
-            <details class="pdf-opts" id="join-pdf-opts" hidden></details>
-            <p class="join-hint">To send the PDF, tap &ldquo;Share PDF on WhatsApp&rdquo; and choose the president&rsquo;s chat. If that button is missing, download the PDF and attach it in the president&rsquo;s WhatsApp chat.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="sec view" id="what-is-spectrum">
-    <div class="wrap">
-      <h2>What is Spectrum</h2>
-      <article class="info spec-card"><div class="info-in">
-        <div class="info-h">The event</div>
-        <h3 class="spec-h">Spectrum</h3>
-        <p><strong>Spectrum</strong> is the flagship photography event organized by the <strong>Photography Club of St. Sylvester’s College, Kandy</strong>. The event begins with an island-wide <strong>online photography competition</strong>, where participants submit their photographs through a Google Form under various categories. The selected and winning photographs are then showcased at a photography exhibition held at the college premises during the main event.</p>
-        <p>The Photography Day features an exhibition, an interactive session conducted by <strong>two renowned professional photographers</strong> serving as the Chief Guest and Guest of Honour, and a certificate award ceremony recognizing the competition winners. Souvenirs are also presented to the distinguished <strong>guests, the Principal, the MIC, and past presidents</strong> of the Photography Club. Through this event, Spectrum aims to celebrate creativity, encourage young photographers across Sri Lanka, and promote the art of photography within the school community.</p>
-      </div></article>
-      <article class="info spec-card"><div class="info-in">
-        <div class="info-h">Competition</div>
-        <h3 class="spec-h">Online Photography Competition</h3>
-        <p>The Spectrum <strong>Online Photography Competition</strong> is an <strong>island-wide inter-school</strong> photography competition open to students from schools across <strong>Sri Lanka</strong>. The competition features <strong>five categories: Colour, Monochrome, Nature, Wildlife, and Mobile</strong> photography. Each participant may submit up to <strong>three</strong> photographs in each category.</p>
-        <p>The competition commenced on <strong>14 August</strong> and will remain open until <strong>30 September</strong> (extended from 20 September). A total of eight winners will be selected, including 1st place, 2nd place, 3rd place, and five merit award recipients. The winning and selected photographs will be displayed at the Spectrum Photography Exhibition, and the winners will be recognized during the certificate award ceremony held on the main Photography Day.</p>
-      </div></article>
-      <article class="info spec-card"><div class="info-in">
-        <div class="info-h">Exhibition</div>
-        <h3 class="spec-h">Photography Exhibition</h3>
-        <p>The Spectrum Photography Exhibition is the main highlight of Spectrum Photography Day, held on <strong>13 November 2026</strong> at the Open Hall of St. Sylvester’s College, Kandy. The exhibition will feature the winning and selected photographs from the Spectrum island-wide inter-school photography competition, as chosen by the official judging panel. Students, participants, guests, and visitors will have the opportunity to view the exhibition throughout the event, celebrating the creativity and talent of young photographers from across Sri Lanka.</p>
-      </div></article>
-      <article class="info spec-card"><div class="info-in">
-        <div class="info-h">Main event</div>
-        <h3 class="spec-h">The Photography Day</h3>
-        <p>The Spectrum Photography Day will be held on <strong>13 November</strong> at the <strong>Cingolani Memorial Hall, St. Sylvester’s College, Kandy</strong>. The event will serve as the main celebration of Spectrum, bringing together students, participants, and distinguished guests for a day dedicated to the art of photography.</p>
-        <p>The programme will feature a photography exhibition showcasing selected and winning photographs from the island-wide online competition, <strong>educational lectures and interactive sessions</strong> conducted by two renowned professional photographers serving as the Chief Guest and Guest of Honour, and a certificate award ceremony recognizing the competition winners. The guest lectures will provide valuable insights into photography techniques, creativity, visual storytelling, and career opportunities in the field of photography. Souvenirs will also be presented to the distinguished guests, the Principal, the MIC, and past presidents of the Photography Club.</p>
-      </div></article>
-      <article class="info spec-card" id="scope-card"><div class="info-in">
-        <div class="info-h">Special award</div>
-        <h3 class="spec-h">SCOPE</h3>
-        <p><strong>SCOPE &ndash; Spectrum&rsquo;s Champion of Photography Excellence</strong> is a new award introduced at Spectrum 2026. It goes to the photographer who does best across the whole competition, not just with a single photograph.</p>
-        <p>The photographer with the most points across the competition takes home the SCOPE trophy. <a href="#spectrum" data-scroll="scope-award">Read more on the Spectrum page.</a></p>
-      </div></article>
-      <div class="btns"><a class="btn cut" href="#register">Register to attend</a><a class="btn ghost" href="#spectrum">Back to Spectrum</a></div>
-    </div>
-  </section>
-  <section class="sec view" id="vote">
-    <div class="wrap">
-      <p class="vt-k">Photography Day &bull; Public Vote</p>
-      <h2 class="vt-h"><span>Most Popular</span> <span class="hl">Photograph</span></h2>
-      <p class="lead" id="vt-lead">Photographs selected from the Spectrum 2026 competition. Choose one photograph and vote for it. You can vote once per day, and the results stay hidden until voting closes.</p>
-      <div class="vt-banner" id="vt-banner" role="status"></div>
-      <ul class="ph-grid" id="ph-grid" aria-label="Spectrum 2026 photographs"></ul>
-      <div class="btns"><a class="btn ghost" href="#spectrum">Back to Spectrum</a></div>
-    </div>
-  </section>
-</main>
-
-  <div class="learn-overlay" id="learn-hub" role="dialog" aria-modal="true" aria-labelledby="learn-hub-title" hidden>
-    <div class="wrap">
-      <div class="learn-pane" id="learn-list">
-        <div class="learn-bar"><button type="button" class="btn ghost" data-learn-close>&larr; Back</button></div>
-        <h2 id="learn-hub-title">Photography Basics</h2>
-        <p class="lead">Pick a topic to open its lesson, with facts and photos. Then try the weekly challenge and share your best frame with the club.</p>
-        <div class="learn-grid" id="learn-grid"></div>
-        <div class="learn-foot">
-        <div class="learn-challenge" id="learn-challenge">
-          <span class="hd-eyebrow">This week's challenge</span>
-          <p><b>Shadows.</b> Find a strong shadow, and make it the subject of your photo. Send your best frame to the club.</p>
-        </div>
-        <div class="btns">
-          <button class="btn ghost" type="button" data-learn-close>Back to home</button>
-          <button class="btn cut" type="button" data-bot-pdf="tips">Download the tips sheet (PDF)</button>
-          <button class="btn ghost" type="button" data-bot-ask="Give me a photography tip">Ask the assistant for a tip</button>
-          <a class="btn ghost" href="#gallery">See our gallery for ideas</a>
-        </div>
-      </div>
-      </div>
-      <div class="learn-pane" id="learn-detail" aria-live="polite" hidden></div>
-    </div>
-  </div>
-
-<div id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
-  <div class="pv-top">
-    <span class="pv-play"><i></i>Play</span>
-    <span class="pv-title" id="lb-t"></span>
-    <button class="lb-btn" id="lb-x" aria-label="Close">&times;</button>
-  </div>
-  <div class="pv-stage">
-    <button class="lb-btn" id="lb-p" aria-label="Previous photo">&lsaquo;</button>
-    <div class="pv-frame"><i></i><i></i><i></i><i></i><img id="lb-img" alt=""></div>
-    <button class="lb-btn" id="lb-n" aria-label="Next photo">&rsaquo;</button>
-  </div>
-  <div class="pv-bottom">
-    <span id="lb-c"></span>
-    <div class="pv-ticks" id="lb-ticks" aria-hidden="true"></div>
-  </div>
-</div>
-
-<section class="helpdesk" id="helpdesk" aria-labelledby="hd-title">
-  <div class="wrap">
-    <div class="hd-head">
-      <span class="hd-eyebrow">Need a hand?</span>
-      <h2 id="hd-title">Ask Anything. Take Tips Home.</h2>
-      <p>Chat with the SSCPC Assistant for quick answers and photography tips, or download our ready-made PDFs.</p>
-    </div>
-    <div class="hd-grid">
-      <article class="hd-card">
-        <div class="hd-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5Z"/><path d="M8 9.5h8M8 12.5h5"/></svg></div>
-        <h3>SSCPC Assistant</h3>
-        <p>Ask about Spectrum, joining the club, registration, the committee, or how to take better photos. Available any time.</p>
-        <div class="hd-chips">
-          <button type="button" data-bot-ask="When is Spectrum?">When is Spectrum?</button>
-          <button type="button" data-bot-ask="How do I join?">How do I join?</button>
-          <button type="button" data-bot-ask="How do I take photos at night?">Night photo tips</button>
-          <button type="button" data-bot-ask="Can phone photos win?">Can phone photos win?</button>
-        </div>
-        <button class="btn cut" type="button" data-bot-open>Chat with the assistant</button>
-      </article>
-      <article class="hd-card">
-        <div class="hd-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M12 11v6m0 0-2.5-2.5M12 17l2.5-2.5"/></svg></div>
-        <h3>PDF Downloads</h3>
-        <ul class="hd-list">
-          <li><div><b>Photography Tips Cheat Sheet</b><span>Composition, exposure, light, phone tips and more</span></div><button class="btn cut" type="button" data-bot-pdf="tips">Download PDF</button></li>
-          <li><div><b>Membership application</b><span>Fill in the form, then download your PDF</span></div><a class="btn ghost" href="#join">Open form</a></li>
-          <li><div><b>Visitor registration</b><span>For invited schools: submit, then download</span></div><a class="btn ghost" href="#register">Open form</a></li>
-        </ul>
-        <details class="pdf-opts" data-pdf-options="global" hidden></details>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="helpdesk learn" id="learn" aria-labelledby="learn-title">
-  <div class="wrap">
-    <div class="hd-head">
-      <span class="hd-eyebrow">Learn</span>
-      <h2 id="learn-title">Learn Photography, One Lesson at a Time</h2>
-      <p>Short, practical lessons from the club, with facts and photos. Open the course to start.</p>
-    </div>
-    <button type="button" class="hd-card learn-open" id="learn-open" aria-haspopup="dialog" aria-label="Open Photography Basics: lessons and photos">
-      <span class="learn-open-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h6a3 3 0 0 1 3 3v11a2 2 0 0 0-2-2H4zM20 5h-6a3 3 0 0 0-3 3v11a2 2 0 0 1 2-2h7z"/></svg></span>
-      <span class="learn-open-txt">
-        <b>Photography Basics</b>
-        <span>Composition, light, exposure and phone photography: lessons and example photos in one place.</span>
-        <em id="learn-count">Lessons &middot; facts &middot; photos</em>
-      </span>
-      <span class="learn-open-go" aria-hidden="true">Open &rarr;</span>
-    </button>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap foot-grid">
-    <div class="foot-col foot-brand">
-      <a class="foot-logo" href="#home">
-        <img src="images/school-crest.png" alt="St. Sylvester's College crest" width="25" height="38" class="foot-crest">
-        <img src="images/logo.png" alt="" width="38" height="38" class="foot-club">
-        <span>SSCPC</span>
-      </a>
-      <p>The Photography Club of St. Sylvester's College — capturing our school's story, one frame at a time. Home of Spectrum, our island-wide photography competition and exhibition.</p>
-      <ul class="foot-contact">
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.1 7-12A7 7 0 0 0 5 10c0 5.9 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>St. Sylvester's College, Kandy, Sri Lanka</span></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2C9.6 21 3 14.4 3 6a2 2 0 0 1 1-2Z"/></svg><a href="tel:+94812223917">081 222 3917</a></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:sylvestrian.photography@gmail.com">sylvestrian.photography@gmail.com</a></li>
-      </ul>
-    </div>
-    <div class="foot-col">
-      <h4>Quick Links</h4>
-      <ul class="foot-nav">
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#spectrum">Spectrum</a></li>
-        <li><a href="#members">Committee</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-    <div class="foot-col">
-      <h4>Connect</h4>
-      <p>Join our digital community and see new albums as soon as they're posted.</p>
-      <div class="foot-social">
-        <a href="https://www.instagram.com/ssck_photography" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="dot" cx="17.3" cy="6.7" r=".9"/></svg></a>
-        <a href="https://www.facebook.com/SSCKphotography" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 8.5H14a1 1 0 0 0-1 1V12h2.4l-.3 3H13v6h-3v-6H8v-3h2V9.2C10 6.9 11.7 5 14 5h1.5v3.5Z"/></svg></a>
-        <a href="https://whatsapp.com/channel/0029VaeL6UB9mrGdT1CwN41w" target="_blank" rel="noopener" aria-label="WhatsApp Channel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L4 20l1.2-4.3a8.4 8.4 0 0 1-1.2-4.2A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.7 8.9c.2-.4.4-.4.6-.4h.4c.2 0 .3 0 .5.4l.6 1.4c.1.2 0 .3-.1.4l-.4.5c-.1.1-.1.2 0 .4.4.7 1.2 1.6 1.9 1.9.2.1.3.1.4 0l.5-.4c.1-.1.2-.1.4-.1l1.4.6c.3.1.3.3.3.5v.4c0 .3 0 .4-.4.6-1.3.5-2.9-.2-4.2-1.5-1.3-1.3-2-2.9-1.5-4.2Z" fill="none"/></svg></a>
-      </div>
-    </div>
-  </div>
-  <div class="wrap foot-bottom">
-    <p>© 2026 SSCPC · St. Sylvester's College Photography Club. All rights reserved.</p>
-    <p class="dev">Developed by <a class="name-btn" href="#members">SSCPC Crew</a></p>
-    <div class="pcd-slot" id="pcd-slot" aria-hidden="true"></div>
-  </div>
-</footer>
-
-<script src="js/data.js"></script>
-<script src="js/main.js"></script>
-<script src="js/forms.js"></script>
-<script src="js/app.js"></script>
-<script src="js/logo-fx.js"></script>
-<script src="js/gallery.js"></script>
-<script src="js/events.js"></script>
-<script src="js/members.js"></script>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><!-- async: only needed when a PDF is made; must not hold up the scripts after it -->
-<script src="js/pdf/text.js"></script>
-<script src="js/pdf/i18n.js"></script>
-<script src="js/vendor/qrcode.js"></script>
-<script src="js/pdf/qr.js"></script>
-<script src="js/pdf/core.js"></script>
-<script src="js/pdf/components.js"></script>
-<script src="js/pdf/ui.js"></script>
-<script src="js/pdf/docs/tips.js"></script>
-<script src="js/pdf/docs/chat.js"></script>
-<script src="js/pdf/docs/join.js"></script>
-<script src="js/pdf/docs/register.js"></script>
-<script src="js/pdf/docs/card.js"></script>
-<script src="js/pdf-kit.js"></script>
-<script src="js/join.js"></script>
-<script src="js/contact.js"></script>
-<script src="js/register.js"></script>
-<script src="js/slider.js"></script>
-<script src="js/countdown-dock.js"></script>
-<script src="js/intro.js"></script>
-<script src="js/intro-wall.js"></script>
-<script src="js/letter-burst.js"></script>
-<script src="js/about-pop.js"></script>
-<script src="js/stats.js"></script>
-<script src="js/moments.js"></script>
-<script src="js/photographs.js?v=4"></script>
-<script src="js/router.js"></script>
-<script src="js/zip.js"></script>
-<script>/* committee: no "View profile" buttons and no personal messages on the member cards */
-(function(){
-  var RX=/^\s*view\s*profile\W*$/i;
-  var norm=function(t){return String(t||'').replace(/\s+/g,' ').trim()};
-  var heads=null;
-  function noteHeads(){
-    if(heads)return heads;heads=[];
-    try{(typeof MEMBERS!=='undefined'?MEMBERS:[]).forEach(function(g){(g.members||[]).forEach(function(m){
-      var n=norm(m.note);if(n.length>12)heads.push(n.slice(0,28).toLowerCase())})})}catch(e){}
-    return heads;
-  }
-  function isNote(txt){
-    txt=norm(txt).toLowerCase();if(txt.length<20)return false;
-    return noteHeads().some(function(h){return txt.indexOf(h)===0});
-  }
-  function up(e,host,test){
-    while(e.parentElement&&e.parentElement!==host&&test(e.parentElement.textContent)&&!e.parentElement.querySelector('img,h3'))e=e.parentElement;
-    return e;
-  }
-  function clean(){
-    var host=document.getElementById('members');if(!host)return;
-    var all=host.querySelectorAll('a,button,span,div,p,li,em,small,b,i,q,blockquote');
-    for(var k=0;k<all.length;k++){
-      var e=all[k];if(!e.isConnected)continue;
-      var t=e.textContent,hasBlock=e.querySelector('a,button,img,h2,h3,h4');
-      if(RX.test(t)){
-        if(hasBlock&&e.tagName!=='A'&&e.tagName!=='BUTTON')continue;
-        up(e,host,function(x){return RX.test(x)}).remove();
-      }else if(isNote(t)){
-        if(e.querySelector('img,h2,h3,h4,a,button'))continue;
-        up(e,host,isNote).remove();
-      }
-    }
-  }
-  function go(){clean()}
-  go();
-  new MutationObserver(go).observe(document.body,{childList:true,subtree:true});
-  setTimeout(go,500);setTimeout(go,2000);
-})();
+<dialog id="dlg"></dialog>
+<script>
+const $=s=>document.querySelector(s),h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.innerHTML=x;return e};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const btn=(t,f,c)=>{const b=h('button','btn '+(c||'')+' sm',t);b.type='button';b.onclick=f;return b};
+const save=(n,t,ty)=>{const a=h('a');a.href=URL.createObjectURL(new Blob([t],{type:ty}));a.download=n;a.click()};
+const nice=k=>k.replace(/_/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').toLowerCase().replace(/^./,c=>c.toUpperCase());
+const NAMES=t=>[...t.matchAll(/^const (\w+) =/gm)].map(m=>m[1]);
+const parse=t=>new Function(t+';return {'+NAMES(t).join(',')+'}')();
+const ser=d=>'/* SSCPC site data. Written by the admin portal (admin/index.html). Notes: README.txt */\n\n'+Object.keys(d).map(k=>`const ${k} = ${JSON.stringify(d[k],null,2)};`).join('\n\n')+'\n';
+let D,B,KEYS,key='',X=null,sub='registrations',tab='home',flt='All',hist=[],hi=0,GH=JSON.parse(localStorage.gh||'{}');
+const ST={},URLS={},SEC={MEMBERS:'members',SLIDES:'announcements',EVENTS:'events',LEARN:'learn',SELECTION_DONE:'spectrum',SPECTRUM_PHOTOS:'spectrum-photos'};
+/* blank item shapes for lists that can start empty (used by the + Add button) */
+const PHL={photo:'Photo',title:'Photo name',photographer:'Photographer name',school:'School'};
+const TPL={SPECTRUM_PHOTOS:{photo:'',title:'',photographer:'',school:''},photos:{photo:'',caption:''},LEARN:{title:'',summary:'',facts:[],tryIt:'',photos:[]}};
+const snapK=()=>Object.fromEntries(KEYS.map(k=>[k,JSON.stringify(D[k])]));
+const changed=()=>KEYS.filter(k=>JSON.stringify(D[k])!==B[k]);
+const lab=x=>x&&typeof x==='object'?((x.name||x.title||x.alt||x.image||'')+('photographer' in x?(x.photographer?' · '+x.photographer:'')+(x.school?'':' · ⚠ school missing'):'')):'';
+/* ---------- undo + unpublished marker ---------- */
+let ht;const ub=()=>{$('#undo').disabled=hi<1;$('#redo').disabled=hi>=hist.length-1};
+function snap(){const s=JSON.stringify(D);if(s===hist[hi])return;hist=hist.slice(0,hi+1);hist.push(s);hi=hist.length-1;if(hist.length>60){hist.shift();hi--}ub()}
+function dirty(){const n=changed().length+Object.keys(ST).length;$('#dirty').classList.toggle('hide',!n);clearTimeout(ht);ht=setTimeout(snap,500);ub()}
+function jump(d){clearTimeout(ht);snap();const n=hi+d;if(n<0||n>=hist.length)return;hi=n;D=JSON.parse(hist[hi]);dirty();show(tab)}
+/* ---------- typed editor ---------- */
+const field=(l,el)=>{const x=h('label','f');x.append(l,el);return x};
+const URLK=k=>/^(link|facebook|originals|url)$|(Link|Url|_LINK)$/.test(k),IMGK=/^(image|photo|portrait|logo|poster)$/i,SELK={status:['upcoming','past'],category:['main','school']};
+async function shrink(f,png,max){const im=await createImageBitmap(f,{imageOrientation:'from-image'}),k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);return new Promise(ok=>c.toBlob(ok,png?'image/png':'image/jpeg',.84))}
+function imgf(p,k,L,sec,v){
+  const w=h('div','f'),pv=h('img'),i=h('input','in'),f=h('input');w.append(L);
+  pv.style.cssText='max-height:5.5rem;max-width:100%;object-fit:contain;justify-self:start;background:#0003';pv.onerror=()=>pv.style.display='none';pv.onload=()=>pv.style.display='';
+  const sh=()=>{pv.src=v?(URLS[v]||'../'+v):''};sh();i.value=v;i.oninput=()=>{p[k]=v=i.value;sh();dirty()};
+  f.type='file';f.accept='image/*';f.onchange=async()=>{const fl=f.files[0];if(!fl)return;const png=/portrait/i.test(k)||fl.type==='image/png',b=await shrink(fl,png,png?1200:1600),
+    nm=(p.name||p.title||p.alt||'img').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'img',path='images/'+(SEC[sec]||'uploads')+'/'+nm+'-'+Date.now().toString(36)+(png?'.png':'.jpg');
+    ST[path]=b;URLS[path]=URL.createObjectURL(b);p[k]=v=path;i.value=path;sh();dirty()};
+  w.append(pv,i,f);return w}
+function ed(p,k,label,sec){
+  sec=sec||k;const v=p[k],L=sec==='SPECTRUM_PHOTOS'&&PHL[k]||nice(label||k);
+  if(Array.isArray(v)&&k!=='photos'&&v.every(x=>typeof x==='string')){const t=h('textarea','in');t.rows=Math.min(8,v.length+1);t.value=v.join('\n');t.oninput=()=>{p[k]=t.value.split('\n').map(s=>s.trim()).filter(Boolean);dirty()};return field(L+' (one per line)',t)}
+  if(Array.isArray(v))return list(v,label,sec);
+  if(v&&typeof v==='object'){const f=h('fieldset');f.append(h('legend',0,esc(L)));Object.keys(v).forEach(x=>f.append(ed(v,x,x,sec)));return f}
+  if(typeof v==='boolean'){const c=h('input');c.type='checkbox';c.checked=v;c.onchange=()=>{p[k]=c.checked;dirty()};return field(c,L)}
+  if(IMGK.test(k)&&typeof v==='string')return imgf(p,k,L,sec,v);
+  let i;
+  if(SELK[k]){i=h('select','in');[...new Set([...SELK[k],v])].forEach(o=>i.append(new Option(o,o)));i.value=v;i.onchange=()=>{p[k]=i.value;dirty()};return field(L,i)}
+  if(/^(start|end)$/.test(k)){i=h('input','in');i.type='datetime-local';i.value=String(v).slice(0,16);i.onchange=()=>{p[k]=i.value?i.value+':00+05:30':'';dirty()};return field(L+' (Sri Lanka time)',i)}
+  const long=typeof v==='string'&&(v.length>70||v.includes('\n')||/^(text|about|note)$/.test(k));
+  i=h(long?'textarea':'input','in');if(long)i.rows=4;if(typeof v==='number')i.type='number';else if(URLK(k))i.type='text',i.placeholder='https://…';else if(k==='phone')i.type='tel';
+  i.value=v;i.oninput=()=>{p[k]=typeof v==='number'?+i.value:i.value;dirty()};return field(L+(/^(name|title|image)$/.test(k)?' *':''),i)}
+function list(a,label,sec){
+  const box=h('div');let dr=-1;
+  const draw=()=>{box.innerHTML='';
+    a.forEach((it,i)=>{const d=h('details','it'),s=h('summary');s.draggable=true;s.title='Drag to reorder';s.append(h('span',0,'⠿ '+esc(lab(it)||'#'+(i+1))));
+      [['↑',-1],['↓',1],['✕',0]].forEach(([t,dx])=>{const b=h('button','mini',t);b.type='button';b.onclick=e=>{e.preventDefault();
+        if(!dx){if(!confirm('Remove this item?'))return;a.splice(i,1)}else{const j=i+dx;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]]}dirty();draw()};s.append(b)});
+      s.ondragstart=e=>{dr=i;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','x')};
+      d.ondragover=e=>{if(dr>-1)e.preventDefault()};d.ondrop=e=>{e.preventDefault();e.stopPropagation();if(dr<0||dr===i)return;const[x]=a.splice(dr,1);a.splice(i,0,x);dr=-1;dirty();draw()};
+      const bd=h('div','bd');Object.keys(it).forEach(k=>bd.append(ed(it,k,k,sec)));d.append(s,bd);box.append(d)});
+    if(a.length||label||sec==='LEARN')box.append(btn('+ Add',()=>{const n=blank(a[0]||TPL[label]||TPL[sec]||{});label==='members'||sec==='LEARN'?a.push(n):a.unshift(n);dirty();draw()},'ghost'));
+    if(label==='photos'){const u=h('input','in');u.type='file';u.accept='image/*';u.multiple=true;
+      u.onchange=async()=>{const fs=[...u.files];for(let n=0;n<fs.length;n++){const png=fs[n].type==='image/png',b=await shrink(fs[n],png,1600),path='images/learn/photo-'+Date.now().toString(36)+n+(png?'.png':'.jpg');ST[path]=b;URLS[path]=URL.createObjectURL(b);a.push({photo:path,caption:''})}dirty();draw()};
+      box.append(field('Upload photos (choose one or several)',u))}};
+  draw();return box}
+const blank=v=>Array.isArray(v)?[]:v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,blank(x)])):typeof v==='number'?0:typeof v==='boolean'?false:'';
+/* ---------- checks + change review ---------- */
+function chk(v,p,k,o){
+  if(Array.isArray(v))return v.forEach((x,i)=>chk(x,p+' #'+(i+1)+(lab(x)?' ('+lab(x)+')':''),k,o));
+  if(v&&typeof v==='object'){['name','title','image'].forEach(r=>{if(r in v&&!String(v[r]).trim())o.push(p+': "'+nice(r)+'" is empty')});
+    if(v.start&&v.end&&Date.parse(v.start)>Date.parse(v.end))o.push(p+': ends before it starts');return Object.keys(v).forEach(x=>chk(v[x],p,x,o))}
+  if(typeof v==='string'&&v.trim()){if(URLK(k)&&!/^(https?:\/\/|#|\/|mailto:|tel:)/.test(v.trim()))o.push(p+': "'+nice(k)+'" is not a valid link');
+    if(/^(start|end|EVENT_DATE)$/.test(k)&&isNaN(Date.parse(v)))o.push(p+': "'+nice(k)+'" is not a valid date')}}
+function diff(a,b,p,o){
+  if(JSON.stringify(a)===JSON.stringify(b))return;const sh=s=>{s=typeof s==='string'?s:JSON.stringify(s);return s==null?'(none)':s.length>50?s.slice(0,47)+'…':s};
+  if(Array.isArray(a)&&Array.isArray(b)){for(let i=0;i<Math.max(a.length,b.length);i++){const q=p+'['+(lab(b[i])||lab(a[i])||i+1)+']';
+    if(i>=a.length)o.push('+ '+q+' added');else if(i>=b.length)o.push('− '+q+' removed: '+(lab(a[i])||''));else diff(a[i],b[i],q,o)}}
+  else if(a&&b&&typeof a==='object'&&typeof b==='object')[...new Set([...Object.keys(a),...Object.keys(b)])].forEach(k=>diff(a[k],b[k],p+'.'+k,o));
+  else o.push('~ '+p+': '+sh(a)+' → '+sh(b))}
+/* ---------- GitHub (same saved settings as the album builder) ---------- */
+const gql=async(q,v)=>{const r=await fetch('https://api.github.com/graphql',{method:'POST',headers:{Authorization:'Bearer '+GH.token,'Content-Type':'application/json'},body:JSON.stringify({query:q,variables:v})});
+  const j=await r.json().catch(()=>({}));if(!r.ok||j.errors)throw Error((j.errors&&j.errors[0].message)||j.message||('GitHub said '+r.status));return j.data};
+function normRepo(s){s=String(s||'').trim().replace(/^https?:\/\/(www\.)?github\.com\//i,'').replace(/\.git$/i,'').replace(/^\/+|\/+$/g,'');return s.split('/').slice(0,2).join('/')}
+async function head(){const[o,n]=normRepo(GH.repo).split('/'),b=GH.branch||'main';if(!o||!n)throw Error('Repository must look like owner/name, for example sscpc/sscpc-site. Check the GitHub box.');
+  const d=(await gql('query($o:String!,$n:String!,$q:String!,$e:String!){repository(owner:$o,name:$n){ref(qualifiedName:$q){target{oid}} object(expression:$e){...on Blob{text isTruncated}}}}',{o,n,q:'refs/heads/'+b,e:b+':js/data.js'})).repository;
+  if(!d||!d.ref)throw Error('Repository or branch not found');if(!d.object||d.object.isTruncated)throw Error('Could not read js/data.js');return{oid:d.ref.target.oid,text:d.object.text}}
+const b64=b=>new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result.split(',')[1]);r.readAsDataURL(b)});
+function merge(rd){ // per-section 3-way merge: base (when loaded) / ours / theirs (GitHub now)
+  const out={};[...new Set([...KEYS,...Object.keys(rd)])].forEach(k=>{const o=JSON.stringify(D[k]),r=JSON.stringify(rd[k]);
+    if(o===B[k]||o===r)out[k]=rd[k];else if(r===B[k])out[k]=D[k];
+    else throw Error('"'+k+'" was changed on GitHub (maybe by the Album Builder) and also here. Reload the admin and redo your '+k+' changes.')});return out}
+async function pub(){
+  for(let t=0;;t++)try{const hd=await head(),m=merge(parse(hd.text)),add=[{path:'js/data.js',contents:await b64(new Blob([ser(m)]))}];
+    for(const p in ST)add.push({path:p,contents:await b64(ST[p])});
+    await gql('mutation($i:CreateCommitOnBranchInput!){createCommitOnBranch(input:$i){commit{oid}}}',{i:{branch:{repositoryNameWithOwner:normRepo(GH.repo),branchName:GH.branch||'main'},message:{headline:'Update site data from admin portal'},expectedHeadOid:hd.oid,fileChanges:{additions:add}}});
+    D=m;KEYS=Object.keys(D);B=snapK();for(const p in ST)delete ST[p];hist=[JSON.stringify(D)];hi=0;dirty();return}
+  catch(e){if(t>=2||!/oid|head|expected/i.test(e.message))throw e}}
+/* ---------- inbox ---------- */
+const isH=r=>/^handled$/i.test(r.Status||''),sup=()=>X&&X.v>=2,SHEET={registrations:'Registrations',joins:'Join requests',messages:'Messages'};
+async function load(){const r=await fetch(D0.FORMS_ENDPOINT+'?key='+encodeURIComponent(key));const j=await r.json();if(!j.ok)throw 0;X=j}
+async function setRow(r,st,note){const q=new URLSearchParams({key,action:'set',sheet:sub,row:r._row,ts:r.Timestamp||'',status:st,note});
+  const j=await(await fetch(D0.FORMS_ENDPOINT+'?'+q)).json();if(!j.ok)throw Error(j.error||'Could not save');r.Status=st;r.Note=note}
+const csv=(rows,cols)=>'\ufeff'+[cols,...rows.map(r=>cols.map(c=>r[c]??''))].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+function openRow(r,after){const d=$('#dlg');d.innerHTML='';d.append(h('div','ttl',esc(r.school||r.name||r.contact_name||'Details')));
+  Object.keys(r).filter(k=>r[k]&&!/^(_row|Status|Note)$/.test(k)).forEach(k=>{const e=h('div','kv');e.innerHTML='<small>'+esc(nice(k))+'</small><div>'+esc(r[k]).replace(/\n/g,'<br>')+'</div>';d.append(e)});
+  const ms=h('p','note');if(sup()){const s=h('select','in');['New','Handled'].forEach(o=>s.append(new Option(o,o)));s.value=isH(r)?'Handled':'New';const n=h('textarea','in');n.rows=3;n.value=r.Note||'';n.placeholder='Private note, saved in the sheet';
+    d.append(field('Status',s),field('Note',n),btn('Save',async()=>{ms.textContent='Saving…';try{await setRow(r,s.value,n.value);d.close();after()}catch(e){ms.textContent=e.message}}))}
+  else ms.textContent='To mark items handled and add notes, update the Apps Script (tools/google-sheet-script.gs) and deploy a new version.';
+  d.append(' ',btn('Close',()=>d.close(),'ghost'),ms);d.showModal()}
+function inbox(){
+  const w=h('div'),R=X.registrations,J=X.joins,M=X.messages,all=X[sub],nw=a=>a.filter(r=>!isH(r)).length;
+  w.append(h('div','stats',[['Registrations',R.length],['Students attending',R.reduce((n,r)=>n+(+r.students||0),0)],['Join requests',J.length],['Messages',M.length]].map(([a,b])=>`<div class="card"><small>${a}</small><strong>${b}</strong></div>`).join('')));
+  const bar=h('div','bar');
+  [['registrations','Registrations'],['joins','Join requests'],['messages','Messages']].forEach(([k,t])=>{const c=h('button','chip',t+(sup()?' ('+nw(X[k])+' new)':''));c.setAttribute('aria-pressed',k===sub);c.onclick=()=>{sub=k;show('inbox')};bar.append(c)});
+  if(sup())['All','New','Handled'].forEach(f=>{const c=h('button','chip',f);c.setAttribute('aria-pressed',f===flt);c.onclick=()=>{flt=f;show('inbox')};bar.append(c)});
+  const q=h('input','in');q.placeholder='Search…';
+  const rows=[...all].reverse().filter(r=>flt==='All'||!sup()||(flt==='Handled')===isH(r)),cols=[...new Set(rows.flatMap(r=>Object.keys(r)))].filter(c=>!/^(_row|Status)$/.test(c)&&rows.some(r=>r[c]));
+  bar.append(q,btn('Refresh',async()=>{try{await load();show('inbox')}catch(e){alert('Could not refresh')}},'ghost'),btn('Export CSV',()=>save('sscpc-'+sub+'.csv',csv(rows,cols),'text/csv')));
+  const tb=h('div','tbl'),draw=()=>{const f=q.value.toLowerCase(),rs=rows.filter(r=>!f||JSON.stringify(r).toLowerCase().includes(f));tb.innerHTML='';
+    if(!rs.length){tb.innerHTML='<p style="padding:1rem">Nothing here.</p>';return}
+    const t=h('table');t.innerHTML='<tr>'+(sup()?'<th></th>':'')+cols.map(c=>`<th>${esc(nice(c))}</th>`).join('')+'</tr>';
+    rs.forEach(r=>{const tr=h('tr');tr.style.cursor='pointer';if(sup()&&!isH(r))tr.style.fontWeight='700';
+      if(sup()){const td=h('td'),b=h('button','mini',isH(r)?'✓':'○');b.title=isH(r)?'Handled (tap to reopen)':'Mark handled';b.onclick=async e=>{e.stopPropagation();try{await setRow(r,isH(r)?'New':'Handled',r.Note||'');show('inbox')}catch(x){alert(x.message)}};td.append(b);tr.append(td)}
+      cols.forEach(c=>{const td=h('td',0,esc(r[c]));td.title=r[c]||'';tr.append(td)});tr.onclick=()=>openRow(r,()=>show('inbox'));t.append(tr)});tb.append(t)};
+  q.oninput=draw;draw();w.append(bar,tb);return w}
+/* ---------- home, albums, site, publish ---------- */
+function home(){
+  const w=h('div'),R=X.registrations,J=X.joins,M=X.messages,nw=a=>sup()?a.filter(r=>!isH(r)).length:a.length;
+  const days=Math.ceil((new Date(D.EVENT_DATE)-Date.now())/864e5),ph=D.ALBUMS.reduce((n,a)=>n+a.photos.length,0),mem=D.MEMBERS.reduce((n,g)=>n+g.members.length,0);
+  const C=[['Days to Spectrum',days>0?days:'Done'],[sup()?'New registrations':'Registrations',nw(R)],['Students attending',R.reduce((n,r)=>n+(+r.students||0),0)],[sup()?'New join requests':'Join requests',nw(J)],[sup()?'New messages':'Messages',nw(M)],['Albums',D.ALBUMS.length],['Photos',ph],['Members',mem]];
+  w.append(h('div','stats',C.map(([a,b])=>`<div class="card"><small>${a}</small><strong>${b}</strong></div>`).join('')));
+  const bar=h('div','bar');bar.append(btn('Open inbox',()=>show('inbox')),Object.assign(h('a','btn ghost sm','Album Builder'),{href:'../tools/album-builder.html'}),btn('Review and publish',()=>show('publish'),'ghost'),Object.assign(h('a','btn ghost sm','View site'),{href:'../index.html'}));w.append(bar);
+  const ch=changed();w.append(h('p','note',ch.length||Object.keys(ST).length?'You have unpublished changes in: '+ch.map(nice).join(', ')+'.':'Everything here is published.'));
+  w.append(h('h3',0,'Latest registrations'));const t=h('div','tbl');t.innerHTML='<table>'+[...R].reverse().slice(0,6).map(r=>`<tr><td>${esc(r.school||r.contact_name||'')}</td><td>${esc(r.students||'')} students</td><td>${esc(r.Timestamp||'')}</td></tr>`).join('')+'</table>';w.append(t);return w}
+function albums(){
+  const w=h('div');w.append(h('p','note','Add albums, edit photos, covers and details in the Album Builder. Here you can reorder albums (the order is the gallery order) or remove one.'));
+  w.append(Object.assign(h('a','btn sm','Open Album Builder'),{href:'../tools/album-builder.html'}));
+  const box=h('div');box.style.marginTop='1rem';const draw=()=>{box.innerHTML='';D.ALBUMS.forEach((a,i)=>{const d=h('details','it'),s=h('summary');
+    s.append(Object.assign(h('img'),{src:'../'+(a.cover||a.photos[0]||''),alt:'',style:'width:2.4rem;height:3rem;object-fit:cover'}),h('span',0,esc(a.name)+' <small style="color:var(--muted)">· '+a.photos.length+' photos</small>'));
+    [['↑',-1],['↓',1],['✕',0]].forEach(([t,dx])=>{const b=h('button','mini',t);b.type='button';b.onclick=e=>{e.preventDefault();
+      if(!dx){if(!confirm('Remove "'+a.name+'" from the gallery? Its photo files stay in the repo.'))return;D.ALBUMS.splice(i,1)}else{const j=i+dx;if(j<0||j>=D.ALBUMS.length)return;[D.ALBUMS[i],D.ALBUMS[j]]=[D.ALBUMS[j],D.ALBUMS[i]]}dirty();draw()};s.append(b)});
+    d.append(s);d.querySelector('summary').style.cursor='default';box.append(d)})};draw();w.append(box);return w}
+function selDone(){
+  const w=h('div');
+  w.append(h('p','note','The “Photo selection completed” announcement on the home page, just above the Selection Day Partner. Change the heading (two lines), the message, and the group photo with its caption. Set <b>Show</b> to <b>no</b> to hide the whole block. Then press <b>Publish</b>.'),ed(D,'SELECTION_DONE',''));
+  return w}
+function learn(){
+  const w=h('div');
+  w.append(h('p','note','Each topic is a card on the Learn page (its <b>Title</b> and a two-sentence <b>Summary</b>). Clicking the card opens that topic’s own section with its <b>Facts</b> (one per line), <b>Try it</b> and photos. Add or remove topics and upload photos for each topic (open a lesson, then use <b>Upload photos</b> under Photos; you can pick several at once). Use the arrows or drag to reorder. Then press <b>Publish</b>.'));
+  w.append(h('h3',0,'Topics'),ed(D,'LEARN',''));
+  const c=h('div');c.style.marginTop='1.5rem';
+  c.append(h('h3',0,'Weekly challenges'),h('p','note','One challenge per line, written as <b>Title: what to do</b>. The site shows the next line every Monday and starts again from the top after the last one.'),ed(D,'LEARN_CHALLENGES',''));
+  w.append(c);return w}
+function votesPanel(){
+  const box=h('details','it'),sm=h('summary'),sp=h('span',0,'Votes'),bd=h('div','bd'),msg=h('p','note'),tb=h('div');
+  sm.append(sp);box.open=true;box.append(sm,bd);bd.append(msg,tb);let rows=[];
+  const bar=h('div','bar'),rf=btn('Refresh',()=>go(),'ghost'),ex=btn('Export CSV',()=>save('spectrum-votes.csv',csv(rows.map((r,i)=>({Rank:i+1,'Photo name':r.title,Photographer:r.photographer,School:r.school,Votes:r.votes})),['Rank','Photo name','Photographer','School','Votes']),'text/csv'));
+  bar.append(rf,ex);bd.insertBefore(bar,msg);
+  async function go(){msg.textContent='Loading votes…';tb.innerHTML='';
+    try{const j=await(await fetch(D0.FORMS_ENDPOINT+'?action=photo-votes&key='+encodeURIComponent(key),{redirect:'follow'})).json();
+      if(!j||!j.ok)throw 0;const by={};j.photos.forEach(v=>by[v.photo]=v);
+      rows=D.SPECTRUM_PHOTOS.map(p=>({photo:p.photo,title:p.title,photographer:p.photographer,school:p.school||'',votes:(by[p.photo]||{}).votes||0,last:(by[p.photo]||{}).last||''})).sort((a,b)=>b.votes-a.votes||a.title.localeCompare(b.title));
+      const tot=rows.reduce((n,r)=>n+r.votes,0),mx=Math.max(1,...rows.map(r=>r.votes));sp.textContent='Votes · '+tot+' in total';
+      msg.textContent=tot?'Photos with the most votes first. Only photos currently in the list are shown.':'No votes yet. They appear here after visitors press Vote on the photographs page.';
+      const t=h('table');t.innerHTML='<tr><th>#</th><th></th><th>Photo name</th><th>Photographer</th><th>School</th><th>Votes</th><th></th></tr>';
+      rows.forEach((r,i)=>{const tr=h('tr'),k=r.photo.lastIndexOf('/'),th='../'+r.photo.slice(0,k+1)+'thumbs/'+r.photo.slice(k+1);
+        tr.innerHTML='<td>'+(i+1)+'</td><td><img src="'+esc(th)+'" alt="" style="width:2.2rem;height:2.8rem;object-fit:cover;display:block"></td><td>'+esc(r.title)+'</td><td>'+esc(r.photographer)+'</td><td>'+esc(r.school)+'</td><td><b>'+r.votes+'</b></td><td style="min-width:7rem"><div style="height:.5rem;background:var(--accent);opacity:.8;width:'+Math.max(r.votes?3:0,Math.round(r.votes/mx*100))+'%"></div></td>';t.append(tr)});
+      tb.className='tbl';tb.append(t)}
+    catch(e){sp.textContent='Votes';msg.innerHTML='<b>Could not read the votes.</b> Voting needs a one-time setup: paste <code>tools/photo-votes.gs</code> into your Google Apps Script, add the two lines it explains, and deploy a new version. Then press Refresh.'}}
+  go();return box}
+function photos(){
+  const w=h('div'),n=()=>D.SPECTRUM_PHOTOS.filter(p=>!String(p.school||'').trim()).length,m=h('p','note');
+  const upd=()=>{m.innerHTML='These are the photographs on the voting page (yoursite/#vote, reached from the floating <b>Vote</b> button; voting is open 9 a.m. to 5 p.m. on 13 November). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
+  const L=ed(D,'SPECTRUM_PHOTOS','');upd();w.append(m,votesPanel(),h('h3',0,'Photos'),L);
+  w.addEventListener('input',()=>setTimeout(()=>{upd();L.querySelectorAll(':scope>details.it').forEach((d,i)=>{const s=d.querySelector('summary span');if(s&&D.SPECTRUM_PHOTOS[i])s.textContent='⠿ '+lab(D.SPECTRUM_PHOTOS[i])})},0));
+  return w}
+function site(){
+  const w=h('div','bd');
+  w.append(h('p','note','Edit site-wide countdowns, timings, contact details, external links and shared website text here. Expand a section to make changes. Event-specific dates and times remain in the Events tab. Review all edits in Publish before sending them live.'));
+  const groups=[
+    {title:'Times & countdowns',test:k=>/(DATE|TIME|HOUR|DURATION|SECONDS|COUNTDOWN|OPEN|CLOSE|DEADLINE)/i.test(k)},
+    {title:'Links & contact details',test:k=>/(LINK|URL|WHATSAPP|EMAIL|PHONE|SOCIAL|FORM|ENDPOINT|FACEBOOK|INSTAGRAM|YOUTUBE|TIKTOK)/i.test(k)},
+    {title:'Website text & messages',test:k=>/(TITLE|TEXT|COPY|MESSAGE|TAGLINE|LABEL|INTRO|ABOUT|DESCRIPTION|ADDRESS|FOOTER|NOTICE|ANNOUNC|HEADING|CAPTION)/i.test(k)},
+    {title:'Other site settings',test:k=>true}
+  ];
+  const used=new Set();
+  groups.forEach((g,idx)=>{
+    const keys=Object.keys(D).filter(k=>{
+      if(used.has(k))return false;
+      const v=D[k],simple=v===null||['string','number','boolean'].includes(typeof v);
+      const nested=v&&typeof v==='object'&&!Array.isArray(v);
+      return (simple||nested)&&g.test(k);
+    });
+    if(!keys.length)return;
+    keys.forEach(k=>used.add(k));
+    const section=h('details','it'),summary=h('summary'),body=h('div','bd');
+    summary.append(h('span',0,g.title+' · '+keys.length+' setting'+(keys.length===1?'':'s')));
+    section.open=idx===0;
+    keys.forEach(k=>body.append(ed(D,k,k)));
+    section.append(summary,body);w.append(section);
+  });
+  w.append(h('p','note','For link fields, include the full https:// address. Use Publish to review and deploy your changes.'));
+  return w;
+}
+function publish(){
+  const w=h('div','bd'),st=h('p','note'),errs=[],L=[],ch=changed(),ni=Object.keys(ST).length;
+  KEYS.forEach(k=>chk(D[k],k,k,errs));ch.forEach(k=>diff(JSON.parse(B[k]),D[k],k,L));
+  w.append(h('p','note','Review what will change, then publish. <b>Publish</b> commits to GitHub and Vercel redeploys in about a minute. If the Album Builder (or anyone) changed a section meanwhile, it is merged in automatically; if the same section changed in both places you are asked to reload.'));
+  if(errs.length){const e=h('div','box err');e.append(h('b',0,'Fix these first:'));errs.forEach(x=>e.append(h('div',0,esc(x))));w.append(e)}
+  const r=h('pre','box');r.textContent=(L.length||ni?L.slice(0,80).join('\n')+(L.length>80?'\n… and '+(L.length-80)+' more':'')+(ni?'\n+ '+ni+' new image'+(ni>1?'s':'')+' to upload':''):'No changes.');w.append(r);
+  const bar=h('div','bar');
+  bar.append(btn('Discard all changes',()=>{if(!(ch.length||ni)||!confirm('Throw away all unpublished changes?'))return;D=JSON.parse(JSON.stringify(Object.fromEntries(KEYS.map(k=>[k,JSON.parse(B[k])]))));for(const p in ST)delete ST[p];hist=[JSON.stringify(D)];hi=0;dirty();show('publish')},'ghost'),
+    btn('Download data.js',()=>save('data.js',ser(D),'text/javascript'),'ghost'));
+  const f={};const g=h('div','bd');[['repo','GitHub repository (owner/name)'],['branch','Branch'],['token','Fine-grained access token (Contents: read and write, this repo only)']].forEach(([k,l])=>{const i=h('input','in');if(k==='token')i.type='password';i.value=GH[k]||(k==='branch'?'main':'');f[k]=i;g.append(field(l,i))});
+  const pb=btn('Publish to GitHub',async()=>{GH={repo:normRepo(f.repo.value),branch:f.branch.value.trim()||'main',token:f.token.value.trim()};localStorage.gh=JSON.stringify(GH);
+    if(errs.length||!(ch.length||ni)){st.textContent=errs.length?'Fix the problems above first.':'Nothing to publish.';return}
+    st.textContent='Publishing…';pb.disabled=true;try{await pub();show('publish');$('#main').append(h('p','note','Published. The live site updates in about a minute.'))}catch(e){st.textContent=e.message;pb.disabled=false}});
+  bar.append(pb);w.append(bar,st,g,h('p','note','The token is kept in this browser only (shared with the Album Builder). Use a device you trust, and sign out of shared computers.'));return w}
+/* ---------- shell ---------- */
+const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['selection','Selection',selDone],['photos','Votes',photos],['site','Site',site],['publish','Publish',publish]];
+TABS.forEach(([k,t])=>{const b=h('button','tab',t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))});
+function show(n){tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
+  const m=$('#main'),t=TABS.find(x=>x[0]===n);m.innerHTML='';m.append(h('div','ttl',t[1]),t[2]());scrollTo(0,0)}
+let D0;async function enter(k){key=k;$('#msg').textContent='Checking…';
+  try{const r=await fetch('../js/data.js',{cache:'no-store'});let txt=await r.text();D0=parse(txt);await load();
+    if(GH.token&&GH.repo)try{txt=(await head()).text}catch(e){}
+    D=parse(txt);KEYS=Object.keys(D);B=snapK();hist=[JSON.stringify(D)];hi=0;ub();
+    sessionStorage.k=k;$('#login').classList.add('hide');$('#app').classList.remove('hide');show(tab)}
+  catch(e){sessionStorage.removeItem('k');$('#msg').textContent='Could not sign in. Check the key, and that the updated Apps Script is deployed.'}}
+$('#lf').onsubmit=e=>{e.preventDefault();enter($('#key').value)};
+$('#so').onclick=()=>{sessionStorage.removeItem('k');location.reload()};
+$('#undo').onclick=()=>jump(-1);$('#redo').onclick=()=>jump(1);
+$('#th').onclick=()=>{const r=document.documentElement,c=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.dataset.theme=c==='dark'?'light':'dark';localStorage.at=r.dataset.theme};
+if(localStorage.at)document.documentElement.dataset.theme=localStorage.at;
+addEventListener('beforeunload',e=>{if(D&&(changed().length||Object.keys(ST).length)){e.preventDefault();e.returnValue=''}});
+if(sessionStorage.k)enter(sessionStorage.k);
 </script>
-<script src="js/reveal.js"></script>
-<script src="js/judges-v6.js" defer></script>
-<script src="js/gallery-tools.js"></script>
-<script src="js/album-views.js"></script>
-<script src="js/learn.js"></script>
-<script src="js/selection-done.js"></script>
-<script src="js/chatbot.js"></script>
-<script src="js/music.js"></script>
-<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script><!--vercel-->
-<script defer src="/_vercel/insights/script.js"></script><!--vercel-->
 </body>
 </html>
