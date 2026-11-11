@@ -1854,30 +1854,6 @@ const SLIDE_SECONDS = 6.5;
 
 const SLIDES = [
   {
-    "image": "images/announcements/img-mwawlsnr.png",
-    "alt": "scope introducing"
-  },
-  {
-    "image": "images/announcements/img-mwawle31.jpg",
-    "alt": "chief guests"
-  },
-  {
-    "image": "images/announcements/img-mwawkt73.jpg",
-    "alt": "3 days more"
-  },
-  {
-    "image": "images/announcements/img-mwawkaj1.jpg",
-    "alt": "4 days more"
-  },
-  {
-    "image": "images/announcements/img-mwawjxqk.jpg",
-    "alt": "5 days more"
-  },
-  {
-    "image": "images/announcements/img-mwawjnk3.jpg",
-    "alt": "save the date"
-  },
-  {
     "image": "images/announcements/img-mv88tzgz.jpg",
     "alt": "Successfully concluded"
   },
@@ -1931,12 +1907,12 @@ const SLIDES = [
 const FORMS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyAHz3S7XpEbTAfYYXuhJDoVZoKPNY5his_4kfAh4ElJYyvgeAd4-14XVT_Vlp06f-j/exec";
 
 const PDF_CONFIG = {
-  "siteUrl": "https://ssckphotography.com/",
-  "siteLabel": "www.ssckphotography.com",
+  "siteUrl": "https://sscpc.vercel.app",
+  "siteLabel": "ssckphotography.com",
   "email": "sylvestrian.photography@gmail.com",
   "clubName": "St. Sylvester's College Photography Club",
   "shortName": "SSCPC",
-  "footerText": "Keep Focusing, Capture the Best",
+  "footerText": "",
   "logo": "images/pdf-logo.png",
   "colors": {
     "navy": "#04101E",
