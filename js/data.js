@@ -2623,7 +2623,7 @@ const SITE = {
     "instagramUrl": "https://www.instagram.com/ssck_photography",
     "instagramLabel": "ssck_photography",
     "facebookUrl": "https://www.facebook.com/SSCKphotography",
-    "facebookLabel": "SSCPC Photography",
+    "facebookLabel": "SSCK Photography",
     "whatsappChannelUrl": "https://whatsapp.com/channel/0029VaeL6UB9mrGdT1CwN41w",
     "whatsappLabel": "Follow the channel",
     "mapQuery": "St. Sylvester's College, Kandy, Sri Lanka",
