@@ -130,7 +130,8 @@
     busy = true; dOk.disabled = true; dMsg.textContent = 'Sending your vote\u2026';
     try {
       const r = await send();
-      if (r && r.ok) { remember(cur.id); dMsg.textContent = '\u2713 Your vote for ' + label(cur) + ' has been counted. Thank you!'; dOk.hidden = true; paint(); }
+      if (r && r.unconfirmed) { dMsg.textContent = 'We could not confirm that your vote was saved. Press Confirm again to retry (it will never count twice).'; dOk.disabled = false; busy = false; }
+      else if (r && r.ok) { remember(cur.id); dMsg.textContent = '\u2713 Your vote for ' + label(cur) + ' has been counted. Thank you!'; dOk.hidden = true; paint(); }
       else if (r && r.error === 'already') { remember(idOfPath(r.photo) || cur.id); dMsg.textContent = 'You have already voted today. Thank you!'; dOk.hidden = true; paint(); }
       else if (r && r.error === 'closed') { dMsg.textContent = 'Voting has closed.'; dOk.hidden = true; paint(); }
       else if (r && r.error === 'not_open') { dMsg.textContent = 'Voting has not opened yet.'; dOk.hidden = true; paint(); }
