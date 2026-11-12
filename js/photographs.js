@@ -51,6 +51,7 @@
   const nm=it=>it.p.title||('Photo '+pad(it.n));
   const who=it=>[it.p.photographer,it.p.school].filter(Boolean).join(' \u2022 ')||nm(it);
   const endpoint=()=>{try{return typeof FORMS_ENDPOINT==='string'?FORMS_ENDPOINT:''}catch(e){return ''}};
+  const deviceId=()=>{try{let id=localStorage.getItem('sscpc_vote_dev');if(!id||id.length<16){const a=new Uint8Array(12);(window.crypto||window.msCrypto).getRandomValues(a);id=Array.from(a,b=>b.toString(16).padStart(2,'0')).join('');localStorage.setItem('sscpc_vote_dev',id)}return id}catch(e){return Array.from({length:24},()=>Math.floor(Math.random()*16).toString(16)).join('')}};
   let mine=null; /* {day, photo} when this browser has already voted today */
   const readMine=()=>{try{const v=JSON.parse(localStorage.getItem(KEY)||'null');mine=v&&v.day===today()?v:null}catch(e){mine=mine&&mine.day===today()?mine:null}};
   const writeMine=v=>{mine=v;try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}};
@@ -120,9 +121,19 @@
     const finish=()=>{writeMine({day:today(),photo:it.p.photo});sending=false;paintButtons(state());if(cur===it)note()};
     if(!u){finish();return}
     sending=true;ok.disabled=true;ok.textContent='Sending\u2026';
-    let p;
-    try{p=fetch(u,{method:'POST',mode:'no-cors',keepalive:true,body:new URLSearchParams({form:'photo-vote',photo:it.p.photo,title:it.p.title||'',photographer:it.p.photographer||'',delta:'1',day:today()})})}catch(e){p=Promise.reject(e)}
-    p.then(finish,()=>{sending=false;if(cur===it){ok.disabled=false;ok.textContent='Confirm my vote';msg.textContent='We could not send your vote. Please check your connection and try again.'}});
+    const body=()=>new URLSearchParams({form:'photo-vote',photo:it.p.photo,title:it.p.title||'',photographer:it.p.photographer||'',device:deviceId()});
+    const fail=m=>{sending=false;if(cur===it){ok.disabled=false;ok.textContent='Confirm my vote';msg.textContent=m}};
+    /* Read the server's reply so a rejected vote is never shown as counted. If the reply cannot be read, resend once without reading it (safe: one vote per device per day on the server). */
+    fetch(u,{method:'POST',body:body()}).then(r=>r.text()).then(t=>{
+      let j;try{j=JSON.parse(t)}catch(e){j=null}
+      if(j&&(j.ok||j.error==='already'))return finish();
+      if(j&&j.error==='not_open')return fail('Voting has not opened yet.');
+      if(j&&j.error==='closed')return fail('Voting has closed.');
+      if(j&&j.error==='invalid')return fail('This vote could not be recognised. Please reload the page and try again.');
+      fail('Your vote could not be saved. Please try again.');
+    }).catch(()=>{
+      fetch(u,{method:'POST',mode:'no-cors',keepalive:true,body:body()}).then(finish,()=>fail('We could not send your vote. Please check your connection and try again.'));
+    });
   }
   xb.onclick=closeBox;cl.onclick=closeBox;ok.onclick=confirm;
   box.addEventListener('click',e=>{if(e.target===box)closeBox()});
