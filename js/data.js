@@ -2533,61 +2533,61 @@ const SPECTRUM_PHOTOS = [
     "photo": "images/spectrum-photos/p-ed728c556c.jpg",
     "title": "Call of Nature",
     "photographer": "Mayon Devkalana",
-    "school": ""
+    "school": "D S Senanayaka College"
   },
   {
     "photo": "images/spectrum-photos/p-becbaea5e6.jpg",
     "title": "Aerial ambush",
     "photographer": "Mayon Minthaka",
-    "school": ""
+    "school": "Maris Stella College"
   },
   {
     "photo": "images/spectrum-photos/p-f92938cef6.jpg",
     "title": "Sunday Market",
     "photographer": "Isuli Surathya Liyanage",
-    "school": ""
+    "school": "Yashodara Devi Balika Vidyalaya"
   },
   {
     "photo": "images/spectrum-photos/p-b2da5366a8.jpg",
     "title": "Lost in Thought",
     "photographer": "Dulshan Kokila",
-    "school": ""
+    "school": "Sivali Central College"
   },
   {
     "photo": "images/spectrum-photos/p-d68a8683cb.jpg",
     "title": "Where Light Falls",
     "photographer": "Jithuli Yesanga",
-    "school": ""
+    "school": "St. Paul's College"
   },
   {
     "photo": "images/spectrum-photos/p-0393d55a06.jpg",
     "title": "Sunset",
     "photographer": "Sesath Wathsuka",
-    "school": ""
+    "school": "Bandaranayaka College"
   },
   {
     "photo": "images/spectrum-photos/p-0dbec52aab.jpg",
     "title": "Blossom in rain",
     "photographer": "Pawani Prabhashwari",
-    "school": ""
+    "school": "Maliyadewa Balika Vidyalaya"
   },
   {
     "photo": "images/spectrum-photos/p-1225f6181e.jpg",
     "title": "Hidden Smile",
     "photographer": "Nantharupan Pramothan",
-    "school": ""
+    "school": "Jaffna Hindu College"
   },
   {
     "photo": "images/spectrum-photos/p-9c2e97d2dc.jpg",
     "title": "Midnight movements",
     "photographer": "M.K.L.S. Karunarthna",
-    "school": ""
+    "school": "Prince College"
   },
   {
     "photo": "images/spectrum-photos/p-6e0b8deb7f.jpg",
     "title": "Melody of Devotion",
     "photographer": "Prabhavee Mohottige",
-    "school": ""
+    "school": "Kaluthara Balika Vidyalaya"
   }
 ];
 
