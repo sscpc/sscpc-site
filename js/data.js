@@ -2305,31 +2305,31 @@ const SPECTRUM_PHOTOS = [
     "photo": "images/spectrum-photos/p-1fabcb8e2d.jpg",
     "title": "Carried by Love",
     "photographer": "Prabhavee Mohottige",
-    "school": ""
+    "school": "Kaluthara Balika Vidyalaya"
   },
   {
     "photo": "images/spectrum-photos/p-9422d021f9.jpg",
     "title": "The Young Sportsman",
     "photographer": "Pumindu Semika",
-    "school": ""
+    "school": "Nalanda College"
   },
   {
     "photo": "images/spectrum-photos/p-74ac02b544.jpg",
     "title": "Golden Hour Steps",
     "photographer": "Methika Mihinula",
-    "school": ""
+    "school": "Nalanda College"
   },
   {
     "photo": "images/spectrum-photos/p-63409f768d.jpg",
     "title": "Harmony in Motion",
     "photographer": "Mayon Minthaka",
-    "school": ""
+    "school": " Maris Stella College"
   },
   {
     "photo": "images/spectrum-photos/p-d2551547d1.jpg",
     "title": "Night bright stupa",
     "photographer": "Dulma Yuthmanthi",
-    "school": ""
+    "school": "Girls' High School"
   },
   {
     "photo": "images/spectrum-photos/p-3ae86e8841.jpg",
@@ -2341,55 +2341,55 @@ const SPECTRUM_PHOTOS = [
     "photo": "images/spectrum-photos/p-c13ca76c7b.jpg",
     "title": "Teamwork",
     "photographer": "Uthum Methsara",
-    "school": ""
+    "school": "Sivali College"
   },
   {
     "photo": "images/spectrum-photos/p-dd5c13e491.jpg",
     "title": "Life Unfiltered",
     "photographer": "Prabhavee Mohottige",
-    "school": ""
+    "school": "Kaluthara Balika Vidyalaya"
   },
   {
     "photo": "images/spectrum-photos/p-ebb641d36f.jpg",
     "title": "The harvest",
     "photographer": "Mayon Minthaka",
-    "school": ""
+    "school": "Maris Stella College"
   },
   {
     "photo": "images/spectrum-photos/p-6b1689fa3c.jpg",
     "title": "Double cities after the rain",
     "photographer": "Vinudi Sehansa",
-    "school": ""
+    "school": "Vishaka Balika Vidyalaya"
   },
   {
     "photo": "images/spectrum-photos/p-d22efa20d0.jpg",
     "title": "Riding the boat",
     "photographer": "Shemika Anusara",
-    "school": ""
+    "school": "Nalanda College"
   },
   {
     "photo": "images/spectrum-photos/p-3cd46f9e25.jpg",
     "title": "The Threshold",
     "photographer": "M.K.L.S. Karunarthna",
-    "school": ""
+    "school": "Prince College"
   },
   {
     "photo": "images/spectrum-photos/p-bd12439166.jpg",
     "title": "Upside down",
     "photographer": "Methika Mihinula",
-    "school": ""
+    "school": "Nalanda College"
   },
   {
     "photo": "images/spectrum-photos/p-32011c18f6.jpg",
     "title": "Masters of Camouflage",
     "photographer": "Vidun Nanayakkara",
-    "school": ""
+    "school": "Ananda College"
   },
   {
     "photo": "images/spectrum-photos/p-f01c9acf9d.jpg",
     "title": "Patterns in the Crowd",
     "photographer": "Bihandu Kalidasa",
-    "school": ""
+    "school": "Ananda College"
   },
   {
     "photo": "images/spectrum-photos/p-cf948e7353.jpg",
