@@ -2380,6 +2380,12 @@ const SPECTRUM_PHOTOS = [
     "school": "Nalanda College"
   },
   {
+    "photo": "images/spectrum-photos/p-3e67e3b212.jpg",
+    "title": "The Living Urns",
+    "photographer": "Bihandu Kalidasa",
+    "school": "Nalanda College"
+  },
+  {
     "photo": "images/spectrum-photos/p-32011c18f6.jpg",
     "title": "Masters of Camouflage",
     "photographer": "Vidun Nanayakkara",
@@ -2395,139 +2401,133 @@ const SPECTRUM_PHOTOS = [
     "photo": "images/spectrum-photos/p-cf948e7353.jpg",
     "title": "Silent Vesak",
     "photographer": "Chanuth Hasnaka",
-    "school": ""
+    "school": "Wadduwa  Central College"
   },
   {
     "photo": "images/spectrum-photos/p-a991c805e9.jpg",
     "title": "The Evening Horizon",
     "photographer": "Senuda Damsith",
-    "school": ""
-  },
-  {
-    "photo": "images/spectrum-photos/p-3e67e3b212.jpg",
-    "title": "The Living Urns",
-    "photographer": "Bihandu Kalidasa",
-    "school": ""
+    "school": "President College"
   },
   {
     "photo": "images/spectrum-photos/p-62280136e7.jpg",
     "title": "Grid Walker",
     "photographer": "Bihandu Kalidasa",
-    "school": ""
+    "school": "Nalanda College"
   },
   {
     "photo": "images/spectrum-photos/p-0c2c05bb7b.jpg",
     "title": "The balancing",
     "photographer": "Mayon Minthaka",
-    "school": ""
+    "school": "Maris Stella College"
   },
   {
     "photo": "images/spectrum-photos/p-3a0a4579a3.jpg",
     "title": "Vibrant Buildings",
     "photographer": "Bihandu Kalidasa",
-    "school": ""
+    "school": "Nalanda College"
   },
   {
     "photo": "images/spectrum-photos/p-8b4bd64d28.jpg",
     "title": "Gurdiance of the cross road",
     "photographer": "Sathsara Yoshith",
-    "school": ""
+    "school": "Ananda College"
   },
   {
     "photo": "images/spectrum-photos/p-777364b997.jpg",
     "title": "Hands of Heritage",
     "photographer": "Methika Mihinula",
-    "school": ""
+    "school": "Nalanda College"
   },
   {
     "photo": "images/spectrum-photos/p-f315ae9a1c.jpg",
     "title": "I will Catch you",
     "photographer": "Yethum Sandil Rupasinghe",
-    "school": ""
+    "school": "St. Thomas College"
   },
   {
     "photo": "images/spectrum-photos/p-35f08aeda9.jpg",
     "title": "Acuatic Vibe",
     "photographer": "Bihandu Kalidasa",
-    "school": ""
+    "school": "Nalanda College"
   },
   {
     "photo": "images/spectrum-photos/p-ab95da17e1.jpg",
     "title": "Daily work",
     "photographer": "Sesath Wathsuka",
-    "school": ""
+    "school": "Bandaranayka College"
   },
   {
     "photo": "images/spectrum-photos/p-1753f7f528.jpg",
     "title": "Where Light Takes Shape",
     "photographer": "Sayuru Gunathilaka",
-    "school": ""
+    "school": "Ananda College"
   },
   {
     "photo": "images/spectrum-photos/p-05036734b9.jpg",
     "title": "Who's the 1st",
     "photographer": "Mayon Minthaka",
-    "school": ""
+    "school": "Maris Stella College"
   },
   {
     "photo": "images/spectrum-photos/p-cc79eaecf3.jpg",
     "title": "Refraction",
     "photographer": "Kaveesha Gayanthi",
-    "school": ""
+    "school": "Ananda Balika College"
   },
   {
     "photo": "images/spectrum-photos/p-f0ff2de657.jpg",
     "title": "Waiting",
     "photographer": "Kulan Kujan",
-    "school": ""
+    "school": "Nalanda College"
   },
   {
     "photo": "images/spectrum-photos/p-38b1744fbd.jpg",
     "title": "Hidden workplace",
     "photographer": "Uthum Methsara",
-    "school": ""
-  },
-  {
-    "photo": "images/spectrum-photos/p-31d15b4097.jpg",
-    "title": "Affection",
-    "photographer": "Uthum Methsara",
-    "school": ""
+    "school": "Sivali College"
   },
   {
     "photo": "images/spectrum-photos/p-a8ccd6479e.jpg",
     "title": "Moments of rest",
     "photographer": "Risadi Pehansa",
-    "school": ""
+    "school": "Anula College"
   },
   {
     "photo": "images/spectrum-photos/p-60fc0920ce.jpg",
     "title": "Watching Life pass by",
     "photographer": "Senuda Damsith",
-    "school": ""
+    "school": "President College"
+  },
+  {
+    "photo": "images/spectrum-photos/p-31d15b4097.jpg",
+    "title": "Affection",
+    "photographer": "Uthum Methsara",
+    "school": "Sivali College"
   },
   {
     "photo": "images/spectrum-photos/p-98c4e54275.jpg",
     "title": "On Gulliver's Back",
     "photographer": "Chamathki Fernando",
-    "school": ""
+    "school": "Mahamaya Girls' College"
   },
   {
     "photo": "images/spectrum-photos/p-9c2390cf02.jpg",
     "title": "Look",
     "photographer": "Kaveesha Gayanthi",
-    "school": ""
+    "school": "Ananda Baiika Vidyalaya "
   },
   {
     "photo": "images/spectrum-photos/p-33ab31f4ae.jpg",
     "title": "Mothers Love",
     "photographer": "Bihandu Kalidasa",
-    "school": ""
+    "school": "Nalanda College"
   },
   {
     "photo": "images/spectrum-photos/p-dc4d3af7b0.jpg",
     "title": "Beneath the Promises",
     "photographer": "Prabhavee Mohottige",
-    "school": ""
+    "school": "Kaluthara Balika Vidyalaya"
   },
   {
     "photo": "images/spectrum-photos/p-ed728c556c.jpg",
