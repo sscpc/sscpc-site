@@ -1,60 +1,44 @@
-/* SSCPC forms -> Google Sheets, with thank-you emails
+/* SSCPC forms -> Google Sheets, with thank-you emails  (MERGED VERSION: includes the Most Popular Photograph vote)
    How to use (about 5 minutes, see README.txt section H6):
    1. Make a new Google Sheet with the club Google account -- this will hold
       Registrations and Join requests.
    2. Extensions > Apps Script. Delete the sample code, paste ALL of this file.
    3. (Optional) put the club email between the quotes in NOTIFY_EMAIL to get an email for every entry.
    4. Contact form messages go to a SEPARATE spreadsheet (see CONTACT_SHEET_ID
-      below): make a second new Google Sheet, copy its ID out of the URL --
-      the long part between /d/ and /edit -- and paste it into CONTACT_SHEET_ID.
-      Leave CONTACT_SHEET_ID empty to keep contact messages in this same
+      below). Leave CONTACT_SHEET_ID empty to keep contact messages in this same
       spreadsheet instead, on a "Messages" tab.
    5. Deploy > New deployment > type: Web app
         Execute as: Me
         Who has access: Anyone
       Press Deploy, allow access, and copy the Web app URL (ends with /exec).
    6. Paste that URL into FORMS_ENDPOINT in js/data.js and upload the website again.
-   Registrations go to the sheet "Registrations"; membership applications to "Join requests" -- both in this spreadsheet.
-   Contact-form messages go to the "Messages" tab of CONTACT_SHEET_ID (its own spreadsheet), or of this spreadsheet if CONTACT_SHEET_ID is left empty.
-   The person who filled the form also gets a thank-you email (if they typed an email address).
+   Registrations go to the sheet "Registrations"; membership applications to "Join requests"; photo votes to "Photo votes" (one vote per device per day is tracked on "Voter log").
    If you change this script later: Deploy > Manage deployments > pencil icon > Version: New version > Deploy.
    The web app URL stays the same. Free Google accounts can send about 100 emails a day. */
 
 const NOTIFY_EMAIL = 'spectrum.sscpc@gmail.com';
 const CLUB = "SSCPC - St. Sylvester's College Photography Club";
 
-/* The separate Google Sheet that Contact Us messages go to. Paste the
-   spreadsheet ID from its URL (the part between /d/ and /edit) here, e.g.
-   const CONTACT_SHEET_ID = '1AbCdEfGhIjKlMnOpQrStUvWxYz0123456789';
-   Left empty, contact messages go to a "Messages" tab in THIS spreadsheet
-   instead, same as before. */
 const CONTACT_SHEET_ID = '';
 
-/* Membership numbers (Join requests only): SSCPC 001, SSCPC 002, ...
-   Generated here, centrally, one at a time under a lock -- never in the
-   browser -- so two applications submitted at the same moment can never
-   receive the same number. To change the format, edit these two lines. */
 const MEMBERSHIP_PREFIX = 'SSCPC ';
 const MEMBERSHIP_DIGITS = 3;           // 3 -> SSCPC 001. Use 4 for SSCPC 0001, etc.
 const MEMBERSHIP_COL = 'Membership No.';
 
 function doPost(e) {
+  // Most Popular Photograph vote (sent by the website's vote page)
+  if (e && e.parameter && e.parameter.form === 'photo-vote') { return recordPhotoVote_(e.parameter); }
+
   const p = {};
   Object.keys(e.parameters).forEach(k => p[k] = e.parameters[k].join(', '));
   if (p['bot-field']) return out({ ok: true });                 // spam trap
-  if (p.form_type === 'vote') return handleVote(p);               // Most Popular Photograph vote
   const type = p.form_type === 'join' ? 'join' : p.form_type === 'contact' ? 'contact' : 'registration';
-  // Contact messages go to their own spreadsheet (CONTACT_SHEET_ID) when one
-  // is set; Registrations and Join requests always stay in this spreadsheet.
   const ss = (type === 'contact' && CONTACT_SHEET_ID) ? SpreadsheetApp.openById(CONTACT_SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
   const name = type === 'join' ? 'Join requests' : type === 'contact' ? 'Messages' : 'Registrations';
   const sh = ss.getSheetByName(name) || ss.insertSheet(name);
   const skip = ['form_type', 'form-name', 'bot-field'];
   const keys = Object.keys(p).filter(k => skip.indexOf(k) < 0);
 
-  // The lock covers reading the last membership number AND writing the new
-  // row, so a second request that arrives mid-write always waits its turn
-  // and reads the number that was just taken, instead of reusing it.
   let membershipNo = '';
   const lock = LockService.getScriptLock();
   lock.waitLock(30000);
@@ -64,9 +48,6 @@ function doPost(e) {
       sh.appendRow(firstHeader.concat(keys));
     }
     let header = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
-    // A "Join requests" sheet created before this feature existed may not
-    // have the column yet -- add it right after "Time" without touching
-    // any existing data or columns.
     if (type === 'join' && header.indexOf(MEMBERSHIP_COL) < 0) {
       sh.insertColumnAfter(1);
       sh.getRange(1, 2).setValue(MEMBERSHIP_COL);
@@ -118,58 +99,6 @@ function doPost(e) {
   return out({ ok: true, ref: membershipNo });
 }
 
-/* Looks at every existing value in the Membership No. column, finds the
-   highest number used so far (however the column got there), and returns
-   the next one. This is self-healing: it works the first time the column
-   is created, and keeps working correctly even if rows are ever deleted,
-   reordered, or the sheet is edited by hand. */
-/* ---------- Most Popular Photograph vote ----------
-   Votes are saved on the "Votes" tab; totals appear on the "Vote results" tab (made automatically).
-   The two times below MUST match VOTE_OPEN / VOTE_CLOSE in js/data.js. Votes outside this window are rejected here.
-   One vote per device per day. Totals are never sent to the website, so nobody can see them while voting is open. */
-const VOTE_OPEN = new Date('2026-11-13T09:00:00+05:30');
-const VOTE_CLOSE = new Date('2026-11-13T17:00:00+05:30');
-const VOTE_PHOTO_COUNT = 48;
-
-function handleVote(p) {
-  const now = new Date();
-  if (now < VOTE_OPEN) return out({ ok: false, error: 'not_open' });
-  if (now > VOTE_CLOSE) return out({ ok: false, error: 'closed' });
-  const photo = parseInt(p.photo, 10);
-  const dev = String(p.device || '').replace(/[^a-zA-Z0-9]/g, '').slice(0, 64);
-  if (!(photo >= 1 && photo <= VOTE_PHOTO_COUNT) || dev.length < 16) return out({ ok: false, error: 'invalid' });
-  const day = Utilities.formatDate(now, 'Asia/Colombo', 'yyyy-MM-dd');
-  const key = dev + '|' + day;
-  const lock = LockService.getScriptLock();
-  lock.waitLock(30000);
-  try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const sh = ss.getSheetByName('Votes') || ss.insertSheet('Votes');
-    if (sh.getLastRow() === 0) sh.appendRow(['Timestamp', 'Photo', 'Key (device|day)']);
-    const last = sh.getLastRow();
-    if (last > 1) {
-      const rows = sh.getRange(2, 2, last - 1, 2).getValues();
-      for (let i = 0; i < rows.length; i++) if (String(rows[i][1]) === key) return out({ ok: false, error: 'already', photo: Number(rows[i][0]) });
-    }
-    sh.appendRow([now, photo, key]);
-    ensureVoteResults(ss);
-  } finally { lock.releaseLock(); }
-  return out({ ok: true });
-}
-
-function ensureVoteResults(ss) {
-  if (ss.getSheetByName('Vote results')) return;
-  const r = ss.insertSheet('Vote results');
-  r.getRange(1, 1, 1, 2).setValues([['Photo', 'Votes']]);
-  const rows = [];
-  for (let i = 1; i <= VOTE_PHOTO_COUNT; i++) rows.push([i, '=COUNTIF(Votes!B:B,A' + (i + 1) + ')']);
-  r.getRange(2, 1, rows.length, 2).setValues(rows);
-  r.getRange(1, 4, 1, 3).setValues([['Rank', 'Photo', 'Votes']]);
-  r.getRange(2, 5).setFormula('=SORT(A2:B' + (VOTE_PHOTO_COUNT + 1) + ',2,FALSE)');
-  r.getRange(2, 4, VOTE_PHOTO_COUNT, 1).setFormulas(Array.from({ length: VOTE_PHOTO_COUNT }, (_, i) => ['=ROW()-1']));
-  r.setFrozenRows(1);
-}
-
 function nextMembershipNumber(sh, header) {
   const col = header.indexOf(MEMBERSHIP_COL) + 1;
   const lastRow = sh.getLastRow();
@@ -190,7 +119,7 @@ function nextMembershipNumber(sh, header) {
 /* ADMIN PORTAL (admin/index.html): lets the portal read the sheets.
    Put a long passphrase between the quotes. Leave it empty to switch this off.
    After changing the script: Deploy > Manage deployments > pencil > New version > Deploy. */
-const ADMIN_KEY = 'KEEP-YOUR-OWN-PASSKEY';   // <- when you paste this script, keep the passkey line you already have in Apps Script
+const ADMIN_KEY = '102030';
 
 function doGet(e) {
   const k = ((e && e.parameter && e.parameter.key) || '').trim();
@@ -204,10 +133,13 @@ function doGet(e) {
   }
   cache.remove('fails');
 
+  // Admin portal > Votes tab (placed AFTER the passkey check on purpose, so it is protected by the same lockout)
+  if (e.parameter.action === 'photo-votes') { return photoVotesReport_(e.parameter); }
+
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const cs = CONTACT_SHEET_ID ? SpreadsheetApp.openById(CONTACT_SHEET_ID) : ss;
 
-  // Admin portal: mark a row Handled/New and save a private note (columns "Status" and "Note" are added automatically)
+  // Admin portal: mark a row Handled/New and save a private note
   if (e.parameter.action === 'set') {
     const map = { registrations: [ss, 'Registrations'], joins: [ss, 'Join requests'], messages: [cs, 'Messages'] }[e.parameter.sheet];
     const sh = map && map[0].getSheetByName(map[1]);
@@ -232,24 +164,8 @@ function doGet(e) {
     v: 2,
     registrations: sheetRows(ss, 'Registrations'),
     joins: sheetRows(ss, 'Join requests'),
-    messages: sheetRows(cs, 'Messages'),
-    votes: voteStats(ss)
+    messages: sheetRows(cs, 'Messages')
   });
-}
-
-/* Vote totals for the admin portal. Only reachable with the admin passkey (doGet above); never sent to the public site. */
-function voteStats(ss) {
-  const counts = [];
-  for (let i = 0; i < VOTE_PHOTO_COUNT; i++) counts.push(0);
-  let total = 0, last = '';
-  const sh = ss.getSheetByName('Votes');
-  if (sh && sh.getLastRow() > 1) {
-    const rows = sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues();
-    rows.forEach(function (r) { const n = Number(r[1]); if (n >= 1 && n <= VOTE_PHOTO_COUNT) { counts[n - 1]++; total++; } });
-    const t = rows[rows.length - 1][0];
-    last = t instanceof Date ? Utilities.formatDate(t, 'Asia/Colombo', 'd MMM yyyy, h:mm:ss a') : String(t);
-  }
-  return { total: total, counts: counts, last: last, open: VOTE_OPEN.toISOString(), close: VOTE_CLOSE.toISOString() };
 }
 
 function sheetRows(ss, name) {
@@ -261,4 +177,111 @@ function sheetRows(ss, name) {
 
 function out(o) {
   return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}
+
+/* ================= MOST POPULAR PHOTOGRAPH: photo votes =================
+   Tabs (created automatically):
+     "Photo votes" : Photo | Photo name | Photographer | Votes | Last voted     (totals, read by Admin > Votes)
+     "Voter log"   : Device and day | Photo | Time                              (one row per device per day; stops repeat votes)
+   Visitors cannot read the numbers; only the admin portal can (with the admin passkey).
+   Votes are counted only inside the voting window. Set both fixed times to '' to accept votes at any time (e.g. while testing).
+   The website's vote page gets a JSON reply: {ok:true}, {error:'already'}, {error:'closed'}, {error:'not_open'} or {error:'invalid'}. */
+const PHOTO_VOTES_SHEET = 'Photo votes';
+const VOTER_LOG_SHEET = 'Voter log';
+const VOTE_TZ = 'Asia/Colombo';
+const PHOTO_VOTE_OPENS = '2026-11-13T09:00:00+05:30';
+const PHOTO_VOTE_CLOSES = '2026-11-13T17:00:00+05:30';
+
+/* The voting window is read from the website (SITE.vote in js/data.js, edited in Admin > Site), so the site and this counter always agree.
+   It is cached for 5 minutes. If the site cannot be read, the two fixed times above are used instead. */
+const SITE_DATA_URL = 'https://sscpc.vercel.app/js/data.js';
+
+function voteWindow_() {
+  try {
+    const cache = CacheService.getScriptCache(), hit = cache.get('vote-window');
+    if (hit) return JSON.parse(hit);
+    const txt = UrlFetchApp.fetch(SITE_DATA_URL + '?t=' + Date.now(), { muteHttpExceptions: true }).getContentText();
+    const m = /"vote"\s*:\s*\{[^}]*?"opens"\s*:\s*"([^"]*)"[^}]*?"closes"\s*:\s*"([^"]*)"/.exec(txt);
+    if (m && !isNaN(Date.parse(m[1])) && !isNaN(Date.parse(m[2]))) {
+      const w = { o: m[1], c: m[2] };
+      cache.put('vote-window', JSON.stringify(w), 300);
+      return w;
+    }
+  } catch (err) { /* fall through to the fixed times */ }
+  return { o: PHOTO_VOTE_OPENS, c: PHOTO_VOTE_CLOSES };
+}
+
+function photoVotesSheet_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName(PHOTO_VOTES_SHEET);
+  if (!sh) { sh = ss.insertSheet(PHOTO_VOTES_SHEET); sh.appendRow(['Photo', 'Photo name', 'Photographer', 'Votes', 'Last voted']); sh.setFrozenRows(1); }
+  return sh;
+}
+
+function voterLogSheet_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName(VOTER_LOG_SHEET);
+  if (!sh) { sh = ss.insertSheet(VOTER_LOG_SHEET); sh.appendRow(['Device and day', 'Photo', 'Time']); sh.setFrozenRows(1); }
+  return sh;
+}
+
+function pvText_(v) {
+  v = String(v || '').replace(/[\r\n]+/g, ' ').trim().slice(0, 120);
+  if (/^[=+\-@]/.test(v)) v = "'" + v; /* never let a name run as a formula */
+  return v;
+}
+
+/* Turns whatever the website sent (full address, ../ prefix, thumbs/ copy) into the photo id used by the admin: images/spectrum-photos/name.jpg */
+function pvId_(v) {
+  v = String(v || '').trim().split('?')[0].split('#')[0];
+  v = v.replace(/^https?:\/\/[^\/]+\//i, '').replace(/^(\.\.?\/|\/)+/, '').replace('/thumbs/', '/');
+  return v.slice(0, 200);
+}
+
+function recordPhotoVote_(p) {
+  const id = pvId_(p.photo);
+  if (!/^images\/spectrum-photos\/[A-Za-z0-9._-]+$/.test(id)) return out({ ok: false, error: 'invalid' });   /* only real photo ids */
+  const device = String(p.device || '').trim();
+  if (!/^[A-Za-z0-9]{16,64}$/.test(device)) return out({ ok: false, error: 'invalid' });
+
+  const now = Date.now();
+  const win = voteWindow_();
+  if (win.o && now < Date.parse(win.o)) return out({ ok: false, error: 'not_open' });
+  if (win.c && now > Date.parse(win.c)) return out({ ok: false, error: 'closed' });
+
+  const day = Utilities.formatDate(new Date(now), VOTE_TZ, 'yyyy-MM-dd');   /* the server's own clock, so a phone's clock does not matter */
+  const key = device + '|' + day;
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    /* one vote per device per day */
+    const lg = voterLogSheet_(), ll = lg.getLastRow();
+    if (ll > 1) {
+      const keys = lg.getRange(2, 1, ll - 1, 2).getValues();
+      for (let k = 0; k < keys.length; k++) {
+        if (String(keys[k][0]) === key) return out({ ok: false, error: 'already', photo: String(keys[k][1]) });
+      }
+    }
+    /* count it */
+    const sh = photoVotesSheet_(), last = sh.getLastRow();
+    const ids = last > 1 ? sh.getRange(2, 1, last - 1, 1).getValues() : [];
+    let row = -1;
+    for (let i = 0; i < ids.length; i++) { if (String(ids[i][0]) === id) { row = i + 2; break; } }
+    if (row < 0) {
+      sh.appendRow([id, pvText_(p.title), pvText_(p.photographer), 1, new Date()]);
+    } else {
+      const n = (Number(sh.getRange(row, 4).getValue()) || 0) + 1;
+      sh.getRange(row, 4, 1, 2).setValues([[n, new Date()]]);
+    }
+    lg.appendRow([key, id, new Date()]);
+    SpreadsheetApp.flush();
+  } finally { lock.releaseLock(); }
+  return out({ ok: true });
+}
+
+/* Called from doGet AFTER the passkey check, so it is protected by the same passkey and lockout. */
+function photoVotesReport_(p) {
+  const sh = photoVotesSheet_(), last = sh.getLastRow();
+  const rows = last > 1 ? sh.getRange(2, 1, last - 1, 5).getValues() : [];
+  return out({ ok: true, photos: rows.map(function (r) { return { photo: String(r[0]), title: String(r[1]), photographer: String(r[2]), votes: Number(r[3]) || 0, last: r[4] ? new Date(r[4]).toISOString() : '' }; }) });
 }
