@@ -2595,7 +2595,7 @@ const SITE = {
   "event": {
     "name": "Spectrum 2026",
     "date": "13 November 2026",
-    "time": "9:00 a.m.",
+    "time": "9:30 a.m.",
     "venue": "Cingolani Memorial Hall",
     "venueFull": "Cingolani Memorial Hall, St. Sylvester’s College, Kandy"
   },
