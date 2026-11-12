@@ -272,13 +272,13 @@ function votesPanel(){
       msg.textContent=tot?'Photos with the most votes first. Only photos currently in the list are shown.':'No votes yet. They appear here after visitors press Vote on the photographs page.';
       const t=h('table');t.innerHTML='<tr><th>#</th><th></th><th>Photo name</th><th>Photographer</th><th>School</th><th>Votes</th><th></th></tr>';
       rows.forEach((r,i)=>{const tr=h('tr'),k=r.photo.lastIndexOf('/'),th='../'+r.photo.slice(0,k+1)+'thumbs/'+r.photo.slice(k+1);
-        tr.innerHTML='<td>'+(i+1)+'</td><td><img src="'+esc(th)+'" alt="" style="width:2.2rem;height:2.8rem;object-fit:cover;display:block"></td><td>'+esc(r.title)+'</td><td>'+esc(r.photographer)+'</td><td>'+esc(r.school)+'</td><td><b>'+r.votes+'</b></td><td style="min-width:7rem"><div style="height:.5rem;background:var(--accent);opacity:.8;width:'+Math.max(r.votes?3:0,Math.round(r.votes/mx*100))+'%"></div></td>';t.append(tr)});
+        tr.innerHTML='<td>'+(i+1)+'</td><td><img src="'+esc(th)+'" alt="" onerror="this.style.visibility=\'hidden\'" style="width:2.2rem;height:2.8rem;object-fit:cover;display:block"></td><td>'+esc(r.title)+'</td><td>'+esc(r.photographer)+'</td><td>'+esc(r.school)+'</td><td><b>'+r.votes+'</b></td><td style="min-width:7rem"><div style="height:.5rem;background:var(--accent);opacity:.8;width:'+Math.max(r.votes?3:0,Math.round(r.votes/mx*100))+'%"></div></td>';t.append(tr)});
       tb.className='tbl';tb.append(t)}
     catch(e){sp.textContent='Votes';msg.innerHTML='<b>Could not read the votes.</b> Voting needs a one-time setup: paste <code>tools/photo-votes.gs</code> into your Google Apps Script, add the two lines it explains, and deploy a new version. Then press Refresh.'}}
   go();return box}
 function photos(){
   const w=h('div'),n=()=>D.SPECTRUM_PHOTOS.filter(p=>!String(p.school||'').trim()).length,m=h('p','note');
-  const upd=()=>{m.innerHTML='These are the photographs on the voting page (yoursite/#vote, reached from the floating <b>Vote</b> button; voting runs '+dayOf(D.SITE.vote.opens)+', '+clock(D.SITE.vote.opens)+' to '+clock(D.SITE.vote.closes)+'; change it in the Site tab). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
+  const upd=()=>{m.innerHTML='These are the photographs on the voting page (yoursite/vote, or the floating <b>Vote</b> button; voting runs '+dayOf(D.SITE.vote.opens)+', '+clock(D.SITE.vote.opens)+' to '+clock(D.SITE.vote.closes)+'; change it in the Site tab). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
   const L=ed(D,'SPECTRUM_PHOTOS','');upd();w.append(m,votesPanel(),h('h3',0,'Photos'),L);
   w.addEventListener('input',()=>setTimeout(()=>{upd();L.querySelectorAll(':scope>details.it').forEach((d,i)=>{const s=d.querySelector('summary span');if(s&&D.SPECTRUM_PHOTOS[i])s.textContent='⠿ '+lab(D.SPECTRUM_PHOTOS[i])})},0));
   return w}
@@ -335,7 +335,7 @@ function site(){
   s.g.append(sf(S.vote,'opens','Voting opens','dt',{on:upd}),sf(S.vote,'closes','Voting closes','dt',{on:upd}),
     sf(S.vote,'showButton','Show the floating “Vote” button on every page','toggle',{help:'Turn off to hide the button (the vote page itself still works from its link).',wide:true}),
     sf(S.vote,'intro','Vote page introduction (optional)','area',{wide:true,help:'Leave empty to use the standard sentence (it counts the photographs for you).',rows:3}));
-  upd();s.append(sum,h('p','note','The vote counter (Google Apps Script) reads these same times from the live site every few minutes, once you have pasted in the updated <code>tools/google-sheet-script-merged.gs</code> (one-time setup). Until then it keeps using the times written in the script.'));w.append(s);
+  upd();s.append(sum,h('p','note','The vote counter (Google Apps Script) reads these same times from the live site every few minutes, once you have pasted in the updated <code>tools/photo-votes.gs</code> (one-time setup). Until then it keeps using the times written in the script.'));w.append(s);
 
   /* 3. Registration */
   s=sec('reg','Registration','Open or close visitor registration without touching code.');

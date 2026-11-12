@@ -1,8 +1,8 @@
 /* Most Popular Photograph vote.
    - Photos, open/close times: js/data.js (VOTE_PHOTOS, VOTE_OPEN, VOTE_CLOSE)
-   - Votes are saved by google-sheet-script.gs into the "Votes" tab; totals are in the "Vote results" tab.
+   - Votes are saved by tools/photo-votes.gs (Google Apps Script) into the "Photo votes" tab; the admin portal (Votes tab) reads them.
    - Counts are never shown on the site. The server also checks the time window and
-     one vote per device per day, so changing the phone's clock does not help. */
+     one vote per device per day ("Voter log" tab), so changing the phone's clock does not help. */
 (function () {
   'use strict';
   const grid = document.getElementById('vote-grid');
@@ -37,6 +37,9 @@
 
   const phase = () => { const n = Date.now(); return n < OPEN ? 'soon' : n > CLOSE ? 'closed' : 'open'; };
   const label = p => 'Photo ' + String(p.id).padStart(2, '0');
+  /* The photo's file path, as the admin lists it (images/spectrum-photos/name.jpg). A thumbs/ copy or ../ prefix is cleaned up. */
+  const pathOf = p => String(p.photo || p.full || p.src || '').split('?')[0].replace(/^https?:\/\/[^\/]+\//i, '').replace(/^(\.\.?\/|\/)+/, '').replace('/thumbs/', '/');
+  const idOfPath = path => { const f = VOTE_PHOTOS.find(p => pathOf(p) === path); return f ? f.id : null; };
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
   /* ---- grid ---- */
@@ -108,13 +111,13 @@
 
   /* ---- send the vote ---- */
   async function send() {
-    const body = new URLSearchParams({ form_type: 'vote', photo: String(cur.id), device: deviceId(), 'bot-field': '' });
+    const body = new URLSearchParams({ form: 'photo-vote', photo: pathOf(cur), title: cur.title || '', photographer: cur.by || '', device: deviceId() });
     const url = (typeof FORMS_ENDPOINT === 'string' ? FORMS_ENDPOINT : '').trim();
     if (!url) throw { code: 'notconnected' };
     if (!navigator.onLine) throw { code: 'offline' };
     try {
       const r = await fetch(url, { method: 'POST', body });
-      return await r.json();
+      return JSON.parse(await r.text());
     } catch (e) {
       /* The reply could not be read. Sending again is safe: the server counts one vote per device per day. */
       await fetch(url, { method: 'POST', body, mode: 'no-cors' });
@@ -128,9 +131,10 @@
     try {
       const r = await send();
       if (r && r.ok) { remember(cur.id); dMsg.textContent = '\u2713 Your vote for ' + label(cur) + ' has been counted. Thank you!'; dOk.hidden = true; paint(); }
-      else if (r && r.error === 'already') { remember(r.photo || cur.id); dMsg.textContent = 'You have already voted today. Thank you!'; dOk.hidden = true; paint(); }
+      else if (r && r.error === 'already') { remember(idOfPath(r.photo) || cur.id); dMsg.textContent = 'You have already voted today. Thank you!'; dOk.hidden = true; paint(); }
       else if (r && r.error === 'closed') { dMsg.textContent = 'Voting has closed.'; dOk.hidden = true; paint(); }
       else if (r && r.error === 'not_open') { dMsg.textContent = 'Voting has not opened yet.'; dOk.hidden = true; paint(); }
+      else if (r && r.error === 'invalid') { dMsg.textContent = 'This vote could not be recognised. Please reload the page and try again.'; dOk.disabled = false; busy = false; }
       else { dMsg.textContent = 'Your vote could not be saved. Please try again.'; dOk.disabled = false; busy = false; }
     } catch (e) {
       dMsg.textContent = e && e.code === 'offline' ? 'You are offline. Please connect and try again.'
