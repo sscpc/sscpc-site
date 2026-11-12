@@ -189,12 +189,12 @@ function out(o) {
 const PHOTO_VOTES_SHEET = 'Photo votes';
 const VOTER_LOG_SHEET = 'Voter log';
 const VOTE_TZ = 'Asia/Colombo';
-const PHOTO_VOTE_OPENS = '2026-11-13T09:00:00+05:30';
+const PHOTO_VOTE_OPENS = '2026-11-12T21:08:00+05:30';
 const PHOTO_VOTE_CLOSES = '2026-11-13T17:00:00+05:30';
 
 /* The voting window is read from the website (SITE.vote in js/data.js, edited in Admin > Site), so the site and this counter always agree.
-   It is cached for 5 minutes. If the site cannot be read, the two fixed times above are used instead. */
-const SITE_DATA_URL = 'https://sscpc.vercel.app/js/data.js';
+   It is cached for 1 minute. If the site cannot be read, the two fixed times above are used instead. */
+const SITE_DATA_URL = 'https://ssckphotography.com/js/data.js';
 
 function voteWindow_() {
   try {
@@ -204,7 +204,7 @@ function voteWindow_() {
     const m = /"vote"\s*:\s*\{[^}]*?"opens"\s*:\s*"([^"]*)"[^}]*?"closes"\s*:\s*"([^"]*)"/.exec(txt);
     if (m && !isNaN(Date.parse(m[1])) && !isNaN(Date.parse(m[2]))) {
       const w = { o: m[1], c: m[2] };
-      cache.put('vote-window', JSON.stringify(w), 300);
+      cache.put('vote-window', JSON.stringify(w), 60);
       return w;
     }
   } catch (err) { /* fall through to the fixed times */ }
