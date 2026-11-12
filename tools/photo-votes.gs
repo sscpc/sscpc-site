@@ -16,6 +16,25 @@ var PHOTO_VOTES_SHEET = 'Photo votes';
 var PHOTO_VOTE_OPENS = '2026-11-13T09:00:00+05:30';
 var PHOTO_VOTE_CLOSES = '2026-11-13T17:00:00+05:30';
 
+/* The voting window is read from the website (SITE.vote in js/data.js, edited in Admin > Site), so the site and this counter always agree.
+   It is cached for 5 minutes. If the site cannot be read, the two fixed times above are used instead. */
+var SITE_DATA_URL = 'https://sscpc.vercel.app/js/data.js';
+
+function voteWindow_() {
+  try {
+    const cache = CacheService.getScriptCache(), hit = cache.get('vote-window');
+    if (hit) return JSON.parse(hit);
+    const txt = UrlFetchApp.fetch(SITE_DATA_URL + '?t=' + Date.now(), { muteHttpExceptions: true }).getContentText();
+    const m = /"vote"\s*:\s*\{[^}]*?"opens"\s*:\s*"([^"]*)"[^}]*?"closes"\s*:\s*"([^"]*)"/.exec(txt);
+    if (m && !isNaN(Date.parse(m[1])) && !isNaN(Date.parse(m[2]))) {
+      const w = { o: m[1], c: m[2] };
+      cache.put('vote-window', JSON.stringify(w), 300);
+      return w;
+    }
+  } catch (err) { /* fall through to the fixed times */ }
+  return { o: PHOTO_VOTE_OPENS, c: PHOTO_VOTE_CLOSES };
+}
+
 function photoVotesSheet_() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sh = ss.getSheetByName(PHOTO_VOTES_SHEET);
@@ -33,8 +52,9 @@ function recordPhotoVote_(p) {
   var id = String(p.photo || '').trim().slice(0, 200);
   if (!/^images\/spectrum-photos\/[A-Za-z0-9._-]+$/.test(id)) return;   /* only real photo ids */
   var now = Date.now();   /* one vote per person per day is enforced on the website; the window is enforced here */
-  if (PHOTO_VOTE_OPENS && now < Date.parse(PHOTO_VOTE_OPENS)) return;
-  if (PHOTO_VOTE_CLOSES && now > Date.parse(PHOTO_VOTE_CLOSES)) return;
+  const win = voteWindow_();
+  if (win.o && now < Date.parse(win.o)) return;
+  if (win.c && now > Date.parse(win.c)) return;
   var delta = 1;
   var lock = LockService.getScriptLock();
   lock.waitLock(10000);

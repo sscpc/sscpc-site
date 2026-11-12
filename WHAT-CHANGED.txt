@@ -1,3 +1,22 @@
+ADMIN > SITE TAB (new)
+
+The Site tab now has sections: Spectrum day, Voting, Registration, Notice bar, Contact, Social links, Page texts, Other.
+Everything is stored in a new SITE block at the end of js/data.js (plus the existing EVENT_DATE, SLIDE_SECONDS,
+PRESIDENT_WHATSAPP*, PDF_CONFIG, FORMS_ENDPOINT). Press Publish as usual.
+
+CHANGED FILES
+  admin/index.html          new Site tab, validation, invisible "Unpublished changes" badge fixed
+  js/data.js                new SITE block
+  js/site-config.js (new)   applies SITE to the page (text, links, map, notice bar, registration closed)
+  css/site-config.css (new) notice bar + closed message
+  index.html                data-site="..." markers (the old wording stays as the fallback) + 2 new tags
+  js/photographs.js         vote times / button / intro now come from SITE.vote
+  tools/google-sheet-script-merged.gs, tools/photo-votes.gs   vote window read from the live site
+
+ONE-TIME: paste tools/google-sheet-script-merged.gs into Apps Script again, Deploy > New version.
+Open the script in the editor, run any function once and accept the new permission ("connect to an external service").
+After that, changing the vote times in Admin changes what the vote counter accepts too (within about 5 minutes).
+If the permission is not granted, the counter keeps using the two fixed times written at the top of the script.
 SPECTRUM 2026 - VOTE SYSTEM, REBUILT TO MATCH THE COMMITTEE PREVIEW SCREENSHOTS
 
 WHAT YOU WILL SEE

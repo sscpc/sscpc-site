@@ -1,0 +1,5 @@
+/* Notice bar + registration-closed message (see js/site-config.js, edited in Admin > Site) */
+.site-notice{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.4rem 1rem;padding:.55rem 1rem;background:var(--accent);color:var(--on-accent);font-size:.78rem;font-weight:700;line-height:1.4;text-align:center;position:relative;z-index:51}
+.site-notice a{color:inherit;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+html.loading .site-notice,html.intro-hold .site-notice{display:none}
+.site-reg-closed{margin-top:2rem}

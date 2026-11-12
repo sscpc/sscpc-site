@@ -2590,3 +2590,56 @@ const SPECTRUM_PHOTOS = [
     "school": ""
   }
 ];
+
+const SITE = {
+  "event": {
+    "name": "Spectrum 2026",
+    "date": "13 November 2026",
+    "time": "9:00 a.m.",
+    "venue": "Cingolani Memorial Hall",
+    "venueFull": "Cingolani Memorial Hall, St. Sylvester’s College, Kandy"
+  },
+  "vote": {
+    "opens": "2026-11-13T09:00:00+05:30",
+    "closes": "2026-11-13T17:00:00+05:30",
+    "showButton": true,
+    "intro": ""
+  },
+  "registration": {
+    "open": true,
+    "closedMessage": "Registration is now closed. Thank you to everyone who registered. For any questions, please contact the club."
+  },
+  "notice": {
+    "show": false,
+    "text": "",
+    "linkLabel": "",
+    "linkUrl": ""
+  },
+  "contact": {
+    "school": "St. Sylvester's College, Kandy",
+    "location": "St. Sylvester's College, Kandy, Sri Lanka",
+    "email": "sylvestrian.photography@gmail.com",
+    "phone": "081 222 3917",
+    "instagramUrl": "https://www.instagram.com/ssck_photography",
+    "instagramLabel": "ssck_photography",
+    "facebookUrl": "https://www.facebook.com/SSCKphotography",
+    "facebookLabel": "SSCPC Photography",
+    "whatsappChannelUrl": "https://whatsapp.com/channel/0029VaeL6UB9mrGdT1CwN41w",
+    "whatsappLabel": "Follow the channel",
+    "mapQuery": "St. Sylvester's College, Kandy, Sri Lanka",
+    "presidentName": "Sasidu Shanelka",
+    "presidentPhone": "077 531 2890",
+    "secretaryName": "Chethiya Sulakshana",
+    "secretaryPhone": "076 911 0822"
+  },
+  "texts": {
+    "homeWelcome": "Welcome to SSCK Photography, the Photography Club of St. Sylvester's College, Kandy — where moments become memories and creativity becomes a story.",
+    "homeExplore": "Explore our photography, discover our events, celebrate the talent of our members, and see our school through a different lens.",
+    "homeCloser": "Every frame has a story. We capture it. 📸",
+    "contactLead": "Have a question, an idea, or simply want to connect with us? Reach out to the Photography Club and stay connected with our activities, creative work, and upcoming opportunities.",
+    "registerNote": "One teacher can register a whole group: just enter how many students are coming.",
+    "footerAbout": "The Photography Club of St. Sylvester's College — capturing our school's story, one frame at a time. Home of Spectrum, our island-wide photography competition and exhibition.",
+    "footerConnect": "Join our digital community and see new albums as soon as they're posted.",
+    "copyright": "© 2026 SSCPC · St. Sylvester's College Photography Club. All rights reserved."
+  }
+};

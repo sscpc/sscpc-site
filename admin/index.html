@@ -34,7 +34,7 @@ body,input,select,textarea,button,td,th,label,summary{font-family:var(--body);fo
 .tab:hover{color:var(--accent)}
 .tab[aria-selected=true]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
 .sp{flex:1}
-.badge{margin:.5rem;padding:.4rem .6rem;background:var(--accent);color:#f4f1e4;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-align:center}
+.badge{margin:.5rem;padding:.4rem .6rem;background:var(--accent);color:var(--on-accent);font-size:.65rem;font-weight:700;letter-spacing:.06em;text-align:center}
 main{padding:clamp(1rem,3vw,2rem);min-width:0}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.8rem;margin-bottom:1.2rem}
 .stats .card{padding:1rem}
@@ -61,7 +61,25 @@ legend{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppe
 div.box{padding:.8rem 1rem;background:var(--surface);border:1px solid var(--line);margin-bottom:.8rem;font-size:.78rem}
 dialog{background:var(--surface);color:var(--ink);border:1px solid var(--line);width:min(36rem,94vw);max-height:90vh;overflow:auto;padding:1.2rem}dialog::backdrop{background:rgba(0,0,0,.65)}
 .kv{margin-bottom:.6rem}.kv small{color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:.62rem;display:block}
-.tab:disabled{opacity:.35;cursor:default}details.it summary img{flex:none}
+.tab:disabled{opacity:.35;cursor:default}
+.sitetab{max-width:60rem}
+.sjump{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:.4rem;padding:.6rem 0;margin-bottom:.6rem;background:var(--bg);border-bottom:1px solid var(--line)}
+.sx{border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--surface);padding:1rem 1.1rem 1.2rem;margin:1rem 0;scroll-margin-top:3.6rem}
+.sx h3{font-size:1.15rem;margin-bottom:.2rem}.sx>.note{margin-bottom:.9rem}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.9rem 1rem}
+.sf{display:grid;gap:.3rem;align-content:start;min-width:0}.sf.wide{grid-column:1/-1}
+.sfh{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}.sfh .mini{text-transform:none;letter-spacing:0;font-size:.66rem;text-decoration:none;color:var(--ink)}
+.hp{color:var(--muted);font-size:.72rem;line-height:1.45;font-weight:400;text-transform:none;letter-spacing:0}
+.sw{display:flex;align-items:center;gap:.7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+.sw input{position:absolute;opacity:0;width:1px;height:1px}
+.sw-t{flex:none;width:2.6rem;height:1.45rem;border-radius:99px;background:var(--line);position:relative;transition:background .2s}
+.sw-t::after{content:"";position:absolute;top:.17rem;left:.18rem;width:1.1rem;height:1.1rem;border-radius:50%;background:var(--ink);transition:transform .2s}
+.sw input:checked+.sw-t{background:var(--accent)}.sw input:checked+.sw-t::after{transform:translateX(1.12rem);background:var(--on-accent)}
+.sw input:focus-visible+.sw-t{outline:3px solid var(--accent);outline-offset:2px}
+.site-prev{margin-top:.9rem}.spb{display:inline-flex;flex-wrap:wrap;gap:.4rem .9rem;justify-content:center;padding:.55rem 1rem;background:var(--accent);color:var(--on-accent);font-size:.78rem;font-weight:700;width:100%}
+.sx .box{margin:.9rem 0 .4rem}.sx details.it{margin-top:1rem}
+.sx code{font-size:.72rem}
+details.it summary img{flex:none}
 </style>
 </head>
 <body>
@@ -157,9 +175,10 @@ const blank=v=>Array.isArray(v)?[]:v&&typeof v==='object'?Object.fromEntries(Obj
 function chk(v,p,k,o){
   if(Array.isArray(v))return v.forEach((x,i)=>chk(x,p+' #'+(i+1)+(lab(x)?' ('+lab(x)+')':''),k,o));
   if(v&&typeof v==='object'){['name','title','image'].forEach(r=>{if(r in v&&!String(v[r]).trim())o.push(p+': "'+nice(r)+'" is empty')});
-    if(v.start&&v.end&&Date.parse(v.start)>Date.parse(v.end))o.push(p+': ends before it starts');return Object.keys(v).forEach(x=>chk(v[x],p,x,o))}
+    if(v.start&&v.end&&Date.parse(v.start)>Date.parse(v.end))o.push(p+': ends before it starts');if(v.opens&&v.closes&&Date.parse(v.opens)>=Date.parse(v.closes))o.push(p+': voting closes before it opens');if(v.show===true&&'text' in v&&'linkUrl' in v&&!v.text.trim())o.push(p+': the notice bar is on but has no text');return Object.keys(v).forEach(x=>chk(v[x],p,x,o))}
   if(typeof v==='string'&&v.trim()){if(URLK(k)&&!/^(https?:\/\/|#|\/|mailto:|tel:)/.test(v.trim()))o.push(p+': "'+nice(k)+'" is not a valid link');
-    if(/^(start|end|EVENT_DATE)$/.test(k)&&isNaN(Date.parse(v)))o.push(p+': "'+nice(k)+'" is not a valid date')}}
+    if(/^(start|end|EVENT_DATE|opens|closes)$/.test(k)&&isNaN(Date.parse(v)))o.push(p+': "'+nice(k)+'" is not a valid date');
+    if(k==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()))o.push(p+': "Email" is not a valid email address')}}
 function diff(a,b,p,o){
   if(JSON.stringify(a)===JSON.stringify(b))return;const sh=s=>{s=typeof s==='string'?s:JSON.stringify(s);return s==null?'(none)':s.length>50?s.slice(0,47)+'…':s};
   if(Array.isArray(a)&&Array.isArray(b)){for(let i=0;i<Math.max(a.length,b.length);i++){const q=p+'['+(lab(b[i])||lab(a[i])||i+1)+']';
@@ -175,7 +194,7 @@ async function head(){const[o,n]=normRepo(GH.repo).split('/'),b=GH.branch||'main
   if(!d||!d.ref)throw Error('Repository or branch not found');if(!d.object||d.object.isTruncated)throw Error('Could not read js/data.js');return{oid:d.ref.target.oid,text:d.object.text}}
 const b64=b=>new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result.split(',')[1]);r.readAsDataURL(b)});
 function merge(rd){ // per-section 3-way merge: base (when loaded) / ours / theirs (GitHub now)
-  const out={};[...new Set([...KEYS,...Object.keys(rd)])].forEach(k=>{const o=JSON.stringify(D[k]),r=JSON.stringify(rd[k]);
+  const out={};[...new Set([...KEYS,...Object.keys(rd)])].forEach(k=>{const o=JSON.stringify(D[k]),r=JSON.stringify(rd[k])??'null';
     if(o===B[k]||o===r)out[k]=rd[k];else if(r===B[k])out[k]=D[k];
     else throw Error('"'+k+'" was changed on GitHub (maybe by the Album Builder) and also here. Reload the admin and redo your '+k+' changes.')});return out}
 async function pub(){
@@ -259,14 +278,114 @@ function votesPanel(){
   go();return box}
 function photos(){
   const w=h('div'),n=()=>D.SPECTRUM_PHOTOS.filter(p=>!String(p.school||'').trim()).length,m=h('p','note');
-  const upd=()=>{m.innerHTML='These are the photographs on the voting page (yoursite/#vote, reached from the floating <b>Vote</b> button; voting is open 9 a.m. to 5 p.m. on 13 November). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
+  const upd=()=>{m.innerHTML='These are the photographs on the voting page (yoursite/#vote, reached from the floating <b>Vote</b> button; voting runs '+dayOf(D.SITE.vote.opens)+', '+clock(D.SITE.vote.opens)+' to '+clock(D.SITE.vote.closes)+'; change it in the Site tab). The site shows only the <b>photo name</b>, <b>photographer name</b> and <b>school</b>, in a different random order every time the page is opened. Open a photo to edit its three details, or use <b>+ Add</b> to upload a new one. '+(n()?'<b>'+n()+' of '+D.SPECTRUM_PHOTOS.length+' photos still need a school</b> (marked ⚠ below). ':'All photos have a school. ')+'Then press <b>Publish</b>.'};
   const L=ed(D,'SPECTRUM_PHOTOS','');upd();w.append(m,votesPanel(),h('h3',0,'Photos'),L);
   w.addEventListener('input',()=>setTimeout(()=>{upd();L.querySelectorAll(':scope>details.it').forEach((d,i)=>{const s=d.querySelector('summary span');if(s&&D.SPECTRUM_PHOTOS[i])s.textContent='⠿ '+lab(D.SPECTRUM_PHOTOS[i])})},0));
   return w}
-function site(){const w=h('div','bd'),d=h('input','in');d.type='datetime-local';d.value=D.EVENT_DATE.slice(0,16);
-  d.onchange=()=>{if(d.value){D.EVENT_DATE=d.value+':00+05:30';dirty()}};
-  w.append(h('p','note','The countdown date. The Spectrum entry under Events (date, time, calendar start/end) is edited separately.'),field('Spectrum countdown (Sri Lanka time)',d));
-  ['SLIDE_SECONDS','PRESIDENT_WHATSAPP','PRESIDENT_WHATSAPP_LINK','FORMS_ENDPOINT'].forEach(k=>w.append(ed(D,k,k)));return w}
+/* ---------- Site tab: sections for times, links, texts and small things ---------- */
+const SITE_DEF={"event": {"name": "Spectrum 2026", "date": "13 November 2026", "time": "9:00 a.m.", "venue": "Cingolani Memorial Hall", "venueFull": "Cingolani Memorial Hall, St. Sylvester’s College, Kandy"}, "vote": {"opens": "2026-11-13T09:00:00+05:30", "closes": "2026-11-13T17:00:00+05:30", "showButton": true, "intro": ""}, "registration": {"open": true, "closedMessage": "Registration is now closed. Thank you to everyone who registered. For any questions, please contact the club."}, "notice": {"show": false, "text": "", "linkLabel": "", "linkUrl": ""}, "contact": {"school": "St. Sylvester's College, Kandy", "location": "St. Sylvester's College, Kandy, Sri Lanka", "email": "sylvestrian.photography@gmail.com", "phone": "081 222 3917", "instagramUrl": "https://www.instagram.com/ssck_photography", "instagramLabel": "ssck_photography", "facebookUrl": "https://www.facebook.com/SSCKphotography", "facebookLabel": "SSCPC Photography", "whatsappChannelUrl": "https://whatsapp.com/channel/0029VaeL6UB9mrGdT1CwN41w", "whatsappLabel": "Follow the channel", "mapQuery": "St. Sylvester's College, Kandy, Sri Lanka", "presidentName": "Sasidu Shanelka", "presidentPhone": "077 531 2890", "secretaryName": "Chethiya Sulakshana", "secretaryPhone": "076 911 0822"}, "texts": {"homeWelcome": "Welcome to SSCK Photography, the Photography Club of St. Sylvester's College, Kandy — where moments become memories and creativity becomes a story.", "homeExplore": "Explore our photography, discover our events, celebrate the talent of our members, and see our school through a different lens.", "homeCloser": "Every frame has a story. We capture it. 📸", "contactLead": "Have a question, an idea, or simply want to connect with us? Reach out to the Photography Club and stay connected with our activities, creative work, and upcoming opportunities.", "registerNote": "One teacher can register a whole group: just enter how many students are coming.", "footerAbout": "The Photography Club of St. Sylvester's College — capturing our school's story, one frame at a time. Home of Spectrum, our island-wide photography competition and exhibition.", "footerConnect": "Join our digital community and see new albums as soon as they're posted.", "copyright": "© 2026 SSCPC · St. Sylvester's College Photography Club. All rights reserved."}};
+const fillD=(d,c)=>{if(c===undefined)return JSON.parse(JSON.stringify(d));if(d&&typeof d==='object'&&!Array.isArray(d)&&c&&typeof c==='object'&&!Array.isArray(c))for(const k in d)c[k]=fillD(d[k],c[k]);return c};
+const LK=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Colombo',day:'numeric',month:'long',year:'numeric'}),
+  LKS=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Colombo',weekday:'short',day:'numeric',month:'short',year:'numeric'}),
+  LKT=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Colombo',hour:'numeric',minute:'2-digit',hour12:true});
+const okD=s=>!isNaN(Date.parse(s)),
+  clock=s=>{if(!okD(s))return'?';const p=LKT.formatToParts(new Date(s)),g=t=>p.find(x=>x.type===t).value;return g('hour')+':'+g('minute')+' '+(/^a/i.test(g('dayPeriod'))?'a.m.':'p.m.')},
+  dayOf=s=>okD(s)?LKS.format(new Date(s)):'?';
+const URLOK=v=>!v||/^(https?:\/\/|#|\/|mailto:|tel:)/i.test(v.trim()),MAILOK=v=>!v||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+/* one editable box: o = the object that holds the value, k = its key */
+function sf(o,k,label,type,opt){
+  opt=opt||{};const w=h('div','sf'+(opt.wide?' wide':'')),v=o[k];
+  if(type==='toggle'){const l=h('label','sw'),c=h('input');c.type='checkbox';c.checked=!!v;c.onchange=()=>{o[k]=c.checked;dirty();opt.on&&opt.on(c.checked)};
+    l.append(c,h('span','sw-t'),h('span','sw-l',esc(label)));w.append(l);if(opt.help)w.append(h('small','hp',opt.help));return w}
+  const lb=h('label','f'),hd=h('span','sfh'),i=h(type==='area'?'textarea':'input','in');hd.append(h('span',0,esc(label)));
+  const bad=()=>{const x=i.value;return type==='url'?!URLOK(x):type==='email'?!MAILOK(x):type==='dt'?!x:false};
+  if(type==='area')i.rows=opt.rows||3;
+  if(type==='dt'){i.type='datetime-local';i.value=okD(v)?String(v).slice(0,16):''}
+  else if(type==='num'){i.type='number';i.step=opt.step||1;if(opt.min!=null)i.min=opt.min;if(opt.max!=null)i.max=opt.max;i.value=v}
+  else{i.value=v==null?'':v;if(opt.ph)i.placeholder=opt.ph;if(type==='tel')i.type='tel';if(type==='email')i.type='email'}
+  const sync=()=>{i.classList.toggle('err',bad());if(open)open.hidden=!/^(https?:|mailto:|tel:)/i.test(i.value.trim())};
+  let open=null,rs=null;
+  if(type==='url'){open=h('a','mini','Open ↗');open.target='_blank';open.rel='noopener';open.onclick=()=>{open.href=/^(https?:|mailto:|tel:)/i.test(i.value.trim())?i.value.trim():'#'};hd.append(open)}
+  if(opt.def!==undefined){rs=h('button','mini','↺ Default');rs.type='button';rs.title='Put back the original wording: '+String(opt.def).slice(0,80);rs.onclick=()=>{i.value=opt.def;i.dispatchEvent(new Event('input'))};hd.append(rs)}
+  const rsh=()=>{if(rs)rs.hidden=String(o[k])===String(opt.def)};
+  i.oninput=i.onchange=()=>{let x=i.value;if(type==='dt')x=x?x+':00+05:30':'';else if(type==='num')x=x===''?0:+x;o[k]=x;sync();rsh();dirty();opt.on&&opt.on(x)};
+  lb.append(hd,i);w.append(lb);if(opt.help)w.append(h('small','hp',opt.help));sync();rsh();w.inp=i;return w}
+function sec(id,title,desc){const s=h('section','sx');s.id='sx-'+id;s.append(h('h3',0,esc(title)),h('p','note',desc));const g=h('div','sg');s.append(g);s.g=g;return s}
+function site(){
+  const S=D.SITE,w=h('div','sitetab'),SD=SITE_DEF,F=(o,sk,k,l,t,op)=>sf(o,k,l,t,Object.assign(sk?{def:SD[sk][k]}:{},op||{}));
+  const SECS=[['event','Spectrum day'],['vote','Voting'],['reg','Registration'],['notice','Notice bar'],['contact','Contact'],['links','Social links'],['texts','Page texts'],['other','Other']];
+  const jump=h('div','sjump');SECS.forEach(([id,t])=>{const c=h('button','chip',t);c.type='button';c.onclick=()=>document.getElementById('sx-'+id).scrollIntoView({behavior:'smooth',block:'start'});jump.append(c)});
+  w.append(h('p','note','Everything here is a <b>draft</b> until you press <b>Publish</b> (left menu). Boxes with <b>↺ Default</b> can be put back to the original wording. Times are Sri Lanka time. Each box says where it shows on the site.'),jump);
+
+  /* 1. Spectrum day */
+  let s=sec('event','Spectrum day','The countdown and the date, time and place shown in running text on the Register and Spectrum pages.');
+  const dtBox=sf(D,'EVENT_DATE','Countdown target (Sri Lanka time)','dt',{help:'The countdown badge and the Spectrum page count down to this moment. The Events tab holds the calendar entry.',wide:true});
+  s.g.append(dtBox,F(S.event,'event','name','Event name','text',{help:'Register page.'}),F(S.event,'event','date','Date as written','text',{help:'Register and Spectrum pages, e.g. 13 November 2026.'}),
+    F(S.event,'event','time','Start time as written','text',{help:'Register page, e.g. 9:00 a.m.'}),F(S.event,'event','venue','Venue (short)','text',{help:'Register page.'}),F(S.event,'event','venueFull','Venue (full)','text',{help:'Spectrum page, “The Photography Day”.',wide:true}));
+  const fb=btn('Fill date and time text from the countdown',()=>{const t=D.EVENT_DATE;if(!okD(t))return alert('Set the countdown first.');S.event.date=LK.format(new Date(t));S.event.time=clock(t);dirty();show('site');document.getElementById('sx-event').scrollIntoView()},'ghost');
+  const same=okD(D.EVENT_DATE)&&LK.format(new Date(D.EVENT_DATE))===S.event.date&&clock(D.EVENT_DATE)===S.event.time;
+  const hint=h('p','note','Countdown: <b>'+esc(dayOf(D.EVENT_DATE))+' at '+esc(clock(D.EVENT_DATE))+'</b> &nbsp;·&nbsp; Written on the Register page: <b>'+esc(S.event.date)+' at '+esc(S.event.time)+'</b> &nbsp;—&nbsp; '+(same?'they match.':'<b style="color:#e0a030">they differ.</b> Change one, or use the button below to copy the countdown into the text.'));
+  s.append(hint,fb);w.append(s);
+
+  /* 2. Voting */
+  s=sec('vote','Voting (Most Popular Photograph)','When the vote opens and closes. The floating Vote button, the banner and the Vote buttons all follow these two times.');
+  const sum=h('p','box'),upd=()=>{const o=S.vote.opens,c=S.vote.closes,n=Date.now();let st='';
+    if(okD(o)&&okD(c)){st=Date.parse(c)<=Date.parse(o)?'<b style="color:#e0a030">Closing time must be after the opening time.</b>':n<Date.parse(o)?'Right now: <b>not open yet</b>.':n<Date.parse(c)?'Right now: <b>open</b>.':'Right now: <b>closed</b>.'}
+    sum.innerHTML='Opens <b>'+esc(dayOf(o))+' at '+esc(clock(o))+'</b> &nbsp;→&nbsp; closes <b>'+esc(dayOf(c))+' at '+esc(clock(c))+'</b> &nbsp;—&nbsp; '+st};
+  s.g.append(sf(S.vote,'opens','Voting opens','dt',{on:upd}),sf(S.vote,'closes','Voting closes','dt',{on:upd}),
+    sf(S.vote,'showButton','Show the floating “Vote” button on every page','toggle',{help:'Turn off to hide the button (the vote page itself still works from its link).',wide:true}),
+    sf(S.vote,'intro','Vote page introduction (optional)','area',{wide:true,help:'Leave empty to use the standard sentence (it counts the photographs for you).',rows:3}));
+  upd();s.append(sum,h('p','note','The vote counter (Google Apps Script) reads these same times from the live site every few minutes, once you have pasted in the updated <code>tools/google-sheet-script-merged.gs</code> (one-time setup). Until then it keeps using the times written in the script.'));w.append(s);
+
+  /* 3. Registration */
+  s=sec('reg','Registration','Open or close visitor registration without touching code.');
+  const regS=h('p','note'),ru=()=>{regS.innerHTML=S.registration.open?'Registration is <b>open</b>.':'Registration is <b>closed</b>: visitors see the message below instead of the form, and the Register buttons in the menu are hidden.'};
+  s.g.append(sf(S.registration,'open','Registration is open','toggle',{on:ru,wide:true}),F(S.registration,'registration','closedMessage','Message shown when closed','area',{wide:true}),F(S.texts,'texts','registerNote','Sentence after the date on the Register page','area',{wide:true,rows:2}));
+  ru();s.append(regS);w.append(s);
+
+  /* 4. Notice bar */
+  s=sec('notice','Notice bar','A thin bar at the very top of every page for a short announcement (a deadline, a change of time). Turn it off when it is no longer needed.');
+  const pv=h('div','site-prev'),np=()=>{const n=S.notice;pv.innerHTML='<div class="spb"'+(n.show&&n.text.trim()?'':' style="opacity:.45"')+'><span>'+(esc(n.text)||'Your notice text appears here')+'</span>'+(n.linkUrl.trim()?' <u>'+esc(n.linkLabel||'Learn more')+'</u>':'')+'</div>'+(n.show?'':'<small class="hp">Preview only: the bar is switched off.</small>')};
+  s.g.append(sf(S.notice,'show','Show the notice bar','toggle',{on:np,wide:true}),sf(S.notice,'text','Notice text','area',{wide:true,rows:2,on:np,help:'Keep it short, one sentence.'}),
+    sf(S.notice,'linkLabel','Link text (optional)','text',{on:np,ph:'e.g. Register now'}),sf(S.notice,'linkUrl','Link address (optional)','url',{on:np,ph:'#register or https://…'}));
+  np();s.append(pv);w.append(s);
+
+  /* 5. Contact */
+  s=sec('contact','Contact details','Shown on the Contact page and in the footer.');
+  s.g.append(F(S.contact,'contact','email','Club email','email',{help:'Contact page, footer, and the downloadable PDFs.',on:v=>{if(D.PDF_CONFIG&&MAILOK(v))D.PDF_CONFIG.email=v}}),
+    F(S.contact,'contact','phone','Phone (school office)','tel',{help:'Contact page and footer. Tap-to-call is made for you (07x… becomes +94 7x…).'}),
+    F(S.contact,'contact','school','School name','text',{help:'Contact page.'}),F(S.contact,'contact','location','Address line','text',{help:'Contact page and footer.'}),
+    F(S.contact,'contact','presidentName','President’s name','text'),F(S.contact,'contact','presidentPhone','President’s phone','tel'),
+    F(S.contact,'contact','secretaryName','Secretary’s name','text'),F(S.contact,'contact','secretaryPhone','Secretary’s phone','tel'),
+    F(S.contact,'contact','mapQuery','Map search','text',{wide:true,help:'What the map on the Contact page shows and where “Get directions” goes, e.g. a place name or address.'}));
+  w.append(s);
+
+  /* 6. Links */
+  s=sec('links','Social links','Links used on the Contact page, About page and footer. Use “Open ↗” to test a link before publishing.');
+  s.g.append(F(S.contact,'contact','instagramUrl','Instagram link','url',{wide:true}),F(S.contact,'contact','instagramLabel','Instagram name shown','text'),
+    F(S.contact,'contact','facebookUrl','Facebook link','url',{wide:true}),F(S.contact,'contact','facebookLabel','Facebook name shown','text'),
+    F(S.contact,'contact','whatsappChannelUrl','WhatsApp channel link','url',{wide:true}),F(S.contact,'contact','whatsappLabel','WhatsApp link text','text'),
+    sf(D,'PRESIDENT_WHATSAPP_LINK','President’s WhatsApp link (QR link)','url',{wide:true,help:'Used by the “Message on WhatsApp” step after Join and Register.'}),
+    sf(D,'PRESIDENT_WHATSAPP','President’s WhatsApp number (optional)','tel',{help:'Digits with country code, e.g. 94771234567. If filled, it is used instead of the link above.'}));
+  w.append(s);
+
+  /* 7. Texts */
+  s=sec('texts','Page texts','The main sentences visitors read. Plain text only.');
+  s.g.append(F(S.texts,'texts','homeWelcome','Home: welcome line','area',{wide:true,help:'Home page, first paragraph.'}),F(S.texts,'texts','homeExplore','Home: second paragraph','area',{wide:true}),
+    F(S.texts,'texts','homeCloser','Home: closing line','text',{wide:true}),F(S.texts,'texts','contactLead','Contact page: introduction','area',{wide:true}),
+    F(S.texts,'texts','footerAbout','Footer: about the club','area',{wide:true}),F(S.texts,'texts','footerConnect','Footer: “Connect” sentence','area',{wide:true,rows:2}),
+    F(S.texts,'texts','copyright','Footer: copyright line','text',{wide:true}));
+  w.append(s);
+
+  /* 8. Other */
+  s=sec('other','Other small things','');
+  s.g.append(sf(D,'SLIDE_SECONDS','Announcement slides: seconds per slide','num',{step:.5,min:2,max:30,help:'How long each poster stays on screen on the home page.'}),
+    sf(D.PDF_CONFIG,'footerText','Extra line at the bottom of downloadable PDFs','text',{help:'Optional. Leave empty for none.'}),
+    sf(D.PDF_CONFIG,'siteLabel','Website name printed on PDFs','text'));
+  const adv=h('details','it'),as=h('summary');as.append(h('span',0,'Advanced: forms connection'));adv.append(as);const ab=h('div','bd');
+  ab.append(h('p','note','The Google Apps Script address that receives registrations, join requests, messages and votes. <b>Only change this if you have made a new deployment.</b> A wrong address stops all forms and this admin from working.'),sf(D,'FORMS_ENDPOINT','Apps Script web app address','url',{wide:true}));adv.append(ab);
+  s.append(adv);w.append(s);
+  return w}
 function publish(){
   const w=h('div','bd'),st=h('p','note'),errs=[],L=[],ch=changed(),ni=Object.keys(ST).length;
   KEYS.forEach(k=>chk(D[k],k,k,errs));ch.forEach(k=>diff(JSON.parse(B[k]),D[k],k,L));
@@ -289,7 +408,7 @@ function show(n){tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.se
 let D0;async function enter(k){key=k;$('#msg').textContent='Checking…';
   try{const r=await fetch('../js/data.js',{cache:'no-store'});let txt=await r.text();D0=parse(txt);await load();
     if(GH.token&&GH.repo)try{txt=(await head()).text}catch(e){}
-    D=parse(txt);KEYS=Object.keys(D);B=snapK();hist=[JSON.stringify(D)];hi=0;ub();
+    D=parse(txt);const hadSite=!!D.SITE;D.SITE=fillD(SITE_DEF,D.SITE);D.PDF_CONFIG=D.PDF_CONFIG||{};KEYS=Object.keys(D);B=snapK();if(!hadSite)B.SITE='null';hist=[JSON.stringify(D)];hi=0;ub();
     sessionStorage.k=k;$('#login').classList.add('hide');$('#app').classList.remove('hide');show(tab)}
   catch(e){sessionStorage.removeItem('k');$('#msg').textContent='Could not sign in. Check the key, and that the updated Apps Script is deployed.'}}
 $('#lf').onsubmit=e=>{e.preventDefault();enter($('#key').value)};

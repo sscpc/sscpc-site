@@ -4,7 +4,9 @@
    - Photos come from SPECTRUM_PHOTOS in js/data.js (edited in Admin > Votes), shown in a new random order each visit.
    - Preview any state without waiting: add ?preview=before, ?preview=open or ?preview=closed to the address (display only). */
 (function(){
-  const VOTE_OPENS='2026-11-13T09:00:00+05:30',VOTE_CLOSES='2026-11-13T17:00:00+05:30';
+  const SV=(typeof SITE!=='undefined'&&SITE&&SITE.vote)||{};/* times + texts are edited in Admin > Site */
+  const okT=v=>typeof v==='string'&&!isNaN(Date.parse(v));
+  const VOTE_OPENS=okT(SV.opens)?SV.opens:'2026-11-13T09:00:00+05:30',VOTE_CLOSES=okT(SV.closes)?SV.closes:'2026-11-13T17:00:00+05:30';
   const T0=Date.parse(VOTE_OPENS),T1=Date.parse(VOTE_CLOSES);
   const KEY='sscpc-photo-vote-day';
   const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
@@ -22,7 +24,7 @@
   let fabState='';
   function paintFab(s){
     if(!fab)return;
-    if(s==='closed'){fab.hidden=true;fabState=s;return}
+    if(s==='closed'||SV.showButton===false){fab.hidden=true;fabState=s;return}
     fab.hidden=false;
     if(fabState!==s){
       const k=lk(T0);
@@ -74,7 +76,7 @@
     else banner.innerHTML='<b>Voting has closed.</b> Thank you to everyone who voted. The Most Popular Photograph will be announced at the ceremony.';
     if(grid)grid.hidden=s==='before';
   }
-  if(leadEl)leadEl.textContent=(list.length||'The')+' photographs were selected from the Spectrum 2026 competition. Which one is your favourite? Choose one photograph and vote for it. You can vote once per day, and the results stay hidden until voting closes.';
+  if(leadEl)leadEl.textContent=(typeof SV.intro==='string'&&SV.intro.trim())?SV.intro.trim():(list.length||'The')+' photographs were selected from the Spectrum 2026 competition. Which one is your favourite? Choose one photograph and vote for it. You can vote once per day, and the results stay hidden until voting closes.';
 
   if(grid)list.forEach((it,i)=>{
     const li=el('li','ph-item'),card=el('button','ph-card');card.type='button';card.setAttribute('aria-label','View '+nm(it));
