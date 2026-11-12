@@ -1,6 +1,6 @@
 /* Most Popular Photograph vote.
    - Photos, open/close times: js/data.js (VOTE_PHOTOS, VOTE_OPEN, VOTE_CLOSE)
-   - Votes are saved by tools/photo-votes.gs (Google Apps Script) into the "Photo votes" tab; the admin portal (Votes tab) reads them.
+   - Votes are saved by tools/google-sheet-script.gs (Google Apps Script) into the "Photo votes" tab; the admin portal (Votes tab) reads them.
    - Counts are never shown on the site. The server also checks the time window and
      one vote per device per day ("Voter log" tab), so changing the phone's clock does not help. */
 (function () {
