@@ -1725,14 +1725,14 @@ const EVENTS = [
     "name": "Spectrum 2026",
     "category": "main",
     "type": "Annual Photography Day and Exhibition",
-    "status": "upcoming",
+    "status": "past",
     "date": "Friday, 13th November 2026",
     "time": "9:30 a.m. onwards",
     "venue": "Cingolani Memorial Hall",
-    "about": "Photographs by club members are displayed together, and everyone is welcome to walk through and see the school through our lenses.",
+    "about": "Photographs by club members were displayed together, and everyone was welcome to walk through and see the school through our lenses. Thank you to everyone who joined us.",
     "album": "",
-    "link": "#register",
-    "linkLabel": "Register to attend",
+    "link": "",
+    "linkLabel": "",
     "start": "2026-11-13T09:30:00+05:30",
     "end": "2026-11-13T13:30:00+05:30",
     "mapsQuery": "Cingolani Memorial Hall, St. Sylvester’s College, Kandy"
@@ -2600,18 +2600,18 @@ const SITE = {
     "venueFull": "Cingolani Memorial Hall, St. Sylvester’s College, Kandy"
   },
   "vote": {
-    "opens": "2026-11-13T11:41:00+05:30",
-    "closes": "2026-11-13T12:15:00+05:30",
+    "opens": "2026-11-12T21:28:00+05:30",
+    "closes": "2026-11-13T17:00:00+05:30",
     "showButton": true,
     "intro": ""
   },
   "registration": {
-    "open": true,
-    "closedMessage": "Registration is now closed. Thank you to everyone who registered. For any questions, please contact the club."
+    "open": false,
+    "closedMessage": "Spectrum 2026 has ended and registration is now closed. Thank you to everyone who registered and joined us on the day. For any questions, please contact the club."
   },
   "notice": {
-    "show": false,
-    "text": "",
+    "show": true,
+    "text": "Spectrum 2026 was held on 13 November 2026. Thank you to everyone who took part!",
     "linkLabel": "",
     "linkUrl": ""
   },
@@ -2623,7 +2623,7 @@ const SITE = {
     "instagramUrl": "https://www.instagram.com/ssck_photography",
     "instagramLabel": "ssck_photography",
     "facebookUrl": "https://www.facebook.com/SSCKphotography",
-    "facebookLabel": "SSCK Photography",
+    "facebookLabel": "SSCPC Photography",
     "whatsappChannelUrl": "https://whatsapp.com/channel/0029VaeL6UB9mrGdT1CwN41w",
     "whatsappLabel": "Follow the channel",
     "mapQuery": "St. Sylvester's College, Kandy, Sri Lanka",

@@ -16,7 +16,8 @@ function tick(){
   const pcd=document.getElementById('pcd');
   if(s<=0){
     const cd=document.getElementById('cd');if(cd)cd.hidden=true;
-    const live=document.getElementById('live');if(live)live.hidden=false;
+    const live=document.getElementById('live');if(live){live.textContent='Spectrum 2026 has ended. Thank you to everyone who took part!';live.hidden=false}
+    const tm=document.querySelector('.tminus');if(tm)tm.hidden=true;
     if(pcd)pcd.hidden=true;
     window.spectrumOver=true;
     return;

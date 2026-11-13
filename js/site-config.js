@@ -42,6 +42,7 @@
       form.parentNode.insertBefore(p, form);
     }
     document.querySelectorAll('.nav-cta, .reg, .reg-m').forEach(function (e) { e.hidden = true; });
+    document.querySelectorAll('a[href="#register"]').forEach(function (e) { var li = e.closest('li'); var t = li || e; t.hidden = true; t.style.display = 'none'; });
   }
 
   /* notice bar above the menu */
