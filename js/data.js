@@ -2602,7 +2602,7 @@ const SITE = {
   "vote": {
     "opens": "2026-11-13T08:35:00+05:30",
     "closes": "2026-11-13T17:00:00+05:30",
-    "showButton": false,
+    "showButton": true,
     "intro": ""
   },
   "registration": {
