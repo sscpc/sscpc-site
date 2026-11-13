@@ -2600,9 +2600,9 @@ const SITE = {
     "venueFull": "Cingolani Memorial Hall, St. Sylvester’s College, Kandy"
   },
   "vote": {
-    "opens": "2026-11-13T10:00:00+05:30",
+    "opens": "2026-11-13T08:35:00+05:30",
     "closes": "2026-11-13T17:00:00+05:30",
-    "showButton": true,
+    "showButton": false,
     "intro": ""
   },
   "registration": {
