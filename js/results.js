@@ -47,24 +47,27 @@
   if(!root)return;
   const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
 
-  /* ----- build tabs + panels ----- */
-  const tabs=el('div','rc-tabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Competition category');
+  /* ----- every category is shown on the page, one after another; the bar on top jumps between them ----- */
+  const tabs=el('nav','rc-tabs');tabs.setAttribute('aria-label','Jump to a category');
   const panels=el('div','rc-panels');
   const btns=[],pans=[];
 
   RESULTS.forEach((c,ci)=>{
     const b=el('button','rc-tab',c.name);
-    b.type='button';b.id='rc-tab-'+c.id;b.setAttribute('role','tab');b.setAttribute('aria-controls','rc-pan-'+c.id);
-    b.addEventListener('click',()=>pick(ci,true));
-    b.addEventListener('keydown',e=>{
-      let n=-1;
-      if(e.key==='ArrowRight')n=(ci+1)%RESULTS.length;else if(e.key==='ArrowLeft')n=(ci+RESULTS.length-1)%RESULTS.length;
-      else if(e.key==='Home')n=0;else if(e.key==='End')n=RESULTS.length-1;
-      if(n>-1){e.preventDefault();pick(n,true)}
+    b.type='button';b.id='rc-tab-'+c.id;
+    b.addEventListener('click',()=>{
+      const t=document.getElementById('rc-pan-'+c.id);
+      if(t)t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});
     });
     tabs.appendChild(b);btns.push(b);
 
-    const p=el('div','rc-panel');p.id='rc-pan-'+c.id;p.setAttribute('role','tabpanel');p.setAttribute('aria-labelledby',b.id);
+    const p=el('section','rc-panel rc-cat');p.id='rc-pan-'+c.id;p.setAttribute('aria-labelledby','rc-h-'+c.id);
+
+    const hd=el('div','rc-cat-h');
+    const h3=el('h3','',c.name);h3.id='rc-h-'+c.id;
+    hd.appendChild(el('span','rc-cat-n',String(ci+1).padStart(2,'0')));hd.appendChild(h3);
+    hd.appendChild(el('span','rc-cat-c',c.podium.length+' winners \u2022 '+c.merit.length+' merit awards'));
+    p.appendChild(hd);
 
     const pod=el('div','rc-pod');
     c.podium.forEach((w,i)=>{
@@ -74,7 +77,7 @@
       ph.setAttribute('aria-label','View larger: '+pl[0]+' place, '+c.name+', by '+w.who);
       const im=new Image();im.src=D+w.img;im.alt=pl[0]+' place in '+c.name+', photographed by '+w.who;im.loading='lazy';im.decoding='async';
       ph.appendChild(im);
-      ph.addEventListener('click',()=>lightbox(D+w.img,im.alt,w.who+' • '+w.school));
+      ph.addEventListener('click',()=>lightbox(D+w.img,im.alt,w.who+' \u2022 '+w.school));
       const medal=el('span','rc-medal');
       medal.innerHTML='<b>'+pl[0].replace(/(st|nd|rd)$/,'')+'<sup>'+pl[0].slice(-2)+'</sup></b><i>Place</i>';
       ph.appendChild(medal);
@@ -91,7 +94,7 @@
       const mb=el('button','rc-mph');mb.type='button';mb.setAttribute('aria-label','View larger: merit award, '+c.name+', by '+m[0]);
       const mi=new Image();mi.src=D+'merit/'+c.id+'-m'+(i+1)+'.jpg';mi.alt='Merit award in '+c.name+', photographed by '+m[0];mi.loading='lazy';mi.decoding='async';
       mb.appendChild(mi);
-      mb.addEventListener('click',()=>lightbox(mi.src,mi.alt,m[0]+' • '+m[1]));
+      mb.addEventListener('click',()=>lightbox(mi.src,mi.alt,m[0]+' \u2022 '+m[1]));
       li.appendChild(mb);
       const t=el('div','rc-mt');t.appendChild(el('strong','',m[0]));t.appendChild(el('span','',m[1]));
       li.appendChild(t);mg.appendChild(li);
@@ -100,13 +103,20 @@
     panels.appendChild(p);pans.push(p);
   });
 
-  function pick(i,focus){
-    btns.forEach((b,j)=>{const on=i===j;b.classList.toggle('is-on',on);b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1});
-    pans.forEach((p,j)=>{p.hidden=i!==j;p.classList.remove('is-in');if(i===j){void p.offsetWidth;p.classList.add('is-in')}});
-    if(focus)btns[i].focus();
-  }
   root.appendChild(tabs);root.appendChild(panels);
-  pick(0);
+
+  /* highlight the chip of the category currently on screen */
+  function mark(i){btns.forEach((b,j)=>{b.classList.toggle('is-on',i===j);if(i===j)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')})}
+  mark(0);
+  if('IntersectionObserver' in window){
+    const seen=new Map();
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>seen.set(e.target,e.isIntersecting?e.intersectionRatio:0));
+      let best=-1,bi=-1;pans.forEach((p,j)=>{const r=seen.get(p)||0;if(r>best){best=r;bi=j}});
+      if(bi>-1&&best>0)mark(bi);
+    },{rootMargin:'-120px 0px -45% 0px',threshold:[0,.05,.2,.5]});
+    pans.forEach(p=>io.observe(p));
+  }
 
   /* ----- Most Popular photo opens in the viewer; jump buttons scroll to a block ----- */
   const pp=document.getElementById('res-pop-ph');
