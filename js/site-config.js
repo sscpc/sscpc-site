@@ -47,7 +47,10 @@
 
   /* notice bar above the menu */
   var n = S.notice, nt = n && str(n.text);
-  if (n && n.show === true && nt) {
+  /* optional "hideAfter" (ISO date/time): the bar disappears by itself once that moment has passed */
+  var ha = n && str(n.hideAfter), gone = false;
+  if (ha) { var hat = Date.parse(ha); if (!isNaN(hat) && Date.now() > hat) gone = true; }
+  if (n && n.show === true && nt && !gone) {
     var bar = document.createElement('div');
     bar.className = 'site-notice';
     bar.setAttribute('role', 'status');

@@ -41,6 +41,7 @@
 <link rel="stylesheet" href="css/judges-v6.css">
 <link rel="stylesheet" href="css/selection-done.css">
 <link rel="stylesheet" href="css/photographs.css?v=7">
+<link rel="stylesheet" href="css/results.css?v=1">
 <link rel="stylesheet" href="css/site-config.css">
 <script>document.documentElement.classList.add('loading','intro-hold');document.documentElement.dataset.theme='dark';try{localStorage.removeItem('sscpc-theme')}catch(e){}</script>
 <noscript><style>#loader{display:none}html.loading{overflow:auto}</style></noscript>
@@ -294,6 +295,74 @@
       <div id="events-list"></div>
     </div>
     <div class="ticker" aria-hidden="true"><div class="track"><span>Capture</span><span>Create</span><span>Inspire</span><span>Capture</span><span>Create</span><span>Inspire</span><span>Capture</span><span>Create</span><span>Inspire</span><span>Capture</span><span>Create</span><span>Inspire</span><span>Capture</span><span>Create</span><span>Inspire</span><span>Capture</span><span>Create</span><span>Inspire</span></div></div>
+    <!-- Spectrum 2026 results. Category winners are built by js/results.js (edit RESULTS there). -->
+    <section class="res" id="results" aria-labelledby="res-title">
+      <div class="res-wrap">
+        <header class="res-head">
+          <p class="res-k">Spectrum 2026 &bull; Results</p>
+          <h2 class="res-title" id="res-title">The Winners</h2>
+          <p class="res-sub">Spectrum &rsquo;26 was held on 13 November 2026 at Cingolani Memorial Hall. Congratulations to every winner, and thank you to all the schools and photographers who took part.</p>
+          <div class="res-rule"></div>
+          <nav class="res-jump" aria-label="Jump to a result">
+            <button type="button" data-res-go="res-scope">SCOPE Champion</button>
+            <button type="button" data-res-go="res-popular-h">Most Popular Photograph</button>
+            <button type="button" data-res-go="res-cats-h">Category Winners</button>
+          </nav>
+        </header>
+
+        <article class="res-champ" id="res-scope" aria-label="SCOPE 2026 champion">
+          <div class="rch-trophy" aria-hidden="true"><img src="icons/scope-trophy.webp" alt="" width="433" height="900" loading="lazy" decoding="async"></div>
+          <div class="rch-body">
+            <p class="rch-k">SCOPE &rsquo;26 &bull; Champion</p>
+            <h3 class="rch-name">Mayon Minthaka</h3>
+            <p class="rch-school"><img src="images/spectrum/crests/maris-stella.png" alt="" width="72" height="104" loading="lazy" decoding="async"><span>Maris Stella College</span></p>
+            <p class="rch-line">Spectrum&rsquo;s Champion of Photography Excellence</p>
+          </div>
+        </article>
+
+        <div class="res-sech">
+          <p class="k">Special Recognition</p>
+          <h3>The SCOPE &rsquo;26 Nominees</h3>
+          <p class="d">Five photographers who stood out across the whole of Spectrum &rsquo;26.</p>
+        </div>
+        <ul class="res-noms" aria-label="SCOPE 2026 nominees">
+          <li class="rn"><img src="images/spectrum/crests/kalutara-balika.png" alt="" width="72" height="72" loading="lazy" decoding="async"><div><strong>Prabhavee Mohottige</strong><span>Kalutara Balika Vidyalaya</span></div><em>Nominee</em></li>
+          <li class="rn"><img src="images/spectrum/crests/nalanda.png" alt="" width="72" height="72" loading="lazy" decoding="async"><div><strong>Methika Mihinuda</strong><span>Nalanda College</span></div><em>Nominee</em></li>
+          <li class="rn"><img src="images/spectrum/crests/sivali.png" alt="" width="72" height="72" loading="lazy" decoding="async"><div><strong>Uthum Methsara</strong><span>Sivali Central College</span></div><em>Nominee</em></li>
+          <li class="rn is-win"><img src="images/spectrum/crests/maris-stella.png" alt="" width="72" height="72" loading="lazy" decoding="async"><div><strong>Mayon Minthaka</strong><span>Maris Stella College</span></div><em>Champion</em></li>
+          <li class="rn"><img src="images/spectrum/crests/nalanda.png" alt="" width="72" height="72" loading="lazy" decoding="async"><div><strong>Bihandu Kalidasa</strong><span>Nalanda College</span></div><em>Nominee</em></li>
+        </ul>
+
+        <div class="res-sech" id="res-popular-h">
+          <p class="k">People&rsquo;s Choice</p>
+          <h3>Most Popular Photograph</h3>
+        </div>
+        <article class="res-pop" id="res-popular">
+          <button type="button" class="rp-ph" id="res-pop-ph" aria-label="View larger: The Framed Education, by Sandithi Kariyawasam">
+            <img src="images/spectrum/popular.jpg" alt="The Framed Education: a schoolgirl in uniform sits at a desk, seen through a soft blurred frame, in black and white" width="1400" height="741" loading="lazy" decoding="async">
+            <span class="rp-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.1 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>Most Popular</span>
+          </button>
+          <div class="rp-body">
+            <p class="rp-k">Most Popular Photograph</p>
+            <h3 class="rp-title">The Framed Education</h3>
+            <p class="rp-row"><span>Photographer</span><strong>Sandithi Kariyawasam</strong></p>
+            <p class="rp-row"><span>School</span><strong>Mahamaya Girls&rsquo; College</strong></p>
+            <p class="rp-note">Chosen as the favourite by the public vote.</p>
+          </div>
+        </article>
+
+        <div class="res-sech" id="res-cats-h">
+          <p class="k">Competition Results</p>
+          <h3>Category Winners</h3>
+          <p class="d">1st, 2nd and 3rd place and the merit awards in every category. Tap a photograph to see it larger.</p>
+          <ul class="res-stats" aria-label="Results at a glance">
+            <li><b>4</b>categories</li><li><b>12</b>podium places</li><li><b>28</b>merit awards</li>
+          </ul>
+        </div>
+        <div id="res-cats"></div>
+      </div>
+    </section>
+
     <!-- Photo Selection + Jury: sits directly above Announcements. Assets expected at images/spectrum/judges/*.jpg and images/sponsors/camaralk-logo.jpg -->
     <section class="sel" aria-labelledby="sel-title">
       <div class="wrap">
@@ -431,15 +500,15 @@
           <div class="sc-body">
             <p class="sc-ck">The Nominees</p>
             <h3>SCOPE &rsquo;26 Nominees</h3>
-            <p><strong class="sc-soon">Thank you to everyone who took part in Spectrum &rsquo;26. The SCOPE &rsquo;26 results will be shared soon.</strong></p>
+            <p><strong class="sc-soon">Mayon Minthaka of Maris Stella College is the SCOPE &rsquo;26 Champion.</strong></p>
             <p class="sc-gap">Recognising exceptional creativity, artistic vision, and photographic excellence, the nominees represent some of the most outstanding talents of Spectrum &rsquo;26.</p>
-            <p class="sc-gap">Follow our social channels for the winners and highlights.</p>
+            <p class="sc-gap">Prabhavee Mohottige, Methika Mihinuda, Uthum Methsara, Mayon Minthaka and Bihandu Kalidasa were the five nominees. Follow our social channels for more highlights.</p>
           </div>
           <div class="sc-ic sc-ic--cam" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M8 20h12l4-7h16l4 7h12a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V22a2 2 0 0 1 2-2z"/><circle cx="32" cy="36" r="11"/><circle cx="32" cy="36" r="5"/></svg></div>
         </article>
 
         <div class="sc-end">
-          <p class="e1">Nominees revealed soon</p>
+          <p class="e1">SCOPE &rsquo;26 Champion &middot; Mayon Minthaka</p>
           <p class="e2">SCOPE &middot; Spectrum&rsquo;s Champion of Photography Excellence</p>
           <p class="e3">Spectrum 2026 &bull; St. Sylvester&rsquo;s College</p>
         </div>
@@ -921,6 +990,7 @@
 <script src="js/album-views.js"></script>
 <script src="js/learn.js"></script>
 <script src="js/selection-done.js"></script>
+<script src="js/results.js?v=1" defer></script>
 <script src="js/chatbot.js"></script>
 <script src="js/music.js"></script>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script><!--vercel-->

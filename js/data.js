@@ -461,7 +461,7 @@ const ALBUMS = [
     "facebook": "https://www.facebook.com/share/p/1EBohai2qq/",
     "info": {
       "date": "1 November 2026",
-      "venue": "School premises",
+      "venue": "College premises",
       "captured": [
         "Sasidu Shanelka",
         "Chethiya Sulakshana",
@@ -751,7 +751,7 @@ const ALBUMS = [
     "facebook": "https://www.facebook.com/share/p/18mQ6xfMSe/",
     "info": {
       "date": "2 October 2026",
-      "venue": "School Premises.",
+      "venue": "College Premises.",
       "captured": [
         "Sasidu Shanelka",
         "Chethiya Sulakshana",
@@ -987,7 +987,7 @@ const ALBUMS = [
     "facebook": "https://web.facebook.com/share/p/1V2EDJenGt/",
     "info": {
       "date": "22 September 2026",
-      "venue": "School Premises",
+      "venue": "College Premises",
       "captured": [
         "Sasidu Shanelka",
         "Dulsan Bandara",
@@ -1458,7 +1458,7 @@ const ALBUMS = [
     "facebook": "https://web.facebook.com/share/p/1Jvnq94fJd/",
     "info": {
       "date": "2026.05.27.",
-      "venue": "School Premises",
+      "venue": "College Premises",
       "captured": [
         "Chethiya Sulakshana",
         "Kushan Dhananjaya",
@@ -1729,7 +1729,7 @@ const EVENTS = [
     "date": "Friday, 13th November 2026",
     "time": "9:30 a.m. onwards",
     "venue": "Cingolani Memorial Hall",
-    "about": "Photographs by club members were displayed together, and everyone was welcome to walk through and see the school through our lenses. Thank you to everyone who joined us.",
+    "about": "Photographs by club members were displayed together, and everyone was welcome to walk through and see the college through our lenses. Thank you to everyone who joined us.",
     "album": "",
     "link": "",
     "linkLabel": "",
@@ -1740,7 +1740,7 @@ const EVENTS = [
   {
     "name": "රිදී පහන් වැට අද්දර කලා උලෙළ",
     "category": "school",
-    "type": "School event covered by the club",
+    "type": "College event covered by the club",
     "status": "past",
     "date": "12 July 2026",
     "time": "",
@@ -1751,7 +1751,7 @@ const EVENTS = [
   {
     "name": "Vesters’ Soccer Carnival 2026",
     "category": "school",
-    "type": "School event covered by the club",
+    "type": "College event covered by the club",
     "status": "past",
     "date": "28 June 2026",
     "time": "",
@@ -1762,7 +1762,7 @@ const EVENTS = [
   {
     "name": "Annual Prize Giving 2025",
     "category": "school",
-    "type": "School event covered by the club",
+    "type": "College event covered by the club",
     "status": "past",
     "date": "26 June 2026",
     "time": "",
@@ -2612,6 +2612,7 @@ const SITE = {
   "notice": {
     "show": true,
     "text": "Spectrum 2026 was held on 13 November 2026. Thank you to everyone who took part!",
+    "hideAfter": "2026-11-21T23:59:59+05:30",
     "linkLabel": "",
     "linkUrl": ""
   },
@@ -2634,11 +2635,11 @@ const SITE = {
   },
   "texts": {
     "homeWelcome": "Welcome to SSCK Photography, the Photography Club of St. Sylvester's College, Kandy — where moments become memories and creativity becomes a story.",
-    "homeExplore": "Explore our photography, discover our events, celebrate the talent of our members, and see our school through a different lens.",
+    "homeExplore": "Explore our photography, discover our events, celebrate the talent of our members, and see our college through a different lens.",
     "homeCloser": "Every frame has a story. We capture it. 📸",
     "contactLead": "Have a question, an idea, or simply want to connect with us? Reach out to the Photography Club and stay connected with our activities, creative work, and upcoming opportunities.",
     "registerNote": "One teacher can register a whole group: just enter how many students are coming.",
-    "footerAbout": "The Photography Club of St. Sylvester's College — capturing our school's story, one frame at a time. Home of Spectrum, our island-wide photography competition and exhibition.",
+    "footerAbout": "The Photography Club of St. Sylvester's College — capturing our college's story, one frame at a time. Home of Spectrum, our island-wide photography competition and exhibition.",
     "footerConnect": "Join our digital community and see new albums as soon as they're posted.",
     "copyright": "© 2026 SSCPC · St. Sylvester's College Photography Club. All rights reserved."
   }
