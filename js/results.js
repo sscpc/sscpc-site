@@ -75,7 +75,7 @@
       const f=el('figure','rc-win rc-win--'+pl[1]+(w.port?' is-port':''));
       const ph=el('button','rc-ph');ph.type='button';
       ph.setAttribute('aria-label','View larger: '+pl[0]+' place, '+c.name+', by '+w.who);
-      const im=new Image();im.src=D+w.img;im.alt=pl[0]+' place in '+c.name+', photographed by '+w.who;im.loading='lazy';im.decoding='async';
+      const im=new Image();im.src=D+w.img;im.alt=pl[0]+' place in '+c.name+', photographed by '+w.who;im.loading='eager';im.decoding='async';
       ph.appendChild(im);
       ph.addEventListener('click',()=>lightbox(D+w.img,im.alt,w.who+' \u2022 '+w.school));
       const medal=el('span','rc-medal');
