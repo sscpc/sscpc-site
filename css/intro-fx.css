@@ -1,0 +1,60 @@
+/* Home hero (bottom right): effects for the welcome text and the "Explore the gallery" button.
+   Only touches background, box-shadow, pseudo-elements and the separate `scale` property, so the existing
+   entrance animation (introUiIn in style.css) keeps working. Desktop only, like the block itself.
+   Tuning: durations in the @keyframes below; colours are the site's blues. */
+
+/* --- welcome text: a thin light line draws down the left, and a soft light sweeps across the words --- */
+.intro__side p{position:relative;padding-left:1.05rem}
+.intro__side p::before{content:"";position:absolute;left:0;top:.25em;bottom:.25em;width:2px;border-radius:2px;
+  background:linear-gradient(180deg,#2f6fe8,#4fb4ff 45%,#a5f3ff 75%,#2f6fe8);transform-origin:top;
+  animation:introBar 1.3s cubic-bezier(.22,.8,.3,1) 3.1s both,introBarGlow 3.4s ease-in-out 4.6s infinite}
+.intro__shine{
+  background:linear-gradient(100deg,#b4cae6 0%,#b4cae6 38%,#ffffff 50%,#b4cae6 62%,#b4cae6 100%);
+  background-size:250% 100%;background-position:100% 0;
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  animation:introShine 7s ease-in-out 4s infinite}
+@keyframes introShine{0%{background-position:100% 0}45%,100%{background-position:0% 0}}
+@keyframes introBar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes introBarGlow{0%,100%{box-shadow:0 0 0 rgba(79,180,255,0)}50%{box-shadow:0 0 10px rgba(79,180,255,.9)}}
+
+/* --- button: glare passes over it, a soft ring pulses, and it lifts with a glow on hover --- */
+.intro__pill{position:relative;isolation:isolate;transition:box-shadow .3s ease,background-color .3s ease,scale .3s cubic-bezier(.22,.8,.3,1)}
+.intro__pill::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(110deg,transparent 38%,rgba(79,180,255,.55) 50%,transparent 62%);
+  background-size:300% 100%;background-position:100% 0;animation:introGlare 5s ease-in-out 4.2s infinite}
+.intro__pill::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  animation:introRing 3s ease-out 4.2s infinite}
+@keyframes introGlare{0%{background-position:100% 0}35%,100%{background-position:0% 0}}
+@keyframes introRing{0%{box-shadow:0 0 0 0 rgba(165,243,255,.55)}70%,100%{box-shadow:0 0 0 14px rgba(165,243,255,0)}}
+.intro__arr{display:inline-block;margin-left:.55em;font-style:normal;transition:translate .3s cubic-bezier(.22,.8,.3,1)}
+.intro__pill:hover,.intro__pill:focus-visible{background:#ffffff;scale:1.06;
+  box-shadow:0 0 0 1px rgba(165,243,255,.85),0 10px 34px -6px rgba(79,180,255,.8)}
+.intro__pill:hover .intro__arr,.intro__pill:focus-visible .intro__arr{translate:5px 0}
+
+@media (prefers-reduced-motion:reduce){
+  .intro__side p::before,.intro__shine,.intro__pill::before,.intro__pill::after{animation:none}
+  .intro__shine{background:none;-webkit-text-fill-color:currentColor;color:inherit}
+  .intro__pill{transition:none}
+}
+
+/* ===== Section under the opening scene (scroll-driven, see js/intro-type.js) ===== */
+/* top edge: no blue line; the black of the hero above melts into the section's navy */
+.intro{border-top:0;border-image:none;
+  background:linear-gradient(180deg,#02060d 0,#07162a 12rem) top/100% 12rem no-repeat,
+             radial-gradient(50% 80% at 90% 100%,rgba(0,0,0,.45),transparent 70%),#07162a}
+
+/* typewriter: typed part, caret, and the rest of the text (invisible, so the line breaks never move) */
+.tw-r{visibility:hidden}
+.tw-caret{display:inline-block;width:0;height:1em;position:relative;vertical-align:-.15em;visibility:hidden}
+.tw-caret.on{visibility:visible}
+.tw-caret::after{content:"";position:absolute;left:1px;top:0;width:2px;height:100%;background:#6cc8ff;box-shadow:0 0 8px rgba(108,200,255,.9);animation:twBlink .8s steps(1) infinite}
+@keyframes twBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+/* big headline: words come into focus; viewfinder corners lock on (their position follows --lock, set by the script) */
+.intro .motto{position:relative;width:fit-content}
+.intro .motto span{will-change:opacity,filter}
+.intro .motto::before,.intro .motto::after{content:"";display:block;position:absolute;width:1.15rem;height:1.15rem;margin:0;background:none;
+  border:0 solid #6cc8ff;pointer-events:none;
+  opacity:var(--lock,0);translate:calc((1 - var(--lock,0)) * var(--d) * 18px) calc((1 - var(--lock,0)) * var(--d) * 18px)}
+.intro .motto::before{--d:-1;left:-1.05rem;top:-.6rem;border-top-width:2px;border-left-width:2px}
+.intro .motto::after{--d:1;right:-1.05rem;bottom:-.6rem;border-bottom-width:2px;border-right-width:2px}
