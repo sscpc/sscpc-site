@@ -15,7 +15,7 @@
   var words = motto ? Array.prototype.slice.call(motto.querySelectorAll('span')) : [];
   var paras = Array.prototype.slice.call(sec.querySelectorAll('.intro-text p:not(.closer)'));
   var closer = sec.querySelector('.intro-text .closer');
-  var DURATION = 5000, SEE = 0.3;     /* 5 seconds; starts when 30% of the section is on screen */
+  var DURATION = 3600, SEE = 0.3;     /* 3.6 seconds; starts when 30% of the section is on screen */
 
   function el(tag, cls) { var e = document.createElement(tag); if (cls) e.className = cls; e.setAttribute('aria-hidden', 'true'); return e; }
   var items = paras.map(function (p) {
@@ -44,8 +44,8 @@
     });
     if (motto) motto.style.setProperty('--lock', ease(clamp((p - 0.34) / 0.14)).toFixed(3));
 
-    /* typed text: 0.30 -> 0.92 of the scroll, paragraph after paragraph */
-    var n = Math.round(clamp((p - 0.30) / 0.62) * total);
+    /* typed text: 0.26 -> 0.72 of the 3.6s (about 1.7s of typing, was 3.1s), paragraph after paragraph */
+    var n = Math.round(clamp((p - 0.26) / 0.46) * total);
     if (n !== lastN) {
       lastN = n;
       var left = n, active = -1;
@@ -60,7 +60,7 @@
     }
 
     if (closer) {
-      var c = clamp((p - 0.9) / 0.1);
+      var c = clamp((p - 0.74) / 0.16);
       closer.style.opacity = c.toFixed(3);
       closer.style.translate = '0 ' + ((1 - c) * 10).toFixed(1) + 'px';
     }

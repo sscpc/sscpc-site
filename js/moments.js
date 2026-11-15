@@ -107,7 +107,7 @@
   var pos = 0;              // our own (fractional) scroll position, for silky motion
   var speedFactor = 1;      // eases between 0 (stopped) and 1 (full speed)
   var pausedUntil = 0, hovering = false, visible = false, popped = null;
-  var lastSet = 0, last = 0;
+  var lastSet = 0, last = 0, wheelLast = 0;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   function pause() { pausedUntil = Date.now() + RESUME_AFTER; }
@@ -129,6 +129,7 @@
     e.preventDefault();
     if (wheelTarget === null) wheelTarget = row.scrollLeft;
     wheelTarget += d;
+    wheelLast = Date.now();
   }, { passive: false });
 
   // mouse drag (touch already drags the row natively)
@@ -194,12 +195,17 @@
       if (wheelTarget < 0) { wheelTarget += loopW; pos = row.scrollLeft + loopW; }
       else if (wheelTarget >= loopW) { wheelTarget -= loopW; pos = row.scrollLeft - loopW; }
       else pos = row.scrollLeft;
-      pos += (wheelTarget - pos) * Math.min(1, dt * 7);
+      /* FIX: browsers round scrollLeft to whole pixels, so a tiny easing step (under 1px) never moved the row,
+         wheelTarget never reached the end and the glide stayed switched off for good. Always move at least 1px,
+         and give up the wheel move after 1.2s as a safety net. */
+      var dlt = wheelTarget - pos, mv = dlt * Math.min(1, dt * 7);
+      if (Math.abs(mv) < 1) mv = (dlt < 0 ? -1 : 1) * Math.min(1, Math.abs(dlt));
+      pos += mv;
       row.scrollLeft = pos;
       lastSet = row.scrollLeft;
       pause();
       speedFactor = 0;
-      if (Math.abs(wheelTarget - pos) < 0.5) wheelTarget = null;
+      if (Math.abs(wheelTarget - pos) < 0.75 || Date.now() - wheelLast > 1200) wheelTarget = null;
       requestAnimationFrame(frame);
       return;
     }
