@@ -12,8 +12,10 @@
    - Hover a photo (or tap it on a phone) and it pops up; the photos beside it
      slide aside so the gaps stay the same. The glide eases to a stop while a
      photo is popped and eases back up to speed when it is released.
-   - Visitors can still scroll / swipe / use the scrollbar at any time; the
-     glide pauses while they do and resumes a few seconds later.
+   - With the mouse over the row, the glide stops and the mouse wheel / trackpad moves
+     the row sideways (smoothly, and it loops). The mouse can also drag the row.
+   - On a phone, touch and drag the row; the glide pauses while you do and
+     resumes a few seconds later.
    - Only glides while the row is on screen. Skipped for visitors who have
      "reduce motion" turned on (they can still scroll by hand). */
 (function () {
@@ -71,7 +73,7 @@
     ['moment-swara-ranjana-hall.jpg', 'Orchestra and singers on stage at Swara Ranjana \'24'],
     ['moment-hisawes-full-stage.jpg', 'Full troupe of Kandyan dancers on stage at the Hisawes Thabeema Kalaeli Mangalyaya \'24']
   ];
-  var SECONDS_PER_PHOTO = 3; // glide speed: one photo width every 3 seconds (raise = slower)
+  var SECONDS_PER_PHOTO = 7; // glide speed: one photo width every 7 seconds, slow and cinematic (raise = slower)
   var RESUME_AFTER = 4000;   // ms of quiet after a visitor scrolls before gliding resumes
 
   var row = document.getElementById('momentsRow');
@@ -117,6 +119,40 @@
   row.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hovering = true; });
   row.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hovering = false; });
 
+  // mouse wheel over the row moves it sideways, smoothly (vertical wheel turns into sideways travel)
+  var wheelTarget = null;
+  row.addEventListener('wheel', function (e) {
+    if (e.ctrlKey || reduce.matches) return;                 // pinch-zoom / reduced motion: leave alone
+    var d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (!d) return;
+    if (e.deltaMode === 1) d *= 32; else if (e.deltaMode === 2) d *= row.offsetWidth;
+    e.preventDefault();
+    if (wheelTarget === null) wheelTarget = row.scrollLeft;
+    wheelTarget += d;
+  }, { passive: false });
+
+  // mouse drag (touch already drags the row natively)
+  var drag = null, dragged = false;
+  row.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    drag = { x: e.clientX, left: row.scrollLeft, moved: false };
+    wheelTarget = null;
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; row.classList.add('is-dragging'); }
+    if (drag.moved) { pause(); row.scrollLeft = drag.left - dx; }
+  });
+  window.addEventListener('pointerup', function () {
+    if (!drag) return;
+    dragged = drag.moved;
+    drag = null;
+    row.classList.remove('is-dragging');
+    if (dragged) setTimeout(function () { dragged = false; }, 0);
+  });
+  row.addEventListener('click', function (e) { if (dragged) { e.stopPropagation(); e.preventDefault(); } }, true);
+
   // scrolls we did not cause (drag, swipe, scrollbar, keys) -> pause and re-sync
   row.addEventListener('scroll', function () {
     if (Math.abs(row.scrollLeft - lastSet) > 2) {
@@ -153,6 +189,20 @@
     last = now;
 
     var s = step();
+    if (wheelTarget !== null && s) {
+      var loopW = N * s;
+      if (wheelTarget < 0) { wheelTarget += loopW; pos = row.scrollLeft + loopW; }
+      else if (wheelTarget >= loopW) { wheelTarget -= loopW; pos = row.scrollLeft - loopW; }
+      else pos = row.scrollLeft;
+      pos += (wheelTarget - pos) * Math.min(1, dt * 7);
+      row.scrollLeft = pos;
+      lastSet = row.scrollLeft;
+      pause();
+      speedFactor = 0;
+      if (Math.abs(wheelTarget - pos) < 0.5) wheelTarget = null;
+      requestAnimationFrame(frame);
+      return;
+    }
     var canGlide = s && !reduce.matches && !document.hidden && visible && row.offsetWidth;
     var wantMove = canGlide && !hovering && !popped && Date.now() >= pausedUntil;
 

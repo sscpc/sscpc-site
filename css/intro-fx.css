@@ -3,19 +3,31 @@
    entrance animation (introUiIn in style.css) keeps working. Desktop only, like the block itself.
    Tuning: durations in the @keyframes below; colours are the site's blues. */
 
-/* --- welcome text: a thin light line draws down the left, and a soft light sweeps across the words --- */
-.intro__side p{position:relative;padding-left:1.05rem}
-.intro__side p::before{content:"";position:absolute;left:0;top:.25em;bottom:.25em;width:2px;border-radius:2px;
+/* --- welcome text: brighter, on a soft dark panel, with a blue line that redraws itself every 5 seconds --- */
+.intro__side p{position:relative;padding:.7rem .9rem .7rem 1.15rem;font-size:.88rem;font-weight:500;color:#eaf2ff;
+  background:linear-gradient(90deg,rgba(2,8,18,.62),rgba(2,8,18,.34) 75%,rgba(2,8,18,0))}
+.intro__side p::before,.ab-moments .lead::before{content:"";position:absolute;left:0;top:.25em;bottom:.25em;width:3px;border-radius:3px;
   background:linear-gradient(180deg,#2f6fe8,#4fb4ff 45%,#a5f3ff 75%,#2f6fe8);transform-origin:top;
-  animation:introBar 1.3s cubic-bezier(.22,.8,.3,1) 3.1s both,introBarGlow 3.4s ease-in-out 4.6s infinite}
+  animation:lineCycle 5s ease-out 3.1s infinite both}
+.intro__side p::before{top:0;bottom:0}
 .intro__shine{
-  background:linear-gradient(100deg,#b4cae6 0%,#b4cae6 38%,#ffffff 50%,#b4cae6 62%,#b4cae6 100%);
+  background:linear-gradient(100deg,#e4eeff 0%,#e4eeff 38%,#ffffff 50%,#e4eeff 62%,#e4eeff 100%);
   background-size:250% 100%;background-position:100% 0;
   -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
   animation:introShine 7s ease-in-out 4s infinite}
 @keyframes introShine{0%{background-position:100% 0}45%,100%{background-position:0% 0}}
-@keyframes introBar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
-@keyframes introBarGlow{0%,100%{box-shadow:0 0 0 rgba(79,180,255,0)}50%{box-shadow:0 0 10px rgba(79,180,255,.9)}}
+/* the line draws down, glows, holds, then fades; repeats every 5 seconds */
+@keyframes lineCycle{
+  0%{transform:scaleY(0);opacity:1;box-shadow:0 0 0 rgba(79,180,255,0)}
+  22%{transform:scaleY(1);opacity:1;box-shadow:0 0 14px rgba(79,180,255,1)}
+  60%{transform:scaleY(1);opacity:1;box-shadow:0 0 6px rgba(79,180,255,.6)}
+  88%{transform:scaleY(1);opacity:1;box-shadow:0 0 0 rgba(79,180,255,0)}
+  100%{transform:scaleY(1);opacity:0}
+}
+
+/* --- "Moments We've Captured" text (About): same brighter text and the same blue line --- */
+.ab-moments .lead{position:relative;padding:.35rem 0 .35rem 1.15rem;color:#e4eeff;font-size:1rem;line-height:1.75}
+.ab-moments .lead::before{top:0;bottom:0;animation-delay:0s}
 
 /* --- button: glare passes over it, a soft ring pulses, and it lifts with a glow on hover --- */
 .intro__pill{position:relative;isolation:isolate;transition:box-shadow .3s ease,background-color .3s ease,scale .3s cubic-bezier(.22,.8,.3,1)}
@@ -32,7 +44,7 @@
 .intro__pill:hover .intro__arr,.intro__pill:focus-visible .intro__arr{translate:5px 0}
 
 @media (prefers-reduced-motion:reduce){
-  .intro__side p::before,.intro__shine,.intro__pill::before,.intro__pill::after{animation:none}
+  .intro__side p::before,.ab-moments .lead::before,.intro__shine,.intro__pill::before,.intro__pill::after{animation:none}
   .intro__shine{background:none;-webkit-text-fill-color:currentColor;color:inherit}
   .intro__pill{transition:none}
 }
@@ -58,3 +70,8 @@
   opacity:var(--lock,0);translate:calc((1 - var(--lock,0)) * var(--d) * 18px) calc((1 - var(--lock,0)) * var(--d) * 18px)}
 .intro .motto::before{--d:-1;left:-1.05rem;top:-.6rem;border-top-width:2px;border-left-width:2px}
 .intro .motto::after{--d:1;right:-1.05rem;bottom:-.6rem;border-bottom-width:2px;border-right-width:2px}
+
+/* "Moments We've Captured" row: grab cursor for mouse dragging (see js/moments.js) */
+.ab-moments-row{cursor:grab}
+.ab-moments-row.is-dragging{cursor:grabbing;user-select:none}
+.ab-moments-row.is-dragging figure{pointer-events:none}

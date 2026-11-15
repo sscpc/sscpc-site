@@ -1,0 +1,41 @@
+/* Call-to-action card ("Follow Our Journey" on About, "More on Facebook" in Gallery).
+   Camera-viewfinder corners, a soft blue glow, a slow light sweep, and round glowing social buttons. */
+.cta.cta2{position:relative;isolation:isolate;overflow:hidden;text-align:center;color:#f4f1e4;
+  padding:clamp(2.6rem,6vw,4.2rem) clamp(1.5rem,5vw,3rem);
+  background:
+    radial-gradient(60% 90% at 50% 0%,rgba(79,180,255,.24),transparent 70%),
+    radial-gradient(45% 70% at 100% 100%,rgba(47,111,232,.28),transparent 70%),
+    linear-gradient(160deg,#101b44,#0a1433 60%,#081026);
+  border:1px solid rgba(108,200,255,.3);box-shadow:0 24px 60px -28px rgba(47,111,232,.7)}
+.cta2>*{position:relative;z-index:1}
+/* viewfinder corners */
+.cta2::before{content:"";position:absolute;inset:1.4rem;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(#6cc8ff,#6cc8ff) left top/22px 2px no-repeat,linear-gradient(#6cc8ff,#6cc8ff) left top/2px 22px no-repeat,
+    linear-gradient(#6cc8ff,#6cc8ff) right top/22px 2px no-repeat,linear-gradient(#6cc8ff,#6cc8ff) right top/2px 22px no-repeat,
+    linear-gradient(#6cc8ff,#6cc8ff) left bottom/22px 2px no-repeat,linear-gradient(#6cc8ff,#6cc8ff) left bottom/2px 22px no-repeat,
+    linear-gradient(#6cc8ff,#6cc8ff) right bottom/22px 2px no-repeat,linear-gradient(#6cc8ff,#6cc8ff) right bottom/2px 22px no-repeat;
+  opacity:.75}
+/* slow light sweep */
+.cta2::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 42%,rgba(165,243,255,.11) 50%,transparent 58%);
+  background-size:280% 100%;background-position:120% 0;animation:cta2Sweep 8s ease-in-out infinite}
+@keyframes cta2Sweep{0%,55%{background-position:120% 0}100%{background-position:-60% 0}}
+
+.cta2-eyebrow{display:inline-flex;align-items:center;gap:.55rem;margin-bottom:1rem;font-weight:700;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:#6cc8ff}
+.cta2-eyebrow::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:#6cc8ff;box-shadow:0 0 0 0 rgba(108,200,255,.7);animation:cta2Dot 2s ease-out infinite}
+@keyframes cta2Dot{0%{box-shadow:0 0 0 0 rgba(108,200,255,.7)}70%,100%{box-shadow:0 0 0 9px rgba(108,200,255,0)}}
+.cta2 h2{font-size:clamp(1.4rem,4.2vw,2.1rem);color:#fff}
+.cta2 h2::after{width:72px;height:3px;margin:.9rem auto 0;background:linear-gradient(90deg,#2f6fe8,#a5f3ff)}
+.cta2 p{margin:0 auto;max-width:46ch;color:#d3dcf2;line-height:1.8}
+.cta2 .btns{margin-top:1.7rem;display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem}
+.cta2 .btn{transition:transform .25s ease,box-shadow .25s ease}
+.cta2 .btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px -8px rgba(79,180,255,.8)}
+/* round glowing social buttons */
+.cta2 .foot-social{gap:1rem}
+.cta2 .foot-social a{width:3.2rem;height:3.2rem;border-radius:50%;background:rgba(108,200,255,.08);border:1px solid rgba(108,200,255,.38);
+  transition:transform .25s ease,background .25s ease,color .25s ease,box-shadow .25s ease,border-color .25s ease}
+.cta2 .foot-social svg{width:21px;height:21px}
+.cta2 .foot-social a:hover,.cta2 .foot-social a:focus-visible{transform:translateY(-4px);background:#f4f1e4;border-color:#f4f1e4;color:#04101e;box-shadow:0 12px 28px -6px rgba(79,180,255,.8)}
+@media (prefers-reduced-motion:reduce){.cta2::after,.cta2-eyebrow::before{animation:none}.cta2 .btn,.cta2 .foot-social a{transition:none}}
+@media (max-width:560px){.cta2::before{inset:1rem}}
