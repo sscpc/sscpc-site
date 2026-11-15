@@ -37,11 +37,11 @@
   .intro__pill{transition:none}
 }
 
-/* ===== Section under the opening scene (scroll-driven, see js/intro-type.js) ===== */
+/* ===== Section under the opening scene (plays on its own for 5 seconds, see js/intro-type.js) ===== */
 /* top edge: no blue line; the black of the hero above melts into the section's navy */
 .intro{border-top:0;border-image:none;
-  background:linear-gradient(180deg,#02060d 0,#07162a 12rem) top/100% 12rem no-repeat,
-             radial-gradient(50% 80% at 90% 100%,rgba(0,0,0,.45),transparent 70%),#07162a}
+  background:linear-gradient(180deg,#02060d 0,#07162a 3rem) top/100% 3rem no-repeat,
+             radial-gradient(50% 60% at 90% 100%,rgba(0,0,0,.18),transparent 70%),#07162a}
 
 /* typewriter: typed part, caret, and the rest of the text (invisible, so the line breaks never move) */
 .tw-r{visibility:hidden}

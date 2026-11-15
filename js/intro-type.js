@@ -1,11 +1,12 @@
 /* Home page, section under the opening scene ("Capture. Create. Inspire." + the welcome text).
-   Everything here is driven by SCROLL, so it plays as you scroll down and rewinds as you scroll back up:
+   Plays by itself, once, over DURATION (5 seconds) as soon as the section comes into view:
      - the big "Capture. Create. Inspire." comes into focus word by word, then viewfinder corners lock around it
-     - the two small paragraphs are typed out letter by letter as you scroll, with a blinking caret
+     - the two small paragraphs are typed out letter by letter, with a blinking caret
      - the closing line fades in last
    The full text stays in the page (hidden part), so wrapping never changes while it types.
    Skipped for visitors who prefer reduced motion (they just see the text).
-   Tuning: RANGE = how much scrolling it takes (share of the screen height); the 0.xx numbers in render() set when each part runs. */
+   Tuning: DURATION = total time in ms; SEE = how much of the section must be on screen to start;
+   the 0.xx numbers in render() set when each part runs inside the 5 seconds. */
 (function () {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var sec = document.querySelector('section.intro');
@@ -14,7 +15,7 @@
   var words = motto ? Array.prototype.slice.call(motto.querySelectorAll('span')) : [];
   var paras = Array.prototype.slice.call(sec.querySelectorAll('.intro-text p:not(.closer)'));
   var closer = sec.querySelector('.intro-text .closer');
-  var START = 0.95, RANGE = 0.7;      /* starts when the section top is at 95% of the screen height, ends 0.7 screens later */
+  var DURATION = 5000, SEE = 0.3;     /* 5 seconds; starts when 30% of the section is on screen */
 
   function el(tag, cls) { var e = document.createElement(tag); if (cls) e.className = cls; e.setAttribute('aria-hidden', 'true'); return e; }
   var items = paras.map(function (p) {
@@ -65,20 +66,27 @@
     }
   }
 
-  var ticking = false;
-  function update() {
-    ticking = false;
-    var r = sec.getBoundingClientRect();
-    if (!r.height) return;                       /* another tab of the site is showing */
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    render(clamp((vh * START - r.top) / (vh * RANGE)));
+  var started = false;
+  function play() {
+    if (started) return;
+    started = true;
+    var t0 = null;
+    function frame(now) {
+      if (t0 === null) t0 = now;
+      var p = clamp((now - t0) / DURATION);
+      render(p);
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
   }
-  function ask() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
 
   render(0);
-  window.addEventListener('scroll', ask, { passive: true });
-  window.addEventListener('resize', ask);
-  window.addEventListener('hashchange', function () { setTimeout(ask, 60); setTimeout(ask, 400); });
-  window.addEventListener('pageshow', ask);
-  setTimeout(ask, 50); setTimeout(ask, 800);
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); play(); } });
+    }, { threshold: SEE });
+    io.observe(sec);
+  } else {
+    play();
+  }
 })();
