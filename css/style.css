@@ -436,7 +436,7 @@ html.loading .vf>:not(i){animation-play-state:paused}
 
 :lang(si){letter-spacing:normal!important}
 
-:root{--mono:'Share Tech Mono','Courier New',ui-monospace,monospace}
+:root{--mono:'Roboto','Noto Sans',Arial,sans-serif}
 
 /* slow glitch on the Spectrum wordmark */
 h1{position:relative}

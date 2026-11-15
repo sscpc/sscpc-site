@@ -1,5 +1,5 @@
 /* Spectrum 2026: Most Popular Photograph vote (js/photographs.js), floating vote button, confirm window, SCOPE award */
-:root{--vg:#3df07a;--vg2:#2fb457;--gold:#e8b94a;--gold2:#c9962f;--mono:'Share Tech Mono',ui-monospace,'Courier New',monospace}
+:root{--vg:#3df07a;--vg2:#2fb457;--gold:#e8b94a;--gold2:#c9962f;--mono:'Roboto','Noto Sans',Arial,sans-serif}
 
 /* ============ floating vote button (top-left, mirrors the small countdown on the top-right) ============
    Same behaviour as the AI assistant button (css/chatbot.css .sb-ai): resting state = just the round
