@@ -7,7 +7,7 @@ const ALBUMS = [
     "name": "KALAI VIZHA '26",
     "facebook": "https://www.facebook.com/share/p/1E8vfMaN6S/?mibextid=wwXIfr",
     "info": {
-      "date": "",
+      "date": "26 October 2026",
       "venue": "College Premises",
       "captured": [
         "Sasidu Sanelka",
