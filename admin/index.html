@@ -7,6 +7,8 @@
 <meta name="theme-color" content="#0a0d26">
 <title>SSCPC Admin</title>
 <link rel="icon" href="../images/crown-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../css/style.css">
 <style>
 @font-face{font-family:'Nexa';font-weight:100 900;font-style:normal;font-display:swap;src:url(../fonts/Nexa-Heavy.ttf) format('truetype')}
@@ -88,18 +90,19 @@ details.it summary img{flex:none}
 :root[data-theme=dark]{--bg:#070a1f;--surface:#0f1433;--ink:#e9eeff;--muted:#8f99c4;--line:#232b58;--accent:#4a74ff;--shadow:0 6px 24px rgba(0,0,0,.45)}
 body{background:var(--bg);color:var(--ink)}
 /* login */
-#login{background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='1400' viewBox='0 0 800 1400' preserveAspectRatio='xMidYMid slice'><defs><linearGradient id='s' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%236a9db3'/><stop offset='.28' stop-color='%23b9c4b4'/><stop offset='.42' stop-color='%23efc58c'/></linearGradient><linearGradient id='a' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2397b43a'/><stop offset='1' stop-color='%23487a1c'/></linearGradient><linearGradient id='b' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2374a02a'/><stop offset='1' stop-color='%232f5e14'/></linearGradient></defs><rect width='800' height='1400' fill='url(%23s)'/><path d='M0 470 L110 440 L240 480 L400 430 L560 475 L700 445 L800 470 V620 H0Z' fill='%237f93ad' opacity='.55'/><path d='M0 520 C150 470 260 520 400 500 C560 478 680 450 800 490 V700 H0Z' fill='%235b7a63' opacity='.8'/><path d='M0 600 C180 520 330 600 520 540 C650 500 740 520 800 500 V1400 H0Z' fill='url(%23a)'/><path d='M0 820 C160 720 340 800 520 740 C660 700 740 720 800 690 V1400 H0Z' fill='url(%23b)'/><path d='M0 1060 C200 960 420 1040 620 980 C700 955 760 965 800 950 V1400 H0Z' fill='%23558a1f'/><path d='M0 1250 C220 1170 480 1230 800 1150 V1400 H0Z' fill='%2342721a'/><g fill='%231f3a12'><ellipse cx='70' cy='1195' rx='70' ry='55'/><ellipse cx='170' cy='1215' rx='60' ry='48'/><ellipse cx='20' cy='1250' rx='60' ry='60'/></g></svg>") center/cover no-repeat #6a9db3;color:#fff}
-.glass{width:min(24rem,100%);padding:2.4rem 1.8rem 1.4rem;border-radius:28px;border:2px solid rgba(255,255,255,.55);background:linear-gradient(160deg,rgba(255,255,255,.3),rgba(25,35,20,.38));-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 24px 70px rgba(0,0,0,.35);text-align:left}
+#login{background:linear-gradient(rgba(8,16,56,.18),rgba(8,16,56,.32)),url(../images/admin-login-bg.jpg) center/cover no-repeat #1b2a55;color:#fff}
+.glass{width:min(24rem,100%);padding:2.4rem 1.8rem 1.4rem;border-radius:28px;border:2px solid rgba(255,255,255,.55);background:linear-gradient(160deg,rgba(255,255,255,.26),rgba(12,22,70,.46));-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 24px 70px rgba(0,0,0,.35);text-align:left}
 .glass img{width:46px;display:block;margin-bottom:1rem}
 .lt{font-family:var(--heading);font-size:2.2rem;line-height:1.1;margin:0 0 .4rem}
 .ls{font-size:.85rem;opacity:.92;margin:0}
-.pw{position:relative;margin:1.6rem 0 1.4rem}
+#login,#login *{box-sizing:border-box}#login{margin:0}body{margin:0}#lf{display:block;margin:0;padding:0;height:auto;min-height:0}.glass{height:auto;min-height:0}.keyrow{position:relative;display:block;height:auto;min-height:0;margin:1.6rem 0 1.3rem;padding:0}
 #login .in{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.6);border-radius:16px;padding:.95rem 3rem .95rem 1.1rem;margin:0}
+#login .in:-webkit-autofill,#login .in:-webkit-autofill:hover,#login .in:-webkit-autofill:focus{-webkit-text-fill-color:#fff;caret-color:#fff;-webkit-box-shadow:0 0 0 1000px rgba(26,44,110,.9) inset;box-shadow:0 0 0 1000px rgba(26,44,110,.9) inset;transition:background-color 99999s ease-in-out 0s}
 #login .in::placeholder{color:rgba(255,255,255,.75)}
 #login .in:focus{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
 .eye{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);background:none;border:0;color:#fff;opacity:.85;cursor:pointer;padding:.2rem;display:grid}
 .eye:hover{opacity:1}
-.lbtn{width:100%;border:0;border-radius:16px;padding:.95rem;font-size:1.05rem;color:#fff;cursor:pointer;background:linear-gradient(90deg,#b6c41b,#1ea35d);box-shadow:0 8px 22px rgba(30,163,93,.35);clip-path:none}
+.lbtn{width:100%;border:0;border-radius:16px;padding:.95rem;font-size:1.05rem;color:#fff;cursor:pointer;background:linear-gradient(90deg,#2d5bff,#3fb8ff);box-shadow:0 8px 22px rgba(45,91,255,.45);clip-path:none;text-transform:none;letter-spacing:.02em;font-weight:600;display:block}
 .lbtn:hover{filter:brightness(1.07)}
 #msg{margin:1rem 0 0;font-size:.78rem;color:#ffe3e3;min-height:1em}
 .cr{display:block;margin-top:1.4rem;text-align:center;font-size:.66rem;opacity:.85}
@@ -135,6 +138,21 @@ body{background:var(--bg);color:var(--ink)}
 dialog{box-shadow:0 20px 60px rgba(0,0,0,.4)}
 @media(max-width:800px){.side{border-radius:0}.tab{width:auto;white-space:nowrap;border-radius:999px}.topbar .td,.who{display:none}.glass{padding:2rem 1.3rem 1.2rem}}
 </style>
+<style>
+/* ===== Round 2 ===== */
+:root{--body:'Inter','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',system-ui,Arial,sans-serif;--heading:'Poppins','Inter','Noto Sans Sinhala','Iskoola Pota','Nirmala UI',Arial,sans-serif}
+body,input,select,textarea,button,td,th,label,summary{font-weight:500}
+h1,h2,h3,h4,.ttl,legend,.brand,.lt,.tt{font-weight:600}
+.tab{font-weight:600;letter-spacing:.05em}
+a.tbtn{text-decoration:none;display:inline-block}
+.tbtn.ghostw{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7)}
+.sjump{top:.6rem;gap:.2rem;padding:.35rem;margin:0 0 1.1rem;flex-wrap:nowrap;overflow-x:auto;background:color-mix(in srgb,var(--surface) 90%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:999px;box-shadow:var(--shadow);scrollbar-width:none}
+.sjump::-webkit-scrollbar{display:none}
+.sjump .chip{flex:none;border:0!important;background:transparent!important;color:var(--muted)!important;border-radius:999px!important;padding:.5rem 1rem!important;font:600 .72rem var(--body)!important;letter-spacing:.03em;text-transform:none!important;white-space:nowrap;cursor:pointer;transition:background .15s,color .15s}
+.sjump .chip:hover{color:var(--ink)!important;background:color-mix(in srgb,var(--accent) 14%,transparent)!important}
+.sjump .chip.on{background:var(--accent)!important;color:#fff!important;box-shadow:0 4px 12px color-mix(in srgb,var(--accent) 40%,transparent)}
+.sx{scroll-margin-top:4.6rem}
+</style>
 </head>
 <body>
 
@@ -144,7 +162,7 @@ dialog{box-shadow:0 20px 60px rgba(0,0,0,.4)}
     <h1 class="lt">Login</h1>
     <p class="ls">Welcome back, please sign in to the SSCPC admin portal</p>
     <form id="lf">
-      <div class="pw"><input class="in" id="key" type="password" placeholder="Admin key" autocomplete="current-password" required>
+      <div class="keyrow"><input class="in" id="key" type="password" placeholder="Admin key" autocomplete="current-password" required>
       <button type="button" class="eye" id="eye" aria-label="Show or hide the key"><svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><path d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg></button></div>
       <button class="btn lbtn">Login</button>
     </form>
@@ -159,10 +177,7 @@ dialog{box-shadow:0 20px 60px rgba(0,0,0,.4)}
     <div class="sp"></div>
     <div class="badge hide" id="dirty">UNPUBLISHED CHANGES</div>
     <button class="tab" id="undo" type="button" disabled>↶ Undo</button><button class="tab" id="redo" type="button" disabled>↷ Redo</button>
-    <button class="tab" id="th">Light / Dark</button>
-    <a class="tab" href="../tools/album-builder.html">Album Builder</a>
-    <a class="tab" href="../index.html">← View site</a>
-    <button class="tab" id="so">Sign out</button>
+        <button class="tab" id="so">Sign out</button>
   </nav>
   <main id="main"></main>
 </div>
@@ -373,7 +388,9 @@ function sec(id,title,desc){const s=h('section','sx');s.id='sx-'+id;s.append(h('
 function site(){
   const S=D.SITE,w=h('div','sitetab'),SD=SITE_DEF,F=(o,sk,k,l,t,op)=>sf(o,k,l,t,Object.assign(sk?{def:SD[sk][k]}:{},op||{}));
   const SECS=[['event','Spectrum day'],['vote','Voting'],['reg','Registration'],['notice','Notice bar'],['contact','Contact'],['links','Social links'],['texts','Page texts'],['other','Other']];
-  const jump=h('div','sjump');SECS.forEach(([id,t])=>{const c=h('button','chip',t);c.type='button';c.onclick=()=>document.getElementById('sx-'+id).scrollIntoView({behavior:'smooth',block:'start'});jump.append(c)});
+  const jump=h('div','sjump'),chips=[];SECS.forEach(([id,t])=>{const c=h('button','chip',t);c.type='button';c.onclick=()=>document.getElementById('sx-'+id).scrollIntoView({behavior:'smooth',block:'start'});jump.append(c);chips.push([id,c])});
+  const spy=()=>{if(!document.contains(jump)){removeEventListener('scroll',spy);return}let cur=SECS[0][0];for(const[id]of SECS){const e=document.getElementById('sx-'+id);if(e&&e.getBoundingClientRect().top<150)cur=id}chips.forEach(([id,c])=>c.classList.toggle('on',id===cur))};
+  addEventListener('scroll',spy,{passive:true});setTimeout(spy,0);
   w.append(h('p','note','Everything here is a <b>draft</b> until you press <b>Publish</b> (left menu). Boxes with <b>↺ Default</b> can be put back to the original wording. Times are Sri Lanka time. Each box says where it shows on the site.'),jump);
 
   /* 1. Spectrum day */
@@ -462,10 +479,10 @@ function publish(){
 /* ---------- shell ---------- */
 const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['selection','Selection',selDone],['photos','Votes',photos],['site','Site',site],['publish','Publish',publish]];
 const IC={home:'⌂',inbox:'✉',events:'◷',albums:'▣',members:'☺',slides:'❏',learn:'✎',selection:'✓',photos:'★',site:'⚙',publish:'⇪'};
-TABS.forEach(([k,t])=>{const b=h('button','tab','<i class="ic">'+(IC[k]||'•')+'</i>'+t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))});
+TABS.forEach(([k,t])=>{if(k==='events')return;const b=h('button','tab','<i class="ic">'+(IC[k]||'•')+'</i>'+t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))});
 function show(n){tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
   const m=$('#main'),t=TABS.find(x=>x[0]===n);m.innerHTML='';const tb=h('header','topbar');tb.innerHTML='<span class="tt">'+esc(t[1])+'</span><span class="td">'+esc(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Colombo',weekday:'long',day:'numeric',month:'long'}).format(new Date()))+'</span><span class="sp2"></span>';
-  const tp=h('button','tbtn','Publish');tp.type='button';tp.onclick=()=>show('publish');tb.append(tp,h('span','who','Admin'),h('span','av','A'));m.append(tb,t[2]());scrollTo(0,0)}
+  const tp=h('button','tbtn','Publish');tp.type='button';tp.onclick=()=>show('publish');const ab=h('a','tbtn ghostw','Album Builder');ab.href='../tools/album-builder.html';tb.append(ab,tp,h('span','who','Admin'),h('span','av','A'));m.append(tb,t[2]());scrollTo(0,0)}
 let D0;async function enter(k){key=k;$('#msg').textContent='Checking…';
   try{const r=await fetch('../js/data.js',{cache:'no-store'});let txt=await r.text();D0=parse(txt);await load();
     if(GH.token&&GH.repo)try{txt=(await head()).text}catch(e){}
@@ -476,7 +493,6 @@ $('#eye').onclick=()=>{const k=$('#key');k.type=k.type==='password'?'text':'pass
 $('#lf').onsubmit=e=>{e.preventDefault();enter($('#key').value)};
 $('#so').onclick=()=>{sessionStorage.removeItem('k');location.reload()};
 $('#undo').onclick=()=>jump(-1);$('#redo').onclick=()=>jump(1);
-$('#th').onclick=()=>{const r=document.documentElement,c=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.dataset.theme=c==='dark'?'light':'dark';localStorage.at=r.dataset.theme};
 if(localStorage.at)document.documentElement.dataset.theme=localStorage.at;
 addEventListener('beforeunload',e=>{if(D&&(changed().length||Object.keys(ST).length)){e.preventDefault();e.returnValue=''}});
 if(sessionStorage.k)enter(sessionStorage.k);
