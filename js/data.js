@@ -1908,7 +1908,7 @@ const FORMS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyAHz3S7XpEbTAfY
 
 const PDF_CONFIG = {
   "siteUrl": "https://sscpc.vercel.app",
-  "siteLabel": "ssckphotography.com",
+  "siteLabel": "www.ssckphotography.com",
   "email": "sylvestrian.photography@gmail.com",
   "clubName": "St. Sylvester's College Photography Club",
   "shortName": "SSCPC",
@@ -2610,7 +2610,7 @@ const SITE = {
     "closedMessage": "Spectrum 2026 has ended and registration is now closed. Thank you to everyone who registered and joined us on the day. For any questions, please contact the club."
   },
   "notice": {
-    "show": true,
+    "show": false,
     "text": "Spectrum 2026 was held on 13 November 2026. Thank you to everyone who took part!",
     "hideAfter": "2026-11-21T23:59:59+05:30",
     "linkLabel": "",
