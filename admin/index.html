@@ -153,8 +153,65 @@ a.tbtn{text-decoration:none;display:inline-block}
 .sjump .chip.on{background:var(--accent)!important;color:#fff!important;box-shadow:0 4px 12px color-mix(in srgb,var(--accent) 40%,transparent)}
 .sx{scroll-margin-top:4.6rem}
 </style>
-<link rel="stylesheet" href="auth.css">
-<link rel="stylesheet" href="users.css">
+<style>
+/* ===== Round 3: account menu + phone tab row ===== */
+.topbar{position:relative}
+.acct{position:relative;z-index:40;margin-left:.2rem}
+.acct-btn{display:flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:.22rem .55rem .22rem .9rem;cursor:pointer;font:inherit;transition:background .15s,box-shadow .15s}
+.acct-btn:hover,.acct-btn[aria-expanded=true]{background:rgba(255,255,255,.26)}
+.acct-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.acct-btn .who{padding:0;max-width:11rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acct-btn .av{box-shadow:0 2px 8px rgba(0,0,0,.2);font-weight:700;flex:none}
+.acct-chev{flex:none;opacity:.9;transition:transform .2s}
+.acct-btn[aria-expanded=true] .acct-chev{transform:rotate(180deg)}
+.acct-menu{position:absolute;right:0;top:calc(100% + .7rem);width:min(19rem,calc(100vw - 2rem));background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:20px;box-shadow:0 22px 60px rgba(8,12,50,.32),0 2px 0 rgba(255,255,255,.04) inset;padding:.5rem;transform-origin:top right;animation:acctpop .18s ease}
+.acct-menu[hidden]{display:none}
+.acct-menu::before{content:"";position:absolute;right:1.1rem;top:-6px;width:12px;height:12px;background:var(--surface);border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg);border-radius:3px 0 0 0}
+@keyframes acctpop{from{opacity:0;transform:translateY(-6px) scale(.97)}}
+.am-head{display:flex;align-items:center;gap:.8rem;padding:.8rem .7rem .7rem}
+.av.av-lg{width:3rem;height:3rem;font-size:1.2rem;background:linear-gradient(135deg,#2d5bff,#3fb8ff);color:#fff;flex:none;box-shadow:0 6px 16px rgba(45,91,255,.4);font-weight:700}
+.am-id{min-width:0;display:grid;gap:.1rem}
+.am-id b{font-size:.95rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.am-id small{color:var(--muted);font-size:.74rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.am-info{margin:.1rem .4rem .5rem;padding:.55rem .8rem;border-radius:14px;background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid var(--line);font-size:.76rem}
+.am-info div{display:flex;justify-content:space-between;gap:1rem;padding:.22rem 0}
+.am-info dt{color:var(--muted)}
+.am-info dd{margin:0;font-weight:600;text-align:right;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.am-list{display:grid;gap:.1rem;padding-top:.35rem;border-top:1px solid var(--line)}
+.am-list a,.am-list button{display:flex;align-items:center;gap:.7rem;width:100%;text-align:left;background:none;border:0;color:var(--ink);border-radius:12px;padding:.65rem .75rem;font:600 .82rem var(--body);text-decoration:none;cursor:pointer;transition:background .12s,color .12s}
+.am-list a:hover,.am-list button:hover:not(:disabled){background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent)}
+.am-list a:focus-visible,.am-list button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.am-list button:disabled{opacity:.4;cursor:default}
+.am-list svg{flex:none;opacity:.85}
+.am-list .am-out{color:#c23838}
+.am-list .am-out:hover{background:rgba(194,56,56,.12)!important;color:#c23838!important}
+:root[data-theme=dark] .am-list .am-out{color:#ff9a9a}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .am-list .am-out{color:#ff9a9a}}
+.am-mob{display:none!important}
+@media(max-width:800px){
+  .am-mob{display:flex!important}
+  .app{grid-template-rows:auto 1fr}
+  main{padding:.8rem;align-self:start}
+  /* tab row: a sticky, swipeable strip. Icon over label, active tab is a glowing pill */
+  .side{position:sticky;top:0;z-index:30;height:auto;flex-direction:row;align-items:stretch;gap:.3rem;padding:.55rem .6rem .65rem;border-radius:0 0 22px 22px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scroll-padding:0 1rem;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;background:linear-gradient(180deg,#0a0d26,#05060c);box-shadow:0 12px 28px rgba(3,5,25,.4)}
+  .side::-webkit-scrollbar{display:none}
+  .side .brand,.side .sp,.side #dirty,.side #undo,.side #redo{display:none}
+  .side .tab[data-t]{flex:none;flex-direction:column;justify-content:center;gap:.28rem;width:auto;min-width:4.3rem;padding:.55rem .75rem .5rem;border-radius:16px;font-size:.6rem;letter-spacing:.05em;line-height:1;scroll-snap-align:center;position:relative;transition:background .15s,color .15s,box-shadow .15s}
+  .side .tab .ic{font-size:1.2rem;width:auto;line-height:1}
+  .side .tab[data-t][aria-selected=true]{background:linear-gradient(135deg,#2d5bff,#3fb8ff);color:#fff;box-shadow:0 6px 16px rgba(45,91,255,.5)}
+  .side.is-dirty .tab[data-t=publish]::after{content:"";position:absolute;top:.4rem;right:.55rem;width:.5rem;height:.5rem;border-radius:50%;background:#ffb84a;box-shadow:0 0 0 2px #05060c}
+  .topbar{border-radius:16px;padding:.55rem .6rem .55rem 1rem;gap:.6rem;margin-bottom:1rem}
+  .topbar .tt{font-size:1.15rem}
+  .tb-wide{display:none!important}
+  .topbar .tbtn{padding:.45rem .9rem}
+  .acct-btn{padding:.2rem}
+  .acct-btn .who,.acct-chev{display:none}
+  .sjump{top:4.9rem}
+  .sx{scroll-margin-top:8rem}
+}
+</style>
+<link rel="stylesheet" href="/admin/auth.css">
+<link rel="stylesheet" href="/admin/users.css">
 </head>
 <body>
 
@@ -302,7 +359,6 @@ a.tbtn{text-decoration:none;display:inline-block}
     <div class="sp"></div>
     <div class="badge hide" id="dirty">UNPUBLISHED CHANGES</div>
     <button class="tab" id="undo" type="button" disabled>↶ Undo</button><button class="tab" id="redo" type="button" disabled>↷ Redo</button>
-        <button class="tab" id="so">Sign out</button>
   </nav>
   <main id="main"></main>
 </div>
@@ -327,9 +383,9 @@ const snapK=()=>Object.fromEntries(KEYS.map(k=>[k,JSON.stringify(D[k])]));
 const changed=()=>KEYS.filter(k=>JSON.stringify(D[k])!==B[k]);
 const lab=x=>x&&typeof x==='object'?((x.name||x.title||x.alt||x.image||'')+('photographer' in x?(x.photographer?' · '+x.photographer:'')+(x.school?'':' · ⚠ school missing'):'')):'';
 /* ---------- undo + unpublished marker ---------- */
-let ht;const ub=()=>{$('#undo').disabled=hi<1;$('#redo').disabled=hi>=hist.length-1};
+let ht;const ub=()=>{$('#undo').disabled=hi<1;$('#redo').disabled=hi>=hist.length-1;document.querySelectorAll('.am-undo').forEach(x=>x.disabled=hi<1);document.querySelectorAll('.am-redo').forEach(x=>x.disabled=hi>=hist.length-1)};
 function snap(){const s=JSON.stringify(D);if(s===hist[hi])return;hist=hist.slice(0,hi+1);hist.push(s);hi=hist.length-1;if(hist.length>60){hist.shift();hi--}ub()}
-function dirty(){const n=changed().length+Object.keys(ST).length;$('#dirty').classList.toggle('hide',!n);clearTimeout(ht);ht=setTimeout(snap,500);ub()}
+function dirty(){const n=changed().length+Object.keys(ST).length;$('#dirty').classList.toggle('hide',!n);$('#side').classList.toggle('is-dirty',!!n);clearTimeout(ht);ht=setTimeout(snap,500);ub()}
 function jump(d){clearTimeout(ht);snap();const n=hi+d;if(n<0||n>=hist.length)return;hi=n;D=JSON.parse(hist[hi]);dirty();show(tab)}
 /* ---------- typed editor ---------- */
 const field=(l,el)=>{const x=h('label','f');x.append(l,el);return x};
@@ -608,9 +664,36 @@ const IC={home:'⌂',inbox:'✉',events:'◷',albums:'▣',members:'☺',slides:
 const NEED={home:'portal:access',inbox:'inbox:read',events:'content:edit',albums:'content:edit',members:'content:edit',slides:'content:edit',learn:'content:edit',selection:'photos:manage',photos:'votes:read',users:'users:view',passkey:'passkey:manage',site:'settings:manage',publish:'content:publish'};
 const allowed=k=>!NEED[k]||SSCPC_AUTH.can(NEED[k]);
 function buildSidebar(){document.querySelectorAll('#side .tab[data-t]').forEach(b=>b.remove());TABS.forEach(([k,t])=>{if(k==='events'||!allowed(k))return;const b=h('button','tab','<i class="ic">'+(IC[k]||'•')+'</i>'+t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))})}
+/* ---------- account menu (avatar circle in the blue bar; same on phone and desktop) ---------- */
+const ROLES={super_admin:'Super Admin',admin:'Admin',editor:'Editor',general:'General User'};
+function acctMenu(){
+  const u=SSCPC_AUTH.user||{},nm=(u.fullName||u.username||'Account').trim(),ini=esc(nm.charAt(0).toUpperCase()||'A'),
+    role=(SSCPC_AUTH.access&&SSCPC_AUTH.access.label)||ROLES[u.role]||'General User',
+    row=(k,v)=>v?'<div><dt>'+k+'</dt><dd>'+esc(v)+'</dd></div>':'',
+    ic=d=>'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d+'</svg>';
+  const w=h('div','acct');
+  w.innerHTML='<button type="button" class="acct-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="acctMenu" aria-label="Account menu for '+esc(nm)+'"><span class="who">'+esc(nm)+'</span><span class="av">'+ini+'</span>'+ic('<path d="M6 9l6 6 6-6"/>').replace('<svg','<svg class="acct-chev"')+'</button>'
+   +'<div class="acct-menu" id="acctMenu" role="menu" hidden>'
+   +'<div class="am-head"><span class="av av-lg">'+ini+'</span><div class="am-id"><b>'+esc(nm)+'</b>'+(u.username?'<small>@'+esc(u.username)+'</small>':'')+'</div></div>'
+   +'<dl class="am-info">'+row('Role',role)+row('Email',u.email)+row('Status',u.status?u.status.charAt(0).toUpperCase()+u.status.slice(1):'')+'</dl>'
+   +'<div class="am-list">'
+   +'<a role="menuitem" href="../">'+ic('<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>')+'<span>Back to the website</span></a>'
+   +(allowed('publish')?'<a role="menuitem" class="am-mob" href="../tools/album-builder.html">'+ic('<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/>')+'<span>Album Builder</span></a>':'')
+   +'<button type="button" role="menuitem" class="am-mob am-undo">'+ic('<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/>')+'<span>Undo</span></button>'
+   +'<button type="button" role="menuitem" class="am-mob am-redo">'+ic('<path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 000 12h3"/>')+'<span>Redo</span></button>'
+   +'<button type="button" role="menuitem" class="am-out">'+ic('<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>')+'<span>Sign out</span></button>'
+   +'</div></div>';
+  w.querySelector('.am-undo').onclick=()=>jump(-1);w.querySelector('.am-redo').onclick=()=>jump(1);
+  w.querySelector('.am-out').onclick=()=>SSCPC_AUTH.logout();
+  return w}
+function closeAcct(focus){const m=document.querySelector('.acct-menu');if(!m||m.hidden)return;m.hidden=true;const b=document.querySelector('.acct-btn');if(b){b.setAttribute('aria-expanded','false');if(focus)b.focus()}}
+document.addEventListener('click',e=>{const b=e.target.closest('.acct-btn');
+  if(b){const m=b.parentNode.querySelector('.acct-menu'),open=m.hidden;m.hidden=!open;b.setAttribute('aria-expanded',String(open));return}
+  const it=e.target.closest('.acct-menu a,.acct-menu button');if(it||!e.target.closest('.acct-menu'))closeAcct()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAcct(true)});
 function show(n){if(!allowed(n))n='home';tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
   const m=$('#main'),t=TABS.find(x=>x[0]===n);m.innerHTML='';const tb=h('header','topbar');tb.innerHTML='<span class="tt">'+esc(t[1])+'</span><span class="td">'+esc(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Colombo',weekday:'long',day:'numeric',month:'long'}).format(new Date()))+'</span><span class="sp2"></span>';
-  const tp=h('button','tbtn','Publish');tp.type='button';tp.onclick=()=>show('publish');const ab=h('a','tbtn ghostw','Album Builder');ab.href='../tools/album-builder.html';tb.append(...(allowed('publish')?[ab,tp]:[]),h('span','who',esc((SSCPC_AUTH.user||{}).fullName||'Account')),h('span','av',esc(((SSCPC_AUTH.user||{}).fullName||'A').trim().charAt(0).toUpperCase())));m.append(tb,t[2]());scrollTo(0,0)}
+  const tp=h('button','tbtn','Publish');tp.type='button';tp.onclick=()=>show('publish');const ab=h('a','tbtn ghostw','Album Builder');ab.href='../tools/album-builder.html';ab.className+=' tb-wide';tb.append(...(allowed('publish')?[ab,tp]:[]),acctMenu());m.append(tb,t[2]());scrollTo(0,0);ub();const on=document.querySelector('.tab[data-t][aria-selected=true]');if(on&&on.scrollIntoView)try{on.scrollIntoView({block:'nearest',inline:'center'})}catch(e){}}
 let D0;
 /* Called by auth.js once the server has confirmed a session whose role allows the portal. */
 window.enterPortal=async function(){
@@ -621,12 +704,11 @@ window.enterPortal=async function(){
   if(GH.token&&GH.repo)try{txt=(await head()).text}catch(e){}
   D=parse(txt);const hadSite=!!D.SITE;D.SITE=fillD(SITE_DEF,D.SITE);D.PDF_CONFIG=D.PDF_CONFIG||{};KEYS=Object.keys(D);B=snapK();if(!hadSite)B.SITE='null';hist=[JSON.stringify(D)];hi=0;ub();
   window._portalUser=who;buildSidebar();$('#login').classList.add('hide');$('#app').classList.remove('hide');show(allowed(tab)?tab:'home')};
-$('#so').onclick=()=>SSCPC_AUTH.logout();
 $('#undo').onclick=()=>jump(-1);$('#redo').onclick=()=>jump(1);
 if(localStorage.at)document.documentElement.dataset.theme=localStorage.at;
 addEventListener('beforeunload',e=>{if(D&&(changed().length||Object.keys(ST).length)){e.preventDefault();e.returnValue=''}});
 </script>
-<script src="auth.js" defer></script>
-<script src="users.js" defer></script>
+<script src="/admin/auth.js" defer></script>
+<script src="/admin/users.js" defer></script>
 </body>
 </html>
