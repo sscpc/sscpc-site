@@ -153,23 +153,148 @@ a.tbtn{text-decoration:none;display:inline-block}
 .sjump .chip.on{background:var(--accent)!important;color:#fff!important;box-shadow:0 4px 12px color-mix(in srgb,var(--accent) 40%,transparent)}
 .sx{scroll-margin-top:4.6rem}
 </style>
+<link rel="stylesheet" href="auth.css">
+<link rel="stylesheet" href="users.css">
 </head>
 <body>
 
-<div id="login">
-  <div class="glass">
+<div id="login" class="auth-checking">
+  <div class="glass auth-card" id="authCard">
     <img src="../images/crown-mark.png" alt="">
-    <h1 class="lt">Login</h1>
-    <p class="ls">Welcome back, please sign in to the SSCPC admin portal</p>
-    <form id="lf">
-      <div class="keyrow"><input class="in" id="key" type="password" placeholder="Admin key" autocomplete="current-password" required>
-      <button type="button" class="eye" id="eye" aria-label="Show or hide the key"><svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><path d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg></button></div>
-      <button class="btn lbtn">Login</button>
-    </form>
-    <p id="msg"></p>
+    <h1 class="lt" id="authTitle">Sign in</h1>
+    <p class="ls" id="authSub">Use your personal username and the shared passkey.</p>
+
+    <div class="auth-tabs" role="tablist" aria-label="Account access" data-active="signin">
+      <span class="auth-ink" aria-hidden="true"></span>
+      <button type="button" class="auth-tab" role="tab" id="tabSignin" aria-controls="panelSignin" aria-selected="true">Sign In</button>
+      <button type="button" class="auth-tab" role="tab" id="tabSignup" aria-controls="panelSignup" aria-selected="false" tabindex="-1">Sign Up</button>
+    </div>
+
+    <div class="auth-panels" id="authPanels">
+
+      <section class="auth-panel is-active" id="panelSignin" role="tabpanel" aria-labelledby="tabSignin">
+        <form id="signinForm" novalidate>
+          <fieldset class="auth-set">
+            <div class="af">
+              <label for="siUser">Personal username</label>
+              <input class="in" id="siUser" name="username" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="24" placeholder="e.g. nimal.perera">
+              <p class="af-msg" role="alert"></p>
+            </div>
+            <div class="af">
+              <label for="siPass">Shared passkey</label>
+              <div class="af-wrap"><input class="in" id="siPass" name="passkey" type="password" autocomplete="current-password" maxlength="128" placeholder="Enter the passkey" data-caps>
+              <button type="button" class="eye auth-eye" data-target="siPass" aria-pressed="false" aria-label="Show the passkey"><svg class='e-open' width='21' height='21' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg><svg class='e-shut' style='display:none' width='21' height='21' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M3 3l18 18'/><path d='M10.6 5.1A10.5 10.5 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.2 6.3C3.6 8.1 2 12 2 12s3.6 7 10 7a10 10 0 0 0 4.1-.9'/><path d='M9.9 9.9a3 3 0 0 0 4.2 4.2'/></svg></button></div>
+              <span class="af-caps" hidden>Caps Lock is on</span>
+              <p class="af-msg" role="alert"></p>
+            </div>
+            <div class="auth-row">
+              <label class="ck"><input type="checkbox" id="siRemember"><span class="ck-box"></span><span>Remember my username</span></label>
+            </div>
+            <button type="submit" class="btn lbtn"><span class="spin" aria-hidden="true"></span><span class="btn-txt">Sign In</span></button>
+          </fieldset>
+          <div class="auth-banner" role="status" aria-live="polite" hidden></div>
+        </form>
+        <p class="auth-switch">New to the portal? <button type="button" class="auth-link" data-go="signup">Create an account</button></p>
+      </section>
+
+      <section class="auth-panel" id="panelSignup" role="tabpanel" aria-labelledby="tabSignup" hidden>
+        <form id="signupForm" class="auth-panel is-active" novalidate>
+          <fieldset class="auth-set">
+            <div class="af">
+              <label for="suName">Full name</label>
+              <input class="in" id="suName" name="name" type="text" autocomplete="name" maxlength="60" placeholder="Your full name">
+              <p class="af-msg" role="alert"></p>
+            </div>
+            <div class="af">
+              <label for="suUser">Personal username</label>
+              <div class="af-wrap"><input class="in" id="suUser" name="new-username" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="24" placeholder="Choose a username"><span class="af-state" aria-hidden="true"><i class="i-spin"></i><i class="i-ok"></i><i class="i-err"></i></span></div>
+              <p class="af-msg" role="status" aria-live="polite"></p>
+            </div>
+            <div class="af">
+              <label for="suEmail">Email address</label>
+              <input class="in" id="suEmail" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="254" placeholder="you@example.com">
+              <p class="af-msg" role="alert"></p>
+            </div>
+            <div class="af">
+              <label for="suPass">Shared passkey</label>
+              <div class="af-wrap"><input class="in" id="suPass" name="shared-passkey" type="password" autocomplete="off" maxlength="128" placeholder="Enter the passkey" data-caps>
+              <button type="button" class="eye auth-eye" data-target="suPass" aria-pressed="false" aria-label="Show the passkey"><svg class='e-open' width='21' height='21' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg><svg class='e-shut' style='display:none' width='21' height='21' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M3 3l18 18'/><path d='M10.6 5.1A10.5 10.5 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.2 6.3C3.6 8.1 2 12 2 12s3.6 7 10 7a10 10 0 0 0 4.1-.9'/><path d='M9.9 9.9a3 3 0 0 0 4.2 4.2'/></svg></button></div>
+              <span class="af-caps" hidden>Caps Lock is on</span>
+              <p class="af-msg" role="alert"></p>
+            </div>
+            <div class="af">
+              <label for="suPass2">Confirm shared passkey</label>
+              <div class="af-wrap"><input class="in" id="suPass2" name="shared-passkey-confirm" type="password" autocomplete="off" maxlength="128" placeholder="Re-enter the passkey" data-caps>
+              <button type="button" class="eye auth-eye" data-target="suPass2" aria-pressed="false" aria-label="Show the passkey"><svg class='e-open' width='21' height='21' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg><svg class='e-shut' style='display:none' width='21' height='21' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M3 3l18 18'/><path d='M10.6 5.1A10.5 10.5 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.2 6.3C3.6 8.1 2 12 2 12s3.6 7 10 7a10 10 0 0 0 4.1-.9'/><path d='M9.9 9.9a3 3 0 0 0 4.2 4.2'/></svg></button></div>
+              <span class="af-caps" hidden>Caps Lock is on</span>
+              <p class="af-msg" role="status" aria-live="polite"></p>
+            </div>
+            <p class="auth-hint">Don't have the passkey? Ask a club administrator.</p>
+            <div class="af">
+              <label class="ck"><input type="checkbox" id="suTerms"><span class="ck-box"></span><span>I agree to the <button type="button" class="auth-link" id="openTerms">Terms and Conditions</button></span></label>
+              <p class="af-msg" role="alert"></p>
+            </div>
+            <button type="submit" class="btn lbtn"><span class="spin" aria-hidden="true"></span><span class="btn-txt">Create Account</span></button>
+          </fieldset>
+          <div class="auth-banner" role="status" aria-live="polite" hidden></div>
+          <p class="auth-switch">Already have an account? <button type="button" class="auth-link" data-go="signin">Sign in</button></p>
+        </form>
+
+        <div class="auth-done auth-panel" id="signupSent" hidden>
+          <svg class="mail" viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="14" width="48" height="36" rx="7"/><path d="M11 20l21 17 21-17"/></svg>
+          <p>We sent a verification link to <b id="sentTo"></b>. It expires in 15 minutes.</p>
+          <p class="auth-hint-sm">Open the link to activate your account, then come back and sign in. If you cannot see it, check your spam folder.</p>
+          <div class="auth-banner" id="sentBanner" role="status" aria-live="polite" hidden></div>
+          <div class="acct-actions">
+            <button type="button" class="btn lbtn" id="resendBtn" disabled><span class="spin" aria-hidden="true"></span><span class="btn-txt">Resend email</span></button>
+            <button type="button" class="btn lbtn ghost" id="sentBack"><span class="btn-txt">Back to Sign In</span></button>
+          </div>
+          <p class="auth-switch">Wrong address? <button type="button" class="auth-link" id="sentChange">Use a different email</button></p>
+        </div>
+      </section>
+
+    </div>
+
+    <small class="cr">SSCPC &middot; St. Sylvester's College Photography Club</small>
+  </div>
+
+  <div class="glass auth-card hide" id="acctCard">
+    <img src="../images/crown-mark.png" alt="">
+    <h1 class="lt">Signed in</h1>
+    <p class="ls" id="acctSub">Your account is active.</p>
+    <div class="auth-done">
+      <dl>
+        <div><dt>Name</dt><dd id="acctName"></dd></div>
+        <div><dt>Username</dt><dd id="acctUser"></dd></div>
+        <div><dt>Role</dt><dd id="acctRole"></dd></div>
+      </dl>
+      <p id="acctMsg" role="status"></p>
+      <div class="acct-actions">
+        <button type="button" class="btn lbtn hide" id="acctRetry"><span class="btn-txt">Try again</span></button>
+        <a class="btn lbtn ghost" href="../">Back to the website</a>
+        <button type="button" class="btn lbtn ghost" id="acctOut"><span class="btn-txt">Sign out</span></button>
+      </div>
+    </div>
     <small class="cr">SSCPC &middot; St. Sylvester's College Photography Club</small>
   </div>
 </div>
+
+<dialog id="termsDlg" class="auth-dlg" aria-labelledby="termsTitle">
+  <h2 id="termsTitle">Terms and Conditions</h2>
+  <div class="dlg-body">
+    <ol>
+      <li><strong>Authorised use.</strong> The SSCPC admin portal is for members and helpers authorised by the club to manage the club website and its records.</li>
+      <li><strong>Keep the shared passkey private.</strong> Share it only with people the club has approved. Never post it publicly or include it in screenshots.</li>
+      <li><strong>Your username is personal.</strong> One person, one account. Do not create accounts for other people or sign in as someone else.</li>
+      <li><strong>Responsibility.</strong> You are responsible for what is done with your account. Report anything suspicious to a club administrator straight away.</li>
+      <li><strong>Permissions.</strong> New accounts are General Users with limited access. Only administrators can grant more, and they may reduce or remove access at any time.</li>
+      <li><strong>Your information.</strong> We store your name and username to run the portal and manage access. The shared passkey is never stored in readable form. Your details are used only for club administration.</li>
+      <li><strong>Suspension.</strong> Misuse of the portal, its data or other members' information may lead to your account being suspended.</li>
+      <li><strong>Changes.</strong> The club may update these terms or change the shared passkey. You will then need to use the new passkey to sign in.</li>
+    </ol>
+  </div>
+  <div class="dlg-foot"><button type="button" class="dlg-ghost" id="termsClose">Close</button><button type="button" class="dlg-go" id="termsAgree">I Agree</button></div>
+</dialog>
 
 <div class="app hide" id="app">
   <nav class="side" id="side">
@@ -183,6 +308,7 @@ a.tbtn{text-decoration:none;display:inline-block}
 </div>
 
 <dialog id="dlg"></dialog>
+<dialog id="cdlg"></dialog>
 <script>
 const $=s=>document.querySelector(s),h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.innerHTML=x;return e};
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -192,7 +318,7 @@ const nice=k=>k.replace(/_/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').toLowerCase
 const NAMES=t=>[...t.matchAll(/^const (\w+) =/gm)].map(m=>m[1]);
 const parse=t=>new Function(t+';return {'+NAMES(t).join(',')+'}')();
 const ser=d=>'/* SSCPC site data. Written by the admin portal (admin/index.html). Notes: README.txt */\n\n'+Object.keys(d).map(k=>`const ${k} = ${JSON.stringify(d[k],null,2)};`).join('\n\n')+'\n';
-let D,B,KEYS,key='',X=null,sub='registrations',tab='home',flt='All',hist=[],hi=0,GH=JSON.parse(localStorage.gh||'{}');
+let D,B,KEYS,X=null,sub='registrations',tab='home',flt='All',hist=[],hi=0,GH=JSON.parse(localStorage.gh||'{}');
 const ST={},URLS={},SEC={MEMBERS:'members',SLIDES:'announcements',EVENTS:'events',LEARN:'learn',SELECTION_DONE:'spectrum',SPECTRUM_PHOTOS:'spectrum-photos'};
 /* blank item shapes for lists that can start empty (used by the + Add button) */
 const PHL={photo:'Photo',title:'Photo name',photographer:'Photographer name',school:'School'};
@@ -279,9 +405,8 @@ async function pub(){
   catch(e){if(t>=2||!/oid|head|expected/i.test(e.message))throw e}}
 /* ---------- inbox ---------- */
 const isH=r=>/^handled$/i.test(r.Status||''),sup=()=>X&&X.v>=2,SHEET={registrations:'Registrations',joins:'Join requests',messages:'Messages'};
-async function load(){const r=await fetch(D0.FORMS_ENDPOINT+'?key='+encodeURIComponent(key));const j=await r.json();if(!j.ok)throw 0;X=j}
-async function setRow(r,st,note){const q=new URLSearchParams({key,action:'set',sheet:sub,row:r._row,ts:r.Timestamp||'',status:st,note});
-  const j=await(await fetch(D0.FORMS_ENDPOINT+'?'+q)).json();if(!j.ok)throw Error(j.error||'Could not save');r.Status=st;r.Note=note}
+async function load(){X=SSCPC_AUTH.can('inbox:read')?await SSCPC_AUTH.admin('inbox'):{ok:true,v:1,registrations:[],joins:[],messages:[]}}
+async function setRow(r,st,note){await SSCPC_AUTH.admin('set',{sheet:sub,row:r._row,ts:r.Timestamp||'',status:st,note});r.Status=st;r.Note=note}
 const csv=(rows,cols)=>'\ufeff'+[cols,...rows.map(r=>cols.map(c=>r[c]??''))].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
 function openRow(r,after){const d=$('#dlg');d.innerHTML='';d.append(h('div','ttl',esc(r.school||r.name||r.contact_name||'Details')));
   Object.keys(r).filter(k=>r[k]&&!/^(_row|Status|Note)$/.test(k)).forEach(k=>{const e=h('div','kv');e.innerHTML='<small>'+esc(nice(k))+'</small><div>'+esc(r[k]).replace(/\n/g,'<br>')+'</div>';d.append(e)});
@@ -310,8 +435,8 @@ function home(){
   const w=h('div'),R=X.registrations,J=X.joins,M=X.messages,nw=a=>sup()?a.filter(r=>!isH(r)).length:a.length;
   const days=Math.ceil((new Date(D.EVENT_DATE)-Date.now())/864e5),ph=D.ALBUMS.reduce((n,a)=>n+a.photos.length,0),mem=D.MEMBERS.reduce((n,g)=>n+g.members.length,0);
   const C=[['Days to Spectrum',days>0?days:'Done'],[sup()?'New registrations':'Registrations',nw(R)],['Students attending',R.reduce((n,r)=>n+(+r.students||0),0)],[sup()?'New join requests':'Join requests',nw(J)],[sup()?'New messages':'Messages',nw(M)],['Albums',D.ALBUMS.length],['Photos',ph],['Members',mem]];
-  w.append(h('div','stats',C.map(([a,b])=>`<div class="card"><small>${a}</small><strong>${b}</strong></div>`).join('')));
-  const bar=h('div','bar');bar.append(btn('Open inbox',()=>show('inbox')),Object.assign(h('a','btn ghost sm','Album Builder'),{href:'../tools/album-builder.html'}),btn('Review and publish',()=>show('publish'),'ghost'),Object.assign(h('a','btn ghost sm','View site'),{href:'../index.html'}));w.append(bar);
+  w.append(h('div','stats',(SSCPC_AUTH.can('inbox:read')?C:[C[0],C[5],C[6],C[7]]).map(([a,b])=>`<div class="card"><small>${a}</small><strong>${b}</strong></div>`).join('')));
+  const bar=h('div','bar');if(SSCPC_AUTH.can('inbox:read'))bar.append(btn('Open inbox',()=>show('inbox')));bar.append(Object.assign(h('a','btn ghost sm','Album Builder'),{href:'../tools/album-builder.html'}),btn('Review and publish',()=>show('publish'),'ghost'),Object.assign(h('a','btn ghost sm','View site'),{href:'../index.html'}));w.append(bar);
   const ch=changed();w.append(h('p','note',ch.length||Object.keys(ST).length?'You have unpublished changes in: '+ch.map(nice).join(', ')+'.':'Everything here is published.'));
   w.append(h('h3',0,'Latest registrations'));const t=h('div','tbl');t.innerHTML='<table>'+[...R].reverse().slice(0,6).map(r=>`<tr><td>${esc(r.school||r.contact_name||'')}</td><td>${esc(r.students||'')} students</td><td>${esc(r.Timestamp||'')}</td></tr>`).join('')+'</table>';w.append(t);return w}
 function albums(){
@@ -339,7 +464,7 @@ function votesPanel(){
   const bar=h('div','bar'),rf=btn('Refresh',()=>go(),'ghost'),ex=btn('Export CSV',()=>save('spectrum-votes.csv',csv(rows.map((r,i)=>({Rank:i+1,'Photo name':r.title,Photographer:r.photographer,School:r.school,Votes:r.votes})),['Rank','Photo name','Photographer','School','Votes']),'text/csv'));
   bar.append(rf,ex);bd.insertBefore(bar,msg);
   async function go(){msg.textContent='Loading votes…';tb.innerHTML='';
-    try{const j=await(await fetch(D0.FORMS_ENDPOINT+'?action=photo-votes&key='+encodeURIComponent(key),{redirect:'follow'})).json();
+    try{const j=await SSCPC_AUTH.admin('votes');
       if(!j||!j.ok)throw 0;const by={};j.photos.forEach(v=>by[v.photo]=v);
       rows=D.SPECTRUM_PHOTOS.map(p=>({photo:p.photo,title:p.title,photographer:p.photographer,school:p.school||'',votes:(by[p.photo]||{}).votes||0,last:(by[p.photo]||{}).last||''})).sort((a,b)=>b.votes-a.votes||a.title.localeCompare(b.title));
       const tot=rows.reduce((n,r)=>n+r.votes,0),mx=Math.max(1,...rows.map(r=>r.votes));sp.textContent='Votes · '+tot+' in total';
@@ -348,7 +473,7 @@ function votesPanel(){
       rows.forEach((r,i)=>{const tr=h('tr'),k=r.photo.lastIndexOf('/'),th='../'+r.photo.slice(0,k+1)+'thumbs/'+r.photo.slice(k+1);
         tr.innerHTML='<td>'+(i+1)+'</td><td><img src="'+esc(th)+'" alt="" onerror="this.style.visibility=\'hidden\'" style="width:2.2rem;height:2.8rem;object-fit:cover;display:block"></td><td>'+esc(r.title)+'</td><td>'+esc(r.photographer)+'</td><td>'+esc(r.school)+'</td><td><b>'+r.votes+'</b></td><td style="min-width:7rem"><div style="height:.5rem;background:var(--accent);opacity:.8;width:'+Math.max(r.votes?3:0,Math.round(r.votes/mx*100))+'%"></div></td>';t.append(tr)});
       tb.className='tbl';tb.append(t)}
-    catch(e){sp.textContent='Votes';msg.innerHTML='<b>Could not read the votes.</b> Paste the latest <code>tools/google-sheet-script.gs</code> into your Google Apps Script, deploy a new version (Deploy > Manage deployments > pencil > New version), then press Refresh.'}}
+    catch(e){sp.textContent='Votes';msg.innerHTML='<b>Could not read the votes.</b> Check that the Apps Script is deployed with the PROXY_SECRET property and that APPS_SCRIPT_URL and APPS_SCRIPT_SECRET are set in Vercel, then press Refresh.'}}
   go();return box}
 function photos(){
   const w=h('div'),n=()=>D.SPECTRUM_PHOTOS.filter(p=>!String(p.school||'').trim()).length,m=h('p','note');
@@ -477,25 +602,31 @@ function publish(){
     st.textContent='Publishing…';pb.disabled=true;try{await pub();show('publish');$('#main').append(h('p','note','Published. The live site updates in about a minute.'))}catch(e){st.textContent=e.message;pb.disabled=false}});
   bar.append(pb);w.append(bar,st,g,h('p','note','The token is kept in this browser only (shared with the Album Builder). Use a device you trust, and sign out of shared computers.'));return w}
 /* ---------- shell ---------- */
-const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['selection','Selection',selDone],['photos','Votes',photos],['site','Site',site],['publish','Publish',publish]];
-const IC={home:'⌂',inbox:'✉',events:'◷',albums:'▣',members:'☺',slides:'❏',learn:'✎',selection:'✓',photos:'★',site:'⚙',publish:'⇪'};
-TABS.forEach(([k,t])=>{if(k==='events')return;const b=h('button','tab','<i class="ic">'+(IC[k]||'•')+'</i>'+t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))});
-function show(n){tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
+const TABS=[['home','Home',home],['inbox','Inbox',inbox],['events','Events',()=>ed(D,'EVENTS','')],['albums','Albums',albums],['members','Members',()=>ed(D,'MEMBERS','')],['slides','Slides',()=>ed(D,'SLIDES','')],['learn','Learn',learn],['selection','Selection',selDone],['photos','Votes',photos],['users','Users',()=>SSCPC_USERS.users()],['passkey','Passkey',()=>SSCPC_USERS.passkey()],['site','Site',site],['publish','Publish',publish]];
+const IC={home:'⌂',inbox:'✉',events:'◷',albums:'▣',members:'☺',slides:'❏',learn:'✎',selection:'✓',photos:'★',users:'☻',passkey:'⚿',site:'⚙',publish:'⇪'};
+/* Which permission each section needs. The server enforces its own checks on every request; this only decides what is shown. */
+const NEED={home:'portal:access',inbox:'inbox:read',events:'content:edit',albums:'content:edit',members:'content:edit',slides:'content:edit',learn:'content:edit',selection:'photos:manage',photos:'votes:read',users:'users:view',passkey:'passkey:manage',site:'settings:manage',publish:'content:publish'};
+const allowed=k=>!NEED[k]||SSCPC_AUTH.can(NEED[k]);
+function buildSidebar(){document.querySelectorAll('#side .tab[data-t]').forEach(b=>b.remove());TABS.forEach(([k,t])=>{if(k==='events'||!allowed(k))return;const b=h('button','tab','<i class="ic">'+(IC[k]||'•')+'</i>'+t);b.dataset.t=k;b.onclick=()=>show(k);$('#side').insertBefore(b,$('.sp'))})}
+function show(n){if(!allowed(n))n='home';tab=n;document.querySelectorAll('.tab[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===n));
   const m=$('#main'),t=TABS.find(x=>x[0]===n);m.innerHTML='';const tb=h('header','topbar');tb.innerHTML='<span class="tt">'+esc(t[1])+'</span><span class="td">'+esc(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Colombo',weekday:'long',day:'numeric',month:'long'}).format(new Date()))+'</span><span class="sp2"></span>';
-  const tp=h('button','tbtn','Publish');tp.type='button';tp.onclick=()=>show('publish');const ab=h('a','tbtn ghostw','Album Builder');ab.href='../tools/album-builder.html';tb.append(ab,tp,h('span','who','Admin'),h('span','av','A'));m.append(tb,t[2]());scrollTo(0,0)}
-let D0;async function enter(k){key=k;$('#msg').textContent='Checking…';
-  try{const r=await fetch('../js/data.js',{cache:'no-store'});let txt=await r.text();D0=parse(txt);await load();
-    if(GH.token&&GH.repo)try{txt=(await head()).text}catch(e){}
-    D=parse(txt);const hadSite=!!D.SITE;D.SITE=fillD(SITE_DEF,D.SITE);D.PDF_CONFIG=D.PDF_CONFIG||{};KEYS=Object.keys(D);B=snapK();if(!hadSite)B.SITE='null';hist=[JSON.stringify(D)];hi=0;ub();
-    sessionStorage.k=k;$('#login').classList.add('hide');$('#app').classList.remove('hide');show(tab)}
-  catch(e){sessionStorage.removeItem('k');$('#msg').textContent='Could not sign in. Check the key, and that the updated Apps Script is deployed.'}}
-$('#eye').onclick=()=>{const k=$('#key');k.type=k.type==='password'?'text':'password'};
-$('#lf').onsubmit=e=>{e.preventDefault();enter($('#key').value)};
-$('#so').onclick=()=>{sessionStorage.removeItem('k');location.reload()};
+  const tp=h('button','tbtn','Publish');tp.type='button';tp.onclick=()=>show('publish');const ab=h('a','tbtn ghostw','Album Builder');ab.href='../tools/album-builder.html';tb.append(...(allowed('publish')?[ab,tp]:[]),h('span','who',esc((SSCPC_AUTH.user||{}).fullName||'Account')),h('span','av',esc(((SSCPC_AUTH.user||{}).fullName||'A').trim().charAt(0).toUpperCase())));m.append(tb,t[2]());scrollTo(0,0)}
+let D0;
+/* Called by auth.js once the server has confirmed a session whose role allows the portal. */
+window.enterPortal=async function(){
+  const who=(SSCPC_AUTH.user||{}).username;
+  if(D&&window._portalUser===who){buildSidebar();$('#app').classList.remove('hide');show(tab);return}   /* signed back in after a timeout: keep unsaved edits */
+  if(D){location.reload();return}                                               /* a different person: start clean */
+  const r=await fetch('../js/data.js',{cache:'no-store'});let txt=await r.text();D0=parse(txt);await load();
+  if(GH.token&&GH.repo)try{txt=(await head()).text}catch(e){}
+  D=parse(txt);const hadSite=!!D.SITE;D.SITE=fillD(SITE_DEF,D.SITE);D.PDF_CONFIG=D.PDF_CONFIG||{};KEYS=Object.keys(D);B=snapK();if(!hadSite)B.SITE='null';hist=[JSON.stringify(D)];hi=0;ub();
+  window._portalUser=who;buildSidebar();$('#login').classList.add('hide');$('#app').classList.remove('hide');show(allowed(tab)?tab:'home')};
+$('#so').onclick=()=>SSCPC_AUTH.logout();
 $('#undo').onclick=()=>jump(-1);$('#redo').onclick=()=>jump(1);
 if(localStorage.at)document.documentElement.dataset.theme=localStorage.at;
 addEventListener('beforeunload',e=>{if(D&&(changed().length||Object.keys(ST).length)){e.preventDefault();e.returnValue=''}});
-if(sessionStorage.k)enter(sessionStorage.k);
 </script>
+<script src="auth.js" defer></script>
+<script src="users.js" defer></script>
 </body>
 </html>

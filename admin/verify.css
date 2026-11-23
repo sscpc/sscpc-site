@@ -1,0 +1,30 @@
+/* Email verification page. Same glass-card look as the admin sign-in (auth.css supplies the fonts, fields and notices). */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'SSCPC Poppins','Poppins',system-ui,sans-serif;font-weight:500;color:#fff;background:#0a0d26}
+.hide,[hidden]{display:none!important}
+#login{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:1.5rem;color:#fff;
+  background:linear-gradient(rgba(8,16,56,.18),rgba(8,16,56,.32)),url(../images/admin-login-bg.jpg) center/cover no-repeat #1b2a55}
+.glass{width:min(26rem,100%);padding:2.2rem 1.8rem 1.5rem;border-radius:28px;border:2px solid rgba(255,255,255,.55);
+  background:linear-gradient(160deg,rgba(255,255,255,.26),rgba(12,22,70,.46));-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);
+  box-shadow:0 24px 70px rgba(0,0,0,.35);text-align:left}
+.glass img{width:46px;display:block;margin-bottom:1rem}
+.lt{font-size:2rem;font-weight:600;line-height:1.15;margin:0 0 .4rem}
+.ls{font-size:.85rem;opacity:.92;margin:0;line-height:1.55}
+.cr{display:block;margin-top:1.3rem;text-align:center;font-size:.7rem;opacity:.8}
+.in{width:100%;background:rgba(8,11,34,.5);color:#f4f1e4;border:1px solid rgba(255,255,255,.55);border-radius:16px;font:inherit;font-size:1rem;font-weight:500}
+.lbtn{width:100%;border:0;border-radius:16px;padding:.95rem;font:600 1rem 'SSCPC Poppins',sans-serif;color:#fff;cursor:pointer;text-decoration:none;text-align:center;
+  background:linear-gradient(90deg,#2d5bff,#3fb8ff);box-shadow:0 8px 22px rgba(45,91,255,.45);display:flex;align-items:center;justify-content:center}
+.lbtn:hover{filter:brightness(1.07)}
+.lbtn:disabled{opacity:.7;cursor:not-allowed;filter:none}
+.lbtn.ghost{background:transparent;border:1.5px solid rgba(255,255,255,.6);box-shadow:none}
+.vspin{width:42px;height:42px;margin:1.6rem auto .4rem;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:aspin .8s linear infinite}
+.v-icon{width:64px;height:64px;display:block;margin:0 auto .7rem}
+.v-icon *{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.v-ok *{stroke:#7fe3ab}.v-warn *{stroke:#ffd98a}.v-bad *{stroke:#ff9f9f}
+#stOk,#stProblem{text-align:center}
+#stOk .lt,#stProblem .lt,#stProcessing .lt{text-align:center}
+#stProcessing .ls,#stOk .ls,#stProblem .ls{text-align:center}
+.v-form{margin-top:1.2rem;text-align:left}
+.v-actions{display:grid;gap:.7rem;margin-top:1rem}
+.v-note{margin:1rem 0 0;font-size:.75rem;opacity:.85;text-align:center}

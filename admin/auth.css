@@ -1,0 +1,143 @@
+/* SSCPC admin sign-in / sign-up. Builds on the glass login card in index.html. */
+@font-face{font-family:'SSCPC Poppins';font-weight:400;font-display:swap;src:url(../fonts/poppins-regular.ttf) format('truetype')}
+@font-face{font-family:'SSCPC Poppins';font-weight:500;font-display:swap;src:url(../fonts/poppins-medium.ttf) format('truetype')}
+@font-face{font-family:'SSCPC Poppins';font-weight:600;font-display:swap;src:url(../fonts/poppins-semibold.ttf) format('truetype')}
+@font-face{font-family:'SSCPC Poppins';font-weight:700;font-display:swap;src:url(../fonts/poppins-bold.ttf) format('truetype')}
+
+#login{min-height:100vh;min-height:100dvh}
+.auth-card{--a-ok:#8df0b8;--a-err:#ffb9b9;--a-info:#c4e6ff;--a-dim:rgba(255,255,255,.78);
+  width:min(26rem,100%);padding:2.2rem 1.8rem 1.5rem;
+  font-family:'SSCPC Poppins','Poppins',system-ui,sans-serif}
+.auth-card *,.auth-dlg *{font-family:'SSCPC Poppins','Poppins',system-ui,sans-serif}
+.auth-card .lt{font-weight:600;font-size:2rem}
+.auth-card .ls{font-weight:400;line-height:1.5}
+.auth-card .lt,.auth-card .ls{transition:opacity .25s ease}
+.auth-card .is-swapping{opacity:0}
+
+/* Tabs */
+.auth-tabs{position:relative;display:grid;grid-template-columns:1fr 1fr;margin:1.4rem 0 1.5rem;padding:4px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35)}
+.auth-ink{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:linear-gradient(90deg,#2d5bff,#3fb8ff);box-shadow:0 6px 16px rgba(45,91,255,.45);transition:transform .38s cubic-bezier(.4,.1,.2,1)}
+.auth-tabs[data-active=signup] .auth-ink{transform:translateX(100%)}
+.auth-tab{position:relative;z-index:1;background:none;border:0;border-radius:999px;padding:.7rem .5rem;color:rgba(255,255,255,.82);font:600 .85rem/1 'SSCPC Poppins',sans-serif;letter-spacing:.02em;cursor:pointer;transition:color .25s ease}
+.auth-tab[aria-selected=true]{color:#fff}
+.auth-tab:hover{color:#fff}
+.auth-tab:focus-visible,.auth-link:focus-visible,.eye:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:8px}
+
+/* Panels */
+.auth-panels{position:relative;transition:height .38s cubic-bezier(.4,.1,.2,1);--dx:16px}
+.auth-panel{opacity:0;transform:translateX(var(--dx));transition:opacity .3s ease,transform .38s cubic-bezier(.4,.1,.2,1)}
+.auth-panel.is-active{opacity:1;transform:none}
+.auth-panel.is-leaving{position:absolute;top:0;left:0;right:0;opacity:0;transform:translateX(calc(var(--dx) * -1));pointer-events:none}
+.auth-panel[hidden]{display:none}
+.auth-set{display:block;gap:0;border:0;border-radius:0;background:none;margin:0;padding:0;min-width:0}
+.auth-set:disabled{opacity:.72}
+
+/* Fields */
+.af{margin:0 0 1rem}
+.af>label:not(.ck){display:block;margin:0 0 .4rem;font-size:.76rem;font-weight:500;letter-spacing:.02em;color:rgba(255,255,255,.95)}
+.af-wrap{position:relative}
+#login .af .in{width:100%;min-height:3rem;font-size:1rem;font-weight:500;padding:.8rem 1.1rem;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}
+#login .af .af-wrap .in{padding-right:3rem}
+#login .af .in::placeholder{font-weight:400;color:rgba(255,255,255,.6)}
+#login .af.is-err .in{border-color:#ff9f9f;box-shadow:0 0 0 3px rgba(255,120,120,.18)}
+#login .af.is-ok .in{border-color:#7fe3ab}
+.af-msg{margin:.35rem 0 0;font-size:.72rem;line-height:1.4;color:var(--a-dim);min-height:0}
+.af-msg:empty{display:none}
+.af.is-err .af-msg{color:var(--a-err)}
+.af.is-ok .af-msg{color:var(--a-ok)}
+.af-caps{display:block;margin:.35rem 0 0;font-size:.7rem;color:#ffe08a}
+.af-caps[hidden]{display:none}
+.af-wrap .eye{right:.8rem;padding:.35rem}
+.af-state{position:absolute;right:.95rem;top:50%;width:20px;height:20px;transform:translateY(-50%);pointer-events:none}
+.af-state i{display:none;position:absolute;inset:0}
+.af.is-busy .af-state .i-spin{display:block;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:aspin .7s linear infinite}
+.af.is-ok .af-state .i-ok,.af.is-err .af-state .i-err{display:block}
+.af-state .i-ok{background:#7fe3ab;border-radius:50%;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M5 10.5l3.2 3.2L15 6.8'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M5 10.5l3.2 3.2L15 6.8'/%3E%3C/svg%3E") center/contain no-repeat;background:#7fe3ab}
+.af-state .i-err{background:#ff9f9f;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' d='M6 6l8 8M14 6l-8 8'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' d='M6 6l8 8M14 6l-8 8'/%3E%3C/svg%3E") center/contain no-repeat}
+
+/* Checkboxes */
+.ck{display:flex;align-items:flex-start;gap:.65rem;cursor:pointer;font-size:.78rem;line-height:1.45;color:rgba(255,255,255,.95)}
+.ck input{position:absolute;opacity:0;width:1px;height:1px}
+.ck-box{flex:none;width:20px;height:20px;margin-top:1px;border-radius:6px;border:1.5px solid rgba(255,255,255,.75);background:rgba(255,255,255,.08);display:grid;place-items:center;transition:background .2s ease,border-color .2s ease}
+.ck-box::after{content:"";width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) scale(0);margin-top:-2px;transition:transform .18s ease}
+.ck input:checked+.ck-box{background:linear-gradient(90deg,#2d5bff,#3fb8ff);border-color:transparent}
+.ck input:checked+.ck-box::after{transform:rotate(45deg) scale(1)}
+.ck input:focus-visible+.ck-box{outline:2px solid #fff;outline-offset:2px}
+.af.is-err .ck-box{border-color:#ff9f9f}
+.auth-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin:.2rem 0 1.2rem}
+
+/* Buttons, links, banners */
+.auth-card .lbtn{font-family:'SSCPC Poppins',sans-serif;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:filter .2s ease,opacity .2s ease,transform .2s ease}
+.auth-card .lbtn:disabled{opacity:.75;cursor:progress;filter:none}
+.auth-card .lbtn .spin{display:none;width:1rem;height:1rem;margin-right:.6rem;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:aspin .7s linear infinite}
+.auth-card .lbtn.is-busy .spin{display:inline-block}
+.auth-link{background:none;border:0;padding:0;color:#fff;font:inherit;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.auth-link:hover{color:var(--a-info)}
+.auth-switch{margin:1.15rem 0 0;text-align:center;font-size:.78rem;color:var(--a-dim)}
+.auth-hint{margin:-.2rem 0 1rem;font-size:.72rem;color:var(--a-dim)}
+.auth-banner{margin:1rem 0 0;padding:.7rem .9rem;border-radius:14px;border:1px solid;border-left-width:3px;font-size:.78rem;line-height:1.5}
+.auth-banner[hidden]{display:none}
+.auth-banner.err{color:#ffe3e3;background:rgba(255,90,90,.14);border-color:rgba(255,150,150,.55)}
+.auth-banner.ok{color:#dcffec;background:rgba(80,220,140,.14);border-color:rgba(130,230,175,.55)}
+.auth-banner.info{color:#e4f3ff;background:rgba(80,160,255,.16);border-color:rgba(150,205,255,.55)}
+.auth-banner.shake{animation:ashake .4s ease}
+
+/* Account created */
+.auth-done{text-align:center;padding:.2rem 0 0}
+.auth-done[hidden]{display:none}
+.auth-done svg{width:64px;height:64px;margin:0 auto .6rem;display:block}
+.auth-done circle{fill:none;stroke:#7fe3ab;stroke-width:3;stroke-dasharray:176;stroke-dashoffset:176;animation:adraw .6s .1s ease forwards}
+.auth-done path{fill:none;stroke:#7fe3ab;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:adraw .4s .6s ease forwards}
+.auth-done h2::after,.auth-dlg h2::after{content:none!important;display:none!important}
+.auth-done h2{margin:0 0 .3rem;font-size:1.3rem;font-weight:600}
+.auth-done p{margin:0 0 1rem;font-size:.82rem;line-height:1.55;color:var(--a-dim)}
+.auth-done dl{margin:0 0 1rem;padding:.8rem 1rem;border-radius:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3);text-align:left;font-size:.82rem}
+.auth-done dl div{display:flex;justify-content:space-between;gap:1rem;padding:.25rem 0}
+.auth-done dt{color:var(--a-dim)}
+.auth-done dd{margin:0;font-weight:600;text-align:right;word-break:break-word}
+
+/* Session check on page load: the card stays hidden for a moment so a signed-in person never sees a login flash.
+   The animation reveals it after 3s regardless, so a slow or failed check can never leave a blank page. */
+#login.auth-checking .auth-card{opacity:0;animation:areveal .01s 3s forwards}
+.auth-card{transition:opacity .25s ease}
+
+/* Signed-in card */
+.acct-actions{display:grid;gap:.7rem;margin-top:1.1rem}
+.acct-actions .lbtn{text-decoration:none;text-align:center}
+.auth-card .lbtn.ghost{background:transparent;border:1.5px solid rgba(255,255,255,.6);box-shadow:none;color:#fff}
+.auth-card .lbtn.ghost::before,.auth-card .lbtn.ghost::after{display:none}
+#acctCard .auth-done{margin-top:1.2rem}
+.auth-card .lbtn.ghost:hover{background:rgba(255,255,255,.12)}
+#acctMsg{margin:0 0 .2rem}
+
+/* Terms dialog */
+.auth-dlg{position:fixed;inset:0;margin:auto;width:min(34rem,92vw);height:fit-content;max-height:86vh;padding:0;border:1px solid rgba(255,255,255,.4);border-radius:24px;color:#fff;background:linear-gradient(160deg,#1d2f73,#0b1243);box-shadow:0 30px 80px rgba(0,0,0,.55);overflow:hidden}
+.auth-dlg[open]{display:flex;flex-direction:column;animation:apop .25s ease}
+.auth-dlg::backdrop{background:rgba(4,8,30,.68);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.auth-dlg h2{margin:0;padding:1.4rem 1.5rem .6rem;font-size:1.2rem;font-weight:600}
+.auth-dlg .dlg-body{padding:0 1.5rem;overflow:auto;font-size:.82rem;line-height:1.65;color:rgba(255,255,255,.9)}
+.auth-dlg ol{margin:.2rem 0 1rem;padding-left:1.2rem}
+.auth-dlg li{margin:0 0 .55rem}
+.auth-dlg .dlg-foot{display:flex;gap:.7rem;justify-content:flex-end;padding:1rem 1.5rem 1.3rem}
+.auth-dlg .dlg-foot button{border-radius:14px;padding:.7rem 1.2rem;font:600 .85rem 'SSCPC Poppins',sans-serif;cursor:pointer;color:#fff}
+.auth-dlg .dlg-ghost{background:transparent;border:1px solid rgba(255,255,255,.6)}
+.auth-dlg .dlg-go{border:0;background:linear-gradient(90deg,#2d5bff,#3fb8ff)}
+
+@keyframes aspin{to{transform:rotate(360deg)}}
+@keyframes ashake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+@keyframes adraw{to{stroke-dashoffset:0}}
+@keyframes areveal{to{opacity:1}}
+@keyframes apop{from{opacity:0;transform:translateY(8px) scale(.98)}}
+
+@media(max-width:480px){.auth-card{padding:1.8rem 1.15rem 1.2rem}.auth-card .lt{font-size:1.75rem}.auth-row{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.auth-card *,.auth-dlg,.auth-dlg *{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
+
+/* The site stylesheet chamfers some elements with clip-path; keep the auth boxes' rounded corners intact. */
+.auth-banner,.auth-done dl,.auth-tabs,.auth-ink,.auth-tab,.auth-card .in,.ck-box,.auth-dlg{clip-path:none}
+
+/* Check-your-email panel */
+.auth-done svg.mail{width:64px;height:64px}
+.auth-done svg.mail *{fill:none;stroke:#8fd0ff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;animation:none}
+.auth-done .auth-hint-sm{font-size:.75rem}
+#signupSent .acct-actions{margin-top:1rem}
+#signupSent b{word-break:break-all}
