@@ -2159,7 +2159,7 @@ const MEMBERS = [
   }
 ];
 
-const PRESIDENT_WHATSAPP = "";
+const PRESIDENT_WHATSAPP = "077 531 2890";
 
 const PRESIDENT_WHATSAPP_LINK = "https://wa.me/qr/N6BZAZJNBVUHC1";
 
