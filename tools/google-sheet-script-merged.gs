@@ -116,24 +116,24 @@ function nextMembershipNumber(sh, header) {
   return MEMBERSHIP_PREFIX + digits;
 }
 
-/* ADMIN PORTAL (admin/index.html): lets the portal read the sheets.
-   Put a long passphrase between the quotes. Leave it empty to switch this off.
-   After changing the script: Deploy > Manage deployments > pencil > New version > Deploy. */
-const ADMIN_KEY = '102030';
+/* ADMIN PORTAL BACKEND ACCESS.
+   The portal no longer calls this script from the browser. The SSCPC website server (api/admin.js) calls it after
+   checking the person's login and permissions, and proves itself with a long random secret.
+   Set that secret here (never in this file):
+     Apps Script > Project Settings (gear icon) > Script properties > Add script property
+       name:  PROXY_SECRET        value: a random string of 40+ characters (the same value as APPS_SCRIPT_SECRET in Vercel)
+   Then: Deploy > Manage deployments > pencil > New version > Deploy.
+   With no PROXY_SECRET (or one shorter than 32 characters) the admin actions below are switched off. */
+function adminSecret_() {
+  return String(PropertiesService.getScriptProperties().getProperty('PROXY_SECRET') || '').trim();
+}
 
 function doGet(e) {
   const k = ((e && e.parameter && e.parameter.key) || '').trim();
+  const secret = adminSecret_();
+  if (secret.length < 32 || k !== secret) return out({ ok: false, error: 'Unauthorized' });
 
-  // Brute-force protection: after 8 wrong passkeys, lock the portal for 15 minutes.
-  const cache = CacheService.getScriptCache();
-  if (Number(cache.get('fails') || 0) >= 8) return out({ ok: false, error: 'Too many attempts. Try again in 15 minutes.' });
-  if (!ADMIN_KEY || ADMIN_KEY === 'KEEP-YOUR-OWN-PASSKEY' || k !== ADMIN_KEY.trim()) {
-    cache.put('fails', String(Number(cache.get('fails') || 0) + 1), 900);
-    return out({ ok: false, error: 'Invalid passkey' });
-  }
-  cache.remove('fails');
-
-  // Admin portal > Votes tab (placed AFTER the passkey check on purpose, so it is protected by the same lockout)
+  // Admin portal > Votes tab (placed AFTER the secret check on purpose)
   if (e.parameter.action === 'photo-votes') { return photoVotesReport_(e.parameter); }
 
   const ss = SpreadsheetApp.getActiveSpreadsheet();
