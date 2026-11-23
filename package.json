@@ -1,0 +1,14 @@
+{
+  "name": "sscpc-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SSCPC website and admin portal. Static site plus Vercel serverless functions in /api.",
+  "scripts": {
+    "test": "node --test auth-setup/tests/registration.test.js auth-setup/tests/session.test.js auth-setup/tests/users.test.js auth-setup/tests/appsscript.test.js",
+    "hash-passkey": "node auth-setup/hash-passkey.js",
+    "setup-db": "node auth-setup/setup-db.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.0"
+  }
+}
