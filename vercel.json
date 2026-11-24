@@ -75,5 +75,10 @@
       "permanent": false
     }
   ],
-  "ignoreCommand": "git log -1 --pretty=%B | grep -q 'photos batch' && exit 0 || exit 1"
+  "ignoreCommand": "git log -1 --pretty=%B | grep -q 'photos batch' && exit 0 || exit 1",
+  "functions": {
+    "api/album.js": {
+      "maxDuration": 30
+    }
+  }
 }

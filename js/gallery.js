@@ -157,6 +157,8 @@
     [idx+1,idx-1].forEach(k=>{new Image().src=a.photos[(k+a.photos.length)%a.photos.length]});
     $('lb-t').textContent=a.name;lang($('lb-t'),a.name);
     $('lb-c').textContent='IMG '+pad(idx+1)+' / '+pad(a.photos.length);
+    let cp=$('lb-cap');if(!cp){cp=document.createElement('div');cp.id='lb-cap';cp.className='pv-cap';$('lb-c').parentNode.prepend(cp)}
+    cp.textContent=(a.captions&&a.captions[a.photos[idx].split('/').pop()])||'';   /* optional caption written in the Album Builder */
     tk.style.display=a.photos.length>60?'none':'';
     if(tk.dataset.a!==String(cur)){
       tk.textContent='';

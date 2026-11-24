@@ -1,0 +1,18 @@
+ALBUM BUILDER: PUBLISH WITHOUT A ZIP (one-time setup)
+
+The Album Builder now publishes through your admin sign-in. The GitHub token is kept in Vercel, never in the browser.
+
+1. GitHub: Settings > Developer settings > Personal access tokens > Fine-grained tokens > Generate new token
+   - Repository access: Only select repositories > your website repo
+   - Permissions > Repository permissions > Contents: Read and write
+   - Copy the token (starts with github_pat_).
+
+2. Vercel: your project > Settings > Environment Variables. Add for Production:
+   GITHUB_TOKEN   = the token from step 1
+   GITHUB_REPO    = owner/name        (for example myname/sscpc-site)
+   GITHUB_BRANCH  = main              (optional; main is the default)
+
+3. Redeploy. Then open /tools/album-builder.html while signed in to the admin portal.
+   The top badge should say "publishing ready". Editors, Admins and Super Admins can publish.
+
+If the badge says "not set up on the server yet", one of the three settings above is missing or wrong, or you have not redeployed.

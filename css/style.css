@@ -345,6 +345,9 @@ button.btn.ghost{border-color:currentColor}
 .lb-btn{width:44px;height:44px;background:rgba(244,241,228,.1);color:#f4f1e4;border:1px solid rgba(244,241,228,.4);font:700 1.4rem var(--body);cursor:pointer;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
 .lb-btn:hover{background:#0a1a30}
 .pv-bottom{justify-content:space-between}
+.pv-bottom{flex-wrap:wrap}
+.pv-cap{order:-1;flex:0 0 100%;text-align:center;text-transform:none;letter-spacing:.02em;font-size:.92rem;line-height:1.45;font-weight:500;padding:0 .5rem .3rem}
+.pv-cap:empty{display:none}
 .pv-ticks{flex:1;max-width:28rem;display:flex;gap:3px;align-items:flex-end;height:14px}
 .pv-ticks span{flex:1;max-width:22px;height:8px;background:rgba(244,241,228,.25);cursor:pointer}
 .pv-ticks span.on{height:14px;background:#f4f1e4;box-shadow:0 0 8px #6cc8ff}
