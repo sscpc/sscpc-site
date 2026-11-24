@@ -72,7 +72,7 @@ const ALBUMS = [
       "images/albums/kalai-vizha-26/photo-050.jpg",
       "images/albums/kalai-vizha-26/photo-051.jpg",
       "images/albums/kalai-vizha-26/photo-052.jpg",
-      "images/albums/kalai-vizha-26/photo-053.jpg",
+      "images/albums/kalai-vizha-26/photo-295.jpg",
       "images/albums/kalai-vizha-26/photo-054.jpg",
       "images/albums/kalai-vizha-26/photo-055.jpg",
       "images/albums/kalai-vizha-26/photo-056.jpg",
