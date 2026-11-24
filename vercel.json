@@ -79,6 +79,15 @@
   "functions": {
     "api/album.js": {
       "maxDuration": 30
+    },
+    "api/album-builder.js": {
+      "maxDuration": 10
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/tools/album-builder.html",
+      "destination": "/api/album-builder"
+    }
+  ]
 }

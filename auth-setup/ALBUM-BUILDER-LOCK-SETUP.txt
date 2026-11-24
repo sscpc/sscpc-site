@@ -1,0 +1,27 @@
+ALBUM BUILDER: ADMIN SIGN-IN REQUIRED
+
+What it does
+- Only a signed-in admin-portal user who may publish albums (Editor, Admin, Super Admin) can open the Album Builder.
+- Anyone else (visitors, signed-out people, accounts without publish permission) is sent to the public albums gallery (/#gallery). They never see the editor.
+- Two locks: the server only sends the page to signed-in editors (api/album-builder.js), and the page checks the sign-in again itself.
+- Publishing was already protected by the sign-in (api/album.js). Nothing about that changed.
+
+One-time steps on GitHub
+1. Upload / replace the files from the zip (keep the folder names).
+2. DELETE the old public file:  tools/album-builder.html
+   (The new page is served by the server instead. If the old file stays, Vercel keeps serving it to everyone.)
+3. If you already have a .vercelignore file, do not replace it. Just add this line to it:
+       album-builder-src/
+   Then commit. Vercel deploys by itself.
+
+How people get to it
+- Sign in to the admin portal, then open  yoursite.com/album-builder
+- Signed out, that same link takes the person to the public albums gallery.
+
+Changing where visitors are sent
+- Open api/album-builder.js and album-builder-src/album-builder.html and change PUBLIC_URL ('/#gallery').
+
+Editing the Album Builder page later
+- The editable page is album-builder-src/album-builder.html (it is not public).
+- After you edit it, run:  node album-builder-src/build.js
+  That rewrites api/_lib/album-builder-page.js. Commit both files.
