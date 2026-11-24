@@ -2027,8 +2027,8 @@ const ALBUMS = [
       "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-19.jpg",
       "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-20.jpg",
       "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-21.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-22.jpg",
-      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-23.jpg"
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-23.jpg",
+      "images/albums/st-sylvester-s-college-vs-richmond-college-ragby-match/photo-22.jpg"
     ]
   }
 ];
