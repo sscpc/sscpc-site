@@ -1,25 +1,26 @@
 ALBUM BUILDER: ADMIN SIGN-IN REQUIRED
 
 What it does
-- Only a signed-in admin-portal user who may publish albums (Editor, Admin, Super Admin) can open the Album Builder.
+- The Album Builder lives at  yoursite.com/api/album-builder  (short links  /album-builder  and  /tools/album-builder.html  both go there).
+- Only a signed-in admin-portal user who may publish albums (Editor, Admin, Super Admin) gets the page.
 - Anyone else (visitors, signed-out people, accounts without publish permission) is sent to the public albums gallery (/#gallery). They never see the editor.
 - Two locks: the server only sends the page to signed-in editors (api/album-builder.js), and the page checks the sign-in again itself.
 - Publishing was already protected by the sign-in (api/album.js). Nothing about that changed.
 
-One-time steps on GitHub
-1. Upload / replace the files from the zip (keep the folder names).
-2. DELETE the old public file:  tools/album-builder.html
-   (The new page is served by the server instead. If the old file stays, Vercel keeps serving it to everyone.)
-3. If you already have a .vercelignore file, do not replace it. Just add this line to it:
+Upload steps (GitHub)
+1. Unzip and upload everything to the website repository, keeping the folder names. Replace files when asked.
+   (tools/album-builder.html is now only a small redirect to /api/album-builder, so there is nothing to delete.)
+2. If you already have a .vercelignore file, do not replace it. Just make sure it contains this line:
        album-builder-src/
-   Then commit. Vercel deploys by itself.
+3. Commit. Vercel deploys by itself (about a minute). Hard-refresh the browser afterwards (Ctrl+Shift+R).
 
-How people get to it
-- Sign in to the admin portal, then open  yoursite.com/album-builder
-- Signed out, that same link takes the person to the public albums gallery.
+If an admin is still sent to the gallery
+- Make sure you are signed in to the admin portal in the SAME browser, then open yoursite.com/album-builder.
+- The reason is in the response header "X-Album-Gate" of the redirect (browser DevTools > Network):
+    not-signed-in | no-publish-permission | auth-not-configured | error
 
 Changing where visitors are sent
-- Open api/album-builder.js and album-builder-src/album-builder.html and change PUBLIC_URL ('/#gallery').
+- Change PUBLIC_URL ('/#gallery') in api/album-builder.js and in album-builder-src/album-builder.html.
 
 Editing the Album Builder page later
 - The editable page is album-builder-src/album-builder.html (it is not public).

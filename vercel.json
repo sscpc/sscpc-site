@@ -71,7 +71,12 @@
   "redirects": [
     {
       "source": "/album-builder",
-      "destination": "/tools/album-builder.html",
+      "destination": "/api/album-builder",
+      "permanent": false
+    },
+    {
+      "source": "/tools/album-builder.html",
+      "destination": "/api/album-builder",
       "permanent": false
     }
   ],
@@ -83,11 +88,5 @@
     "api/album-builder.js": {
       "maxDuration": 10
     }
-  },
-  "rewrites": [
-    {
-      "source": "/tools/album-builder.html",
-      "destination": "/api/album-builder"
-    }
-  ]
+  }
 }

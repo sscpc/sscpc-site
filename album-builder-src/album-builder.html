@@ -186,7 +186,7 @@ progress::-webkit-progress-bar{background:var(--well)}progress::-webkit-progress
     <div style="display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin-top:1rem"><button class="btn sm" id="g-save" type="button">Save and check</button><span class="note" id="g-st"></span></div></details>
   <div id="view"></div>
 </main>
-<script src="zip.js"></script>
+<script src="../tools/zip.js"></script>
 <script>
 const SV=(d,x)=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(x||2.4)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d+'</svg>';
 const IC={chk:SV('<path d="M5 12.5l4.5 4.5L19 7.5"/>'),x:SV('<path d="M6 6l12 12M18 6L6 18"/>'),l:SV('<path d="M15 5l-7 7 7 7"/>'),r:SV('<path d="M9 5l7 7-7 7"/>'),star:SV('<path d="M12 3.5l2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.9l6-.9z"/>',2),plus:SV('<path d="M12 5v14M5 12h14"/>'),up:SV('<path d="M12 16V4M7 9l5-5 5 5M5 20h14"/>',2),rl:SV('<path d="M3 12a9 9 0 109-9H8M8 3L5 6l3 3"/>',2),rr:SV('<path d="M21 12a9 9 0 11-9-9h4M16 3l3 3-3 3"/>',2),back:SV('<path d="M15 5l-7 7 7 7"/>',2.2),pub:SV('<path d="M12 16V4M7 9l5-5 5 5M5 20h14"/>',2),zip:SV('<path d="M12 4v12M7 11l5 5 5-5M5 20h14"/>',2)};
