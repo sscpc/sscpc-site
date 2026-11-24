@@ -20,9 +20,9 @@ const ALBUMS = [
     "cover": "images/albums/kalai-vizha-26/cover.jpg",
     "thumbs": "images/albums/kalai-vizha-26/thumbs/",
     "photos": [
+      "images/albums/kalai-vizha-26/photo-003.jpg",
       "images/albums/kalai-vizha-26/photo-001.jpg",
       "images/albums/kalai-vizha-26/photo-002.jpg",
-      "images/albums/kalai-vizha-26/photo-003.jpg",
       "images/albums/kalai-vizha-26/photo-004.jpg",
       "images/albums/kalai-vizha-26/photo-005.jpg",
       "images/albums/kalai-vizha-26/photo-006.jpg",
