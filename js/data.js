@@ -314,10 +314,7 @@ const ALBUMS = [
       "images/albums/kalai-vizha-26/photo-292.jpg",
       "images/albums/kalai-vizha-26/photo-293.jpg",
       "images/albums/kalai-vizha-26/photo-294.jpg"
-    ],
-    "captions": {
-      "photo-003.jpg": "Faaaaah"
-    }
+    ]
   },
   {
     "name": "Swara Ranjana 26 School show",
